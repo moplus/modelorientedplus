@@ -1,0 +1,400 @@
+<CONFIG>
+	NAME DbSpMethodBodyTaskCode
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
+CurrentMethod = Method
+
+// output tasks by method type
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%-
+		
+		-- add item to the database
+		BEGIN%%><%%=TAB 1%%>
+		if (ShouldPrimaryKeyBeSuppliedOnAdd == false)
+		{
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (DataTypeCode == 26 /* Guid */)
+				{
+					<%%-
+					IF %%><%%=DbSpParameterName%%><%%- IS NULL SET %%><%%=DbSpParameterName%%><%%- = NEWID()%%>
+				}
+			}
+		}
+		<%%-
+		INSERT %%><%%=Entity.DBTableName%%>
+		<%%-
+		(%%><%%=TAB 1%%>
+		log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
+		foreach (Property)
+		{
+			CurrentAuditProperty = null
+			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+			{
+				CurrentAuditProperty = AuditProperty
+			}
+			if (CurrentAuditProperty == null || (CurrentAuditProperty.IsAddAuditProperty == true && CurrentAuditProperty.DataTypeCode != 25 /* Timestamp */))
+			{
+				if (LogValue("DbSpMethodBodyTaskCode", "IsFirstItem") == true)
+				{
+					<%%-
+					%%><%%=Solution.LIBDoubleSpace%%>
+				}
+				else
+				{
+					<%%-
+					, %%>
+				}
+				log("DbSpMethodBodyTaskCode", "IsFirstItem", false)
+				<%%=DBColumnName%%>
+			}
+		}
+		<%%=TAB -1%%><%%-
+		)
+		VALUES
+		(%%><%%=TAB 1%%>
+		log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
+		foreach (Property)
+		{
+			CurrentAuditProperty = null
+			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+			{
+				CurrentAuditProperty = AuditProperty
+			}
+			if (CurrentAuditProperty == null || (CurrentAuditProperty.IsAddAuditProperty == true && CurrentAuditProperty.DataTypeCode != 25 /* Timestamp */))
+			{
+				if (LogValue("DbSpMethodBodyTaskCode", "IsFirstItem") == true)
+				{
+					<%%-
+					%%><%%=Solution.LIBDoubleSpace%%>
+				}
+				else
+				{
+					<%%-
+					, %%>
+				}
+				log("DbSpMethodBodyTaskCode", "IsFirstItem", false)
+				if (CurrentAuditProperty != null && CurrentAuditProperty.IsValueGenerated == true)
+				{
+					<%%=DbSpAuditGeneratedValue%%>
+				}
+				else
+				{
+					<%%=DbSpParameterName%%>
+				}
+			}
+		}
+		<%%=TAB -1%%><%%-
+		)%%><%%=TAB -1%%><%%-
+		END%%>
+		foreach (Property)
+		{
+			CurrentAuditProperty = null
+			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+			{
+				CurrentAuditProperty = AuditProperty
+			}
+			if (CurrentAuditProperty != null && CurrentAuditProperty.IsAddAuditProperty == true && CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)
+			{
+				<%%-
+				
+				SET %%><%%=DbSpParameterName%%><%%- = @@DBTS%%>
+			}
+		}
+		break
+	case 9: // UpdateOne
+		<%%-
+		
+		-- update item to the database
+		BEGIN%%><%%=TAB 1%%><%%-
+		UPDATE %%><%%=Entity.DBTableName%%><%%-
+		SET%%><%%=TAB 1%%>
+		log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
+		foreach (Property)
+		{
+			CurrentAuditProperty = null
+			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+			{
+				CurrentAuditProperty = AuditProperty
+			}
+			if (CurrentAuditProperty == null || (CurrentAuditProperty.IsUpdateAuditProperty == true && CurrentAuditProperty.DataTypeCode != 25 /* Timestamp */))
+			{
+				if (LogValue("DbSpMethodBodyTaskCode", "IsFirstItem") == true)
+				{
+					<%%-
+					%%><%%=Solution.LIBDoubleSpace%%>
+				}
+				else
+				{
+					<%%-
+					, %%>
+				}
+				log("DbSpMethodBodyTaskCode", "IsFirstItem", false)
+				if (CurrentAuditProperty != null && CurrentAuditProperty.IsValueGenerated == true)
+				{
+					<%%=DBColumnName%%><%%- = %%><%%=DbSpAuditGeneratedValue%%>
+				}
+				else
+				{
+					<%%=DBColumnName%%><%%- = %%><%%=DbSpParameterName%%>
+				}
+			}
+		}
+		<%%=TAB -1%%><%%-
+		WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%=TAB -1%%><%%-
+		END%%>
+		foreach (Property)
+		{
+			CurrentAuditProperty = null
+			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+			{
+				CurrentAuditProperty = AuditProperty
+			}
+			if (CurrentAuditProperty != null && CurrentAuditProperty.IsAddAuditProperty == true && CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)
+			{
+				<%%-
+				
+				SET %%><%%=DbSpParameterName%%><%%- = @@DBTS%%>
+			}
+		}
+		break
+	case 10: // DeleteOne
+		<%%-
+		
+		-- delete item from the database
+		BEGIN%%><%%=TAB 1%%><%%-
+			DELETE FROM %%><%%=Entity.DBTableName%%><%%-
+			WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%=TAB -1%%><%%-
+		END%%>
+		break
+	case 1: // GetOne
+		<%%-
+		
+		-- get item from the database
+		BEGIN%%><%%=TAB 1%%>
+
+		// add select clause
+		<%%-
+		SELECT%%><%%=TAB 1%%>
+		<%%=Entity.DbSpSelectPropertiesCode%%>
+		<%%=TAB -1%%>
+
+		// add from and join clause
+		<%%-
+		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		<%%=Entity.DbSpJoinSelectEntitiesCode%%>
+		<%%=TAB -1%%>
+
+		// add where clause
+		<%%-
+		WHERE%%><%%=TAB 1%%>
+		<%%=DbSpWhereParametersCode%%><%%=TAB -1%%>
+
+		// output end
+		<%%=TAB -1%%>
+		<%%-
+		END%%>
+		break
+	case 2: // GetAll
+	case 5: // GetAllByCriteria
+	case 4: // GetAllByForeignkey
+		<%%-
+		
+		-- get items from the database
+		BEGIN%%><%%=TAB 1%%>
+
+		// add select clause
+		<%%-
+		SELECT%%><%%=TAB 1%%>
+		<%%=Entity.DbSpSelectPropertiesCode%%><%%=TAB -1%%>
+
+		// add from and join clause
+		<%%-
+		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		<%%=Entity.DbSpJoinSelectEntitiesCode%%><%%=TAB -1%%>
+
+		// add where clause
+		if (ParameterCount > 0 || Entity.IsActivationEntity == true)
+		{
+			<%%-
+			WHERE%%><%%=TAB 1%%>
+			<%%=DbSpWhereParametersCode%%><%%=TAB -1%%>
+		}
+
+		// add order by clause
+		<%%-
+		ORDER BY%%><%%=TAB 1%%>
+	<%%=Entity.DbSpSortPropertiesCode%%><%%=TAB -1%%>
+
+		// output end
+		<%%=TAB -1%%>
+		<%%-
+		END%%>
+		break
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		<%%-
+		
+		-- get page of items from the database
+		BEGIN%%><%%=TAB 1%%>
+
+		// add select clause (for search table)
+		<%%-
+		
+		-- populate search table
+		INSERT INTO @searchTable (%%><%%=Entity.DbSpPrimaryKeyPropertyPhrase%%><%%-)
+		SELECT%%><%%=TAB 1%%>
+		<%%=Entity.DbSpPrimaryKeySelectPropertiesCode%%><%%=TAB -1%%>
+
+		// add from and join clause (for search table)
+		<%%-
+		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		<%%=Entity.DbSpJoinSelectEntitiesCode%%><%%=TAB -1%%>
+
+		// add where clause (for search table)
+		if (ParameterCount > 0 || Entity.IsActivationEntity == true)
+		{
+			<%%-
+			WHERE%%><%%=TAB 1%%>
+			<%%=DbSpWhereParametersCode%%><%%=TAB -1%%>
+		}
+
+		// add order by clause (for search table)
+		<%%-
+		ORDER BY%%><%%=TAB 1%%>
+		<%%=Entity.DbSpSortPropertiesCode%%><%%=TAB -1%%>
+
+		// output search results settings
+		<%%-
+		
+		-- populate search results settings
+		SET @totalRecords = (SELECT Count (*) FROM @searchTable)
+		IF @maximumListSize > 0
+		BEGIN%%><%%=TAB 1%%><%%-
+			IF @totalRecords > @maximumListSize
+			BEGIN%%><%%=TAB 1%%><%%-
+				SET @maximumListSizeExceeded = 1%%><%%=TAB -1%%><%%-
+			END%%><%%=TAB -1%%><%%-
+		END%%>
+
+		// add select clause (for page results)
+		<%%-
+		
+		-- populate page of search results
+		SELECT%%><%%=TAB 1%%>
+		<%%=Entity.DbSpSelectPropertiesCode%%><%%=TAB -1%%>
+
+		// add from and join clause (for page results)
+		<%%-
+		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%><%%-
+		INNER JOIN @searchTable searchTable ON %%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%- AND %%>
+			}
+			<%%-searchTable.%%><%%=DBPropertyName%%><%%- = %%><%%=DbSpAliasColumnName%%>
+		}
+		<%%=Entity.DbSpJoinSelectEntitiesCode%%><%%=TAB -1%%>
+
+		// add where clause (for page results)
+		<%%-
+		WHERE%%><%%=TAB 1%%><%%-
+			searchTable.SearchOrder >= @startIndex
+			AND searchTable.SearchOrder < @endIndex%%><%%=TAB -1%%>
+
+		// add order by clause (for search table)
+		<%%-
+		ORDER BY%%><%%=TAB 1%%><%%-
+			searchTable.SearchOrder%%><%%=TAB -1%%>
+
+		// output end
+		<%%=TAB -1%%>
+		<%%-
+		END%%>
+		break
+	case 11: // DeleteAllByForeignKey:
+		<%%-
+		
+		-- delete items from the database
+		BEGIN%%><%%=TAB 1%%>
+		foreach (MethodRelationship limit 1)
+		{
+			// set foreign entity context
+			with (Relationship)
+			{
+				with (Entity)
+				{
+					log("DbSpMethodBodyTaskCode", "IsForeignEntityProcessed", false)
+					with (../../../Entity)
+					{
+						foreach (Entity in EntityAndBaseEntities)
+						{
+							if (Entity == ../Entity)
+							{
+								// delete foreign entity
+								<%%-
+								DELETE FROM %%><%%=DBTableName%%><%%-
+								WHERE%%><%%=TAB 1%%>
+								<%%=CurrentMethod.DbSpWhereParametersCode%%><%%=TAB -1%%>
+								log("DbSpMethodBodyTaskCode", "IsForeignEntityProcessed", true)
+							}
+							else
+							{
+								if (LogValue("DbSpMethodBodyTaskCode", "IsForeignEntityProcessed") == false)
+								{
+									// delete extended entity
+									<%%-
+									DELETE FROM %%><%%=DBTableName%%><%%-
+									WHERE %%><%%=DBPrimaryKeySelectPhrase%%><%%- IN
+									(%%><%%=TAB 1%%><%%-
+										SELECT %%><%%=DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=../Entity.DBTableName%%><%%-
+										WHERE%%><%%=TAB 1%%>
+										<%%=CurrentMethod.DbSpWhereParametersCode%%><%%=TAB -1%%><%%=TAB -1%%>
+									<%%-
+									)%%>
+								}
+								else
+								{
+									// delete base entities
+									<%%-
+									DELETE FROM %%><%%=DBTableName%%><%%-
+									WHERE %%><%%=TAB 1%%>
+									foreach (Entity  in ExtendingEntities)
+									{
+										if (ItemIndex > 0)
+										{
+											<%%-
+											AND %%>
+										}
+										<%%=../Entity.DbSpPrimaryKeySelectPhrase%%><%%- NOT IN%%>
+										<%%-
+										(%%><%%=TAB 1%%>
+											<%%-
+											SELECT %%><%%=../Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=DBTableName%%><%%=TAB -1%%>
+										<%%-
+										)%%>
+									}
+									<%%=TAB -1%%>
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		<%%=TAB -1%%>
+		<%%-
+		END%%>
+		break
+}
+%%></CONTENT>

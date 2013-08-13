@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME IsUIEditableProperty
+	CATEGORY LIB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsAuditProperty == true)
+{
+	<%%-false%%>
+	return
+}
+if (IsBaseProperty == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

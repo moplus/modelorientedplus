@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierAlias
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-BLL%%></CONTENT>

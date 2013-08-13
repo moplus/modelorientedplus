@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPExtendedClassFileName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPClassName%%><%%-_Ext.svc.cs%%></CONTENT>

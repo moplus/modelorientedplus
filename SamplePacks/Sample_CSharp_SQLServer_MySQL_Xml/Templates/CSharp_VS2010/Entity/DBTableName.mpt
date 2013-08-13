@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DBTableName
+	CATEGORY DB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=SourceName%%></CONTENT>

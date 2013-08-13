@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME PrimaryNameProperty
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where (DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)  && PropertyName.ToLower().EndsWith("name") == true)
+	{
+		<%%=PropertyName%%>
+		return
+	}
+}
+%%></CONTENT>

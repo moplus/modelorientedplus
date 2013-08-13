@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME BLLReturnType
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%>
+			}
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-EnterpriseDataObjectList<BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%->%%>
+			}
+			break
+		default:
+			<%%-void%%>
+			break
+	}
+%%></CONTENT>

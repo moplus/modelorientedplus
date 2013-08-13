@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierPluralEntityPropertyName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPMiddleTierPluralEntityName%%></CONTENT>

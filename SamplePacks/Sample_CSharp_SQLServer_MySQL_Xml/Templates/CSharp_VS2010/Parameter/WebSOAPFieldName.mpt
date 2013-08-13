@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPFieldName
+	CATEGORY WebSOAP
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.UnderscoreCase()%%></CONTENT>

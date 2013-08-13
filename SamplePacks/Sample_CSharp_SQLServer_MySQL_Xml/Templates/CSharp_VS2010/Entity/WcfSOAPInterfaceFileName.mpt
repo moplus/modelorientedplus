@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfSOAPInterfaceFileName
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPInterfaceName%%><%%-_G.cs%%></CONTENT>

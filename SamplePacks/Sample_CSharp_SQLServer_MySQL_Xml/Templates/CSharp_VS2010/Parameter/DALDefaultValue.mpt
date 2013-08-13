@@ -1,0 +1,28 @@
+<CONFIG>
+	NAME DALDefaultValue
+	CATEGORY DAL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%:
+	with (Property from Solution.Find(PropertyID))
+	{
+		<%%=DALDefaultValue%%>
+		break
+	}
+	with (PropertyReference from Solution.Find(PropertyID))
+	{
+		<%%=DALDefaultValue%%>
+		break
+	}
+	with (Collection from Solution.Find(PropertyID))
+	{
+		<%%=DALDefaultValue%%>
+		break
+	}
+	with (EntityReference from Solution.Find(PropertyID))
+	{
+		<%%=DALDefaultValue%%>
+		break
+	}
+%%></CONTENT>

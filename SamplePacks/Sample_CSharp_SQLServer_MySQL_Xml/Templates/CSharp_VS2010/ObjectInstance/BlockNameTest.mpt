@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME BlockNameTest
+	CATEGORY Test
+	NODE ObjectInstance
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (Block)
+{
+	<%%=BlockName%%>
+}
+%%></CONTENT>

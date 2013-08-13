@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME DbSpAliasColumnName
+	CATEGORY DbSp
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%:
+if (LogValue("DBPropertyAliases" + CurrentEntity.EntityID, PropertyID))
+{
+	Text = LogValue("DBPropertyAliases" + CurrentEntity.EntityID, PropertyID)
+	<%%-.%%>
+}
+<%%=DBColumnName%%>
+%%></CONTENT>

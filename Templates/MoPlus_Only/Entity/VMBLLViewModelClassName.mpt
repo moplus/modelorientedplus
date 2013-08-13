@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME VMBLLViewModelClassName
+	CATEGORY VMBLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%><%%-ViewModel%%></CONTENT>

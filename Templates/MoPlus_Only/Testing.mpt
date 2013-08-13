@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME Testing
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// this is a template used to test other templates
+//
+foreach (Entity in Solution)
+{
+	<%%-
+	Entity Name is: %%><%%=BLLClassName%%>
+}
+%%></CONTENT>

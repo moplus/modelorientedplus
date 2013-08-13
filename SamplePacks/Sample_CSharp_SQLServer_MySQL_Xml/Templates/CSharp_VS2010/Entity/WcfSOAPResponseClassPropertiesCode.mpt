@@ -1,0 +1,53 @@
+<CONFIG>
+	NAME WcfSOAPResponseClassPropertiesCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Fields and Properties"
+
+///--------------------------------------------------------------------------------
+/// <summary>This property gets/sets the %%><%%=WcfSOAPMiddleTierClassName%%><%%- count.</summary>
+///--------------------------------------------------------------------------------
+[XmlElement()]
+[DataMember]
+public int %%><%%=WcfSOAPMiddleTierClassName%%><%%-Count
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		if (%%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%- != null)
+		{%%><%%=TAB 1%%><%%-
+			return %%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-.Count;%%><%%=TAB -1%%><%%-
+		}
+		return 0;%%><%%=TAB -1%%><%%-
+	}
+	set {}%%><%%=TAB -1%%><%%-
+}
+
+protected EnterpriseDataObjectList<%%><%%=WcfSOAPMiddleTierDataType%%><%%-> %%><%%=WcfSOAPMiddleTierPluralEntityFieldName%%><%%- = null;
+///--------------------------------------------------------------------------------
+/// <summary>This property gets or sets a reference to the %%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-.</summary>
+///--------------------------------------------------------------------------------
+[XmlArray(ElementName = "%%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-")]
+[XmlArrayItem(typeof(%%><%%=WcfSOAPMiddleTierDataType%%><%%-), ElementName = "%%><%%=WcfSOAPMiddleTierClassName%%><%%-")]
+[DataMember(Name = "%%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-")]
+[DataArrayItem(ElementName = "%%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-")]
+public EnterpriseDataObjectList<%%><%%=WcfSOAPMiddleTierDataType%%><%%-> %%><%%=WcfSOAPMiddleTierPluralEntityPropertyName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		if (%%><%%=WcfSOAPMiddleTierPluralEntityFieldName%%><%%- == null)
+		{%%><%%=TAB 1%%><%%-
+			%%><%%=WcfSOAPMiddleTierPluralEntityFieldName%%><%%- = new EnterpriseDataObjectList<%%><%%=WcfSOAPMiddleTierDataType%%><%%->();%%><%%=TAB -1%%><%%-
+		}
+		return %%><%%=WcfSOAPMiddleTierPluralEntityFieldName%%><%%-;%%><%%=TAB -1%%><%%-
+	}
+	set
+	{%%><%%=TAB 1%%><%%-
+		%%><%%=WcfSOAPMiddleTierPluralEntityFieldName%%><%%- = value;%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}
+
+#endregion "Fields and Properties"%%></CONTENT>

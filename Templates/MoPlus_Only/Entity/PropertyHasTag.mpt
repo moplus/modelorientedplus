@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME PropertyHasTag
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// returns whether or not a property of this entity has the input tag
+//
+<%%:
+param tagName
+if (tagName == null)
+{
+	<%%-false%%>
+	return
+}
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where Tags.Contains(tagName) == true)
+	{
+		<%%-true%%>
+		return
+	}
+}
+<%%-false%%>
+%%></CONTENT>

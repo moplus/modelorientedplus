@@ -1,0 +1,81 @@
+<CONFIG>
+	NAME SolutionFile
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "#region protected"%%>
+<%%=PROTECTEDAREAEND "#endregion protected"%%>
+<%%=USEIGNOREDAREAS true%%>
+<%%=IGNOREDAREASTART "<CreatedByUserName>"%%>
+<%%=IGNOREDAREAEND "</Status>"%%>
+<%%-Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{%%><%%=SolutionID.ToUpper()%%><%%-}") = "MoPlus.Common", "%%><%%=LibraryDirectory%%><%%-\VS2010\MoPlus.Common\MoPlus.Common.csproj", "{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}"
+EndProject
+Project("{%%><%%=SolutionID.ToUpper()%%><%%-}") = "MoPlus.Data", "%%><%%=LibraryDirectory%%><%%-\VS2010\MoPlus.Data\MoPlus.Data.csproj", "{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}"
+EndProject
+Project("{%%><%%=SolutionID.ToUpper()%%><%%-}") = "MoPlus.IO", "%%><%%=LibraryDirectory%%><%%-\VS2010\MoPlus.IO\MoPlus.IO.csproj", "{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}"
+EndProject
+Project("{%%><%%=SolutionID.ToUpper()%%><%%-}") = "MoPlus.Net", "%%><%%=LibraryDirectory%%><%%-\VS2010\MoPlus.Net\MoPlus.Net.csproj", "{63BF2E2B-52AE-4156-A859-96C09F73775C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BF2E2B-52AE-4156-A859-96C09F73775C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BF2E2B-52AE-4156-A859-96C09F73775C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BF2E2B-52AE-4156-A859-96C09F73775C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BF2E2B-52AE-4156-A859-96C09F73775C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D27336EA-2CE5-4ABC-814E-E71221761616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27336EA-2CE5-4ABC-814E-E71221761616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27336EA-2CE5-4ABC-814E-E71221761616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27336EA-2CE5-4ABC-814E-E71221761616}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+%%></CONTENT><OUTPUT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Solution.OutputSolutionFileName%%>
+<%%:
+progress(Solution.EntityCount * 2 * ProjectCount)
+
+// create solution file if it does not exist
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// Add projects
+foreach (Project)
+{
+	CurrentProject = Project
+	
+	// add project to solution if it is not present in solution
+	if (File(Path).Contains(ProjectItemPath) == false)
+	{
+		insert(Path, "Project(", ProjectSolutionItem)
+		insert(Path, "{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}.Debug|Any CPU.ActiveCfg", ProjectSolutionBuildItem)
+	}
+	
+	// output project contents
+	<%%>Template%%>
+}
+%%></OUTPUT>

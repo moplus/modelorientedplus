@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierDataType
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WebSOAPMiddleTierClassName%%></CONTENT>

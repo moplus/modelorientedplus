@@ -1,0 +1,40 @@
+<CONFIG>
+	NAME StackContextTest
+	CATEGORY Test
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// This template is for demonstrating stack context through a debugger
+// A particular entity is pushed onto the stack when this template is called
+//
+<%%-This is a model context test for: %%><%%=EntityName%%>
+<%%:
+var currentItemName = EntityName
+var entityName = EntityName
+var currentItemID = EntityID
+with (Solution)
+{
+	// the solution is pushed onto the stack
+	currentItemName = SolutionName
+	entityName = ../EntityName // the entity is one up the stack
+	currentItemID = SolutionID
+}
+currentItemName = EntityName // the solution is off the stack
+currentItemID = EntityID
+with (Feature)
+{
+	// the feature is pushed onto the stack
+	currentItemName = FeatureName
+	entityName = ../EntityName // the entity is one up the stack
+	currentItemID = FeatureID
+}
+foreach (Property)
+{
+	// the property is pushed onto the stack
+	currentItemName = PropertyName
+	entityName = ../EntityName // the entity is one up the stack
+	currentItemID = PropertyID
+}
+%%></CONTENT>

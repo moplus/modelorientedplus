@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataArrayItemAttributeFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataArrayItemAttribute_G.cs%%></CONTENT>

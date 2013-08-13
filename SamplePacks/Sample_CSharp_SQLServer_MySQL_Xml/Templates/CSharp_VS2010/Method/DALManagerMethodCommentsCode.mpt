@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DALManagerMethodCommentsCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+/// <param name="sqlDbManager">The database manager for managing the transaction.</param>
+///--------------------------------------------------------------------------------%%></CONTENT>

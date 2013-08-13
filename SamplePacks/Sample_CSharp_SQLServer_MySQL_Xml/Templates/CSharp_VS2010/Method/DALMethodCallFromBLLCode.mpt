@@ -1,0 +1,30 @@
+<CONFIG>
+	NAME DALMethodCallFromBLLCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-DAL.%%><%%=Entity.FeatureName%%><%%-.%%><%%=Entity.DALClassName%%><%%-.%%><%%=DALMethodName%%><%%-(%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+			<%%-itemDAL, %%>
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%=BLLParameterName%%><%%-, %%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-out totalRecords, out maximumListSizeExceeded, %%>
+			break
+	}
+	<%%-cascadeDepth, DataAccessOptions, DatabaseOptions)%%>
+%%></CONTENT>

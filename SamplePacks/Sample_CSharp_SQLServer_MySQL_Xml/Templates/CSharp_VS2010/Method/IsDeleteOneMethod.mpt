@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsDeleteOneMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (MethodTypeCode == 10 /* DeleteOne */)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>

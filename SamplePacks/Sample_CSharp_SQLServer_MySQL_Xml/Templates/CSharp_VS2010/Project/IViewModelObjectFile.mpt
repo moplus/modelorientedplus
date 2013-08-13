@@ -1,0 +1,56 @@
+<CONFIG>
+	NAME IViewModelObjectFile
+	CATEGORY VM
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.ComponentModel;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This interface is used for all view model objects.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file outside of protected areas to prevent changes
+	///	from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public interface IViewModelObject : IDataErrorInfo, INotifyPropertyChanged, IDisposable
+	{
+		#region protected
+		#endregion protected
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the name.</summary>
+		///--------------------------------------------------------------------------------
+		string Name { get; set; }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a validation error for a property or other tag.</summary>
+		/// 
+		/// <param name="propertyName">The property to get the validation error for.</param>
+		///--------------------------------------------------------------------------------
+		string GetValidationError(string propertyName);
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(IViewModelObjectFilePath) == null || (File(IViewModelObjectFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(IViewModelObjectFilePath)
+}
+%%></OUTPUT>

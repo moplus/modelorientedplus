@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME IODataContextFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\IODataContext_G.cs%%></CONTENT>

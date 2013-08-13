@@ -1,0 +1,350 @@
+<CONFIG>
+	NAME VMBLLEditWorkspaceViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.ComponentModel;
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This abstract class is for editable workspaces.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public abstract class EditWorkspaceViewModel : WorkspaceViewModel, IEditWorkspaceViewModel
+	{
+		#region "Command Processing"
+		private RelayCommand _closeConfirmCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Close if there are no outstanding edits, otherwise request a confirmation.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand CloseConfirmCommand
+		{
+			get
+			{
+				if (_closeConfirmCommand == null)
+					_closeConfirmCommand = new RelayCommand(param => this.OnRequestCloseConfirm());
+				
+				return _closeConfirmCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method closes the view model if there are no outstanding edits,
+		/// otherwise it requests a confirmation to close.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual void OnRequestCloseConfirm()
+		{
+			if (IsEdited == true)
+			{
+				OnConfirmClose(this, null);
+			}
+			else
+			{
+				Close();
+			}
+		}
+
+		private RelayCommand _closeForceSaveCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Close, forcing a save or lose change of edits.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand CloseForceSaveCommand
+		{
+			get
+			{
+				if (_closeForceSaveCommand == null)
+					_closeForceSaveCommand = new RelayCommand(param => this.OnCloseForceSaveCommand());
+
+				return _closeForceSaveCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method closes the view model, saving changes if there are any
+		/// outstanding edits.
+		///--------------------------------------------------------------------------------
+		protected virtual void OnCloseForceSaveCommand()
+		{
+			if (IsEdited == true)
+			{
+				OnForceClose(this, null);
+			}
+			else
+			{
+				Close();
+			}
+		}
+
+		private RelayCommand _resetCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Command to initiate resets.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand ResetCommand
+		{
+			get
+			{
+				if (_resetCommand == null)
+					_resetCommand = new RelayCommand(param => this.OnReset(), param => this.CanReset());
+
+				return _resetCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method determines if a reset can be done.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual bool CanReset()
+		{
+			return IsEdited;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual void OnReset()
+		{
+		}
+
+		private RelayCommand _defaultsCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Command to initiate default values.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand DefaultsCommand
+		{
+			get
+			{
+				if (_defaultsCommand == null)
+					_defaultsCommand = new RelayCommand(param => this.OnSetDefaults(), param => this.CanSetDefaults());
+
+				return _defaultsCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method determines if a default value setting can be done.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual bool CanSetDefaults()
+		{
+			return true;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets the default values.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual void OnSetDefaults()
+		{
+		}
+
+		private RelayCommand _updateCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Command to initiate updates.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand UpdateCommand
+		{
+			get
+			{
+				if (_updateCommand == null)
+				{
+					_updateCommand = new RelayCommand(param => this.OnUpdate(), param => this.CanUpdate());
+				}
+
+				return _updateCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method determines if an update can be done.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual bool CanUpdate()
+		{
+			return IsEdited && IsEditItemValid;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual void OnUpdate()
+		{
+		}
+
+		#endregion "Command Processing"
+
+		#region "Properties"
+		private readonly SortableObservableCollection<WorkspaceViewModel> _itemsToAdd = new SortableObservableCollection<WorkspaceViewModel>();
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the overall set of items to add (children of any type).</summary>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection<WorkspaceViewModel> ItemsToAdd
+		{
+			get
+			{
+				return _itemsToAdd;
+			}
+		}
+
+		private readonly SortableObservableCollection<WorkspaceViewModel> _itemsToDelete = new SortableObservableCollection<WorkspaceViewModel>();
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the overall set of items to delete (children of any type).</summary>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection<WorkspaceViewModel> ItemsToDelete
+		{
+			get
+			{
+				return _itemsToDelete;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets SourceItem.</summary>
+		///--------------------------------------------------------------------------------
+		public IWorkspaceViewModel SourceItem { get; set; }
+
+		private int _editItemsCount = 0;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets EditItemsCount.</summary>
+		///--------------------------------------------------------------------------------
+		public int EditItemsCount
+		{
+			get
+			{
+				return _editItemsCount;
+			}
+			set
+			{
+				_editItemsCount = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEdited.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual bool IsEdited
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEditItemValid.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual bool IsEditItemValid
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TabTitle.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual string TabTitle
+		{
+			get
+			{
+				return Name;
+			}
+		}
+
+		private int _startIndex = 0;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets StartIndex.</summary>
+		///--------------------------------------------------------------------------------
+		public int StartIndex
+		{
+			get
+			{
+				return _startIndex;
+			}
+			set
+			{
+				_startIndex = value;
+			}
+		}
+
+		private int _pageSize = 10;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets PageSize.</summary>
+		///--------------------------------------------------------------------------------
+		public int PageSize
+		{
+			get
+			{
+				return _pageSize;
+			}
+			set
+			{
+				_pageSize = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets SortColumn.</summary>
+		///--------------------------------------------------------------------------------
+		public string SortColumn { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets SortDirection.</summary>
+		///--------------------------------------------------------------------------------
+		public ListSortDirection SortDirection { get; set; }
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method puts an item into the add queue.</summary>
+		/// 
+		/// <param name="item">The item to add.</param>
+		///--------------------------------------------------------------------------------
+		public virtual void Add(WorkspaceViewModel item)
+		{
+			ItemsToAdd.Add(item);
+			Items.Add(item);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method puts an item into the delete queue.</summary>
+		/// 
+		/// <param name="item">The item to delete.</param>
+		///--------------------------------------------------------------------------------
+		public virtual void Delete(WorkspaceViewModel item)
+		{
+			ItemsToDelete.Add(item);
+			Items.Remove(item);
+		}
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLEditWorkspaceViewModelFilePath) == null || (File(VMBLLEditWorkspaceViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLEditWorkspaceViewModelFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLEditWorkspaceViewModelFilePath)
+}
+%%></OUTPUT>

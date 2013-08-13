@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTResponseClassFileName
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTResponseClassName%%><%%-_G.cs%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALMethodName
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=MethodName%%></CONTENT>

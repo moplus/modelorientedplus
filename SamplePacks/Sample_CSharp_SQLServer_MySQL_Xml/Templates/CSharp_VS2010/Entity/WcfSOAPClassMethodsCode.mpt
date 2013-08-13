@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WcfSOAPClassMethodsCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"%%>
+<%%:
+foreach (Method where WcfSOAPValidMethod == true)
+{
+	<%%=WcfSOAPMethodCode%%>
+}
+%%>
+<%%-
+#endregion "Methods"%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfSOAPMethodInterfaceAttributesCode
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-
+[OperationContract]%%></CONTENT>

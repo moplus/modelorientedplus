@@ -1,0 +1,28 @@
+<CONFIG>
+	NAME BLLDefaultValue
+	CATEGORY BLL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%:
+	with (Property from Solution.Find(PropertyID))
+	{
+		<%%=BLLDefaultValue%%>
+		break
+	}
+	with (PropertyReference from Solution.Find(PropertyID))
+	{
+		<%%=BLLDefaultValue%%>
+		break
+	}
+	with (Collection from Solution.Find(PropertyID))
+	{
+		<%%=BLLDefaultValue%%>
+		break
+	}
+	with (EntityReference from Solution.Find(PropertyID))
+	{
+		<%%=BLLDefaultValue%%>
+		break
+	}
+%%></CONTENT>

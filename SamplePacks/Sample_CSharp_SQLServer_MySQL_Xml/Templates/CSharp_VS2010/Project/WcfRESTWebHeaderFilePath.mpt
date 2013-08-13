@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTWebHeaderFilePath
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebHeader_G.cs%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTBaseClassName
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-WebServiceBase%%></CONTENT>

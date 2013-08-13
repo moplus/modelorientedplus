@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierDataType
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WcfSOAPMiddleTierClassName%%></CONTENT>

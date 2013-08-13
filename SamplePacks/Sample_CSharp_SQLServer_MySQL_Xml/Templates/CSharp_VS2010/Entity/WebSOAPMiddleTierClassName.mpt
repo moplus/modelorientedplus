@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierClassName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%></CONTENT>

@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME ReportingTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-List of entities and the properties within each entity:
+%%>
+foreach (Entity in Solution)
+{
+<%%-
+Entity: %%><%%=EntityName%%>
+	foreach (Property)
+	{
+	<%%-
+	Property: %%><%%=PropertyName%%>
+	}
+}
+%%></CONTENT>

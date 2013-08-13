@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME BLLManagerClassIncludesCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using System.Data.Services;
+using DAL = %%><%%=Project.Namespace%%><%%-.DAL;%%></CONTENT>

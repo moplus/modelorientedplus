@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DataServicesClassFileProjectItem
+	CATEGORY DataServices
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataServicesClassFilePath.Substring(DataServicesClassFilePath.IndexOf("Generated"))%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=DSDataServiceName%%><%%-.svc</DependentUpon>
+    </Compile>
+    %%></CONTENT>

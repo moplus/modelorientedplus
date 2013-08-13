@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUIPropertiesClassFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WPFUIPropertiesClassFileProjectPath%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WPFUIPropertiesMarkupFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

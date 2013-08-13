@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALNonNullableDataType
+	CATEGORY DAL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpNonNullableDataType%%></CONTENT>

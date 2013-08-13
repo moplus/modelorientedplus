@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPProjectResponseRelativePath
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=FeatureName%%><%%-\%%></CONTENT>

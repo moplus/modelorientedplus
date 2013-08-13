@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME DALCoreMethodSignatureCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-public static %%><%%=DALReturnType%%><%%- %%><%%=DALMethodName%%><%%-(%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%=DALDataType%%><%%- item, %%>
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%=DALDataType%%><%%- %%><%%=DALParameterName%%><%%-, %%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-out int totalRecords, out bool maximumListSizeExceeded, %%>
+			break
+	}
+	<%%-int cascadeDepth, DataAccessOptions dataAccessOptions, %%>
+%%></CONTENT>

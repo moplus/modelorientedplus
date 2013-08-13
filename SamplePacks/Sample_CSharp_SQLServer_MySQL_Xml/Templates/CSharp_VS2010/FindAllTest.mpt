@@ -1,0 +1,59 @@
+<CONFIG>
+	NAME FindAllTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// find all CustomerID properties
+//
+foreach (Property in Solution.FindAll(PropertyName, "CustomerID"))
+{
+<%%-
+%%><%%=Entity.EntityName%%><%%-.%%><%%=PropertyName%%>
+}
+<%%-
+
+
+%%>
+//
+// find all entities of type 1
+//
+foreach (Entity in Solution.FindAll(EntityTypeCode, 1))
+{
+<%%-
+%%><%%=EntityName%%>
+}
+<%%-
+
+%%>
+//
+// find all description properties by feature
+//
+foreach (Feature)
+{
+<%%-
+%%><%%=FeatureName%%>
+	foreach (Property in Feature.FindAll(PropertyName, "Description"))
+	{
+<%%-
+	%%><%%=Entity.EntityName%%><%%-.%%><%%=PropertyName%%>	}
+}
+<%%-
+
+%%>
+//
+// find all guid properties by entity
+//
+foreach (Entity)
+{
+<%%-
+%%><%%=EntityName%%>
+	foreach (Property in Entity.FindAll(DataTypeCode, 26))
+	{
+<%%-
+	%%><%%=Entity.EntityName%%><%%-.%%><%%=PropertyName%%>	}
+}
+%%></CONTENT>

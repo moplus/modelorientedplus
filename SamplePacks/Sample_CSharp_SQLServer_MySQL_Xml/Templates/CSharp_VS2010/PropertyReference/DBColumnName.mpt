@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DBColumnName
+	CATEGORY DB
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%-[%%><%%=OriginalName%%><%%-]%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTExtRelativePath
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\Assembly_Exts\%%><%%=FeatureName%%><%%-\%%></CONTENT>

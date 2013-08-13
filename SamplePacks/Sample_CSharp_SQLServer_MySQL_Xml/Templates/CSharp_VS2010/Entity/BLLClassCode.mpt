@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME BLLClassCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLClassBodyStartCode%%>
+<%%=BLLClassConstantsCode%%>
+<%%=BLLClassPropertiesCode%%><%%-
+%%><%%=BLLClassMethodsCode%%><%%-
+%%><%%=BLLClassConstructorsCode%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLClassFilePath) == null || (File(BLLClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(BLLClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(BLLClassFilePath)
+}
+%%></OUTPUT>

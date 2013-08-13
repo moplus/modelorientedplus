@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME WcfSOAPMarkupClassFileProjectItem
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=WcfSOAPMarkupClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

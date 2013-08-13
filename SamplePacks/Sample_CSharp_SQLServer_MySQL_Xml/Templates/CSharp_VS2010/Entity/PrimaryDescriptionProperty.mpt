@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME PrimaryDescriptionProperty
+	CATEGORY LIB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where (DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)  && PropertyName.ToLower().EndsWith("description") == true limit 1)
+{
+	<%%=PropertyName%%>
+	return
+}
+foreach (Property where (DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)  && PropertyName.ToLower().EndsWith("name") == true limit 1)
+{
+	<%%=PropertyName%%>
+}
+%%></CONTENT>

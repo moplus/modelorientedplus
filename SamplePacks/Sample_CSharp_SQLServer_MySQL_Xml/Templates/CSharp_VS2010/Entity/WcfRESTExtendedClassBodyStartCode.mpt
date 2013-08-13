@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WcfRESTExtendedClassBodyStartCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTGlobalCopyrightCode%%>
+<%%=WcfRESTExtendedClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.ProjectNamespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfRESTExtendedClassCommentsCode%%><%%-
+	public partial class %%><%%=WcfRESTClassName%%><%%- : %%><%%=WcfRESTBaseClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

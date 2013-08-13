@@ -1,0 +1,482 @@
+<CONFIG>
+	NAME EFModelMarkupCode
+	CATEGORY EF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="%%><%%=Project.DbName%%><%%-Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="%%><%%=Project.DbName%%><%%-ModelStoreContainer">%%>
+foreach (Entity in Solution where Tags.Contains("DB") == false)
+{
+	progress
+}
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+<%%-
+          <EntitySet Name="%%><%%=SourceName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=SourceName%%><%%-" store:Type="Tables" Schema="dbo" />%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+          <AssociationSet Name="%%><%%=RelationshipName%%><%%-" Association="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=RelationshipName%%><%%-">%%>
+          	<%%-
+            <End Role="%%><%%=EFSinkRoleName%%><%%-" EntitySet="%%><%%=ReferencedEntity.SourceName%%><%%-" />%%>
+	      <%%-
+            <End Role="%%><%%=EFSourceRoleName%%><%%-" EntitySet="%%><%%=Entity.SourceName%%><%%-" />%%>
+           <%%-
+          </AssociationSet>%%>
+}
+<%%-
+       </EntityContainer>%%>
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	progress
+<%%-
+        <EntityType Name="%%><%%=SourceName%%><%%-">
+          <Key>%%>
+          foreach (Property where Tags.Contains("DB") == true && IsPrimaryKeyMember == true)
+          {
+          	<%%-
+            <PropertyRef Name="%%><%%=SourceName%%><%%-" />%%>
+           }
+            <%%-
+          </Key>%%>
+          foreach (Property where Tags.Contains("DB") == true)
+          {
+          <%%-
+          <Property Name="%%><%%=SourceName%%><%%-" Type="%%><%%=DBBaseDataType%%><%%-"%%>
+	          if (IsNullable == false)
+	          {
+          	<%%- Nullable="false"%%>
+	          }
+	          if (DBDataType != DBBaseDataType)
+	          {
+          	<%%- MaxLength="%%><%%=Length%%><%%-"%%>
+	          }
+	          // TODO: determine overall rules to determine StoreGeneratedPattern
+	          if (DataTypeCode == 25 /* Timestamp */)
+	          {
+          	<%%- StoreGeneratedPattern="Computed"%%>
+ 	         }
+          <%%- />%%>
+          }
+          <%%-
+        </EntityType>%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+        <Association Name="%%><%%=RelationshipName%%><%%-">
+          <End Role="%%><%%=EFSinkRoleName%%><%%-" Type="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=ReferencedEntity.SourceName%%><%%-" Multiplicity="%%>
+          if (ReferencedItemsMax == 1)
+          {
+          	if (ReferencedItemsMin == 0)
+          	{
+          		<%%-0..1%%>
+          	}
+          	else
+          	{
+          		<%%-1%%>
+          	}
+          }
+          else
+          {
+          	<%%-*%%>
+          }
+          <%%-" />
+          <End Role="%%><%%=EFSourceRoleName%%><%%-" Type="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=Entity.SourceName%%><%%-" Multiplicity="%%>
+          if (ItemsMax == 1)
+          {
+          	if (ItemsMin == 0)
+          	{
+          		<%%-0..1%%>
+          	}
+          	else
+          	{
+          		<%%-1%%>
+          	}
+          }
+          else
+          {
+          	<%%-*%%>
+          }
+          <%%-" />
+          <ReferentialConstraint>
+            <Principal Role="%%><%%=EFSinkRoleName%%><%%-">%%>
+            foreach (RelationshipProperty)
+            {
+            		// apparently the referential constraints can only handle primary keys, not unique indexes
+            		if (ReferencedProperty.IsPrimaryKeyMember == true)
+            		{
+		            	with (ReferencedProperty)
+		            	{
+            		<%%-
+              <PropertyRef Name="%%><%%=SourceName%%><%%-" />%%>
+ 		            }
+ 		      }
+            }
+             <%%-
+            </Principal>
+            <Dependent Role="%%><%%=EFSourceRoleName%%><%%-">%%>
+            foreach (RelationshipProperty)
+            {
+            		// apparently the referential constraints can only handle primary keys, not unique indexes
+            		if (ReferencedProperty.IsPrimaryKeyMember == true)
+            		{
+		            	with (Property)
+		            	{
+	            		<%%-
+              <PropertyRef Name="%%><%%=SourceName%%><%%-" />%%>
+ 		            }
+ 	            }
+             }
+            <%%-
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>%%>
+}
+<%%-
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="%%><%%=Project.DbName%%><%%-Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="%%><%%=DSModelClassName%%><%%-" annotation:LazyLoadingEnabled="true">%%>
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+          <EntitySet Name="%%><%%=BLLPluralEntityName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-" />%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+          <AssociationSet Name="%%><%%=RelationshipName%%><%%-" Association="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-">%%>
+          	<%%-
+            <End Role="%%><%%=EFSinkRoleName%%><%%-" EntitySet="%%><%%=ReferencedEntity.BLLPluralEntityName%%><%%-" />%%>
+	      <%%-
+            <End Role="%%><%%=EFSourceRoleName%%><%%-" EntitySet="%%><%%=Entity.BLLPluralEntityName%%><%%-" />%%>
+           <%%-
+          </AssociationSet>%%>
+}
+<%%-
+        </EntityContainer>%%>
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+<%%-
+        <EntityType Name="%%><%%=BLLClassName%%><%%-">
+          <Key>%%>
+          foreach (Property where Tags.Contains("DB") == true && IsPrimaryKeyMember == true)
+          {
+          	<%%-
+            <PropertyRef Name="%%><%%=BLLPropertyName%%><%%-" />%%>
+           }
+            <%%-
+          </Key>%%>
+          foreach (Property where Tags.Contains("DB") == true)
+          {
+          <%%-
+          <Property Name="%%><%%=BLLPropertyName%%><%%-" Type="%%><%%=CSharpBaseDataType.Replace("Byte[]", "Binary")%%><%%-"%%>
+	          if (IsNullable == false)
+	          {
+          	<%%- Nullable="false"%%>
+ 	         }
+	          if (DBDataType != DBBaseDataType)
+	          {
+          	<%%- MaxLength="%%><%%=Length%%><%%-"%%>
+	          }
+	          // TODO: determine overall rules to determine StoreGeneratedPattern and FixedLength
+	          if (DataTypeCode == 25 /* Timestamp */)
+	          {
+          	<%%- MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed"%%>
+ 	         }
+          <%%- />%%>
+          }
+          
+          
+          
+          
+        with (BaseEntity)
+        {
+        	CurrentRelationship = null
+        	foreach (Relationship in ../Entity)
+        	{
+        		if (CurrentRelationship == null)
+        		{
+	        		if (Relationship.ReferencedEntityID == ../EntityID)
+	        		{
+	        			log("EFClassCode", "IsBaseRelationship", true)
+	        			foreach (RelationshipProperty)
+	        			{
+	        				with (Property from Solution.Find(PropertyID))
+	        				{
+	        					if (IsPrimaryKeyMember == false)
+	        					{
+	   				      			log("EFClassCode", "IsBaseRelationship", false)
+	       					}
+	        				}
+	        			}
+	        			if (LogValue("EFClassCode", "IsBaseRelationship") == true)
+	        			{
+	        				CurrentRelationship = Relationship
+	        			}
+	        		}
+	        	}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        		with (CurrentRelationship)
+        		{
+          	<%%-
+          <NavigationProperty Name="%%><%%=ReferencedEntity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=Entity.BLLClassName%%><%%-" ToRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" />%%>
+        		}
+        	}
+        }
+        foreach (Entity in Solution where BaseEntityID == ../EntityID)
+        {
+        	CurrentRelationship = null
+        	foreach (Relationship)
+        	{
+        		if (CurrentRelationship == null)
+        		{
+	        		if (Relationship.ReferencedEntityID == ../../EntityID)
+	        		{
+	        			log("EFClassCode", "IsBaseRelationship", true)
+	        			foreach (RelationshipProperty)
+	        			{
+	        				with (Property from Solution.Find(ReferencedPropertyID))
+	        				{
+	        					if (IsPrimaryKeyMember == false)
+	        					{
+	   				      			log("EFClassCode", "IsBaseRelationship", false)
+	       					}
+	        				}
+	        			}
+	        			if (LogValue("EFClassCode", "IsBaseRelationship") == true)
+	        			{
+	        				CurrentRelationship = Relationship
+	        			}
+	        		}
+        		}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        		with (CurrentRelationship)
+        		{
+          	<%%-
+          <NavigationProperty Name="%%><%%=Entity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" ToRole="%%><%%=Entity.BLLClassName%%><%%-" />%%>
+        		}
+        	}
+        }
+        foreach (EntityReference)
+        {
+        	CurrentRelationship = null
+        	foreach (PropertyRelationship limit 1)
+        	{
+        		with (Relationship)
+        		{
+	        		CurrentRelationship = Relationship
+        		}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+          	<%%-
+          <NavigationProperty Name="%%><%%=BLLPropertyName%%>
+        		with (CurrentRelationship)
+        		{
+          <%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=Entity.BLLClassName%%><%%-" ToRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" />%%>
+        		}
+        	}
+        }
+        foreach (Collection)
+        {
+         	CurrentRelationship = null
+        	foreach (PropertyRelationship limit 1)
+        	{
+         		if (Relationship.ReferencedEntityID == ../EntityID && Relationship.EntityID == ../ReferencedEntityID) // must limit collections in EF to direct relationships
+        		{
+	        		with (Relationship)
+	        		{
+		        		CurrentRelationship = Relationship
+	        		}
+	        	}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+          	<%%-
+          <NavigationProperty Name="%%><%%=BLLPropertyName%%>
+        		with (CurrentRelationship)
+        		{
+          <%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" ToRole="%%><%%=Entity.BLLClassName%%><%%-" />%%>
+        		}
+        	}
+        }
+          <%%-
+        </EntityType>%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+        <Association Name="%%><%%=RelationshipName%%><%%-">
+          <End Role="%%><%%=EFSinkRoleName%%><%%-" Type="%%><%%=Project.DbName%%><%%-Model.%%><%%=ReferencedEntity.BLLClassName%%><%%-" Multiplicity="%%>
+          if (ReferencedItemsMax == 1)
+          {
+          	if (ReferencedItemsMin == 0)
+          	{
+          		<%%-0..1%%>
+          	}
+          	else
+          	{
+          		<%%-1%%>
+          	}
+          }
+          else
+          {
+          	<%%-*%%>
+          }
+          <%%-" />
+          <End Role="%%><%%=EFSourceRoleName%%><%%-" Type="%%><%%=Project.DbName%%><%%-Model.%%><%%=Entity.BLLClassName%%><%%-" Multiplicity="%%>
+          if (ItemsMax == 1)
+          {
+          	if (ItemsMin == 0)
+          	{
+          		<%%-0..1%%>
+          	}
+          	else
+          	{
+          		<%%-1%%>
+          	}
+          }
+          else
+          {
+          	<%%-*%%>
+          }
+          <%%-" />
+          <ReferentialConstraint>
+            <Principal Role="%%><%%=ReferencedEntity.BLLClassName%%><%%-">%%>
+            foreach (RelationshipProperty)
+            {
+            		// apparently the referential constraints can only handle primary keys, not unique indexes
+            		if (ReferencedProperty.IsPrimaryKeyMember == true)
+            		{
+		            	with (ReferencedProperty)
+		            	{
+            		<%%-
+              <PropertyRef Name="%%><%%=BLLPropertyName%%><%%-" />%%>
+  		           }
+			}
+            }
+             <%%-
+            </Principal>
+            <Dependent Role="%%><%%=EFSourceRoleName%%><%%-">%%>
+            foreach (RelationshipProperty)
+            {
+            		// apparently the referential constraints can only handle primary keys, not unique indexes
+            		if (ReferencedProperty.IsPrimaryKeyMember == true)
+            		{
+		            	with (Property)
+		            	{
+            		<%%-
+              <PropertyRef Name="%%><%%=BLLPropertyName%%><%%-" />%%>
+ 		            }
+	             }
+             }
+            <%%-
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>%%>
+}
+<%%-
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="%%><%%=Project.DbName%%><%%-ModelStoreContainer" CdmEntityContainer="%%><%%=DSModelClassName%%><%%-">%%>
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+          <EntitySetMapping Name="%%><%%=BLLPluralEntityName%%><%%-"><EntityTypeMapping TypeName="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-"><MappingFragment StoreEntitySet="%%><%%=SourceName%%><%%-">%%>
+	foreach (Property where Tags.Contains("DB") == true)
+	{
+          <%%-
+            <ScalarProperty Name="%%><%%=BLLPropertyName%%><%%-" ColumnName="%%><%%=SourceName%%><%%-" />%%>
+	}
+            <%%-
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>%%>
+}
+        <%%-
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="EntityFrameworkModel" ZoomLevel="93">%%>
+log("EFModelMarkupCode", "XPos", 5)
+log("EFModelMarkupCode", "YPos", 0)
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	if (LogValue("EFModelMarkupCode", "YPos") >= 25)
+	{
+		log("EFModelMarkupCode", "XPos", LogValue("EFModelMarkupCode", "XPos") + 5)
+		log("EFModelMarkupCode", "YPos", 5)
+	}
+	else
+	{
+		log("EFModelMarkupCode", "YPos", LogValue("EFModelMarkupCode", "YPos") + 5)
+	}
+	<%%-
+        <EntityTypeShape EntityType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-" Width="1.5" PointX="%%><%%=LogValue("EFModelMarkupCode", "XPos")%%><%%-.0" PointY="%%><%%=LogValue("EFModelMarkupCode", "YPos")%%><%%-.0" Height="5.0" IsExpanded="true" />%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+        <AssociationConnector Association="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="12.5" />
+          <ConnectorPoint PointX="5.5" PointY="15.25" />
+        </AssociationConnector>%%>
+}
+      <%%-
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFModelMarkupFilePath) == null || (File(EFModelMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(EFModelMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(EFModelMarkupFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierDataType
+	CATEGORY WcfREST
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=BLLDataType%%></CONTENT>

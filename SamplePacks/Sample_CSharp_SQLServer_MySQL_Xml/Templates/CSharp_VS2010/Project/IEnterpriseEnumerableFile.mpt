@@ -1,0 +1,89 @@
+<CONFIG>
+	NAME IEnterpriseEnumerableFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Collections;
+using System.ComponentModel;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This interface is used for all sortable object lists, including the ability
+	/// to sort instances by a property.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public interface IEnterpriseEnumerable
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This method finds an item by property and value.</summary>
+		/// 
+		///	<param name="propertyName">The name of a valid property in the sortable object.</param>
+		///	<param name="propertyValue">The value of the property.</param>
+		/// 
+		/// <returns>An item found.</returns>
+		///--------------------------------------------------------------------------------
+		IEnterpriseDataObject FindItem(string propertyName, object propertyValue);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method finds an item by its ID and value.</summary>
+		/// 
+		///	<param name="propertyValue">The value of the property.</param>
+		/// 
+		/// <returns>An item found.</returns>
+		///--------------------------------------------------------------------------------
+		IEnterpriseDataObject FindItemByID(Guid propertyValue);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method finds all items by property and value.</summary>
+		/// 
+		///	<param name="propertyName">The name of a valid property in the sortable object.</param>
+		///	<param name="propertyValue">The property value.</param>
+		/// 
+		/// <returns>A list of items found.</returns>
+		///--------------------------------------------------------------------------------
+		IEnterpriseEnumerable FindItems(string propertyName, object propertyValue);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sorts the list by the input property and sort direction.</summary>
+		/// 
+		///	<param name="propertyName">The name of a valid property in the sortable object.</param>
+		///	<param name="sortDirection">The direction of the sort: ascending or descending.</param>
+		///--------------------------------------------------------------------------------
+		void Sort(string propertyName, ListSortDirection sortDirection);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sorts the list by two input properties and sort directions.</summary>
+		/// 
+		///	<param name="propertyName1">The name of a primary valid property in the sortable object.</param>
+		///	<param name="sortDirection1">The direction of the primary sort: ascending, descending, or random.</param>
+		///	<param name="propertyName2">The name of a valid secondary property in the sortable object.</param>
+		///	<param name="sortDirection2">The direction of the secondary sort: ascending or descending.</param>
+		///--------------------------------------------------------------------------------
+		void Sort(string propertyName1, ListSortDirection sortDirection1, string propertyName2, ListSortDirection sortDirection2);
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(IEnterpriseEnumerableFilePath) == null || (File(IEnterpriseEnumerableFilePath).Contains("<Status>Generated</Status>") == true && File(IEnterpriseEnumerableFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(IEnterpriseEnumerableFilePath)
+}
+%%></OUTPUT>

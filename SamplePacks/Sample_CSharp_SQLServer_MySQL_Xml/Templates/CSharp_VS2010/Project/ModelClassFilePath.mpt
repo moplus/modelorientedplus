@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME ModelClassFilePath
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\%%><%%=ModelClassFileName%%></CONTENT>

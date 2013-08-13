@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMethodSignatureCode
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-public %%><%%=WcfSOAPMethodBaseSignatureCode%%></CONTENT>

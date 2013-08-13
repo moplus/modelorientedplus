@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DALFieldName
+	CATEGORY DAL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyReferenceName.UnderscoreCase()%%></CONTENT>

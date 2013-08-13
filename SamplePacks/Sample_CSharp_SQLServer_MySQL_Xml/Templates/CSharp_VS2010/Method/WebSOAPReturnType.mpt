@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WebSOAPReturnType
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+with (Entity)
+{
+	<%%=WebSOAPResponseClassName%%>
+}
+%%></CONTENT>

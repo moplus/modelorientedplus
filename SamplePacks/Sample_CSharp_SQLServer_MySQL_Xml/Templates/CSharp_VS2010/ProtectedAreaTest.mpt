@@ -1,0 +1,28 @@
+<CONFIG>
+	NAME ProtectedAreaTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "#region protected"%%>
+<%%=PROTECTEDAREAEND "#endregion protected"%%>
+<%%=USEIGNOREDAREAS true%%>
+<%%=IGNOREDAREASTART "<CreatedByUserName>"%%>
+<%%=IGNOREDAREAEND "</Status>"%%>
+<%%:
+var test2
+var test
+test2 = "kllklklk"
+test = ProtectedAreaParameterTest(parameter1 = "blob1", parameter2 = "blob2")
+<%%=test%%>
+if (ProtectedAreaParameterTest(parameter1 = "blob1", parameter2 = "blob2").Contains("blob2") == true)
+{
+	<%%-
+	found it!%%>
+}
+%%>
+<%%-
+and again: %%><%%=ProtectedAreaParameterTest(parameter1 = test2, parameter2 = "blob4")%%></CONTENT><OUTPUT>
+<%%>ParameterTest(parameter1="blob1", parameter2="blob2")%%></OUTPUT>

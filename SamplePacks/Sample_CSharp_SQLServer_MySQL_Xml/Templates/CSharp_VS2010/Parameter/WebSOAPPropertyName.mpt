@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPPropertyName
+	CATEGORY WebSOAP
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

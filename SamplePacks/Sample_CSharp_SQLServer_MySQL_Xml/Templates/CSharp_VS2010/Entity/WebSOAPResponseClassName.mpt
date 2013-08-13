@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPResponseClassName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-Response%%></CONTENT>

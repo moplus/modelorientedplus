@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFSinkRoleName
+	CATEGORY EF
+	NODE Relationship
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ReferencedEntity.BLLClassName%%></CONTENT>

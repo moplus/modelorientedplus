@@ -1,0 +1,63 @@
+<CONFIG>
+	NAME DbSpProceduresCode
+	CATEGORY DbSp
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+var aliasCount = 1
+var alias
+CurrentEntity = Entity
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	alias = EntityName + aliasCount
+	log("DBBaseEntityAliasNames" + CurrentEntity.EntityID, EntityID, alias)
+	foreach (Property)
+	{
+		with (CurrentEntity)
+		{
+			log("DBPropertyAliases" + EntityID, ../PropertyID, alias)
+		}
+	}
+}
+//trace("Starting with Entity: " + EntityName)
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	foreach (Relationship in PathRelationships)
+	{
+//		trace ("	Relationship: " + RelationshipName)
+		foreach (Relationship)
+		{
+			aliasCount = aliasCount + 1
+			foreach (RelationshipProperty)
+			{
+				with (ReferencedProperty)
+				{
+					// this entity should be the same as the property reference entity below
+					with (Entity from Solution.Find(EntityID))
+					{
+						alias = EntityName + aliasCount
+//						trace("		Set first " + EntityName + "." + ../PropertyName + " alias to " + alias)
+						log("DBEntityAliases" + CurrentEntity.EntityID, EntityID, alias)
+						log("DBPropertyAliases" + CurrentEntity.EntityID, ../PropertyID, alias)
+					}
+				}
+			}
+			foreach (PropertyReference where Relationship.RelationshipID == ../RelationshipID)
+			{
+				with (Entity from Solution.Find(ReferencedEntityID))
+				{
+					alias = EntityName + aliasCount
+//					trace("		Set second " + EntityName + "." + ../PropertyReferenceName + " alias to " + alias)
+					log("DBEntityAliases" + CurrentEntity.EntityID, EntityID, alias)
+					log("DBPropertyAliases" + CurrentEntity.EntityID, ../PropertyID, alias)
+				}
+			}
+		}
+	}
+}
+%%>
+<%%=DbSpProceduresCommentsCode%%>
+<%%=DbSpProceduresMethodsCode%%></CONTENT>

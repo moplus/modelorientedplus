@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUIDetailClassFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WPFUIDetailClassFileProjectPath%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WPFUIDetailMarkupFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

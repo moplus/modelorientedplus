@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME XmlHelperFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\XmlHelper_G.cs%%></CONTENT>

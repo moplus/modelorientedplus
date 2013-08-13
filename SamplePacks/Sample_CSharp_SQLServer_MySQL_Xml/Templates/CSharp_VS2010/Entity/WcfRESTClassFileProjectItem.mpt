@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WcfRESTClassFileProjectItem
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfRESTClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WcfRESTMarkupClassFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

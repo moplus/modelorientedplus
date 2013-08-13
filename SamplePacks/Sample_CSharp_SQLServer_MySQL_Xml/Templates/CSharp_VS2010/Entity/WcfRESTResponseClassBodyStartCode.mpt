@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME WcfRESTResponseClassBodyStartCode
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTGlobalCopyrightCode%%>
+<%%=WcfRESTResponseClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfRESTResponseClassCommentsCode%%><%%-
+	[Serializable()]
+	[XmlRoot(Namespace = "", ElementName = "%%><%%=WcfRESTResponseClassName%%><%%-")]
+	[DataContract]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public class %%><%%=WcfRESTResponseClassName%%><%%- : WebResponseBase
+	{%%><%%=TAB 1%%></CONTENT>

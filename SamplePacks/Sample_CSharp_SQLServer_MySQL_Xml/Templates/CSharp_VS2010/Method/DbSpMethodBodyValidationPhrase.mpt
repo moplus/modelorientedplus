@@ -1,0 +1,77 @@
+<CONFIG>
+	NAME DbSpMethodBodyValidationPhrase
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+log("DbSpMethodBodyValidationPhrase", "IsFirstItem", true)
+log("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter", true)
+
+// output parameter validation
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+
+		// add validation code for add/update/delete
+		log("DbSpMethodBodyValidationPhrase", "IsFirstItem", true)
+		foreach (Property)
+		{
+			log("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter", false)
+			switch (../MethodTypeCode)
+			{
+				case 8: // AddOne
+					if ((IsPrimaryKeyMember == false || ../ShouldPrimaryKeyBeSuppliedOnAdd == true) && IsAuditProperty == false && IsNullable == false)
+					{
+						log("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter", true)
+					}
+					break
+				case 9: // UpdateOne
+					if (IsAuditProperty == false && IsNullable == false)
+					{
+						log("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter", true)
+					}
+					break
+				default:
+					if (IsPrimaryKeyMember == true)
+					{
+						log("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter", true)
+					}
+					break
+			}
+			if (LogValue("DbSpMethodBodyValidationPhrase", "ShouldValidateParameter") == true)
+			{
+				if (LogValue("DbSpMethodBodyValidationPhrase", "IsFirstItem") == false)
+				{
+					<%%- OR %%>
+				}
+				log("DbSpMethodBodyValidationPhrase", "IsFirstItem", false)
+				<%%=DbSpParameterName%%><%%- IS NULL%%>
+			}
+		}
+		break
+	case 1: // GetOne
+	case 11: // DeleteAllByForeignKey
+	case 4: // GetAllByForeignkey
+	case 6: // GetManyByForeignKey
+
+		// add validation for each method parameter
+		if (ParameterCount > 0)
+		{
+			log("DbSpMethodBodyValidationPhrase", "IsFirstItem", true)
+			foreach (Parameter)
+			{
+				if (LogValue("DbSpMethodBodyValidationPhrase", "IsFirstItem") == false)
+				{
+					<%%- OR %%>
+				}
+				log("DbSpMethodBodyValidationPhrase", "IsFirstItem", false)
+				<%%=DbSpParameterName%%><%%- IS NULL%%>
+			}
+		}
+		break
+}
+%%></CONTENT>

@@ -1,0 +1,1208 @@
+<CONFIG>
+	NAME MicrosoftEnterpriseLibraryFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-///--------------------------------------------------------------------------------
+/// <summary>This file is an extremely watered down (and outdated) version of the
+/// Microsoft patterns & practices Enterprise Library for use as a sample only,
+/// and for SQL Server only.
+/// 
+/// To use this library, delete this file and replace with the latest Microsoft
+/// patterns & practices Enterprise Library (http://msdn.microsoft.com/en-us/library/ff648951.aspx).
+/// </summary>
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+///--------------------------------------------------------------------------------
+/*
+Microsoft Public License (Ms-PL)
+
+This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.
+
+1. Definitions
+
+The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.
+
+A "contribution" is the original software, or any additions or changes to the software.
+
+A "contributor" is any person that distributes its contribution under this license.
+
+"Licensed patents" are a contributor's patent claims that read directly on its contribution.
+
+2. Grant of Rights
+
+(A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.
+
+(B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.
+
+3. Conditions and Limitations
+
+(A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.
+
+(B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.
+
+(C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.
+
+(D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.
+
+(E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.
+ */
+//===============================================================================
+// Microsoft patterns & practices Enterprise Library
+// Data Access Application Block
+//===============================================================================
+// Copyright © Microsoft Corporation.  All rights reserved.
+// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY
+// OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT
+// LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+// FITNESS FOR A PARTICULAR PURPOSE.
+//===============================================================================
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Security.Permissions;
+using System.Xml;
+using System.Globalization;
+using System.Transactions;
+using System.Collections;
+using System.Text;
+using System.Collections.Generic;
+
+namespace Microsoft.Practices.EnterpriseLibrary.Data
+{
+	/// <summary>
+	/// <para>Represents a SQL Server database.</para>
+	/// </summary>
+	/// <remarks> 
+	/// <para>
+	/// Internally uses SQL Server .NET Managed Provider from Microsoft (System.Data.SqlClient) to connect to the database.
+	/// </para>  
+	/// </remarks>
+	internal class SqlDatabase : Database
+	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SqlDatabase"/> class with a connection string.
+		/// </summary>
+		/// <param name="connectionString">The connection string.</param>
+		public SqlDatabase(string connectionString)//
+			: base(connectionString, SqlClientFactory.Instance)
+		{
+		}
+
+		/// <summary>
+		/// <para>Gets the parameter token used to delimit parameters for the SQL Server database.</para>
+		/// </summary>
+		/// <value>
+		/// <para>The '@' symbol.</para>
+		/// </value>
+		protected char ParameterToken
+		{
+			get { return '@'; }
+		}
+
+		/// <summary>
+		/// Builds a value parameter name for the current database.
+		/// </summary>
+		/// <param name="name">The name of the parameter.</param>
+		/// <returns>A correctly formated parameter name.</returns>
+		public override string BuildParameterName(string name)
+		{
+			if (name[0] != this.ParameterToken)
+			{
+				return name.Insert(0, new string(this.ParameterToken, 1));
+			}
+			return name;
+		}
+
+		/// <summary>
+		/// Retrieves parameter information from the stored procedure specified in the <see cref="DbCommand"/> and populates the Parameters collection of the specified <see cref="DbCommand"/> object. 
+		/// </summary>
+		/// <param name="discoveryCommand">The <see cref="DbCommand"/> to do the discovery.</param>
+		/// <remarks>The <see cref="DbCommand"/> must be a <see cref="SqlCommand"/> instance.</remarks>
+		protected override void DeriveParameters(DbCommand discoveryCommand)
+		{
+			SqlCommandBuilder.DeriveParameters((SqlCommand)discoveryCommand);
+		}
+
+	}
+
+	/// <summary>
+	/// Represents an abstract database that commands can be run against. 
+	/// </summary>
+	/// <remarks>
+	/// The <see cref="Database"/> class leverages the provider factory model from ADO.NET. A database instance holds 
+	/// a reference to a concrete <see cref="DbProviderFactory"/> object to which it forwards the creation of ADO.NET objects.
+	/// </remarks>
+	public abstract class Database
+	{
+		static readonly ParameterCache parameterCache = new ParameterCache();
+		static readonly string VALID_PASSWORD_TOKENS = "password=,pwd=";
+		static readonly string VALID_USER_ID_TOKENS = "user id=,uid=";
+
+		readonly ConnectionString connectionString;
+		readonly DbProviderFactory dbProviderFactory;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Database"/> class with a connection string and a <see cref="DbProviderFactory"/>.
+		/// </summary>
+		/// <param name="connectionString">The connection string for the database.</param>
+		/// <param name="dbProviderFactory">A <see cref="DbProviderFactory"/> object.</param>
+		protected Database(string connectionString,
+						   DbProviderFactory dbProviderFactory)
+		{
+			if (string.IsNullOrEmpty(connectionString)) throw new ArgumentException("Null or empty argument", "connectionString");
+			if (dbProviderFactory == null) throw new ArgumentNullException("dbProviderFactory");
+
+			this.connectionString = new ConnectionString(connectionString, VALID_USER_ID_TOKENS, VALID_PASSWORD_TOKENS);
+			this.dbProviderFactory = dbProviderFactory;
+		}
+
+		/// <summary>
+		/// <para>Gets the string used to open a database.</para>
+		/// </summary>
+		/// <value>
+		/// <para>The string used to open a database.</para>
+		/// </value>
+		/// <seealso cref="DbConnection.ConnectionString"/>
+		public string ConnectionString
+		{
+			get { return connectionString.ToString(); }
+		}
+
+		/// <summary>
+		/// <para>Gets the connection string without the username and password.</para>
+		/// </summary>
+		/// <value>
+		/// <para>The connection string without the username and password.</para>
+		/// </value>
+		/// <seealso cref="ConnectionString"/>
+		protected string ConnectionStringNoCredentials
+		{
+			get { return connectionString.ToStringNoCredentials(); }
+		}
+
+		/// <summary>
+		/// Gets the connection string without credentials.
+		/// </summary>
+		/// <value>
+		/// The connection string without credentials.
+		/// </value>
+		public string ConnectionStringWithoutCredentials
+		{
+			get { return ConnectionStringNoCredentials; }
+		}
+
+		/// <summary>
+		/// <para>Gets the DbProviderFactory used by the database instance.</para>
+		/// </summary>
+		/// <seealso cref="DbProviderFactory"/>
+		public DbProviderFactory DbProviderFactory
+		{
+			get { return dbProviderFactory; }
+		}
+
+		/// <summary>
+		/// Adds a new In <see cref="DbParameter"/> object to the given <paramref name="command"/>.
+		/// </summary>
+		/// <param name="command">The commmand to add the parameter.</param>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <param name="dbType"><para>One of the <see cref="DbType"/> values.</para></param>                
+		/// <param name="value"><para>The value of the parameter.</para></param>      
+		public void AddInParameter(DbCommand command,
+								   string name,
+								   DbType dbType,
+								   object value)
+		{
+			AddParameter(command, name, dbType, ParameterDirection.Input, String.Empty, DataRowVersion.Default, value);
+		}
+
+		/// <summary>
+		/// Adds a new In <see cref="DbParameter"/> object to the given <paramref name="command"/>.
+		/// </summary>
+		/// <param name="command">The command to add the parameter.</param>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <param name="dbType"><para>One of the <see cref="DbType"/> values.</para></param>
+		/// <param name="size"><para>The maximum size of the data within the column.</para></param>
+		/// <param name="direction"><para>One of the <see cref="ParameterDirection"/> values.</para></param>
+		/// <param name="nullable"><para>Avalue indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+		/// <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+		/// <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+		/// <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+		/// <param name="sourceVersion"><para>One of the <see cref="DataRowVersion"/> values.</para></param>
+		/// <param name="value"><para>The value of the parameter.</para></param>       
+		public virtual void AddParameter(DbCommand command,
+										 string name,
+										 DbType dbType,
+										 int size,
+										 ParameterDirection direction,
+										 bool nullable,
+										 byte precision,
+										 byte scale,
+										 string sourceColumn,
+										 DataRowVersion sourceVersion,
+										 object value)
+		{
+			DbParameter parameter = CreateParameter(name, dbType, size, direction, nullable, precision, scale, sourceColumn, sourceVersion, value);
+			command.Parameters.Add(parameter);
+		}
+
+		/// <summary>
+		/// <para>Adds a new instance of a <see cref="DbParameter"/> object to the command.</para>
+		/// </summary>
+		/// <param name="command">The command to add the parameter.</param>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <param name="dbType"><para>One of the <see cref="DbType"/> values.</para></param>        
+		/// <param name="direction"><para>One of the <see cref="ParameterDirection"/> values.</para></param>                
+		/// <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+		/// <param name="sourceVersion"><para>One of the <see cref="DataRowVersion"/> values.</para></param>
+		/// <param name="value"><para>The value of the parameter.</para></param>    
+		public void AddParameter(DbCommand command,
+								 string name,
+								 DbType dbType,
+								 ParameterDirection direction,
+								 string sourceColumn,
+								 DataRowVersion sourceVersion,
+								 object value)
+		{
+			AddParameter(command, name, dbType, 0, direction, false, 0, 0, sourceColumn, sourceVersion, value);
+		}
+
+		static DbTransaction BeginTransaction(DbConnection connection)
+		{
+			DbTransaction tran = connection.BeginTransaction();
+			return tran;
+		}
+
+		/// <summary>
+		/// Builds a value parameter name for the current database.
+		/// </summary>
+		/// <param name="name">The name of the parameter.</param>
+		/// <returns>A correctly formated parameter name.</returns>
+		public virtual string BuildParameterName(string name)
+		{
+			return name;
+		}
+
+		static void CommitTransaction(IDbTransaction tran)
+		{
+			tran.Commit();
+		}
+
+		/// <summary>
+		/// Configures a given <see cref="DbParameter"/>.
+		/// </summary>
+		/// <param name="param">The <see cref="DbParameter"/> to configure.</param>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <param name="dbType"><para>One of the <see cref="DbType"/> values.</para></param>
+		/// <param name="size"><para>The maximum size of the data within the column.</para></param>
+		/// <param name="direction"><para>One of the <see cref="ParameterDirection"/> values.</para></param>
+		/// <param name="nullable"><para>Avalue indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+		/// <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+		/// <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+		/// <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+		/// <param name="sourceVersion"><para>One of the <see cref="DataRowVersion"/> values.</para></param>
+		/// <param name="value"><para>The value of the parameter.</para></param>  
+		protected virtual void ConfigureParameter(DbParameter param,
+												  string name,
+												  DbType dbType,
+												  int size,
+												  ParameterDirection direction,
+												  bool nullable,
+												  byte precision,
+												  byte scale,
+												  string sourceColumn,
+												  DataRowVersion sourceVersion,
+												  object value)
+		{
+			param.DbType = dbType;
+			param.Size = size;
+			param.Value = value ?? DBNull.Value;
+			param.Direction = direction;
+			param.IsNullable = nullable;
+			param.SourceColumn = sourceColumn;
+			param.SourceVersion = sourceVersion;
+		}
+
+		DbCommand CreateCommandByCommandType(CommandType commandType,
+											 string commandText)
+		{
+			DbCommand command = dbProviderFactory.CreateCommand();
+			command.CommandType = commandType;
+			command.CommandText = commandText;
+
+			return command;
+		}
+
+		/// <summary>
+		/// <para>Creates a connection for this database.</para>
+		/// </summary>
+		/// <returns>
+		/// <para>The <see cref="DbConnection"/> for this database.</para>
+		/// </returns>
+		/// <seealso cref="DbConnection"/>        
+		public virtual DbConnection CreateConnection()
+		{
+			DbConnection newConnection = dbProviderFactory.CreateConnection();
+			newConnection.ConnectionString = ConnectionString;
+
+			return newConnection;
+		}
+
+		/// <summary>
+		/// <para>Adds a new instance of a <see cref="DbParameter"/> object.</para>
+		/// </summary>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <param name="dbType"><para>One of the <see cref="DbType"/> values.</para></param>
+		/// <param name="size"><para>The maximum size of the data within the column.</para></param>
+		/// <param name="direction"><para>One of the <see cref="ParameterDirection"/> values.</para></param>
+		/// <param name="nullable"><para>Avalue indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+		/// <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+		/// <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+		/// <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+		/// <param name="sourceVersion"><para>One of the <see cref="DataRowVersion"/> values.</para></param>
+		/// <param name="value"><para>The value of the parameter.</para></param>  
+		/// <returns>A newly created <see cref="DbParameter"/> fully initialized with given parameters.</returns>
+		protected DbParameter CreateParameter(string name,
+											  DbType dbType,
+											  int size,
+											  ParameterDirection direction,
+											  bool nullable,
+											  byte precision,
+											  byte scale,
+											  string sourceColumn,
+											  DataRowVersion sourceVersion,
+											  object value)
+		{
+			DbParameter param = CreateParameter(name);
+			ConfigureParameter(param, name, dbType, size, direction, nullable, precision, scale, sourceColumn, sourceVersion, value);
+			return param;
+		}
+
+		/// <summary>
+		/// <para>Adds a new instance of a <see cref="DbParameter"/> object.</para>
+		/// </summary>
+		/// <param name="name"><para>The name of the parameter.</para></param>
+		/// <returns><para>An unconfigured parameter.</para></returns>
+		protected DbParameter CreateParameter(string name)
+		{
+			DbParameter param = dbProviderFactory.CreateParameter();
+			param.ParameterName = BuildParameterName(name);
+
+			return param;
+		}
+
+		/// <summary>
+		/// Retrieves parameter information from the stored procedure specified in the <see cref="DbCommand"/> and populates the Parameters collection of the specified <see cref="DbCommand"/> object. 
+		/// </summary>
+		/// <param name="discoveryCommand">The <see cref="DbCommand"/> to do the discovery.</param>
+		protected abstract void DeriveParameters(DbCommand discoveryCommand);
+
+		/// <summary>
+		/// Discovers the parameters for a <see cref="DbCommand"/>.
+		/// </summary>
+		/// <param name="command">The <see cref="DbCommand"/> to discover the parameters.</param>
+		public void DiscoverParameters(DbCommand command)
+		{
+			using (ConnectionWrapper wrapper = GetOpenConnection())
+			{
+				using (DbCommand discoveryCommand = CreateCommandByCommandType(command.CommandType, command.CommandText))
+				{
+					discoveryCommand.Connection = wrapper.Connection;
+					DeriveParameters(discoveryCommand);
+
+					foreach (IDataParameter parameter in discoveryCommand.Parameters)
+					{
+						IDataParameter cloneParameter = (IDataParameter)((ICloneable)parameter).Clone();
+						command.Parameters.Add(cloneParameter);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Executes the query for <paramref name="command"/>.
+		/// </summary>
+		/// <param name="command">The <see cref="DbCommand"/> representing the query to execute.</param>
+		/// <returns>The quantity of rows affected.</returns>
+		protected int DoExecuteNonQuery(DbCommand command)
+		{
+			try
+			{
+				DateTime startTime = DateTime.Now;
+				int rowsAffected = command.ExecuteNonQuery();
+				return rowsAffected;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		IDataReader DoExecuteReader(DbCommand command,
+									CommandBehavior cmdBehavior)
+		{
+			try
+			{
+				DateTime startTime = DateTime.Now;
+				IDataReader reader = command.ExecuteReader(cmdBehavior);
+				return reader;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		object DoExecuteScalar(IDbCommand command)
+		{
+			try
+			{
+				DateTime startTime = DateTime.Now;
+				object returnValue = command.ExecuteScalar();
+				return returnValue;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// <para>Executes the <paramref name="command"/> within the given <paramref name="transaction" />, and returns the number of rows affected.</para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command that contains the query to execute.</para>
+		/// </param>
+		/// <param name="transaction">
+		/// <para>The <see cref="IDbTransaction"/> to execute the command within.</para>
+		/// </param>
+		/// <seealso cref="IDbCommand.ExecuteScalar"/>
+		public virtual int ExecuteNonQuery(DbCommand command,
+										   DbTransaction transaction)
+		{
+			PrepareCommand(command, transaction);
+			return DoExecuteNonQuery(command);
+		}
+
+		/// <summary>
+		/// <para>Executes the <paramref name="command"/> and returns an <see cref="IDataReader"></see> through which the result can be read.
+		/// It is the responsibility of the caller to close the connection and reader when finished.</para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command that contains the query to execute.</para>
+		/// </param>
+		/// <returns>
+		/// <para>An <see cref="IDataReader"/> object.</para>
+		/// </returns>        
+		public virtual IDataReader ExecuteReader(DbCommand command)
+		{
+			ConnectionWrapper wrapper = GetOpenConnection(false);
+
+			try
+			{
+				//
+				// JS-L: I moved the PrepareCommand inside the try because it can fail.
+				//
+				PrepareCommand(command, wrapper.Connection);
+
+				//
+				// If there is a current transaction, we'll be using a shared connection, so we don't
+				// want to close the connection when we're done with the reader.
+				//
+				if (Transaction.Current != null)
+					return DoExecuteReader(command, CommandBehavior.Default);
+				else
+					return DoExecuteReader(command, CommandBehavior.CloseConnection);
+			}
+			catch
+			{
+				wrapper.Connection.Close();
+				throw;
+			}
+		}
+
+		/// <summary>
+		/// <para>Executes the <paramref name="command"/> and returns the first column of the first row in the result set returned by the query. Extra columns or rows are ignored.</para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command that contains the query to execute.</para>
+		/// </param>
+		/// <returns>
+		/// <para>The first column of the first row in the result set.</para>
+		/// </returns>
+		/// <seealso cref="IDbCommand.ExecuteScalar"/>
+		public virtual object ExecuteScalar(DbCommand command)
+		{
+			if (command == null) throw new ArgumentNullException("command");
+
+			using (ConnectionWrapper wrapper = GetOpenConnection())
+			{
+				PrepareCommand(command, wrapper.Connection);
+				return DoExecuteScalar(command);
+			}
+		}
+
+		internal DbConnection GetNewOpenConnection()
+		{
+			DbConnection connection = null;
+			try
+			{
+				try
+				{
+					connection = CreateConnection();
+					connection.Open();
+				}
+				catch
+				{
+					throw;
+				}
+			}
+			catch
+			{
+				if (connection != null)
+					connection.Close();
+
+				throw;
+			}
+
+			return connection;
+		}
+
+		/// <summary>
+		///		Get's a "wrapped" connection that will be not be disposed if a transaction is
+		///		active (created by creating a <see cref="TransactionScope"/> instance). The
+		///		connection will be disposed when no transaction is active.
+		/// </summary>
+		/// <returns></returns>
+		protected ConnectionWrapper GetOpenConnection()
+		{
+			return GetOpenConnection(true);
+		}
+
+		/// <summary>
+		///		Get's a "wrapped" connection that will be not be disposed if a transaction is
+		///		active (created by creating a <see cref="TransactionScope"/> instance). The
+		///		connection can be disposed when no transaction is active.
+		/// </summary>
+		/// <param name="disposeInnerConnection">
+		///		Determines if the connection will be disposed when there isn't an active
+		///		transaction.
+		/// </param>
+		/// <returns>The wrapped connection.</returns>
+		protected ConnectionWrapper GetOpenConnection(bool disposeInnerConnection)
+		{
+			DbConnection connection = TransactionScopeConnections.GetConnection(this);
+			if (connection != null)
+				return new ConnectionWrapper(connection, false);
+			else
+				return new ConnectionWrapper(GetNewOpenConnection(), disposeInnerConnection);
+		}
+
+		/// <summary>
+		/// <para>Creates a <see cref="DbCommand"/> for a SQL query.</para>
+		/// </summary>
+		/// <param name="query"><para>The text of the query.</para></param>        
+		/// <returns><para>The <see cref="DbCommand"/> for the SQL query.</para></returns>        
+		public DbCommand GetSqlStringCommand(string query)
+		{
+			if (string.IsNullOrEmpty(query)) throw new ArgumentException("String is null or empty", "query");
+
+			return CreateCommandByCommandType(CommandType.Text, query);
+		}
+
+		/// <summary>
+		/// <para>Creates a <see cref="DbCommand"/> for a stored procedure.</para>
+		/// </summary>
+		/// <param name="storedProcedureName"><para>The name of the stored procedure.</para></param>
+		/// <returns><para>The <see cref="DbCommand"/> for the stored procedure.</para></returns>       
+		public virtual DbCommand GetStoredProcCommand(string storedProcedureName)
+		{
+			if (string.IsNullOrEmpty(storedProcedureName)) throw new ArgumentException("String is null or empty", "storedProcedureName");
+
+			return CreateCommandByCommandType(CommandType.StoredProcedure, storedProcedureName);
+		}
+
+		/// <summary>
+		/// <para>Opens a connection.</para>
+		/// </summary>
+		/// <returns>The opened connection.</returns>
+		[Obsolete("Use GetOpenConnection instead.")]
+		protected DbConnection OpenConnection()
+		{
+			return GetNewOpenConnection();
+		}
+
+		/// <summary>
+		/// <para>Assigns a <paramref name="connection"/> to the <paramref name="command"/> and discovers parameters if needed.</para>
+		/// </summary>
+		/// <param name="command"><para>The command that contains the query to prepare.</para></param>
+		/// <param name="connection">The connection to assign to the command.</param>
+		protected static void PrepareCommand(DbCommand command,
+											 DbConnection connection)
+		{
+			if (command == null) throw new ArgumentNullException("command");
+			if (connection == null) throw new ArgumentNullException("connection");
+
+			command.Connection = connection;
+		}
+
+		/// <summary>
+		/// <para>Assigns a <paramref name="transaction"/> to the <paramref name="command"/> and discovers parameters if needed.</para>
+		/// </summary>
+		/// <param name="command"><para>The command that contains the query to prepare.</para></param>
+		/// <param name="transaction">The transaction to assign to the command.</param>
+		protected static void PrepareCommand(DbCommand command,
+											 DbTransaction transaction)
+		{
+			if (command == null) throw new ArgumentNullException("command");
+			if (transaction == null) throw new ArgumentNullException("transaction");
+
+			PrepareCommand(command, transaction.Connection);
+			command.Transaction = transaction;
+		}
+
+		static void RollbackTransaction(IDbTransaction tran)
+		{
+			tran.Rollback();
+		}
+
+		/// <summary>
+		/// Sets a parameter value.
+		/// </summary>
+		/// <param name="command">The command with the parameter.</param>
+		/// <param name="parameterName">The parameter name.</param>
+		/// <param name="value">The parameter value.</param>
+		public virtual void SetParameterValue(DbCommand command,
+											  string parameterName,
+											  object value)
+		{
+			command.Parameters[BuildParameterName(parameterName)].Value = value ?? DBNull.Value;
+		}
+
+		/// <summary>
+		///		This is a helper class that is used to manage the lifetime of a connection for various
+		///		Execute methods. We needed this class to support implicit transactions created with
+		///		the <see cref="TransactionScope"/> class. In this case, the various Execute methods
+		///		need to use a shared connection instead of a new connection for each request in order
+		///		to prevent a distributed transaction.
+		/// </summary>
+		protected class ConnectionWrapper : IDisposable
+		{
+			readonly DbConnection connection;
+			readonly bool disposeConnection;
+
+			/// <summary>
+			///		Create a new "lifetime" container for a <see cref="DbConnection"/> instance.
+			/// </summary>
+			/// <param name="connection">The connection</param>
+			/// <param name="disposeConnection">
+			///		Whether or not to dispose of the connection when this class is disposed.
+			///	</param>
+			public ConnectionWrapper(DbConnection connection,
+									 bool disposeConnection)
+			{
+				this.connection = connection;
+				this.disposeConnection = disposeConnection;
+			}
+
+			/// <summary>
+			///		Gets the actual connection.
+			/// </summary>
+			public DbConnection Connection
+			{
+				get { return connection; }
+			}
+
+			/// <summary>
+			///		Dispose the wrapped connection, if appropriate.
+			/// </summary>
+			public void Dispose()
+			{
+				if (disposeConnection)
+					connection.Dispose();
+			}
+		}
+	}
+
+	/// <summary>
+	/// <para>
+	/// Provides parameter caching services for dynamic parameter discovery of stored procedures.
+	/// Eliminates the round-trip to the database to derive the parameters and types when a command
+	/// is executed more than once.
+	/// </para>
+	/// </summary>
+	internal class ParameterCache
+	{
+		private CachingMechanism cache = new CachingMechanism();
+
+		/// <summary>
+		/// <para>
+		/// Populates the parameter collection for a command wrapper from the cache 
+		/// or performs a round-trip to the database to query the parameters.
+		/// </para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command to add the parameters.</para>
+		/// </param>
+		/// <param name="database">
+		/// <para>The database to use to set the parameters.</para>
+		/// </param>
+		public void SetParameters(DbCommand command, Database database)
+		{
+			if (command == null) throw new ArgumentNullException("command");
+			if (database == null) throw new ArgumentNullException("database");
+
+
+			if (AlreadyCached(command, database))
+			{
+				AddParametersFromCache(command, database);
+			}
+			else
+			{
+				database.DiscoverParameters(command);
+				IDataParameter[] copyOfParameters = CreateParameterCopy(command);
+
+				this.cache.AddParameterSetToCache(database.ConnectionString, command, copyOfParameters);
+			}
+		}
+
+		/// <summary>
+		/// <para>Empties the parameter cache.</para>
+		/// </summary>
+		protected internal void Clear()
+		{
+			this.cache.Clear();
+		}
+
+		/// <summary>
+		/// <para>Adds parameters to a command using the cache.</para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command to add the parameters.</para>
+		/// </param>
+		/// <param name="database">The database to use.</param>
+		protected virtual void AddParametersFromCache(DbCommand command, Database database)
+		{
+			IDataParameter[] parameters = this.cache.GetCachedParameterSet(database.ConnectionString, command);
+
+			foreach (IDataParameter p in parameters)
+			{
+				command.Parameters.Add(p);
+			}
+		}
+
+		/// <summary>
+		/// <para>Checks to see if a cache entry exists for a specific command on a specific connection</para>
+		/// </summary>
+		/// <param name="command">
+		/// <para>The command to check.</para>
+		/// </param>
+		/// <param name="database">The database to check.</param>
+		/// <returns>True if the parameters are already cached for the provided command, false otherwise</returns>
+		private bool AlreadyCached(IDbCommand command, Database database)
+		{
+			return this.cache.IsParameterSetCached(database.ConnectionString, command);
+		}
+
+		private static IDataParameter[] CreateParameterCopy(DbCommand command)
+		{
+			IDataParameterCollection parameters = command.Parameters;
+			IDataParameter[] parameterArray = new IDataParameter[parameters.Count];
+			parameters.CopyTo(parameterArray, 0);
+
+			return CachingMechanism.CloneParameters(parameterArray);
+		}
+	}
+
+	/// <devdoc>
+	/// CachingMechanism provides caching support for stored procedure 
+	/// parameter discovery and caching
+	/// </devdoc>
+	internal class CachingMechanism
+	{
+		private Hashtable paramCache = Hashtable.Synchronized(new Hashtable());
+
+		/// <devdoc>
+		/// Create and return a copy of the IDataParameter array.
+		/// </devdoc>        
+		public static IDataParameter[] CloneParameters(IDataParameter[] originalParameters)
+		{
+			IDataParameter[] clonedParameters = new IDataParameter[originalParameters.Length];
+
+			for (int i = 0, j = originalParameters.Length; i < j; i++)
+			{
+				clonedParameters[i] = (IDataParameter)((ICloneable)originalParameters[i]).Clone();
+			}
+
+			return clonedParameters;
+		}
+
+		/// <devdoc>
+		/// Empties all items from the cache
+		/// </devdoc>
+		public void Clear()
+		{
+			this.paramCache.Clear();
+		}
+
+		/// <devdoc>
+		/// Add a parameter array to the cache for the command.
+		/// </devdoc>        
+		public void AddParameterSetToCache(string connectionString, IDbCommand command, IDataParameter[] parameters)
+		{
+			string storedProcedure = command.CommandText;
+			string key = CreateHashKey(connectionString, storedProcedure);
+			this.paramCache[key] = parameters;
+		}
+
+		/// <devdoc>
+		/// Gets a parameter array from the cache for the command. Returns null if no parameters are found.
+		/// </devdoc>        
+		public IDataParameter[] GetCachedParameterSet(string connectionString, IDbCommand command)
+		{
+			string storedProcedure = command.CommandText;
+			string key = CreateHashKey(connectionString, storedProcedure);
+			IDataParameter[] cachedParameters = (IDataParameter[])(this.paramCache[key]);
+			return CloneParameters(cachedParameters);
+		}
+
+		/// <devdoc>
+		/// Gets if a given stored procedure on a specific connection string has a cached parameter set
+		/// </devdoc>        
+		public bool IsParameterSetCached(string connectionString, IDbCommand command)
+		{
+			string hashKey = CreateHashKey(
+				connectionString,
+				command.CommandText);
+			return this.paramCache[hashKey] != null;
+		}
+
+		private static string CreateHashKey(string connectionString, string storedProcedure)
+		{
+			return connectionString + ":" + storedProcedure;
+		}
+	}
+
+	/// <summary>
+	/// ConnectionString class constructs a connection string by 
+	/// inserting a username and password into a template.
+	/// </summary>
+	internal class ConnectionString
+	{
+		private const char CONNSTRING_DELIM = ';';
+		private string connectionString;
+		private string connectionStringWithoutCredentials;
+		private string userIdTokens;
+		private string passwordTokens;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ConnectionString"/> with a connection string, the user ID tokens and password tokens.
+		/// </summary>
+		/// <param name="connectionString">The connection string.</param>
+		/// <param name="userIdTokens">The user id tokens that can be parsed out of the connection string.</param>
+		/// <param name="passwordTokens">The password tokens that can be parsed out of the conection string.</param>
+		public ConnectionString(string connectionString, string userIdTokens, string passwordTokens)
+		{
+			if (string.IsNullOrEmpty(connectionString)) throw new ArgumentException("Null or empty argument", "connectionString");
+			if (string.IsNullOrEmpty(userIdTokens)) throw new ArgumentException("Null or empty argument", "userIdTokens");
+			if (string.IsNullOrEmpty(passwordTokens)) throw new ArgumentException("Null or empty argument", "passwordTokens");
+
+			this.connectionString = connectionString;
+			this.userIdTokens = userIdTokens;
+			this.passwordTokens = passwordTokens;
+
+			this.connectionStringWithoutCredentials = null;
+		}
+
+		/// <summary>
+		/// Gets or sets the name of the user.
+		/// </summary>
+		/// <value>The name of the user.</value>
+		/// <devdoc>
+		/// Database username for the connection string.
+		/// </devdoc>
+		public string UserName
+		{
+			get
+			{
+				string lowConnString = connectionString.ToLower(CultureInfo.CurrentCulture);
+				int uidPos;
+				int uidMPos;
+
+				GetTokenPositions(userIdTokens, out uidPos, out uidMPos);
+				if (0 <= uidPos)
+				{
+					// found a user id, so pull out the value
+					int uidEPos = lowConnString.IndexOf(CONNSTRING_DELIM, uidMPos);
+					return connectionString.Substring(uidMPos, uidEPos - uidMPos);
+				}
+				else
+				{
+					return String.Empty;
+				}
+			}
+			set
+			{
+				string lowConnString = connectionString.ToLower(CultureInfo.CurrentCulture);
+				int uidPos;
+				int uidMPos;
+				GetTokenPositions(userIdTokens, out uidPos, out uidMPos);
+				if (0 <= uidPos)
+				{
+					// found a user id, so replace the value
+					int uidEPos = lowConnString.IndexOf(CONNSTRING_DELIM, uidMPos);
+					connectionString = connectionString.Substring(0, uidMPos) +
+						value + connectionString.Substring(uidEPos);
+
+					//_connectionStringNoCredentials = RemoveCredentials(_connectionString);
+				}
+				else
+				{
+					//no user id in the connection string so just append to the connection string
+					string[] tokens = userIdTokens.Split(',');
+					connectionString += tokens[0] + value + CONNSTRING_DELIM;
+				}
+			}
+		}
+
+		/// <devdoc>
+		/// User password for the connection string.
+		/// </devdoc>
+		public string Password
+		{
+			get
+			{
+
+				string lowConnString = connectionString.ToLower(CultureInfo.CurrentCulture);
+				int pwdPos;
+				int pwdMPos;
+				GetTokenPositions(passwordTokens, out pwdPos, out pwdMPos);
+
+				if (0 <= pwdPos)
+				{
+					// found a password, so pull out the value
+					int pwdEPos = lowConnString.IndexOf(CONNSTRING_DELIM, pwdMPos);
+					return connectionString.Substring(pwdMPos, pwdEPos - pwdMPos);
+				}
+				else
+				{
+					return String.Empty;
+				}
+			}
+			set
+			{
+				string lowConnString = connectionString.ToLower(CultureInfo.CurrentCulture);
+				int pwdPos;
+				int pwdMPos;
+				GetTokenPositions(passwordTokens, out pwdPos, out pwdMPos);
+
+				if (0 <= pwdPos)
+				{
+					// found a password, so replace the value
+					int pwdEPos = lowConnString.IndexOf(CONNSTRING_DELIM, pwdMPos);
+					connectionString = connectionString.Substring(0, pwdMPos) + value + connectionString.Substring(pwdEPos);
+
+					//_connectionStringNoCredentials = RemoveCredentials(_connectionString);
+				}
+				else
+				{
+					//no password in the connection string so just append to the connection string
+					string[] tokens = passwordTokens.Split(',');
+					connectionString += tokens[0] + value + CONNSTRING_DELIM;
+				}
+			}
+		}
+
+		/// <devdoc>
+		/// Gets the formatted connection string.
+		/// </devdoc>        
+		public override string ToString()
+		{
+			return connectionString;
+		}
+
+		/// <devdoc>
+		/// Gets the formatted connection string without the username and password.
+		/// </devdoc>        
+		public string ToStringNoCredentials()
+		{
+			if (connectionStringWithoutCredentials == null)
+				connectionStringWithoutCredentials = RemoveCredentials(connectionString);
+			return connectionStringWithoutCredentials;
+		}
+
+		/// <summary>
+		/// Formats a new connection string with a user ID and password.
+		/// </summary>  
+		/// <param name="connectionStringToFormat">
+		/// The connection string to format.
+		/// </param>		
+		public ConnectionString CreateNewConnectionString(string connectionStringToFormat)
+		{
+			return new ConnectionString(connectionStringToFormat, userIdTokens, passwordTokens);
+		}
+
+		private void GetTokenPositions(string tokenString, out int tokenPos, out int tokenMPos)
+		{
+			string[] tokens = tokenString.Split(',');
+			int currentPos = -1;
+			int previousPos = -1;
+			string lowConnString = connectionString.ToLower(CultureInfo.CurrentCulture);
+
+			//initialze output parameter
+			tokenPos = -1;
+			tokenMPos = -1;
+			foreach (string token in tokens)
+			{
+				currentPos = lowConnString.IndexOf(token);
+				if (currentPos > previousPos)
+				{
+					tokenPos = currentPos;
+					tokenMPos = currentPos + token.Length;
+					previousPos = currentPos;
+				}
+			}
+		}
+
+		private string RemoveCredentials(string connectionStringToModify)
+		{
+			StringBuilder connStringNoCredentials = new StringBuilder();
+
+			string[] tokens = connectionStringToModify.ToLower(CultureInfo.CurrentCulture).Split(CONNSTRING_DELIM);
+
+			string thingsToRemove = userIdTokens + "," + passwordTokens;
+			string[] avoidTokens = thingsToRemove.ToLower(CultureInfo.CurrentCulture).Split(',');
+
+			foreach (string section in tokens)
+			{
+				bool found = false;
+				string token = section.Trim();
+				if (token.Length != 0)
+				{
+					foreach (string avoidToken in avoidTokens)
+					{
+						if (token.StartsWith(avoidToken))
+						{
+							found = true;
+							break;
+						}
+					}
+					if (!found)
+					{
+						connStringNoCredentials.Append(token + CONNSTRING_DELIM);
+					}
+				}
+			}
+			return connStringNoCredentials.ToString();
+		}
+	}
+
+	/// <summary>
+	///		This class manages the connections that will be used when transactions are active
+	///		as a result of instantiating a <see cref="TransactionScope"/>. When a transaction
+	///		is active, all database access must be through this single connection unless you want
+	///		to use a distributed transaction, which is an expensive operation.
+	/// </summary>
+	internal static class TransactionScopeConnections
+	{
+		// There's a reason why this field is not thread-static: notifications for completed oracle transactions
+		// may happen in a different thread
+		static readonly Dictionary<Transaction, Dictionary<string, DbConnection>> transactionConnections =
+			new Dictionary<Transaction, Dictionary<string, DbConnection>>();
+
+		/// <summary>
+		///		Returns a connection for the current transaction. This will be an existing <see cref="DbConnection"/>
+		///		instance or a new one if there is a <see cref="TransactionScope"/> active. Otherwise this method
+		///		returns null.
+		/// </summary>
+		/// <param name="db"></param>
+		/// <returns>Either a <see cref="DbConnection"/> instance or null.</returns>
+		public static DbConnection GetConnection(Database db)
+		{
+			Transaction currentTransaction = Transaction.Current;
+
+			if (currentTransaction == null)
+				return null;
+
+			Dictionary<string, DbConnection> connectionList;
+			DbConnection connection;
+
+			lock (transactionConnections)
+			{
+				if (!transactionConnections.TryGetValue(currentTransaction, out connectionList))
+				{
+					// We don't have a list for this transaction, so create a new one
+					connectionList = new Dictionary<string, DbConnection>();
+					transactionConnections.Add(currentTransaction, connectionList);
+
+					// We need to know when this previously unknown transaction is completed too
+					currentTransaction.TransactionCompleted += OnTransactionCompleted;
+				}
+			}
+
+			lock (connectionList)
+			{
+				// Next we'll see if there is already a connection. If not, we'll create a new connection and add it
+				// to the transaction's list of connections.
+				// This collection should only be modified by the thread where the transaction scope was created
+				// while the transaction scope is active.
+				// However there's no documentation to confirm this, so we err on the safe side and lock.
+				if (!connectionList.TryGetValue(db.ConnectionString, out connection))
+				{
+					// we're betting the cost of acquiring a new finer-grained lock is less than 
+					// that of opening a new connection, and besides this allows threads to work in parallel
+					connection = db.GetNewOpenConnection();
+					connectionList.Add(db.ConnectionString, connection);
+				}
+			}
+
+			return connection;
+		}
+
+		/// <summary>
+		///		This event handler is called whenever a transaction is about to be disposed, which allows
+		///		us to remove the transaction from our list and dispose the connection instance we created.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		static void OnTransactionCompleted(object sender, TransactionEventArgs e)
+		{
+			Dictionary<string, DbConnection> connectionList;
+
+			lock (transactionConnections)
+			{
+				if (!transactionConnections.TryGetValue(e.Transaction, out connectionList))
+				{
+					// we don't know about this transaction. odd.
+					return;
+				}
+
+				// we know about this transaction - remove it from the mappings
+				transactionConnections.Remove(e.Transaction);
+			}
+
+			lock (connectionList)
+			{
+				// acquiring this lock should not be necessary unless there's a possibility for this event to be fired
+				// while the transaction involved in the event is still set as the current transaction for a 
+				// different thread.
+				foreach (DbConnection connection in connectionList.Values)
+				{
+					connection.Dispose();
+				}
+			}
+		}
+	}
+}%%></CONTENT><OUTPUT>
+<%%:
+if (File(MicrosoftEnterpriseLibraryFilePath) == null || (File(MicrosoftEnterpriseLibraryFilePath).Contains("<Status>Generated</Status>") == true && File(MicrosoftEnterpriseLibraryFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(MicrosoftEnterpriseLibraryFilePath)
+}
+%%></OUTPUT>

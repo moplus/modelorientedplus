@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DatabaseOptionsFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DatabaseOptions_G.cs%%></CONTENT>

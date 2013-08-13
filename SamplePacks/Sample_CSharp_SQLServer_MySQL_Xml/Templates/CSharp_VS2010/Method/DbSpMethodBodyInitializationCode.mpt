@@ -1,0 +1,40 @@
+<CONFIG>
+	NAME DbSpMethodBodyInitializationCode
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+
+-- initializations
+SET NOCOUNT ON
+SET @sqlErrorNumber = 0
+SET @sqlErrorMessage = ''%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		<%%-
+		DECLARE @endIndex int
+		IF (@startIndex < 0) SET @startIndex = 0
+		IF (@pageSize < 1) SET @pageSize = 50
+		SET @endIndex = @startIndex + @pagesize
+		DECLARE @searchTable TABLE
+		(%%><%%=TAB 1%%><%%-
+			SearchOrder int IDENTITY (0, 1) NOT NULL%%>
+		foreach (Property)
+		{
+			if (IsPrimaryKeyMember == true)
+			{
+				<%%-, %%><%%=DBPropertyName%%><%%- %%><%%=DBDataType%%>
+			}
+		}
+		<%%=TAB -1%%><%%-
+		)%%>
+		break
+
+}
+%%></CONTENT>

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME WcfRESTExtendedClassCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTExtendedClassBodyStartCode%%>
+<%%-
+#region "Constants"
+#endregion "Constants"
+
+#region "Fields and Properties"
+#endregion "Fields and Properties"
+
+#region "Methods"
+#endregion "Methods"%%>
+<%%=WcfRESTGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTExtendedClassFilePath) == null || (File(WcfRESTExtendedClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTExtendedClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTExtendedClassFilePath)
+}
+%%></OUTPUT>

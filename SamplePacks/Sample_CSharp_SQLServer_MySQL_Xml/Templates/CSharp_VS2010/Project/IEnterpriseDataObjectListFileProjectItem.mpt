@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME IEnterpriseDataObjectListFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=IEnterpriseDataObjectListFilePath.Substring(IEnterpriseDataObjectListFilePath.IndexOf("IEnterpriseDataObjectList")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

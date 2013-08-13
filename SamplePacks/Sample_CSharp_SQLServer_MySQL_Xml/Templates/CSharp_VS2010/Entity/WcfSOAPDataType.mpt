@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPDataType
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=FeatureName%%><%%-.%%><%%=WcfSOAPClassName%%></CONTENT>

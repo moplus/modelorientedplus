@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME WcfSOAPValidMethod
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+switch (MethodTypeCode)
+{
+	case 11: // DeleteAllByForeignKey
+
+		// exclude heavy delete operation from generated services
+		<%%-false%%>
+		break
+}
+if (Text != null)
+{
+	return
+}
+<%%-true%%>
+%%></CONTENT>

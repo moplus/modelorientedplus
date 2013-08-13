@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTPropertyName
+	CATEGORY WcfREST
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

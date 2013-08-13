@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPPropertyName
+	CATEGORY WcfSOAP
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIMainMenuCodeFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\MainMenu_G.xaml.cs%%></CONTENT>

@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME WcfRESTDataType
+	CATEGORY WcfREST
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%:
+with (Property from Solution.Find(PropertyID))
+{
+	if (../Method.MethodTypeCode == 1 /* GetOne */)
+	{
+		<%%-string%%>
+		break
+	}
+	<%%=BLLDataType%%>
+	break
+}
+with (PropertyReference from Solution.Find(PropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+with (Collection from Solution.Find(PropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+with (EntityReference from Solution.Find(PropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+%%></CONTENT>

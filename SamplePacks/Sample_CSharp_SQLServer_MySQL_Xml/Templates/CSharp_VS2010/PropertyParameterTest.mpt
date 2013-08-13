@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME PropertyParameterTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+param entity
+param property
+
+<%%-
+
+public class %%><%%=entity%%><%%-
+{
+	public string %%><%%=property%%><%%- ( get; set; }
+}%%>
+%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ModelClassFileName
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=DSModelClassName%%><%%-_G.cs%%></CONTENT>

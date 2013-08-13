@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfSOAPWebServiceBaseFilePath
+	CATEGORY WcfSOAP
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebServiceBase_G.cs%%></CONTENT>

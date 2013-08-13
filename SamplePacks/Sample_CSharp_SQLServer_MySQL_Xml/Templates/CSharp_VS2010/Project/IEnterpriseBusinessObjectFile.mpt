@@ -1,0 +1,50 @@
+<CONFIG>
+	NAME IEnterpriseBusinessObjectFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This interface is used for all enterprise business objects.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public interface IEnterpriseBusinessObject : IEnterpriseDataObject
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads the data for this entity (presumably from a database),
+		/// based on the primary identifying property or properties.</summary>
+		///--------------------------------------------------------------------------------
+		void Load();
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves the data for this entity (presumably to a database).</summary>
+		///--------------------------------------------------------------------------------
+		void Save();
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(IEnterpriseBusinessObjectFilePath) == null || (File(IEnterpriseBusinessObjectFilePath).Contains("<Status>Generated</Status>") == true && File(IEnterpriseBusinessObjectFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(IEnterpriseBusinessObjectFilePath)
+}
+%%></OUTPUT>

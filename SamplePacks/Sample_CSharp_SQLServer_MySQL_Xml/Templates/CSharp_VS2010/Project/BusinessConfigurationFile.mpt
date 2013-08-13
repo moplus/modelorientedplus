@@ -1,0 +1,180 @@
+<CONFIG>
+	NAME BusinessConfigurationFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Configuration;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class manages overall business configuration values.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class BusinessConfiguration
+	{
+		#region "Constants"
+		#endregion "Constants"
+
+		#region "Fields and Properties"
+
+		protected string _dbConnectionString = DefaultValue.String;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the database connection string.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public string DbConnectionString
+		{
+			get
+			{
+				if (_dbConnectionString == DefaultValue.String)
+				{
+					_dbConnectionString = GetAppSettingString("DbConnectionString");
+				}
+				return _dbConnectionString;
+			}
+			set
+			{
+				_dbConnectionString = value;
+			}
+		}
+
+		protected int _dbCommandTimeout = DefaultValue.Int;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the database command timeout.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public int DbCommandTimeout
+		{
+			get
+			{
+				if (_dbCommandTimeout == DefaultValue.Int)
+				{
+					_dbCommandTimeout = GetAppSettingInt("DbCommandTimeout");
+				}
+				return _dbCommandTimeout;
+			}
+			set
+			{
+				_dbCommandTimeout = value;
+			}
+		}
+
+		protected int _dbPageSize = DefaultValue.Int;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the database (search) page size.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public int DbPageSize
+		{
+			get
+			{
+				if (_dbPageSize == DefaultValue.Int)
+				{
+					_dbPageSize = GetAppSettingInt("DbPageSize");
+				}
+				return _dbPageSize;
+			}
+			set
+			{
+				_dbPageSize = value;
+			}
+		}
+
+		protected int _dbMaximumListSize = DefaultValue.Int;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the database (search) maximum list size.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public int DbMaximumListSize
+		{
+			get
+			{
+				if (_dbMaximumListSize == DefaultValue.Int)
+				{
+					_dbMaximumListSize = GetAppSettingInt("DbMaximumListSize");
+				}
+				return _dbMaximumListSize;
+			}
+			set
+			{
+				_dbMaximumListSize = value;
+			}
+		}
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>Execute the business logic layer exception policy.</summary>
+		///
+		/// <param name="ex">The exception to handle.</param>
+		///
+		/// <returns>True if exception is handled.</returns>
+		///--------------------------------------------------------------------------------
+		public static bool HandleException(Exception ex)
+		{
+			return ExceptionHandler.HandleException(ex);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets an application setting as a string.</summary>
+		///
+		/// <param name="inputAppSettingName">The application setting name.</param>
+		/// 
+		/// <returns>An application setting as a string.</returns>
+		///--------------------------------------------------------------------------------
+		public static string GetAppSettingString(string inputAppSettingName)
+		{
+			// get application setting
+			if (inputAppSettingName.Trim() != String.Empty)
+			{
+				return ConfigurationManager.AppSettings[inputAppSettingName.Trim()];
+			}
+			return String.Empty;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets an application setting as an int.</summary>
+		///
+		/// <param name="inputAppSettingName">The application setting name.</param>
+		/// 
+		/// <returns>An application setting as an int.</returns>
+		///--------------------------------------------------------------------------------
+		public static int GetAppSettingInt(string inputAppSettingName)
+		{
+			// get application setting
+			int appSettingInt = 0;
+			if (inputAppSettingName.Trim() != String.Empty)
+			{
+				int.TryParse(ConfigurationManager.AppSettings[inputAppSettingName.Trim()], out appSettingInt);
+			}
+			return appSettingInt;
+		}
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BusinessConfigurationFilePath) == null || (File(BusinessConfigurationFilePath).Contains("<Status>Generated</Status>") == true && File(BusinessConfigurationFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BusinessConfigurationFilePath)
+}
+%%></OUTPUT>

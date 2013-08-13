@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WcfRESTServiceJSONMethodBodyCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+{%%><%%=TAB 1%%><%%-
+	return %%><%%=WcfRESTServiceMethodCallCode%%><%%-;%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

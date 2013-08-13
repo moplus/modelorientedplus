@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME BLLManagerClassBodyStartCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLGlobalCopyrightCode%%>
+<%%=BLLManagerClassIncludesCode%%><%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=BLLManagerClassCommentsCode%%><%%-
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	[IgnoreProperties("SortDirection", "FilterElements")]
+	public partial class %%><%%=BLLManagerClassName%%><%%- : %%><%%=BLLBaseManagerClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

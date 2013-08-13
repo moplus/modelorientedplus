@@ -1,0 +1,89 @@
+<CONFIG>
+	NAME WPFUIEditorAreaMarkupFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<UserControl x:Class="%%><%%=Namespace%%><%%-.UserControls.EditorArea"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"%%>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as VM
+	foreach (Project where Tags.Contains("VM") == true)
+	{
+		foreach (Feature where Tags.Contains("DB") == true)
+		{
+		<%%-
+                    xmlns:%%><%%=FeatureName%%><%%-VM="clr-namespace:%%><%%=../Namespace%%><%%-.%%><%%=FeatureName%%><%%-;assembly=%%><%%=../Namespace%%><%%-"%%>
+		}
+	}
+}
+else
+{
+	foreach (Project)
+	{
+		foreach (Feature where Tags.Contains("DB") == true)
+		{
+		<%%-
+                    xmlns:%%><%%=FeatureName%%><%%-VM="clr-namespace:%%><%%=../Namespace%%><%%-.%%><%%=FeatureName%%><%%-;assembly=%%><%%=../Namespace%%><%%-"%%>
+		}
+	}
+}
+foreach (Feature where Tags.Contains("DB") == true)
+{
+		<%%-
+                    xmlns:%%><%%=FeatureName%%><%%-="clr-namespace:%%><%%=../Namespace%%><%%-.UserControls.%%><%%=FeatureName%%><%%-"%%>
+}
+%%>
+                    <%%-
+                    mc:Ignorable="d" 
+                    d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../Resources/Theme_G.xaml" />
+			</ResourceDictionary.MergedDictionaries>%%>
+<%%:
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	<%%-
+			<DataTemplate DataType="{x:Type %%><%%=FeatureName%%><%%-VM:%%><%%=VMBLLViewModelClassName%%><%%-}">
+				<Grid>
+					<%%><%%=FeatureName%%><%%-:%%><%%=BLLClassName%%><%%-Detail/>
+				</Grid>
+			</DataTemplate>
+			<DataTemplate DataType="{x:Type %%><%%=FeatureName%%><%%-VM:%%><%%=VMBLLViewPluralModelClassName%%><%%-}">
+				<Grid>
+					<%%><%%=FeatureName%%><%%-:%%><%%=BLLClassName%%><%%-Search/>
+				</Grid>
+			</DataTemplate>%%>
+}
+%%>
+<%%-
+		</ResourceDictionary>
+	</UserControl.Resources>
+	<Grid>
+		<TabControl ScrollViewer.CanContentScroll="True" ItemsSource="{Binding Items, Mode=OneWay}"/>
+	</Grid>
+</UserControl>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIEditorAreaMarkupFilePath) == null || (File(WPFUIEditorAreaMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIEditorAreaMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIEditorAreaMarkupFilePath)
+}
+%%></OUTPUT>

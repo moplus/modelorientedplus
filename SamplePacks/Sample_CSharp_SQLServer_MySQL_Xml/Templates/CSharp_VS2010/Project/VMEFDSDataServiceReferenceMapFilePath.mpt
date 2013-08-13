@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME VMEFDSDataServiceReferenceMapFilePath
+	CATEGORY VMEFDS
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Service References\DataService\Reference.datasvcmap%%></CONTENT>

@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME WcfRESTInterfaceCommentsCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-///--------------------------------------------------------------------------------
+/// <summary>This interface is used to define REST based web services for
+/// %%><%%=WcfRESTMiddleTierClassName%%><%%- items.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize, change the Status value below to something
+/// other than Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

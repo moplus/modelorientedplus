@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataTransformHelperFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataTransformHelper_G.cs%%></CONTENT>

@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WcfRESTInterfaceFileProjectItem
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfRESTInterfaceFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <SubType>Code</SubType>
+    </Compile>
+    %%></CONTENT>

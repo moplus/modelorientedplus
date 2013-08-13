@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsGetOneMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (MethodTypeCode == 1 /* GetOne */)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>

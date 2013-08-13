@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPParameterName
+	CATEGORY WebSOAP
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.CamelCase()%%></CONTENT>

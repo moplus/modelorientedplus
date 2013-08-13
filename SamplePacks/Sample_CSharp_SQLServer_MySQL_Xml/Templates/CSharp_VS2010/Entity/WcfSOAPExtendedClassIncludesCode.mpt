@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPExtendedClassIncludesCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPClassIncludesCode%%></CONTENT>

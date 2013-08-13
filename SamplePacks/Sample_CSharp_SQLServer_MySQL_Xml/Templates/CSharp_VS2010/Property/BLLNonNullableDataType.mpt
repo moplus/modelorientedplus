@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLNonNullableDataType
+	CATEGORY BLL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpNonNullableDataType%%></CONTENT>

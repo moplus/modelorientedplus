@@ -1,0 +1,130 @@
+<CONFIG>
+	NAME BLLMethodCommentsCode
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get an instance of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "AddOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to add an instance of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "UpdateOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to update an instance of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to delete an instance of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteAllByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to delete a number of instances of %%><%%=BLLClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetAll":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get all of the instances of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetAllByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get all instances of %%><%%=BLLClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetAllByForeignkey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get all instances of %%><%%=BLLClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetMany":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to a number of the instances of %%><%%=BLLClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetManyByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get a number of instances of %%><%%=BLLClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This method is used to get a number of instances of %%><%%=BLLClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+	}
+%%>
+<%%-
+///%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%-
+				/// <param name="item">The instance of %%><%%=BLLClassName%%><%%- to perform the operation on.</param>%%>
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%-
+		/// <param name="%%><%%=BLLParameterName%%><%%-">The value for the %%><%%=BLLPropertyName%%><%%- property.</param>%%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			/// <param name="totalRecords">The total number of records in the overall search.</param>
+			/// <param name="maximumListSizeExceeded">Flag indicating if total records is greater than the maximum list size.</param>%%>
+			break
+	}
+%%>
+<%%-
+/// <param name="cascadeDepth">The depth of performing operations relating to this instance.</param>
+///--------------------------------------------------------------------------------%%></CONTENT>

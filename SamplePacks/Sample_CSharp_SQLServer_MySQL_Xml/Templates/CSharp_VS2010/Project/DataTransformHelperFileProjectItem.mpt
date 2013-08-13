@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DataTransformHelperFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataTransformHelperFilePath.Substring(DataTransformHelperFilePath.IndexOf("DataTransformHelper")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

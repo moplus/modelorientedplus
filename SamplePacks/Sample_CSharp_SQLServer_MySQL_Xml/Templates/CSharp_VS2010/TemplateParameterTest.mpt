@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME TemplateParameterTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in Solution)
+{
+	foreach (Property)
+	{
+		//
+		// parameters should use context relative to Property, not ../../
+		//
+		<%%=../../PropertyParameterTest(entity=../EntityName, property=PropertyName)%%>
+		//
+		// parameters should use context relative to Property, not Solution.
+		//
+		<%%=Solution.PropertyParameterTest(entity=../EntityName, property=PropertyName)%%>
+	}
+}%%></CONTENT>

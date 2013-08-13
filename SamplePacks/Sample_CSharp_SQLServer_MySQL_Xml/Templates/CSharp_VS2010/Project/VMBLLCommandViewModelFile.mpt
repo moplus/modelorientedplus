@@ -1,0 +1,76 @@
+<CONFIG>
+	NAME VMBLLCommandViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+
+This code is derived from the Microsoft MVVM design pattern example (http://msdn.microsoft.com/en-us/magazine/dd419663.aspx).
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;%%>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as BLL
+	foreach (Project where Tags.Contains("BLL") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+%%>
+<%%-
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class represents an actionable item displayed by a View.</summary>
+	/// 
+	/// <remarks>Derived from Microsoft MVVM design pattern example (http://msdn.microsoft.com/en-us/magazine/dd419663.aspx).</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class CommandViewModel : ViewModelBase
+	{
+		public CommandViewModel(string displayName, ICommand command)
+		{
+			if (command == null)
+				throw new ArgumentNullException("command");
+
+			Name = displayName;
+			this.Command = command;
+		}
+
+		public ICommand Command { get; private set; }
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLCommandViewModelFilePath) == null || (File(VMBLLCommandViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLCommandViewModelFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLCommandViewModelFilePath)
+}
+%%></OUTPUT>

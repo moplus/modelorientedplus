@@ -1,0 +1,35 @@
+<CONFIG>
+	NAME LIBParentCollectionOfThisPropertyID
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var relationshipID
+var entityID = EntityID
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where Tags.Contains("Parent") == true)
+	{
+		foreach (PropertyRelationship limit 1)
+		{
+			relationshipID = RelationshipID
+		}
+		with (ReferencedEntity)
+		{
+			foreach (Collection where ReferencedEntityID == entityID)
+			{
+				foreach (PropertyRelationship limit 1)
+				{
+					if (RelationshipID == relationshipID)
+					{
+						Text = ../PropertyID
+						return
+					}
+				}
+			}
+		}
+	}
+}
+%%></CONTENT>

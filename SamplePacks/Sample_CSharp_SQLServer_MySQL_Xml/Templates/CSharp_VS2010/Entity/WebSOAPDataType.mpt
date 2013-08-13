@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPDataType
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=FeatureName%%><%%-.%%><%%=WebSOAPClassName%%></CONTENT>

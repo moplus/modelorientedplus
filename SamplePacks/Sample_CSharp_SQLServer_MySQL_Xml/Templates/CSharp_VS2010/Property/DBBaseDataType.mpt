@@ -1,0 +1,96 @@
+<CONFIG>
+	NAME DBBaseDataType
+	CATEGORY DB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		<%%-sbyte%%>
+		break
+	case 2: // IntShort
+		<%%-smallint%%>
+		break
+	case 3: // Int
+		<%%-int%%>
+		break
+	case 4: // IntLong
+		<%%-bigint%%>
+		break
+	case 5: // Byte
+		<%%-binary%%>
+		break
+	case 6: // UIntShort
+		<%%-smallint%%>
+		break
+	case 7: // UInt
+		<%%-int%%>
+		break
+	case 8: // UIntLong
+		<%%-bigint%%>
+		break
+	case 9: // FloatSingle
+		<%%-float%%>
+		break
+	case 10: // FloatDouble
+		<%%-double%%>
+		break
+	case 11: // Decimal
+		<%%-decimal%%>
+		break
+	case 12: // Boolean
+		<%%-bit%%>
+		break
+	case 13: // Char
+		<%%-char%%>
+		break
+	case 14: // CharUnicode
+		<%%-nchar%%>
+		break
+	case 15: // Object
+		<%%-binary%%>
+		break
+	case 16: // String
+		<%%-varchar%%>
+		break
+	case 17: // StringUnicode
+		<%%-nvarchar%%>
+		break
+	case 18: // Currency
+		<%%-money%%>
+		break
+	case 19: // Text
+		<%%-text%%>
+		break
+	case 20: // TextUnicode
+		<%%-ntext%%>
+		break
+	case 21: // IntTiny
+		<%%-tinyint%%>
+		break
+	case 22: // UIntTiny
+		<%%-tinyint%%>
+		break
+	case 23: // Binary
+		<%%-binary%%>
+		break
+	case 24: // DateTime
+		<%%-datetime%%>
+		break
+	case 25: // Timestamp
+		<%%-timestamp%%>
+		break
+	case 26: // Guid
+		<%%-uniqueidentifier%%>
+		break
+	case 27: // Image
+		<%%-image%%>
+		break
+	default:
+		<%%-string%%>
+		break
+}
+
+%%></CONTENT>

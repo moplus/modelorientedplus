@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPParameterName
+	CATEGORY WcfSOAP
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.CamelCase()%%></CONTENT>

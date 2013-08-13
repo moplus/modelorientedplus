@@ -1,0 +1,69 @@
+<CONFIG>
+	NAME WPFUIDisableButtonStringConverterFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Data;
+using System.Globalization;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class manages styling for disabled buttons.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class DisableButtonStringConverter : IValueConverter
+	{
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method replaces underscores from a string for disabled buttons.</summary>
+		///--------------------------------------------------------------------------------
+		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			if (targetType != typeof(string))
+				throw new InvalidOperationException("The target type must be a string.");
+
+			if (value != null)
+			{
+				return value.ToString().Replace("_", "");
+			}
+			return null;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method restores underscores from a string for disabled buttons.</summary>
+		///--------------------------------------------------------------------------------
+		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+		{
+			return DependencyProperty.UnsetValue;
+		}
+
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIDisableButtonStringConverterFilePath) == null || (File(WPFUIDisableButtonStringConverterFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIDisableButtonStringConverterFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIDisableButtonStringConverterFilePath)
+}
+%%></OUTPUT>

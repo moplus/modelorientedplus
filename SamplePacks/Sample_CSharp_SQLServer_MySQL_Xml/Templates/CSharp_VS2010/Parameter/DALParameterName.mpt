@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALParameterName
+	CATEGORY DAL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=ParameterName.CamelCase()%%></CONTENT>

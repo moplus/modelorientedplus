@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPInterfaceName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-I%%><%%=WcfSOAPMiddleTierClassName%%><%%-Service%%></CONTENT>

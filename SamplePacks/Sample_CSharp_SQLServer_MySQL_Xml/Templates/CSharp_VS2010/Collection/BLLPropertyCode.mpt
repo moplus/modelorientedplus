@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME BLLPropertyCode
+	CATEGORY BLL
+	NODE Collection
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+%%><%%=BLLPropertyFieldCode%%>
+<%%=BLLPropertyCommentsCode%%>
+<%%=BLLIgnorePropertyAttributesCode%%><%%-
+%%><%%=BLLPropertySignatureCode%%>
+<%%=BLLPropertyBodyCode%%>
+<%%=BLLSerializationPropertyAttributesCode%%><%%-
+%%><%%=BLLSerializationPropertySignatureCode%%>
+<%%=BLLSerializationPropertyBodyCode%%></CONTENT>

@@ -1,0 +1,57 @@
+<CONFIG>
+	NAME DataAccessConfigurationFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class manages overall data access configuration values.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class DataAccessConfiguration
+	{
+		#region "Constants"
+		#endregion "Constants"
+
+		#region "Fields and Properties"
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>Execute the data access layer exception policy.</summary>
+		///
+		/// <param name="ex">The exception to handle.</param>
+		///
+		/// <returns>True if exception handled, false otherwise.</returns>
+		///--------------------------------------------------------------------------------
+		public static bool HandleException(Exception ex)
+		{
+			return ExceptionHandler.HandleException(ex);
+		}
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(DataAccessConfigurationFilePath) == null || (File(DataAccessConfigurationFilePath).Contains("<Status>Generated</Status>") == true && File(DataAccessConfigurationFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(DataAccessConfigurationFilePath)
+}
+%%></OUTPUT>

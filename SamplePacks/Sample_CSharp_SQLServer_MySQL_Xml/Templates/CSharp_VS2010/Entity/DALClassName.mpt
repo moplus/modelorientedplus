@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALClassName
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%></CONTENT>

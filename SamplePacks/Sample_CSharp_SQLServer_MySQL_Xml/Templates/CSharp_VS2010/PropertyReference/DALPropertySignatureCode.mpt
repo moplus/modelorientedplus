@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALPropertySignatureCode
+	CATEGORY DAL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%-public virtual %%><%%=DALDataType%%><%%- %%><%%=DALPropertyName%%></CONTENT>

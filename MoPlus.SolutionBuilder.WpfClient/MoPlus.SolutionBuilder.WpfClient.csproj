@@ -1,0 +1,1226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{571978FA-999A-41C7-B590-27EBEDD70F99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MoPlus.SolutionBuilder.WpfClient</RootNamespace>
+    <AssemblyName>MoPlus.SolutionBuilder.WpfClient</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MoPlus.SolutionBuilder.WpfClient.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\MoPlus.SolutionBuilder.WpfClient.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock, Version=2.0.1771.0, Culture=neutral, PublicKeyToken=96637cf0d3eefdfb, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Third Party Dlls\AvalonDock_2_0_1746\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=4.1.0.7916, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Third Party Dlls\AvalonEdit_4.3.1_Binaries\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Third Party Dlls\Irony_2011_07_05\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="UserControls\Diagrams\PropertiesDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\DiagramTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Theme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Conventions\HelpControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\EntityDiagramControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\RelationshipsDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\PropertyReferencesDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\MethodsDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\IndexesDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\EntityReferencesDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\CollectionsDiagramControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\DiagramControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\ToolBoxDiagramControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\ToolBoxEntitiesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\ToolBoxPropertiesControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Diagrams\ToolBoxZoomControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Interpreter\CodeTemplateContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Interpreter\CodeTemplateDetailControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Interpreter\SpecTemplateContentDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Interpreter\SpecTemplateDetailControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MainMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\PropertyCollectionItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\PropertyItemControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\OKDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Output.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SolutionBuilderControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\SolutionDesignerControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\TagManagementControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Status.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\WorkflowDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\WorkflowDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StepTransitionDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StepTransitionDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StepDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StepDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StageTransitionDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StageTransitionDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StageDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Workflows\StageDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\XmlSourceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\XmlSourceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\SolutionDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\SolutionDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\ProjectDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\ProjectDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\FeatureDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\FeatureDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\DatabaseSourceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\DatabaseSourceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\AuditPropertyDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Solutions\AuditPropertyDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ValueDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ValueDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelPropertyDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelPropertyDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\PropertyInstanceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\PropertyInstanceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelObjectDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelObjectDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ObjectInstanceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ObjectInstanceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\ModelDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\EnumerationDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Models\EnumerationDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateTransitionDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateTransitionDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateModelDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateModelDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\StateDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\RelationshipPropertyDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\RelationshipPropertyDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\RelationshipPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\RelationshipDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\RelationshipDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyReferencePropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyReferenceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyReferenceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\PropertyDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\ParameterDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\ParameterDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\MethodPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\MethodDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\MethodDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\IndexPropertyDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\IndexPropertyDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\IndexPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\IndexDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\IndexDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityReferencePropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityReferenceDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityReferenceDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\EntityDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\CollectionPropertiesControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\CollectionDialogControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Entities\CollectionDetailControl_G.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\FindReplaceDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Library\CodeCompletionElement.cs" />
+    <Compile Include="Library\BreakPointMargin.cs" />
+    <Compile Include="Library\BreakPointLineColorizer.cs" />
+    <Compile Include="Library\HtmlTextBlob.cs" />
+    <Compile Include="Library\HtmlToXamlConverter.cs" />
+    <Compile Include="Library\UserSettingsHelper.cs" />
+    <Compile Include="UserControls\Entities\CollectionPropertiesControl.cs" />
+    <Compile Include="UserControls\Entities\PropertyReferencePropertiesControl.cs" />
+    <Compile Include="UserControls\Entities\EntityReferencePropertiesControl.cs" />
+    <Compile Include="UserControls\Models\PropertyCollectionItemControl.xaml.cs">
+      <DependentUpon>PropertyCollectionItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\PropertyItemControl.xaml.cs">
+      <DependentUpon>PropertyItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ObjectInstanceDialogControl.cs" />
+    <Compile Include="UserControls\Models\PropertyCollectionItemControl.cs" />
+    <Compile Include="UserControls\Models\PropertyInstanceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyInstanceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\PropertyInstanceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyInstanceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ObjectInstanceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ObjectInstanceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ObjectInstanceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ObjectInstanceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Library\HighlightingHelper.cs" />
+    <Compile Include="Library\PasswordBoxHelper.cs" />
+    <Compile Include="UserControls\Conventions\HelpControl.xaml.cs">
+      <DependentUpon>HelpControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\PropertiesDiagramControl.cs" />
+    <Compile Include="UserControls\Entities\CollectionDetailControl.cs" />
+    <Compile Include="UserControls\Entities\CollectionDialogControl.cs" />
+    <Compile Include="UserControls\Entities\PropertyReferenceDialogControl.cs" />
+    <Compile Include="UserControls\Entities\PropertyReferenceDetailControl.cs" />
+    <Compile Include="UserControls\Entities\EntityReferenceDialogControl.cs" />
+    <Compile Include="UserControls\Entities\EntityReferenceDetailControl.cs" />
+    <Compile Include="UserControls\Entities\RelationshipPropertiesControl.cs" />
+    <Compile Include="UserControls\Entities\MethodPropertiesControl.cs" />
+    <Compile Include="UserControls\Entities\IndexPropertiesControl.cs" />
+    <Compile Include="UserControls\Entities\StateDialogControl.cs" />
+    <Compile Include="UserControls\Entities\RelationshipDialogControl.cs" />
+    <Compile Include="UserControls\Entities\MethodDialogControl.cs" />
+    <Compile Include="UserControls\Entities\IndexDialogControl.cs" />
+    <Compile Include="UserControls\Entities\StateDetailControl.cs" />
+    <Compile Include="UserControls\Entities\RelationshipDetailControl.cs" />
+    <Compile Include="UserControls\Entities\IndexDetailControl.cs" />
+    <Compile Include="UserControls\Entities\MethodDetailControl.cs" />
+    <Compile Include="UserControls\Entities\EntityPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\PropertiesDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertiesDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\EntityDiagramControl.xaml.cs">
+      <DependentUpon>EntityDiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\RelationshipsDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipsDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\PropertyReferencesDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyReferencesDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\MethodsDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MethodsDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\IndexesDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexesDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\EntityReferencesDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityReferencesDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\CollectionsDiagramControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CollectionsDiagramControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\DiagramControl.xaml.cs">
+      <DependentUpon>DiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\ToolBoxDiagramControl.xaml.cs">
+      <DependentUpon>ToolBoxDiagramControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\ToolBoxEntitiesControl.xaml.cs">
+      <DependentUpon>ToolBoxEntitiesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\ToolBoxPropertiesControl.xaml.cs">
+      <DependentUpon>ToolBoxPropertiesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Diagrams\ToolBoxZoomControl.xaml.cs">
+      <DependentUpon>ToolBoxZoomControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Interpreter\CodeTemplateContentDialog.xaml.cs">
+      <DependentUpon>CodeTemplateContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Interpreter\CodeTemplateDetailControl.xaml.cs">
+      <DependentUpon>CodeTemplateDetailControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Interpreter\SpecTemplateContentDialog.xaml.cs">
+      <DependentUpon>SpecTemplateContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Interpreter\SpecTemplateDetailControl.xaml.cs">
+      <DependentUpon>SpecTemplateDetailControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\EnumerationDialogControl.cs" />
+    <Compile Include="UserControls\Models\ModelObjectDialogControl.cs" />
+    <Compile Include="UserControls\Models\EnumerationDetailControl.cs" />
+    <Compile Include="UserControls\Models\ModelObjectDetailControl.cs" />
+    <Compile Include="UserControls\OKDialog.xaml.cs">
+      <DependentUpon>OKDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Output.xaml.cs">
+      <DependentUpon>Output.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SolutionBuilderControl_G.xaml.cs">
+      <DependentUpon>SolutionBuilderControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\SolutionDesignerControl_G.xaml.cs">
+      <DependentUpon>SolutionDesignerControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\TagManagementControl.xaml.cs">
+      <DependentUpon>TagManagementControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\XmlSourceDialogControl.cs" />
+    <Compile Include="UserControls\Solutions\SolutionDialogControl.cs" />
+    <Compile Include="UserControls\Solutions\DatabaseSourceDialogControl.cs" />
+    <Compile Include="UserControls\Solutions\XmlSourceDetailControl.cs" />
+    <Compile Include="UserControls\Solutions\DatabaseSourceDetailControl.cs" />
+    <Compile Include="UserControls\Solutions\SolutionDetailControl.cs" />
+    <Compile Include="UserControls\Status.xaml.cs">
+      <DependentUpon>Status.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StepDetailControl.cs" />
+    <Compile Include="UserControls\Workflows\StageDetailControl.cs" />
+    <Compile Include="UserControls\Workflows\WorkflowDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>WorkflowDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\WorkflowDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>WorkflowDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StepTransitionDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StepTransitionDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StepTransitionDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StepTransitionDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StepDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StepDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StepDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StepDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StageTransitionDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StageTransitionDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StageTransitionDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StageTransitionDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StageDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StageDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Workflows\StageDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StageDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\XmlSourceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>XmlSourceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\XmlSourceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>XmlSourceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\SolutionDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SolutionDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\SolutionDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>SolutionDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\ProjectDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ProjectDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\ProjectDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ProjectDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\FeatureDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>FeatureDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\FeatureDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>FeatureDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\DatabaseSourceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>DatabaseSourceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\DatabaseSourceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>DatabaseSourceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\AuditPropertyDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>AuditPropertyDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Solutions\AuditPropertyDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>AuditPropertyDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ValueDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ValueDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ValueDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ValueDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelPropertyDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelPropertyDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelPropertyDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelPropertyDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelObjectDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelObjectDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelObjectDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelObjectDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\ModelDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ModelDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\EnumerationDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EnumerationDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Models\EnumerationDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EnumerationDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateTransitionDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateTransitionDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateTransitionDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateTransitionDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateModelDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateModelDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateModelDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateModelDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\StateDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>StateDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\RelationshipPropertyDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipPropertyDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\RelationshipPropertyDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipPropertyDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\RelationshipPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\RelationshipDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\RelationshipDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>RelationshipDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyReferencePropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyReferencePropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyReferenceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyReferenceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyReferenceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyReferenceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\PropertyDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>PropertyDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\ParameterDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ParameterDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\ParameterDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ParameterDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\MethodPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MethodPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\MethodDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MethodDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\MethodDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MethodDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\IndexPropertyDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexPropertyDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\IndexPropertyDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexPropertyDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\IndexPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\IndexDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\IndexDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>IndexDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\EntityReferencePropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityReferencePropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\EntityReferenceDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityReferenceDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\EntityReferenceDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityReferenceDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\EntityDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\EntityDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>EntityDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\CollectionPropertiesControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CollectionPropertiesControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\CollectionDialogControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CollectionDialogControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Entities\CollectionDetailControl_G.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>CollectionDetailControl_G.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\FindReplaceDialog.xaml.cs">
+      <DependentUpon>FindReplaceDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Library\Adapters.cs" />
+    <Compile Include="Library\BindableDataGridComboBoxColumn.cs" />
+    <Compile Include="Library\Connection.cs" />
+    <Compile Include="Library\ConnectionAdorner.cs" />
+    <Compile Include="Library\Connector.cs" />
+    <Compile Include="Library\ConnectorAdorner.cs" />
+    <Compile Include="Library\DataGridHelper.cs" />
+    <Compile Include="Library\DesignerCanvas.cs" />
+    <Compile Include="Library\DesignerItem.cs" />
+    <Compile Include="Library\DisableButtonStringConverter.cs" />
+    <Compile Include="Library\DraggableListBox.cs" />
+    <Compile Include="Library\DragObject.cs" />
+    <Compile Include="Library\DragThumb.cs" />
+    <Compile Include="Library\EditControl.cs" />
+    <Compile Include="Library\FindReplace.cs" />
+    <Compile Include="Library\ISelectable.cs" />
+    <Compile Include="Library\IsNullOrEmptyConverter.cs" />
+    <Compile Include="Library\ModelTreeView.cs" />
+    <Compile Include="Library\ModelTreeViewItem.cs" />
+    <Compile Include="Library\MouseUtilities.cs" />
+    <Compile Include="Library\PathFinder.cs" />
+    <Compile Include="Library\RelativePositionPanel.cs" />
+    <Compile Include="Library\ResizeThumb.cs" />
+    <Compile Include="Library\RoutableDataGrid.cs" />
+    <Compile Include="Library\RoutedEventPlaceHolder.cs" />
+    <Compile Include="Library\RubberbandAdorner.cs" />
+    <Compile Include="Library\TemplateFoldingStrategy.cs" />
+    <Compile Include="Library\ToolBoxControl.cs" />
+    <Compile Include="Library\ViewModelHelper.cs" />
+    <Compile Include="Library\VisualItemHelper.cs" />
+    <Compile Include="Library\ZoomBox.cs" />
+    <Compile Include="Resources\DisplayValues.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisplayValues.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MoPlus.Interpreter\MoPlus.Interpreter.csproj">
+      <Project>{E936645D-A430-499E-89CA-9D034D75B775}</Project>
+      <Name>MoPlus.Interpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoPlus.ViewModel\MoPlus.ViewModel.csproj">
+      <Project>{1A6C3352-9781-4722-B6C8-DEC5DB0FAF53}</Project>
+      <Name>MoPlus.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\MoPlus.Common\MoPlus.Common.csproj">
+      <Project>{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}</Project>
+      <Name>MoPlus.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\MoPlus.Data\MoPlus.Data.csproj">
+      <Project>{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}</Project>
+      <Name>MoPlus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\MoPlus.IO\MoPlus.IO.csproj">
+      <Project>{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}</Project>
+      <Name>MoPlus.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CodeContentHighlighting.xshd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CodeOutputHighlighting.xshd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SpecContentHighlighting.xshd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SpecOutputHighlighting.xshd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Product.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DisplayValues.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DisplayValues.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Debug_Go.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Breakpoint.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Debug_Stop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\AuditPropertyClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\CodeTemplateClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\CollectionClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\DatabaseSourceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\DiagramClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DiagramEntityClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EntityClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EntityOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EntityReferenceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EnumerationClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\EnumerationOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\FeatureClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\FeatureOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\FolderClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\FolderOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\IndexClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\IndexOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\IndexPropertyClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MethodClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\MethodOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ModelClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ModelObjectClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ModelObjectOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ModelOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ModelPropertyClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\Node.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\NodeOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ObjectInstanceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ObjectInstanceOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ParameterClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\pin.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ProjectClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PropertyClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PropertyInstanceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\PropertyReferenceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\RelationshipClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\RelationshipOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\RelationshipPropertyClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\SolutionClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\SolutionOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\SpecTemplateClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StageClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StageOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StageTransitionClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StateClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StateModelClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StateModelOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StateOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StateTransitionClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StepClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StepOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\StepTransitionClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\ValueClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\WorkflowClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\WorkflowOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\XmlSourceClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MoPlusKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\HelpClosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Images\HelpOpen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

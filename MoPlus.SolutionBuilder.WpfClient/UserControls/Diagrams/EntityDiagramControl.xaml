@@ -1,0 +1,108 @@
+﻿<lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Diagrams.EntityDiagramControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:vm="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
+			 xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+			 xmlns:uent="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Entities"
+			 xmlns:udiag="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Diagrams"
+			 xmlns:usol="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Solutions"
+             xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
+			 mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+			 Focusable="True"
+			 PreviewMouseDown="EditControl_PreviewMouseDown">
+	<lib:EditControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme.xaml" />
+				<ResourceDictionary Source="../../Resources/DiagramTheme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<Style x:Key="DiagramBorderStyle" TargetType="{x:Type Border}">
+				<Setter Property="BorderBrush" Value="{StaticResource DiagramNormalBorderBrush}" />
+				<Setter Property="BorderThickness" Value="6" />
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsSelected}" Value="True">
+						<Setter Property="BorderBrush" Value="{StaticResource DiagramPressedBorderBrush}" />
+						<Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource AncestorType=lib:EditControl}}"></Setter>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+		</ResourceDictionary>
+	</lib:EditControl.Resources>
+	<Grid>
+		<StackPanel Orientation="Vertical" Name="LeftPanel" Margin="-4" Width="3" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Hidden">
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Left" Visibility="Hidden"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" Name="TopPanel" Margin="-4" Height="3" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Hidden">
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Top" Visibility="Hidden"/>
+		</StackPanel>
+		<StackPanel Orientation="Vertical" Name="RightPanel" Margin="-4" Width="3" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Hidden">
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+			<lib:Connector Margin="0,3,0,3" Orientation="Right" Visibility="Hidden"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" Name="BottomPanel" Margin="-4" Height="3" HorizontalAlignment="Center" VerticalAlignment="Bottom" Visibility="Hidden">
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+			<lib:Connector Margin="3,0,3,0" Orientation="Bottom" Visibility="Hidden"/>
+		</StackPanel>
+		<Border Style="{StaticResource DiagramBorderStyle}">
+			<Grid MinWidth="10" MinHeight="10" Margin="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"></RowDefinition>
+					<RowDefinition Height="*" ></RowDefinition>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"></ColumnDefinition>
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Row="0" Grid.Column="0" IsHitTestVisible="False" Background="{StaticResource ControlDarkBackgroundBrush}">
+					<Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelDiagram}" Content="{Binding EntityViewModel.DiagramHeader, Mode=OneWay}" />
+				</Grid>
+				<ScrollViewer Grid.Row="1" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}" >
+					<StackPanel VerticalAlignment="Top">
+						<udiag:PropertiesDiagramControl DataContext="{Binding EntityViewModel.PropertiesFolder}" />
+						<udiag:CollectionsDiagramControl DataContext="{Binding EntityViewModel.CollectionsFolder}" />
+						<udiag:PropertyReferencesDiagramControl DataContext="{Binding EntityViewModel.PropertyReferencesFolder}" />
+						<udiag:EntityReferencesDiagramControl DataContext="{Binding EntityViewModel.EntityReferencesFolder}" />
+						<udiag:MethodsDiagramControl DataContext="{Binding EntityViewModel.MethodsFolder}" />
+						<udiag:IndexesDiagramControl DataContext="{Binding EntityViewModel.IndexesFolder}" />
+					</StackPanel>
+				</ScrollViewer>
+			</Grid>
+		</Border>
+	</Grid>
+</lib:EditControl>

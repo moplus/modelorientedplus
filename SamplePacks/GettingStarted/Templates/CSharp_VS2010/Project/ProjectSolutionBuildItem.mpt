@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME ProjectSolutionBuildItem
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-	{%%><%%=ProjectID.ToUpper()%%><%%-}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{%%><%%=ProjectID.ToUpper()%%><%%-}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{%%><%%=ProjectID.ToUpper()%%><%%-}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{%%><%%=ProjectID.ToUpper()%%><%%-}.Release|Any CPU.Build.0 = Release|Any CPU
+	%%></CONTENT>

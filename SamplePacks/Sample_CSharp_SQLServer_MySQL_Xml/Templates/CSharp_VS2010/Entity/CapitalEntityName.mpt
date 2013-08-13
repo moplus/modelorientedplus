@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME CapitalEntityName
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// Template: CapitalEntityName
+//
+// return the entity name in capital case.
+<%%=EntityName.CapitalCase()%%></CONTENT>

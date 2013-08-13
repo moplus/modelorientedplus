@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WcfRESTWebServiceCodeFileProjectItem
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfRESTWebServiceCodeFilePath.Substring(WcfRESTWebServiceCodeFilePath.IndexOf(WcfRESTWebServiceName))%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WcfRESTWebServiceMarkupFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

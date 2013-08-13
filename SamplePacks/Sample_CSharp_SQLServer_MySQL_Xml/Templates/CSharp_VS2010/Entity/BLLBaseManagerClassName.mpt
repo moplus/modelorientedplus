@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLBaseManagerClassName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-BusinessManagerObjectBase%%></CONTENT>

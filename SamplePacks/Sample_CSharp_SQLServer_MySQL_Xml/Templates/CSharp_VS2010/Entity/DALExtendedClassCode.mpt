@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME DALExtendedClassCode
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=DALExtendedClassBodyStartCode%%>
+<%%-
+#region "Constants"
+#endregion "Constants"
+
+#region "Fields and Properties"
+#endregion "Fields and Properties"
+
+#region "Methods"
+#endregion "Methods"
+
+#region "Constructors"
+#endregion "Constructors"%%>
+<%%=DALGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(DALExtendedClassFilePath) == null || (File(DALExtendedClassFilePath).Contains("<Status>Generated</Status>") == true && File(DALExtendedClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(DALExtendedClassFilePath)
+}
+%%></OUTPUT>

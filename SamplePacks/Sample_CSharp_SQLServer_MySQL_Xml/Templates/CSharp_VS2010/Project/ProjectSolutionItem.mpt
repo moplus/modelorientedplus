@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME ProjectSolutionItem
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-Project("{%%><%%=Solution.SolutionID.ToUpper()%%><%%-}") = "%%><%%=Namespace%%><%%-", "%%><%%=ProjectItemPath%%><%%-", "{%%><%%=ProjectID.ToUpper()%%><%%-}"
+EndProject
+%%></CONTENT>

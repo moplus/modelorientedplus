@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WcfRESTClassCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTClassBodyStartCode%%>
+<%%=WcfRESTClassMethodsCode%%>
+<%%=WcfRESTGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTClassFilePath) == null || (File(WcfRESTClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTClassFilePath)
+}
+%%></OUTPUT>

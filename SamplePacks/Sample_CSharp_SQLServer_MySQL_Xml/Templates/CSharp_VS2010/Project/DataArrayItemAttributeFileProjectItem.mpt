@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DataArrayItemAttributeFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataArrayItemAttributeFilePath.Substring(DataArrayItemAttributeFilePath.IndexOf("DataArrayItemAttribute")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

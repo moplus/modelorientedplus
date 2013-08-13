@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLMethodName
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=MethodName%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfSOAPMarkupClassFileName
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPClassName%%><%%-.svc%%></CONTENT>

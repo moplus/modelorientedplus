@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DALNeedsSQLInjectionWrapping
+	CATEGORY DAL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%:
+if (DALDataType == "string")
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

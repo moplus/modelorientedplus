@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsDeleteAllByForeignKeyMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (MethodTypeCode == 11 /* DeleteAllByForeignKey */)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>

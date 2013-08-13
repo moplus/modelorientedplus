@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLExtendedManagerClassFileName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLManagerClassName%%><%%-_Ext.cs%%></CONTENT>

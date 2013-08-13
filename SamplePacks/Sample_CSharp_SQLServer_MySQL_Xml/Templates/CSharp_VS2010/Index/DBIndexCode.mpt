@@ -1,0 +1,62 @@
+<CONFIG>
+	NAME DBIndexCode
+	CATEGORY DB
+	NODE Index
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+var isFirstItem = true
+<%%-
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name = '%%><%%=IndexName%%><%%-' AND object_id = OBJECT_ID('%%><%%=Entity.DBTableName%%><%%-'))
+	BEGIN%%>
+if (IsPrimaryKeyIndex == true)
+{
+<%%-
+		ALTER TABLE %%><%%=Entity.DBTableName%%><%%-
+		ADD CONSTRAINT %%><%%=IndexName%%><%%-
+		PRIMARY KEY CLUSTERED
+		(%%>
+	foreach (IndexProperty where Tags.Contains("DB") == true)
+	{
+		if (isFirstItem == false)
+		{
+			<%%-, %%>
+		}
+		else
+		{
+			<%%-  %%>
+		}
+		isFirstItem = false
+		<%%=Property.DBColumnName%%><%%- ASC%%>
+	}
+<%%-
+		)%%>
+}
+else
+{
+<%%-
+		CREATE%%>
+	if (IsUniqueIndex == true)
+	{
+		<%%- UNIQUE%%>
+	}
+	<%%- NONCLUSTERED INDEX %%><%%=IndexName%%><%%-
+		ON %%><%%=Entity.DBTableName%%><%%- (%%>
+	foreach (IndexProperty where Tags.Contains("DB") == true)
+	{
+		if (isFirstItem == false)
+		{
+			<%%-, %%>
+		}
+		isFirstItem = false
+		<%%=Property.DBColumnName%%>
+	}
+ <%%-)%%>
+}
+<%%-
+	END
+GO%%>
+%%></CONTENT>

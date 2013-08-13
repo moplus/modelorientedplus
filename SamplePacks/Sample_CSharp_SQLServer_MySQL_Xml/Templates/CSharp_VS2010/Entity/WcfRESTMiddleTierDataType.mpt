@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierDataType
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WcfRESTMiddleTierClassName%%></CONTENT>

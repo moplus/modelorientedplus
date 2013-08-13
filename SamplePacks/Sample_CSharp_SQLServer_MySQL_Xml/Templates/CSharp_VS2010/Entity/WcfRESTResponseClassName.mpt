@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTResponseClassName
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-Response%%></CONTENT>

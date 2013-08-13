@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DBParameterName
+	CATEGORY DB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.CamelCase()%%></CONTENT>

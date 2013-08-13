@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLMediatorFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Messaging\Mediator_G.cs%%></CONTENT>

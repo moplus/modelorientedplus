@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLClassFileProjectItem
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=BLLClassFileProjectPath%%><%%-" />
+    %%></CONTENT>

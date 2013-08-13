@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ODataServiceFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ODataService_G.cs%%></CONTENT>

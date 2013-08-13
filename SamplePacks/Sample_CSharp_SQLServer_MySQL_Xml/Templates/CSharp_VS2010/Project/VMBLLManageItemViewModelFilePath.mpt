@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLManageItemViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ManageItemViewModel_G.cs%%></CONTENT>

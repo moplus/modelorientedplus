@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DALFieldName
+	CATEGORY DAL
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EntityReferenceName.UnderscoreCase()%%></CONTENT>

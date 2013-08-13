@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DefaultValueFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DefaultValue_G.cs%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMarkupClassFilePath
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.ProjectNamespace%%><%%-\%%><%%=Feature.FeatureName%%><%%-\%%><%%=WcfRESTMarkupClassFileName%%></CONTENT>

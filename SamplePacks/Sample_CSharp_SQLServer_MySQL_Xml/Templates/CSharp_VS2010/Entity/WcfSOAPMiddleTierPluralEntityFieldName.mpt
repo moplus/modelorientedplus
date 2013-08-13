@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierPluralEntityFieldName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPMiddleTierPluralEntityName.UnderscoreCase()%%></CONTENT>

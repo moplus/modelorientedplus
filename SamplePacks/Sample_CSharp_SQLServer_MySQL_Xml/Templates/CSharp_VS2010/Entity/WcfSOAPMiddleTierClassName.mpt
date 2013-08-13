@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierClassName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%></CONTENT>

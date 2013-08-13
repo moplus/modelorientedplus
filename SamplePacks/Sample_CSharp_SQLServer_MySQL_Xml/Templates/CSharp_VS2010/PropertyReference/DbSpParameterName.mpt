@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DbSpParameterName
+	CATEGORY DbSp
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-@%%><%%=PropertyReferenceName.CamelCase()%%></CONTENT>

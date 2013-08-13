@@ -1,0 +1,60 @@
+<CONFIG>
+	NAME VMEFDSDataServiceReferenceMapFile
+	CATEGORY VMEFDS
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="14e26fe7-8c37-4de9-ae4c-bb1f44c7ffe8" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">%%>
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as DS
+	foreach (Project where Tags.Contains("DS") == true)
+	{
+<%%-
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:54454/%%><%%=DSDataServiceName%%><%%-.svc/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="a5687865-4aea-46f1-9d8e-93d6f969271f" SourceId="1" SourceUrl="http://localhost:54454/%%><%%=DSDataServiceName%%><%%-.svc/" />
+  </Metadata>%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+<%%-
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:54454/%%><%%=DSDataServiceName%%><%%-.svc/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="a5687865-4aea-46f1-9d8e-93d6f969271f" SourceId="1" SourceUrl="http://localhost:54454/%%><%%=DSDataServiceName%%><%%-.svc/" />
+  </Metadata>%%>
+	}
+}  
+  <%%-
+  <Extensions />
+  <Parameters>
+    <Parameter Name="UseDataServiceCollection" Value="true" />
+    <Parameter Name="Version" Value="2.0" />
+  </Parameters>
+</ReferenceGroup>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMEFDSDataServiceReferenceMapFilePath) == null || (File(VMEFDSDataServiceReferenceMapFilePath).Contains("<Status>Generated</Status>") == true && File(VMEFDSDataServiceReferenceMapFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMEFDSDataServiceReferenceMapFilePath)
+}
+%%></OUTPUT>

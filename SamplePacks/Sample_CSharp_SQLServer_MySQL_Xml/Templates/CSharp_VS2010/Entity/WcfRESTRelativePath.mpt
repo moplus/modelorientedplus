@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTRelativePath
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\%%><%%=FeatureName%%><%%-\%%></CONTENT>

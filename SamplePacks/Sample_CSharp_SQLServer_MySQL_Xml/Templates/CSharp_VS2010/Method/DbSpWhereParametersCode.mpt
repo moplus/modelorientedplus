@@ -1,0 +1,113 @@
+<CONFIG>
+	NAME DbSpWhereParametersCode
+	CATEGORY DbSp
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+// output parameter validation
+log("DbSpWhereParametersCode", "IsFirstItem", true)
+switch (MethodTypeCode)
+{
+	case 2: // GetAll
+	case 5: // GetAllByCriteria
+	case 4: // GetAllByForeignkey
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		with (Entity)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsActivationProperty == true)
+				{
+					<%%-
+					%%>
+					if (LogValue("DbSpWhereParametersCode", "IsFirstItem") == false)
+					{
+						<%%-AND %%>
+					}
+					log("DbSpWhereParametersCode", "IsFirstItem", false)
+					if (IsActivationDateProperty == true)
+					{
+						if (DBPropertyName.Contains("Start") == true)
+						{
+							<%%=DbSpAliasColumnName%%>
+							<%%- <= CASE WHEN @includeInactive = 1 THEN %%>
+							<%%=DbSpAliasColumnName%%>
+							<%%- ELSE getdate() END%%>
+						}
+						else
+						{
+							<%%=DbSpAliasColumnName%%>
+							<%%- >= CASE WHEN @includeInactive = 1 THEN %%>
+							<%%=DbSpAliasColumnName%%>
+							<%%- ELSE getdate() END%%>
+						}
+					}
+					else
+					{
+						<%%=DbSpAliasColumnName%%>
+						<%%- = CASE WHEN @includeInactive = 1 THEN %%>
+						<%%=DbSpAliasColumnName%%>
+						<%%- ELSE 1 END%%>
+					}
+				}
+			}
+		}
+		break
+}
+
+// add method parameters to where clause
+foreach (Parameter)
+{
+	CurrentParameter = Parameter
+	with (Entity)
+	{
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			with (Property from Entity.Find(CurrentParameter.ReferencedPropertyID))
+			{
+				<%%-
+				%%>
+				if (LogValue("DbSpWhereParametersCode", "IsFirstItem") == false)
+				{
+					<%%-AND %%>
+				}
+				log("DbSpWhereParametersCode", "IsFirstItem", false)
+				switch (CurrentMethod.MethodTypeCode)
+				{
+					case 11: // DeleteAllByForeignKey
+						<%%=DBPropertyName%%><%%- = %%><%%=CurrentParameter.DbSpParameterName%%>
+						break
+					case 5: // GetAllByCriteria
+					case 7: // GetManyByCriteria
+						if (IsStartDateProperty == true)
+						{
+							<%%-(%%><%%=CurrentParameter.DbSpParameterName%%><%%- IS NULL OR %%><%%=DbSpAliasColumnName%%><%%- >= %%><%%=CurrentParameter.DbSpParameterNamee%%><%%-)%%>
+						}
+						else if (IsEndDateProperty == true)
+						{
+							<%%-(%%><%%=CurrentParameter.DbSpParameterName%%><%%- IS NULL OR %%><%%=DbSpAliasColumnName%%><%%- <= %%><%%=CurrentParameter.DbSpParameterName%%><%%-)%%>
+						}
+						else if (IsLikeSearchProperty == true)
+						{
+							<%%-(%%><%%=CurrentParameter.DbSpParameterName%%><%%- IS NULL OR %%><%%=DbSpAliasColumnName%%><%%- like '%' + %%><%%=CurrentParameter.DbSpParameterName%%><%%- + '%')%%>
+						}
+						else
+						{
+							<%%-(%%><%%=CurrentParameter.DbSpParameterName%%><%%- IS NULL OR %%><%%=DbSpAliasColumnName%%><%%- = %%><%%=CurrentParameter.DbSpParameterName%%><%%-)%%>
+						}
+						break
+					default:
+						<%%=DbSpAliasColumnName%%><%%- = %%><%%=CurrentParameter.DbSpParameterName%%>
+						break
+				}
+				break
+			}
+		}
+	}
+}
+%%></CONTENT>

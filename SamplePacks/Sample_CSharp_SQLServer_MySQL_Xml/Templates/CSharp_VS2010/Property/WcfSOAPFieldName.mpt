@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPFieldName
+	CATEGORY WcfSOAP
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.UnderscoreCase()%%></CONTENT>

@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME BLLSerializationPropertyAttributesCode
+	CATEGORY BLL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[XmlElement(ElementName = "%%><%%=BLLPropertyName%%><%%-")]%%></CONTENT>

@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME ShouldPrimaryKeyBeSuppliedOnAdd
+	CATEGORY LIB
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+// determine if primary key is required
+// TODO: may need to check default values for primary key properties for this
+switch (Entity.EntityTypeCode)
+{
+	case 1: // Lookup:
+	case 2: // LookupBusiness:
+	case 4: // PrimaryCoded:
+		<%%-true%%>
+		break
+	default:
+		with (BaseEntity)
+		{
+			// extended entities need primary key from base
+			<%%-true%%>
+		}
+		break
+}
+if (Text == null)
+{
+	<%%-false%%>
+}
+%%></CONTENT>

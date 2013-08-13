@@ -1,0 +1,62 @@
+<CONFIG>
+	NAME ProtectedAreaParameterTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param parameter1
+param parameter2
+var v1
+var v2
+v1 = parameter1
+v2 = parameter2
+if (v1 == null)
+{
+	v1 = "<undefined>"
+}
+if (v2 == null)
+{
+	v2 = "<undefined>"
+}
+%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>This file is a code generation test!!!</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize, change the Status value below to something
+/// other than Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+///-------------------------------------------------------------------------------
+
+The first parameter is %%><%%=v1%%><%%- and the second parameter is %%><%%=v2%%><%%-.  This is generated text.
+
+#region protected
+#endregion protected
+
+Before second region
+
+	#region protected
+	#endregion protected
+
+Before third region
+
+			#region protected
+			#endregion protected
+
+This is some more generated text.
+
+
+%%></CONTENT><OUTPUT>
+<%%:
+if (File("c:\\temp\\test.txt").FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update("c:\\temp\\test.txt")
+}
+
+%%></OUTPUT>

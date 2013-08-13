@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierPluralEntityFieldName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPMiddleTierPluralEntityName.UnderscoreCase()%%></CONTENT>

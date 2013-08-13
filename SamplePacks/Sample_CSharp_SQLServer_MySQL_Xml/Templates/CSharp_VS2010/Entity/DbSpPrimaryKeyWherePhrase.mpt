@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DbSpPrimaryKeyWherePhrase
+	CATEGORY DbSp
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true && Tags.Contains("DB") == true)
+{
+	if (ItemIndex > 0)
+	{
+		<%%- AND %%>
+	}
+	<%%=DBColumnName%%><%%- = %%><%%=DbSpParameterName%%>
+}
+%%></CONTENT>

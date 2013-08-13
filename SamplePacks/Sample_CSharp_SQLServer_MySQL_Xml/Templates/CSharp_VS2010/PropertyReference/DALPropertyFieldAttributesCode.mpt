@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME DALPropertyFieldAttributesCode
+	CATEGORY DAL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[DataMember(Name="%%><%%=DALPropertyName%%><%%- ")]
+[DataElement(ElementName="%%><%%=DALPropertyName%%><%%-")]
+%%></CONTENT>

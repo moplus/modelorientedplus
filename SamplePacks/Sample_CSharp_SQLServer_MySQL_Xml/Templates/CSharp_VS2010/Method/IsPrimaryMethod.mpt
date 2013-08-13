@@ -1,0 +1,42 @@
+<CONFIG>
+	NAME IsPrimaryMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var isPrimaryMethod = false
+var isFound
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+		if (ParameterCount == 0)
+		{
+			isPrimaryMethod = true
+		}
+		break
+	case 1: // GetOne
+		isPrimaryMethod = true
+		foreach (Parameter)
+		{
+			isFound = false
+			with (Property from ../Entity.Find(ReferencedPropertyID))
+			{
+				if (IsPrimaryKeyMember == true)
+				{
+					isFound = true
+				}
+				if (isFound == false)
+				{
+					isPrimaryMember = false
+				}
+			}
+		}
+		break
+}
+<%%=isPrimaryMethod%%>
+
+%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DbSpMethodName
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-[dbo].[sp%%><%%=FeatureName%%><%%-_%%><%%=MethodName%%><%%-]%%></CONTENT>

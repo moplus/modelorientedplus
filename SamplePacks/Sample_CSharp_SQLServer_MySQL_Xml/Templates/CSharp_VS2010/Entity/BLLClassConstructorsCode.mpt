@@ -1,0 +1,79 @@
+<CONFIG>
+	NAME BLLClassConstructorsCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Constructors"
+
+///--------------------------------------------------------------------------------
+/// <summary>The default constructor (for reflection, etc.).</summary>
+///--------------------------------------------------------------------------------
+public %%><%%=BLLClassName%%><%%-(){}
+
+///--------------------------------------------------------------------------------
+/// <summary>This constructor creates a business logic %%><%%=BLLClassName%%><%%- instance
+/// with a data access %%><%%=DALClassName%%><%%- instance.</summary>
+///
+/// <param name="dataAccessObject">The corresponding data access object.</param>
+/// <param name="filterElements">Data elements to filter from the data access object.</param>
+///--------------------------------------------------------------------------------
+public %%><%%=BLLClassName%%><%%-(DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassName%%><%%- dataAccessObject, NameObjectCollection filterElements)
+{%%>
+	<%%=TAB 1%%><%%-
+	TransformDataFromObject(dataAccessObject, filterElements);%%>
+<%%=TAB -1%%><%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This constructor creates a business logic %%><%%=BLLClassName%%><%%- instance
+/// with primary key values.</summary>
+///
+/// <param name="primaryKeyValues">The primary key values to initialize the instance with.</param>
+///--------------------------------------------------------------------------------
+public %%><%%=BLLClassName%%><%%-(string primaryKeyValues)
+{%%>
+	<%%=TAB 1%%><%%-
+	PrimaryKeyValues = primaryKeyValues;%%>
+<%%=TAB -1%%><%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This constructor creates a business logic %%><%%=BLLClassName%%><%%- instance
+/// with primary key properties individually.</summary>
+///
+%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-/// <param name="%%><%%=BLLParameterName%%><%%-">The input value for %%><%%=BLLPropertyName%%><%%-.</param>%%>
+	}
+%%>
+<%%-
+///--------------------------------------------------------------------------------
+public %%><%%=BLLClassName%%><%%-(%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%=BLLDataType%%><%%- %%><%%=BLLParameterName%%>
+	}
+	<%%-)%%>
+%%><%%-
+{%%>
+<%%:
+	<%%=TAB 1%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-
+		%%>	<%%=BLLPropertyName%%><%%- = %%><%%=BLLParameterName%%><%%-;%%>
+	}
+%%><%%=TAB -1%%><%%-
+}%%>
+<%%-
+#endregion "Constructors"%%></CONTENT>

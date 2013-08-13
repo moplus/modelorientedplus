@@ -1,0 +1,215 @@
+<CONFIG>
+	NAME WcfRESTWebResponseBaseFile
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.ComponentModel;
+using System.Text;
+using System.CodeDom.Compiler;
+using System.Xml.Serialization;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to wrap web response data and include response status
+	/// for Unit items.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	[XmlRoot(Namespace = "")]
+	[DataContract]
+	public abstract class WebResponseBase : WebResults
+	{
+		#region "Fields and Properties"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property determines how data for this entity is to be paged and
+		/// sorted.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual DataAccessOptions DataAccessOptions { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the PageSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.Int)]
+		[DataMember]
+		[DataElement]
+		public virtual int PageSize
+		{
+			get
+			{
+				if (DataAccessOptions == null)
+				{
+					return DefaultValue.Int;
+				}
+				return DataAccessOptions.PageSize;
+			}
+			set
+			{
+				if (DataAccessOptions != null)
+				{
+					DataAccessOptions.PageSize = value;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the StartIndex property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.Int)]
+		[DataMember]
+		[DataElement]
+		public virtual int StartIndex
+		{
+			get
+			{
+				if (DataAccessOptions == null)
+				{
+					return DefaultValue.Int;
+				}
+				return DataAccessOptions.StartIndex;
+			}
+			set
+			{
+				if (DataAccessOptions != null)
+				{
+					DataAccessOptions.StartIndex = value;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the MaximumListSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.Int)]
+		[DataMember]
+		[DataElement]
+		public virtual int MaximumListSize
+		{
+			get
+			{
+				if (DataAccessOptions == null)
+				{
+					return DefaultValue.Int;
+				}
+				return DataAccessOptions.MaximumListSize;
+			}
+			set
+			{
+				if (DataAccessOptions != null)
+				{
+					DataAccessOptions.MaximumListSize = value;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortColumn property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.StringStr)]
+		[DataMember]
+		[DataElement]
+		public virtual string SortColumn
+		{
+			get
+			{
+				if (DataAccessOptions == null)
+				{
+					return DefaultValue.String;
+				}
+				return DataAccessOptions.SortColumn;
+			}
+			set
+			{
+				if (DataAccessOptions != null)
+				{
+					DataAccessOptions.SortColumn = value;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortDirection property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.StringStr)]
+		[DataMember]
+		[DataElement]
+		public virtual string SortDirection
+		{
+			get
+			{
+				if (DataAccessOptions == null)
+				{
+					return DefaultValue.String;
+				}
+				return DataAccessOptions.SortDirection.ToString();
+			}
+			set
+			{
+				if (DataAccessOptions != null)
+				{
+					if (value.ToLower().StartsWith("desc") == true)
+					{
+						DataAccessOptions.SortDirection = ListSortDirection.Descending;
+					}
+					else
+					{
+						DataAccessOptions.SortDirection = ListSortDirection.Ascending;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the total records count.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.Int)]
+		[DataMember]
+		[DataElement]
+		public int TotalRecords { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the maximum list size exceeded flag (for searches).</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(DefaultValue.Bool)]
+		[DataMember]
+		[DataElement]
+		public bool MaximumListSizeExceeded { get; set; }
+
+		#endregion "Fields and Properties"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTWebResponseBaseFilePath) == null || (File(WcfRESTWebResponseBaseFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTWebResponseBaseFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTWebResponseBaseFilePath)
+}
+%%></OUTPUT>

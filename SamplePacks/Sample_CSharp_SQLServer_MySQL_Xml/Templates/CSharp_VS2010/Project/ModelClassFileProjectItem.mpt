@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME ModelClassFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=ModelClassFilePath.Substring(ModelClassFilePath.IndexOf(ModelClassFileName))%%><%%-" />
+    %%></CONTENT>

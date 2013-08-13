@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WcfSOAPInterfaceFileProjectItem
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfSOAPInterfaceFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <SubType>Code</SubType>
+    </Compile>
+    %%></CONTENT>

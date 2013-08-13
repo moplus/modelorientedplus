@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME WebSOAPMarkupClassFileProjectItem
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=WebSOAPMarkupClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME FileHelperFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\FileHelper_G.cs%%></CONTENT>

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME WcfSOAPExtendedClassCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPExtendedClassBodyStartCode%%>
+<%%-
+#region "Constants"
+#endregion "Constants"
+
+#region "Fields and Properties"
+#endregion "Fields and Properties"
+
+#region "Methods"
+#endregion "Methods"%%>
+<%%=WcfSOAPGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfSOAPExtendedClassFilePath) == null || (File(WcfSOAPExtendedClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfSOAPExtendedClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfSOAPExtendedClassFilePath)
+}
+%%></OUTPUT>

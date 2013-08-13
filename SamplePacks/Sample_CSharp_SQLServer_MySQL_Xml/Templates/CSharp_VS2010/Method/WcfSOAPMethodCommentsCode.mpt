@@ -1,0 +1,163 @@
+<CONFIG>
+	NAME WcfSOAPMethodCommentsCode
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+
+///--------------------------------------------------------------------------------%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get an instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "AddOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to add an instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "UpdateOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to update an instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to delete an instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteAllByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to delete a number of instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetAll":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all of the instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetAllByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetAllByForeignkey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetMany":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to a number of the instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetManyByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get a number of instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get a number of instances of %%><%%=WcfSOAPMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+	}
+%%>
+<%%-
+///%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+			with (Entity)
+			{
+				<%%-
+				/// <param name="item">The instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%- to perform the add  operation on.</param>%%>
+			}
+			break
+		case "UpdateOne":
+			with (Entity)
+			{
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-
+					/// <param name="%%><%%=WcfSOAPParameterName%%><%%-">A key to get an instance of %%><%%=../WcfSOAPMiddleTierClassName%%><%%- for updating.</param>%%>
+				}
+				<%%-
+				/// <param name="item">The instance of %%><%%=WcfSOAPMiddleTierClassName%%><%%- to perform the update  operation on.</param>%%>
+			}
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-
+					/// <param name="%%><%%=WcfSOAPParameterName%%><%%-">A key to get an instance of %%><%%=../WcfSOAPMiddleTierClassName%%><%%- for deletion.</param>%%>
+				}
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%-
+		/// <param name="%%><%%=WcfSOAPParameterName%%><%%-">The value for the %%><%%=WcfSOAPPropertyName%%><%%- property.</param>%%>
+	}
+<%%-
+/// <param name="cascadeDepth">The depth of performing operations relating to this instance.</param>%%>
+switch (MethodTypeName)
+	{
+		case "GetAll":
+		case "GetAllByCollectionItem":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+			<%%-
+			/// <param name="sortColumn">The name of the column to sort the results by.</param>
+			/// <param name="sortDirection">The direction to sort, ascending, descending, or random.</param>%%>
+			break
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			/// <param name="sortColumn">The name of the column to sort the results by.</param>
+			/// <param name="sortDirection">The direction to sort, ascending, descending, or random.</param>
+			/// <param name="startIndex">The starting index for the current page of results.</param>
+			/// <param name="pageSize">The size of the page of results.</param>
+			/// <param name="maximumListSize">The maximum expected results size for the search.</param>%%>
+			break
+	}
+%%>
+<%%-
+///--------------------------------------------------------------------------------%%></CONTENT>

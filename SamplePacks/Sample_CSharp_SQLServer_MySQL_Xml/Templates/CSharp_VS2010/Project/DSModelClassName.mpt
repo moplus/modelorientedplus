@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DSModelClassName
+	CATEGORY DS
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=Project.DbName%%><%%-Entities%%></CONTENT>

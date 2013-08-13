@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WcfRESTExtendedClassCommentsCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-///--------------------------------------------------------------------------------
+/// <summary></summary>
+///
+/// This file is for adding customizations to the %%><%%=WcfRESTClassName%%><%%- class.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Customized</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

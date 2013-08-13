@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsGetAllByCriteriaMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (MethodTypeCode == 5 /* GetAllByCriteria */)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>

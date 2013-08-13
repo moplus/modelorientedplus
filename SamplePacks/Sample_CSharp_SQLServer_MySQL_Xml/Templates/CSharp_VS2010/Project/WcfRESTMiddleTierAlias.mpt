@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierAlias
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%-BLL%%></CONTENT>

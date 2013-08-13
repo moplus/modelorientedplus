@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WcfSOAPExtendedClassBodyStartCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPGlobalCopyrightCode%%>
+<%%=WcfSOAPExtendedClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfSOAPExtendedClassCommentsCode%%><%%-
+	public partial class %%><%%=WcfSOAPClassName%%><%%- : %%><%%=WcfSOAPBaseClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

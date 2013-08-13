@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUISearchClassFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WPFUISearchClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WPFUISearchMarkupFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

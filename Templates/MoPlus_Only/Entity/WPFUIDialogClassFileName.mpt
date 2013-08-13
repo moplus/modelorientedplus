@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIDialogClassFileName
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WPFUIDialogClassName%%><%%-_G.xaml.cs%%></CONTENT>

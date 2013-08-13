@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLManagerClassPropertiesCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Fields and Properties"
+#endregion "Fields and Properties"%%></CONTENT>

@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME DALPropertyBodyCode
+	CATEGORY DAL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		return %%><%%=DALFieldName%%><%%-;%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

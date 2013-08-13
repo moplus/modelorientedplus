@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DALPropertyAttributesCode
+	CATEGORY DAL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[XmlIgnore]%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLExtendedEventArgsClassFilePath
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\Exts\Events\%%><%%=Feature.FeatureName%%><%%-\%%><%%=VMBLLExtendedEventArgsClassFileName%%></CONTENT>

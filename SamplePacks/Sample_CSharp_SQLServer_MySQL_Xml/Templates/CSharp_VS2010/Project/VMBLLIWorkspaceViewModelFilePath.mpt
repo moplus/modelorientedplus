@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLIWorkspaceViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\IWorkspaceViewModel_G.cs%%></CONTENT>

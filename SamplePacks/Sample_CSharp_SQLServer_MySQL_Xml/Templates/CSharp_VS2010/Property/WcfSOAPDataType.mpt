@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPDataType
+	CATEGORY WcfSOAP
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

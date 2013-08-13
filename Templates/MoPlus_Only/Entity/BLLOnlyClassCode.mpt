@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME BLLOnlyClassCode
+	CATEGORY BLLOnly
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=TAB -6%%>// there is a bug somewhere in setting tabs
+<%%=BLLOnlyClassBodyStartCode%%>
+<%%=BLLClassConstantsCode%%>
+<%%=BLLOnlyClassPropertiesCode%%><%%-
+%%><%%=BLLOnlyClassMethodsCode%%><%%-
+%%><%%=BLLOnlyClassConstructorsCode%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLClassFilePath) == null || (File(BLLClassFilePath).Contains("<Status>Generated</Status>") == true && File(BLLClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(BLLClassFilePath)
+}
+%%></OUTPUT>

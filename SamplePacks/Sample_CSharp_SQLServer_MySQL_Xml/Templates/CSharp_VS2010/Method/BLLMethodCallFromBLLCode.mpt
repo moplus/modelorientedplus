@@ -1,0 +1,30 @@
+<CONFIG>
+	NAME BLLMethodCallFromBLLCode
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=BLLMethodName%%><%%-(%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+			<%%-item, %%>
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%=BLLParameterName%%><%%-, %%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-out totalRecords, out maximumListSizeExceeded, %%>
+			break
+	}
+	<%%-cascadeDepth)%%>
+%%></CONTENT>

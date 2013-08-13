@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DataAccessConfigurationFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataAccessConfigurationFilePath.Substring(DataAccessConfigurationFilePath.IndexOf("DataAccessConfiguration")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME WcfSOAPMarkupClassCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<%@ ServiceHost Language="C#" Debug="true" Service="%%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WcfSOAPClassName%%><%%-" CodeBehind="%%><%%=WcfSOAPClassFileName%%><%%-" Factory="System.ServiceModel.Activation.ServiceHostFactory"%>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfSOAPMarkupClassFilePath) == null || (File(WcfSOAPMarkupClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfSOAPMarkupClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfSOAPMarkupClassFilePath)
+}
+%%></OUTPUT>

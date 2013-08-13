@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME BLLForeignEntityPrimaryKeyPropertyName
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// return the primary key property name of the foreign entity of this property
+//
+<%%:
+if (IsForeignKeyMember == true)
+{
+	foreach (Relationship)
+	{
+		foreach (RelationshipProperty)
+		{
+			if (PropertyID == ../../PropertyID)
+			{
+				with (ReferencedEntity)
+				{
+					<%%=BLLPrimaryKeyPropertyName%%>
+				}
+				return
+			}
+		}
+	}
+}
+%%></CONTENT>

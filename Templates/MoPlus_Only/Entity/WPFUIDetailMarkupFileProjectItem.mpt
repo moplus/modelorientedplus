@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUIDetailMarkupFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Page Include="%%><%%=WPFUIDetailMarkupFileProjectPath%%><%%-">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    %%></CONTENT>

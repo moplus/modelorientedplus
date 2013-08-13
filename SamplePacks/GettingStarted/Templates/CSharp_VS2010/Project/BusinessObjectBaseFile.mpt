@@ -1,0 +1,64 @@
+<CONFIG>
+	NAME BusinessObjectBaseFile
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.ComponentModel;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is the base business object implementation for this
+	/// project.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	[DataContract]
+	public abstract partial class BusinessObjectBase
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets IsModified.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DefaultValue(false)]
+		public virtual bool IsModified { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets IsLoaded.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DefaultValue(false)]
+		public virtual bool IsLoaded { get; set; }
+
+		#region protected
+		#endregion protected
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BusinessObjectBaseFilePath) == null || (File(BusinessObjectBaseFilePath).Contains("<Status>Generated</Status>") == true && File(BusinessObjectBaseFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BusinessObjectBaseFilePath)
+}
+%%></OUTPUT>

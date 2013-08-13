@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLFieldName
+	CATEGORY BLL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=BLLPropertyName.UnderscoreCase()%%></CONTENT>

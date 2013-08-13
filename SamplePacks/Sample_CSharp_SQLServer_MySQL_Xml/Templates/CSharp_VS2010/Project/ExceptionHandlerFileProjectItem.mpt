@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME ExceptionHandlerFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=ExceptionHandlerFilePath.Substring(ExceptionHandlerFilePath.IndexOf("ExceptionHandler")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

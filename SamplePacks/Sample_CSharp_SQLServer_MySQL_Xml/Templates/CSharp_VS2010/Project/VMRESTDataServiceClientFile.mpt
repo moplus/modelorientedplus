@@ -1,0 +1,107 @@
+<CONFIG>
+	NAME VMRESTDataServiceClientFile
+	CATEGORY VMREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.Services.Client;
+using System.ServiceModel.Web;
+using System.ServiceModel;
+using System.ServiceModel.Channels;
+using System.Configuration;%%>
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as DS
+	foreach (Project where Tags.Contains("DS") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class sets up the data service context to enable
+	/// view models to perform data operations.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public static partial class DataServiceClient
+	{%%>
+	foreach (Project)
+	{
+		if (../ProjectReferenceCount == 1 || Tags.Contains("DS") == true)
+		{
+		<%%-
+		private static WebChannelFactory<I%%><%%=WcfRESTWebServiceName%%><%%-> _channelFactory = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the DataService Context.</summary>
+		///--------------------------------------------------------------------------------
+		public static WebChannelFactory<I%%><%%=WcfRESTWebServiceName%%><%%-> ChannelFactory
+		{
+			get
+			{
+				if (_channelFactory == null)
+				{
+					// set up the binding
+					WebHttpBinding binding = new WebHttpBinding();
+					binding.Security.Mode = WebHttpSecurityMode.None;
+					binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
+					binding.TransferMode = TransferMode.StreamedResponse;
+					_channelFactory = new WebChannelFactory<I%%><%%=WcfRESTWebServiceName%%><%%->(binding, new Uri(ConfigurationManager.AppSettings["ServiceURI"], UriKind.RelativeOrAbsolute));
+				}
+				return _channelFactory;
+			}
+			set
+			{
+				_channelFactory = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method clears the  ClearChannelFactory.</summary>
+		///--------------------------------------------------------------------------------
+		public static void ClearChannelFactory()
+		{
+			_channelFactory = null;
+		}%%>
+		}
+	}
+	<%%-
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMEFDSDataServiceClientFilePath) == null || (File(VMEFDSDataServiceClientFilePath).Contains("<Status>Generated</Status>") == true && File(VMEFDSDataServiceClientFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMEFDSDataServiceClientFilePath)
+}
+%%></OUTPUT>

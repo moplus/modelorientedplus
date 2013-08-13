@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DataElementAttributeFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataElementAttributeFilePath.Substring(DataElementAttributeFilePath.IndexOf("DataElementAttribute")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

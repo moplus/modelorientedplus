@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME DALExtendedClassCommentsCode
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary></summary>
+///
+/// This file is for adding customizations to the %%><%%=DALClassName%%><%%- class
+/// (change the Status below to something other than Generated).
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

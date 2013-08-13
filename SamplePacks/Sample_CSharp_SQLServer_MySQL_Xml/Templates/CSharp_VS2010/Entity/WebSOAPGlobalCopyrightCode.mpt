@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WebSOAPGlobalCopyrightCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+/*<copyright>%%><%%-
+%%><%%=Solution.Copyright%%><%%-
+</copyright>*/%%></CONTENT>

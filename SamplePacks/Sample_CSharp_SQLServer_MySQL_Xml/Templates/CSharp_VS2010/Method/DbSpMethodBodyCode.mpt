@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME DbSpMethodBodyCode
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+BEGIN TRY%%><%%=TAB 1%%>
+<%%=DbSpMethodBodyInitializationCode%%>
+<%%=DbSpMethodBodyValidationCode%%>
+<%%=DbSpMethodBodyTaskCode%%>
+<%%=TAB -1%%>
+<%%-
+
+END TRY
+
+BEGIN CATCH%%><%%=TAB 1%%><%%-
+
+	-- output error number and message
+	SET @sqlErrorNumber = ERROR_NUMBER()
+	SET @sqlErrorMessage = ERROR_MESSAGE()%%><%%=TAB -1%%><%%-
+	
+END CATCH%%></CONTENT>

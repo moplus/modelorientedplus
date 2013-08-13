@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DALDataType
+	CATEGORY DAL
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (ReferencedEntity)
+{
+<%%-EnterpriseDataObjectList<DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassName%%><%%->%%>
+}%%></CONTENT>

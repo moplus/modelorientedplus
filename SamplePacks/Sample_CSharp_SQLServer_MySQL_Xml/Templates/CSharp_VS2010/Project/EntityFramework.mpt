@@ -1,0 +1,163 @@
+<CONFIG>
+	NAME EntityFramework
+	NODE Project
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+//
+// This template is for creating a business logic layer that utilizes underlying database
+// operations via the Entity Framework.
+//
+// Note: Tag projects using this template with BLL to best work with higher layer projects in this library.
+//
+<%%=USETABS false%%>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<!--<ProjectType>EF</ProjectType>-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{%%><%%=ProjectID.ToUpper()%%><%%-}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>%%><%%=Namespace%%><%%-</RootNamespace>
+    <AssemblyName>%%><%%=Namespace%%><%%-</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Services" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>%%></CONTENT><OUTPUT>
+<%%=ProjectFilePath%%>
+<%%:
+// delete project file if of a different type
+if (File(Path).Contains("<ProjectType>EF</ProjectType>") == false)
+{
+	delete(Path)
+}
+
+// create project file if it does not exist
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// make sure standard project files are present
+<%%>AssemblyInfoFile%%>
+
+// output entity framework model
+<%%>EFModelClassCode%%>
+log("GeneratedFile", EFModelClassFilePath, true)
+if (File(Path).Contains("\"" + EFModelClassFilePath.Substring(EFModelClassFilePath.IndexOf(DSModelClassName))) == false)
+{
+	//trace("adding to project: " + EFModelClassFilePath)
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", EFModelClassFileProjectItem)
+}
+<%%>EFModelMarkupCode%%>
+log("GeneratedFile", EFModelMarkupFilePath, true)
+if (File(Path).Contains(EFModelMarkupFilePath.Substring(EFModelMarkupFilePath.IndexOf(EFModelMarkupFileName)) + "\"") == false)
+{
+	//trace("adding to project: " + EFModelMarkupFilePath)
+	// add to project file
+	insert(ProjectFilePath, "<Import Project=", "/>", "$(MSBuildToolsPath)\Microsoft.CSharp.targets", EFModelMarkupFileProjectItem)
+}
+
+// add generated files that should be part of the solution
+foreach (Entity in Solution)
+{
+	<%%>EFExtendedClassCode%%>
+	log("GeneratedFile", EFExtendedClassFilePath, true)
+}
+
+// delete generated files that are no longer part of the solution
+forfiles(ProjectDirectory, ".cs")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		//trace("deleting: " + ItemPath.Substring(ProjectDirectory.Length + 1))
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Compile Include=", "/>", ItemPath.Substring(ProjectDirectory.Length + 1))
+	}
+}
+
+// make sure project references are present
+if (ProjectReferenceCount > 0)
+{
+	foreach (Project)
+	{
+		if (File(Path).Contains(ProjectFileName) == false)
+		{
+			if (File(Path).Contains("<ProjectReference") == true)
+			{
+				// add to project file
+				insert(../ProjectFilePath, "<ProjectReference", ProjectReferenceProjectItem)
+			}
+			else
+			{
+				// add to project file as new ItemGroup
+				insert(../ProjectFilePath, "<Import Project", ProjectReferenceProjectItemGroup)
+			}
+		}
+	}
+}
+%%></OUTPUT>

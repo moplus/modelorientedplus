@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME RelativeContextTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity)
+{
+	foreach (Property)
+	{
+		with (Entity)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				trace(../../PropertyID)
+			//	with (Property from Entity.Find(../../PropertyID))
+			//	{
+			//	}
+			}
+		}
+	}
+}%%></CONTENT>

@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME BLLEnumerationBodyStartCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLGlobalCopyrightCode%%>
+<%%=BLLEnumerationIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.ProjectNamespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+<%%=BLLEnumerationCommentsCode%%><%%-
+[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+public enum %%><%%=BLLEnumerationName%%><%%-
+{%%><%%=TAB 1%%></CONTENT>

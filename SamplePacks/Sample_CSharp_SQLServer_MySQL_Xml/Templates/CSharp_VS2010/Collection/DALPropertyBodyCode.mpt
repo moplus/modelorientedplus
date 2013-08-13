@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME DALPropertyBodyCode
+	CATEGORY DAL
+	NODE Collection
+</CONFIG>
+<CONTENT>
+<%%-
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		return %%><%%=DALFieldName%%><%%-;%%><%%=TAB -1%%><%%-
+	}
+	set
+	{%%><%%=TAB 1%%><%%-
+		if (%%><%%=DALFieldName%%><%%- == null || %%><%%=DALFieldName%%><%%-.Equals(value) == false)
+		{%%><%%=TAB 1%%><%%-
+			%%><%%=DALFieldName%%><%%- = value;
+			if (value != null)
+			{%%><%%=TAB 1%%><%%-
+				_isModified = true;%%><%%=TAB -1%%><%%-
+			}%%><%%=TAB -1%%><%%-
+		}%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

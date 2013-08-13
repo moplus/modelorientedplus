@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALProjectRelativePath
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-DAL\%%><%%=Feature.FeatureName%%><%%-\%%></CONTENT>

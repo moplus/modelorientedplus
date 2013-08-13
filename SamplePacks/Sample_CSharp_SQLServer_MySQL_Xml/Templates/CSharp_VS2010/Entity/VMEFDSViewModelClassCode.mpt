@@ -1,0 +1,543 @@
+<CONFIG>
+	NAME VMEFDSViewModelClassCode
+	CATEGORY VMEFDS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+CurrentEntity = Entity
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.ComponentModel;
+using %%><%%=Project.Namespace%%><%%-.Messaging;
+using %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.DataService;
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides views for %%><%%=BLLClassName%%><%%- instances.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize, change the Status value below to something
+	/// other than Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLViewModelClassName%%><%%- : EditWorkspaceViewModel
+	{
+		#region "Menus"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				return "New %%><%%=BLLClassName%%><%%-";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelEdit.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelEdit
+		{
+			get
+			{
+				return "Edit";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelDelete.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelDelete
+		{
+			get
+			{
+				return "Delete";
+			}
+		}
+
+		#endregion "Menus"
+
+		#region "Editing Support"
+		private bool _isEdited;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEdited.</summary>
+		///--------------------------------------------------------------------------------
+		public override bool IsEdited
+		{
+			get
+			{
+				return _isEdited;
+			}
+		}%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets view model property changes upon property change of
+		/// the %%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		void %%><%%=BLLClassName%%><%%-_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			OnPropertyChanged("%%><%%=BLLClassName%%><%%-");
+			OnPropertyChanged("TabTitle");%%>
+		foreach (Property where IsAuditProperty == false && IsBaseProperty == false)
+		{
+				<%%-
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");%%>
+		}
+			<%%-
+			_isEdited = true;
+		}%%>
+	}
+	<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Title.</summary>
+		///--------------------------------------------------------------------------------
+		public string Title
+		{
+			get
+			{
+				return "%%><%%=BLLClassName%%><%%-";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TabTitle.</summary>
+		///--------------------------------------------------------------------------------
+		public override string TabTitle
+		{
+			get
+			{
+				return "%%><%%=BLLClassName%%><%%-" + " (" + Name + ")";
+			}
+		}%%>
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where IsAuditProperty == false && IsBaseProperty == false)
+		{
+				<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the %%><%%=BLLPropertyName%%><%%-Label.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=BLLPropertyName%%><%%-Label
+		{
+			get
+			{
+				return "%%><%%=BLLPropertyName%%><%%-" + ":";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets %%><%%=BLLPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=CSharpDataType%%><%%- %%><%%=BLLPropertyName%%><%%-
+		{
+			get
+			{
+				return Edit%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;
+			}
+			set
+			{
+				%%>
+				if (IsPrimaryKeyMember == true)
+				{
+					with (CurrentEntity)
+					{
+						foreach (Entity in EntityAndBaseEntities)
+						{
+						<%%-Edit%%><%%=BLLClassName%%><%%-.%%><%%=../../BLLPropertyName%%><%%- = value;%%>
+						}
+					}
+				}
+				else
+				{
+					<%%-Edit%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = value;%%>
+				}
+				<%%-
+				_isEdited = true;
+				OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");
+				OnPropertyChanged("TabTitle");
+			}
+		}%%>
+		}
+	}
+		<%%-
+		#endregion "Editing Support"
+
+		#region "Command Processing"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnReset()
+		{
+			try
+			{
+				// reset the underlying data for the %%><%%=BLLClassName%%><%%-
+				Edit%%><%%=BLLClassName%%><%%- = null;
+				%%><%%=BLLClassName%%><%%- = (from i in Context.%%><%%=BLLPluralEntityName%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+				<%%-
+						&& i.%%><%%=BLLPropertyName%%><%%- == %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+					}
+					else
+					{
+				<%%-
+						where i.%%><%%=BLLPropertyName%%><%%- == %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+					}
+				}
+				<%%-
+						select i).FirstOrDefault<%%><%%=BLLClassName%%><%%->();
+				%%><%%=BLLClassName%%><%%-_PropertyChanged(this, null);
+			}
+			catch
+			{
+				%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();%%>
+				foreach (Property where IsPrimaryKeyMember == true && DataTypeCode == 26 /* Guid */)
+				{
+				<%%-
+				%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = Guid.NewGuid();%%>
+				}
+				<%%-
+			}
+			_isEdited = false;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		public void Reset()
+		{
+			OnReset();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnUpdate()
+		{
+			try
+			{
+				// get the edited information%%>
+			foreach (Entity in BaseAndEntityEntities)
+			{
+				foreach (Property where IsAuditProperty == false)
+				{
+				<%%-
+				%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = Edit%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;%%>
+				}
+			}
+			<%%-
+%%>
+			foreach (Entity in BaseAndEntityEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-
+%%>
+				}
+			<%%-
+				// perform the update of %%><%%=BLLClassName%%><%%-
+				%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%- = null;
+				try
+				{
+					%%><%%=BLLClassName.CamelCase()%%><%%- = (from i in Context.%%><%%=BLLPluralEntityName%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+				<%%-
+							&& i.%%><%%=BLLPropertyName%%><%%- == %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+					}
+					else
+					{
+				<%%-
+							where i.%%><%%=BLLPropertyName%%><%%- == %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+					}
+				}
+							<%%-
+							select i).FirstOrDefault<%%><%%=BLLClassName%%><%%->();
+				}
+				catch { }
+				if (%%><%%=BLLClassName.CamelCase()%%><%%- == null)
+				{
+					Context.AddTo%%><%%=BLLPluralEntityName%%><%%-(%%><%%=BLLClassName%%><%%-);%%>
+					foreach (Property where IsAuditProperty == true && DataTypeCode == 24 /* DateTime */)
+					{
+						with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+						{
+							if (IsAddAuditProperty == true)
+							{
+					<%%-
+					%%><%%=../../BLLClassName%%><%%-.%%><%%=../BLLPropertyName%%><%%- = DateTime.Now;%%>
+							}
+						}
+					}
+					<%%-
+				}
+				else
+				{
+					Context.UpdateObject(%%><%%=BLLClassName%%><%%-);
+				}%%>
+				foreach (Property where IsAuditProperty == true && DataTypeCode == 24 /* DateTime */)
+				{
+					with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+					{
+						if (IsUpdateAuditProperty == true)
+						{
+				<%%-
+				%%><%%=../../BLLClassName%%><%%-.%%><%%=../BLLPropertyName%%><%%- = DateTime.Now;%%>
+						}
+					}
+				}
+			}
+				<%%-
+				
+				Context.SaveChanges();
+				OnUpdated(this, null);
+				ShowOutput("%%><%%=BLLClassName%%><%%- successfully updated.", "%%><%%=BLLClassName%%><%%- Update", true);
+				_isEdited = false;
+			}
+			catch (System.Exception ex)
+			{
+				ShowException(ex, true);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		public void Update()
+		{
+			OnUpdate();
+		}
+
+		#endregion "Command Processing"
+
+		#region "Properties"%%>
+		with (Project)
+		{
+			foreach (Project)
+			{
+				if (../ProjectCount == 1 || Tags.Contains("DS") == true)
+				{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Context.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=../Namespace%%><%%-.DataService.%%><%%=DSModelClassName%%><%%- Context
+		{
+			get
+			{
+				return DataServiceClient.Context;
+			}
+		}%%>
+				}
+			}
+		}
+	foreach (Entity in EntityAndBaseEntities)
+	{
+<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the %%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- { get; set; }%%><%%-
+
+		private %%><%%=BLLClassName%%><%%-  _edit%%><%%=BLLClassName%%><%%-  = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the Edit%%><%%=BLLClassName%%><%%- .</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%-  Edit%%><%%=BLLClassName%%><%%- 
+		{
+			get
+			{
+				if (_edit%%><%%=BLLClassName%%><%%-  == null)
+				{
+					_edit%%><%%=BLLClassName%%><%%-  = new %%><%%=BLLClassName%%><%%- ();%%>
+					foreach (Property where IsAuditProperty == false)
+					{
+					<%%-
+					_edit%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;%%>
+					}
+				<%%-
+				}
+				return _edit%%><%%=BLLClassName%%><%%- ;
+			}
+			set
+			{
+				_edit%%><%%=BLLClassName%%><%%-  = value;
+			}
+		}%%>
+	}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Name.</summary>
+		///--------------------------------------------------------------------------------
+		public override string Name
+		{
+			get
+			{%%>
+			if (PrimaryNameProperty == null)
+			{
+			<%%-
+				return String.Empty;%%>
+			}
+			else
+			{
+				<%%-
+				return %%><%%=BLLClassName%%><%%-.%%><%%=PrimaryNameProperty%%><%%-;%%>
+			}
+			<%%-
+			}
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads the corresponding data service
+		/// entities into the view model.</summary>
+		///%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+		<%%-
+		/// <param name=" %%><%%=BLLParameterName%%><%%-">The %%><%%=BLLClassName%%><%%- to load.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		public void LoadEntities(%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=BLLClassName%%><%%- %%><%%=BLLParameterName%%>
+		}
+		<%%-)
+		{%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-
+%%>
+			}
+		<%%-
+			// attach the %%><%%=BLLClassName%%><%%-
+			%%><%%=BLLClassName%%><%%- = %%><%%=BLLParameterName%%><%%-;
+			%%><%%=BLLClassName%%><%%-.PropertyChanged += new PropertyChangedEventHandler(%%><%%=BLLClassName%%><%%-_PropertyChanged);%%>
+		}
+		<%%-
+			Refresh(false);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method refreshes the view model.</summary>
+		/// 
+		/// <param name="refreshChildren">Flag indicating whether children should be refreshed.</param>
+		///--------------------------------------------------------------------------------
+		public void Refresh(bool refreshChildren, int refreshLevel = 0)
+		{
+			#region protected
+			#endregion protected
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method disposes of resources in the view model.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnDispose()
+		{%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			<%%-
+			%%><%%=BLLClassName%%><%%-.PropertyChanged -= %%><%%=BLLClassName%%><%%-_PropertyChanged;
+			%%><%%=BLLClassName%%><%%- = null;%%>
+		}
+		<%%-
+			base.OnDispose();
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor (for reflection, etc.).</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%-ViewModel()
+		{
+			WorkspaceID = Guid.NewGuid();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Create the instance with the designer view and other data.</summary>
+		///%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+		<%%-
+		/// <param name=" %%><%%=BLLParameterName%%><%%-">The %%><%%=BLLClassName%%><%%- to load.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%-ViewModel(%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=BLLClassName%%><%%- %%><%%=BLLParameterName%%>
+		}
+		<%%-)
+		{
+			WorkspaceID = Guid.NewGuid();
+			LoadEntities(%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=BLLParameterName%%>
+		}
+		<%%-);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLViewModelClassFilePath) == null || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewModelClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(VMBLLViewModelClassFilePath)
+}
+%%></OUTPUT>

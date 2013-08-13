@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME DALPropertyCommentsCode
+	CATEGORY DAL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>This read only property gets the %%><%%=DALPropertyName%%><%%-.</summary>
+///--------------------------------------------------------------------------------%%></CONTENT>

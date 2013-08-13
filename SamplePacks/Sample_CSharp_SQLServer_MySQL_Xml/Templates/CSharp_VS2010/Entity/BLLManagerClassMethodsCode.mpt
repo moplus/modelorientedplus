@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME BLLManagerClassMethodsCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"%%>
+<%%:
+	foreach (Method)
+	{
+		<%%=BLLMethodCode%%>
+	}
+%%><%%-
+#endregion "Methods"%%></CONTENT>

@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME WcfSOAPClassBodyStartCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPGlobalCopyrightCode%%>
+<%%=WcfSOAPClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=WcfSOAPClassCommentsCode%%>
+	<%%-
+	[ServiceBehavior(IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public partial class %%><%%=WcfSOAPClassName%%><%%- : %%><%%=WcfSOAPBaseClassName%%><%%-, %%><%%=WcfSOAPInterfaceName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME IEnterpriseDataObjectFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\IEnterpriseDataObject_G.cs%%></CONTENT>

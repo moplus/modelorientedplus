@@ -1,0 +1,37 @@
+<CONFIG>
+	NAME DBDataType
+	CATEGORY DB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=DBBaseDataType%%>
+switch (DataTypeCode)
+{
+	case 13: // Char
+		if (Length > 1)
+		{
+			<%%-(%%><%%=Length%%><%%-)%%>
+		}
+		break
+	case 14: // CharUnicode
+		if (Length > 1)
+		{
+			<%%-(%%><%%=Length%%><%%-)%%>
+		}
+		break
+	case 16: // String
+		if (Length > 1)
+		{
+			<%%-(%%><%%=Length%%><%%-)%%>
+		}
+		break
+	case 17: // StringUnicode
+		if (Length > 1)
+		{
+			<%%-(%%><%%=Length%%><%%-)%%>
+		}
+		break
+}
+%%></CONTENT>

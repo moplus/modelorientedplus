@@ -1,0 +1,151 @@
+<CONFIG>
+	NAME ODataServiceQueryProviderFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Services.Providers;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides query information for OData services.</summary>
+	/// 
+	/// <remarks>This code is based on an example provided by Alex D. James in his blog
+	/// at http://blogs.msdn.com/b/alexj/archive/2010/01/04/creating-a-data-service-provider-part-1-intro.aspx .</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class ODataServiceQueryProvider<T> : IDataServiceQueryProvider where T : IODataContext
+	{
+		#region "Fields and Properties"
+		T _currentDataSource;
+		IDataServiceMetadataProvider _metadata;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the CurrentDataSource.</summary>
+		///--------------------------------------------------------------------------------
+		public object CurrentDataSource
+		{
+			get
+			{
+				return _currentDataSource;
+			}
+			set
+			{
+				_currentDataSource = (T)value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the IsNullPropagationRequired.</summary>
+		///--------------------------------------------------------------------------------
+		public bool IsNullPropagationRequired
+		{
+			get { return true; }
+		}
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated open property value.</summary>
+		/// 
+		/// <param name="target">The property target.</param>
+		/// <param name="propertyName">The property name.</param>
+		///--------------------------------------------------------------------------------
+		public object GetOpenPropertyValue(object target, string propertyName)
+		{
+			throw new NotImplementedException();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the set of associated open property values.</summary>
+		/// 
+		/// <param name="target">The property target.</param>
+		///--------------------------------------------------------------------------------
+		public IEnumerable<KeyValuePair<string, object>> GetOpenPropertyValues(object target)
+		{
+			throw new NotImplementedException();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated property value.</summary>
+		/// 
+		/// <param name="target">The property target.</param>
+		/// <param name="resourceProperty">The resource property.</param>
+		///--------------------------------------------------------------------------------
+		public object GetPropertyValue(object target, ResourceProperty resourceProperty)
+		{
+			throw new NotImplementedException();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the query root for the resource set.</summary>
+		/// 
+		/// <param name="resourceSet">The resource set.</param>
+		///--------------------------------------------------------------------------------
+		public IQueryable GetQueryRootForResourceSet(ResourceSet resourceSet)
+		{
+			return _currentDataSource.GetQueryable(resourceSet);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated resource type.</summary>
+		/// 
+		/// <param name="target">The resource target.</param>
+		///--------------------------------------------------------------------------------
+		public ResourceType GetResourceType(object target)
+		{
+			Type type = target.GetType();
+			return _metadata.Types.Single(t => t.InstanceType == type);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method invokes a service operation.</summary>
+		/// 
+		/// <param name="serviceOperation">The service operation.</param>
+		/// <param name="parameters">The input parameters</param>
+		///--------------------------------------------------------------------------------
+		public object InvokeServiceOperation(ServiceOperation serviceOperation, object[] parameters)
+		{
+			throw new NotImplementedException();
+		}
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor sets up the metadata.</summary>
+		/// 
+		/// <param name="metadata">The input metadata.</param>
+		///--------------------------------------------------------------------------------
+		public ODataServiceQueryProvider(IDataServiceMetadataProvider metadata)
+		{
+			_metadata = metadata;
+		}
+		#endregion "Constructors"
+	}
+}
+
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(ODataServiceQueryProviderFilePath) == null || (File(ODataServiceQueryProviderFilePath).Contains("<Status>Generated</Status>") == true && File(ODataServiceQueryProviderFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(ODataServiceQueryProviderFilePath)
+}
+%%></OUTPUT>

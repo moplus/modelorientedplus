@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPExtRelativePath
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\Assembly_Exts\%%><%%=FeatureName%%><%%-\%%></CONTENT>

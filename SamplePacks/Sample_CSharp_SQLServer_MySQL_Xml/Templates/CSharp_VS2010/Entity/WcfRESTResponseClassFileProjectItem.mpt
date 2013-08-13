@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WcfRESTResponseClassFileProjectItem
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfRESTResponseClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <SubType>Code</SubType>
+    </Compile>
+    %%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLRelayCommandFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\RelayCommand_G.cs%%></CONTENT>

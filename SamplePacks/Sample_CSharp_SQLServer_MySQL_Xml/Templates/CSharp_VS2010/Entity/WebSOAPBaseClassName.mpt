@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPBaseClassName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-WebServiceBase%%></CONTENT>

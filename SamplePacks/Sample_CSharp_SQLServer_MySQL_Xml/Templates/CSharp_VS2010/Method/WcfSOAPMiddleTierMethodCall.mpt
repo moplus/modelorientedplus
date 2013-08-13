@@ -1,0 +1,39 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierMethodCall
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPMiddleTierMethodName%%><%%-(%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+		<%%-item, %%>
+		break
+}
+foreach (Parameter)
+{
+	// convert service parameter to middle tier type
+	<%%=WcfSOAPParameterName%%>
+	if (WcfSOAPDataType != WcfSOAPMiddleTierDataType)
+	{
+		with (Property from Solution.Find(PropertyID))
+		{
+			<%%=GetDataHelperGetMethod%%>
+		}
+	}
+	<%%-, %%>
+}
+switch (MethodTypeCode)
+{
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		<%%-out totalRecords, out maximumListSizeExceeded, %%>
+		break
+}
+<%%-cascadeDepth)%%>
+%%></CONTENT>

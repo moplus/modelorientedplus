@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTWebServiceInterfaceFileName
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%-I%%><%%=WcfRESTWebServiceName%%><%%-.cs%%></CONTENT>

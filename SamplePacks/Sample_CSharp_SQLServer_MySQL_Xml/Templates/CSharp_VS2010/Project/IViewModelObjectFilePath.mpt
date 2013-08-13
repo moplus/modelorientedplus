@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME IViewModelObjectFilePath
+	CATEGORY VM
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\IViewModelObject_G.cs%%></CONTENT>

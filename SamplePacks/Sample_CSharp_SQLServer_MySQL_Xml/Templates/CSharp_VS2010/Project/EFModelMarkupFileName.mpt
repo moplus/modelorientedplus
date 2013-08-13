@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFModelMarkupFileName
+	CATEGORY EF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=DSModelClassName%%><%%-.edmx%%></CONTENT>

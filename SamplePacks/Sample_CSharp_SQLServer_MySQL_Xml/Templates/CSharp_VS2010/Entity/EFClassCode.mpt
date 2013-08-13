@@ -1,0 +1,346 @@
+<CONFIG>
+	NAME EFClassCode
+	CATEGORY EF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="%%><%%=Project.DbName%%><%%-Model", Name="%%><%%=BLLClassName%%><%%-")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class %%><%%=BLLClassName%%><%%- : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new %%><%%=BLLClassName%%><%%- object.
+        /// </summary>%%>
+        foreach (Property)
+        {
+        <%%-
+        /// <param name="%%><%%=BLLParameterName%%><%%-">Initial value of the %%><%%=BLLPropertyName%%><%%- property.</param>%%>
+        }
+        <%%-
+        public static %%><%%=BLLClassName%%><%%- Create%%><%%=BLLClassName%%><%%-(%%>
+        foreach (Property)
+        {
+        	if (ItemIndex > 0)
+        	{
+        		<%%-, %%>
+        	}
+        	<%%-global::%%><%%=CSharpSystemDataType%%><%%- %%><%%=BLLParameterName%%>
+        }
+        <%%-)
+        {
+            %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();%%>
+            foreach (Property)
+            {
+            <%%-
+            %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=BLLParameterName%%><%%-;%%>
+            }
+            <%%-
+            return %%><%%=BLLClassName%%><%%-;
+        }
+
+        #endregion
+        
+        #region Primitive Properties%%>
+        foreach (Property)
+        {
+        <%%-
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=%%><%%=IsPrimaryKeyMember%%><%%-, IsNullable=%%><%%=IsNullable%%><%%-)]
+        [DataMemberAttribute()]
+        public global::%%><%%=CSharpSystemDataType%%><%%- %%><%%=BLLPropertyName%%><%%-
+        {
+            get
+            {
+                return _%%><%%=BLLPropertyName%%><%%-;
+            }
+            set
+            {
+                if (_%%><%%=BLLPropertyName%%><%%- != value)
+                {
+                    On%%><%%=BLLPropertyName%%><%%-Changing(value);
+                    ReportPropertyChanging("%%><%%=BLLPropertyName%%><%%-");
+                    _%%>
+                    switch (DataTypeCode)
+                    {
+				case 16: // String
+				case 17: // StringUnicode
+				case 19: // Text
+				case 20: // TextUnicode
+	                  case 25: // Timestamp
+	                  case 27: // Image
+	                    	<%%=BLLPropertyName%%><%%- = StructuralObject.SetValidValue(value, %%><%%=IsNullable%%><%%-);%%>
+	                    	break
+	                    default:
+		                    <%%=BLLPropertyName%%><%%- = StructuralObject.SetValidValue(value);%%>
+	                   		break
+                    }
+                    <%%-
+                    ReportPropertyChanged("%%><%%=BLLPropertyName%%><%%-");
+                    On%%><%%=BLLPropertyName%%><%%-Changed();
+                }
+            }
+        }
+        private global::%%><%%=CSharpSystemDataType%%><%%- _%%><%%=BLLPropertyName%%><%%-;
+        partial void On%%><%%=BLLPropertyName%%><%%-Changing(global::%%><%%=CSharpSystemDataType%%><%%- value);
+        partial void On%%><%%=BLLPropertyName%%><%%-Changed();%%>
+        }
+        progress
+        <%%-
+        #endregion
+    
+        #region Navigation Properties%%>
+        with (BaseEntity)
+        {
+        	CurrentRelationship = null
+        	foreach (Relationship in ../Entity)
+        	{
+        		if (CurrentRelationship == null)
+        		{
+	        		if (Relationship.ReferencedEntityID == ../EntityID)
+	        		{
+	        			log("EFClassCode", "IsBaseRelationship", true)
+	        			foreach (RelationshipProperty)
+	        			{
+	        				with (Property from Solution.Find(PropertyID))
+	        				{
+	        					if (IsPrimaryKeyMember == false)
+	        					{
+	   				      			log("EFClassCode", "IsBaseRelationship", false)
+	       					}
+	        				}
+	        			}
+	        			if (LogValue("EFClassCode", "IsBaseRelationship") == true)
+	        			{
+	        				CurrentRelationship = Relationship
+	        			}
+	        		}
+	        	}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        <%%-
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("%%><%%=Project.DbName%%><%%-Model", "%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-")]
+        public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%-
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<%%><%%=BLLClassName%%><%%-> %%><%%=BLLClassName%%><%%-Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-", value);
+                }
+            }
+        }%%>
+        	}
+        }
+        foreach (Entity in Solution where BaseEntityID == ../EntityID)
+        {
+        	CurrentRelationship = null
+        	foreach (Relationship)
+        	{
+        		if (CurrentRelationship == null)
+        		{
+	        		if (Relationship.ReferencedEntityID == ../../EntityID)
+	        		{
+	        			log("EFClassCode", "IsBaseRelationship", true)
+	        			foreach (RelationshipProperty)
+	        			{
+	        				with (Property from Solution.Find(ReferencedPropertyID))
+	        				{
+	        					if (IsPrimaryKeyMember == false)
+	        					{
+	   				      			log("EFClassCode", "IsBaseRelationship", false)
+	       					}
+	        				}
+	        			}
+	        			if (LogValue("EFClassCode", "IsBaseRelationship") == true)
+	        			{
+	        				CurrentRelationship = Relationship
+	        			}
+	        		}
+        		}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        <%%-
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("%%><%%=Project.DbName%%><%%-Model", "%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-")]
+        public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%-
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<%%><%%=BLLClassName%%><%%-> %%><%%=BLLClassName%%><%%-Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<%%><%%=BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=BLLClassName%%><%%-", value);
+                }
+            }
+        }%%>
+        	}
+        }
+        foreach (EntityReference)
+        {
+        	CurrentRelationship = null
+        	foreach (PropertyRelationship limit 1)
+        	{
+        		with (Relationship)
+        		{
+	        		CurrentRelationship = Relationship
+        		}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        <%%-
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("%%><%%=Project.DbName%%><%%-Model", "%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-")]
+        public %%><%%=ReferencedEntity.BLLClassName%%><%%- %%><%%=EntityReferenceName%%><%%-
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<%%><%%=ReferencedEntity.BLLClassName%%><%%-> %%><%%=EntityReferenceName%%><%%-Reference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-", value);
+                }
+            }
+        }%%>
+        	}
+        }
+        foreach (Collection)
+        {
+        	CurrentRelationship = null
+        	foreach (PropertyRelationship limit 1)
+        	{
+        		if (Relationship.ReferencedEntityID == ../EntityID && Relationship.EntityID == ../ReferencedEntityID) // must limit collections in EF to direct relationships
+        		{
+	         		with (Relationship)
+	        		{
+		        		CurrentRelationship = Relationship
+	        		}
+	        	}
+        	}
+        	if (CurrentRelationship != null)
+        	{
+        <%%-
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("%%><%%=Project.DbName%%><%%-Model", "%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-")]
+        public EntityCollection<%%><%%=ReferencedEntity.BLLClassName%%><%%-> %%><%%=CollectionName%%><%%-
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<%%><%%=ReferencedEntity.BLLClassName%%><%%->("%%><%%=Project.DbName%%><%%-Model.%%><%%=CurrentRelationship.RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-", value);
+                }
+            }
+        }%%>
+        	}
+        }
+        progress
+        <%%-
+
+        #endregion
+    }%%>%%></CONTENT><OUTPUT>
+<%%:
+update(EFClassFilePath)
+%%></OUTPUT>

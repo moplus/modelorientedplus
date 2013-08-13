@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME DALBaseClassName
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+//
+// this template returns a string for the base class name
+//
+<%%:
+	if (BaseEntity != null)
+	{
+		with (BaseEntity)
+		{
+			<%%=FeatureName%%><%%-.%%><%%=DALClassName%%>
+		}
+	}
+	else
+	{
+		<%%-BusinessObjectBase%%>
+	}
+%%></CONTENT>

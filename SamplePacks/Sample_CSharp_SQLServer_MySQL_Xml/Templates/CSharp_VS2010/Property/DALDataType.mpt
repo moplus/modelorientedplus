@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALDataType
+	CATEGORY DAL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

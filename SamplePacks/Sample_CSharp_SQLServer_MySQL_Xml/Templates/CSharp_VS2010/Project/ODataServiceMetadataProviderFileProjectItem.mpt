@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME ODataServiceMetadataProviderFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=ODataServiceMetadataProviderFilePath.Substring(ODataServiceMetadataProviderFilePath.IndexOf("ODataServiceMetadataProvider")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

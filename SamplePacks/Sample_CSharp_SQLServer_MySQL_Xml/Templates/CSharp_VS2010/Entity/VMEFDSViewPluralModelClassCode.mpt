@@ -1,0 +1,546 @@
+<CONFIG>
+	NAME VMEFDSViewPluralModelClassCode
+	CATEGORY VMEFDS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.ComponentModel;%%>
+
+// find best GetMany method to use for search, etc.
+CurrentEntity = Entity
+CurrentMethod = null
+foreach (Method where MethodName.EndsWith("Criteria") == true && MethodTypeCode == 7 /* GetManyByCriteria */)
+{
+	CurrentMethod = Method
+}
+if (CurrentMethod == null)
+{
+	foreach (Method where ParameterCount == 0 && MethodTypeCode == 3 /* GetMany */)
+	{
+		CurrentMethod = Method
+	}
+}
+if (CurrentMethod == null)
+{
+	trace ("Couldn't find good search method for: " + VMBLLViewPluralModelClassName)
+}
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Messaging;
+using %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.DataService;
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides views for collections of
+	/// %%><%%=BLLClassName%%><%%- instances.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize, change the Status value below to something
+	/// other than Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLViewPluralModelClassName%%><%%- : EditWorkspaceViewModel
+	{
+		#region "Menus"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				return "New %%><%%=BLLClassName%%><%%-";
+			}
+		}
+
+		#endregion "Menus"
+
+		#region "Command Processing"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the new item command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessNew%%><%%=BLLClassName%%><%%-Command()
+		{
+			%%><%%=VMBLLEventArgsClassName%%><%%- messageEventArgs = new %%><%%=VMBLLEventArgsClassName%%><%%-();%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+			<%%-
+			%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%- = new %%><%%=BLLClassName%%><%%-();%%>
+				if (EntityID == CurrentEntity.EntityID)
+				{
+					foreach (Property where IsPrimaryKeyMember == true && DataTypeCode == 26 /* Guid */)
+					{
+					<%%-
+			%%><%%=../BLLClassName.CamelCase()%%><%%-.%%><%%=BLLPropertyName%%><%%- = Guid.NewGuid();%%>
+					}
+				}
+				else
+				{
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						<%%-
+			%%><%%=../BLLClassName.CamelCase()%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=CurrentEntity.BLLClassName.CamelCase()%%><%%-.%%><%%=BLLPropertyName%%><%%-;%%>
+					}
+				}
+			}
+			<%%-
+			messageEventArgs.%%><%%=BLLClassName%%><%%- = new %%><%%=VMBLLViewModelClassName%%><%%-(%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=BLLClassName.CamelCase()%%>
+			}
+			<%%-);
+			messageEventArgs.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<%%><%%=VMBLLEventArgsClassName%%><%%->(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, messageEventArgs);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit item command.</summary>
+		///
+		/// <param name="view">The view for the %%><%%=BLLClassName%%><%%- to edit.</param>
+		///--------------------------------------------------------------------------------
+		public void ProcessEdit%%><%%=BLLClassName%%><%%-Command(%%><%%=VMBLLViewModelClassName%%><%%- view)
+		{
+			%%><%%=VMBLLEventArgsClassName%%><%%- message = new %%><%%=VMBLLEventArgsClassName%%><%%-();
+			message.%%><%%=BLLClassName%%><%%- = new %%><%%=VMBLLViewModelClassName%%><%%-(%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex == 0)
+				{
+					log("VMEFDSViewPluralModelClassCode", "EntityParameters", "view." + BLLClassName)
+					<%%=LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters")%%>
+				}
+				else
+				{
+					log("VMEFDSViewPluralModelClassCode", "EntityParameters", LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters") + "." + BLLClassName)
+					<%%-, %%><%%=LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters")%%>
+				}
+			}
+			<%%-);
+			message.%%><%%=BLLClassName%%><%%-.Updated += new EventHandler(%%><%%=BLLClassName%%><%%-_Updated);
+			message.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<%%><%%=VMBLLEventArgsClassName%%><%%->(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the delete item command.</summary>
+		///
+		/// <param name="view">The view for the %%><%%=BLLClassName%%><%%- to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void ProcessDelete%%><%%=BLLClassName%%><%%-Command(%%><%%=VMBLLViewModelClassName%%><%%- view)
+		{
+			try
+			{
+				Context.DeleteObject(view.%%><%%=BLLClassName%%><%%-);
+				Context.SaveChanges();
+				ShowOutput("%%><%%=BLLClassName%%><%%- successfully deleted.", "%%><%%=BLLClassName%%><%%- Delete", true);
+				Search();
+			}
+			catch (System.Exception ex)
+			{
+				ShowException(ex, true);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Handle updates of child items.</summary>
+		/// 
+		/// <param name="sender">The event sender.</param>
+		/// <param name="e">The event arguments.</param>
+		///--------------------------------------------------------------------------------
+		void %%><%%=BLLClassName%%><%%-_Updated(object sender, EventArgs e)
+		{
+			Search();
+		}
+
+		private RelayCommand _searchCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for processing search commands.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand SearchCommand
+		{
+			get
+			{
+				if (_searchCommand == null)
+					_searchCommand = new RelayCommand(param => this.OnSearchCommand());
+
+				return _searchCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for handling the search command execution.
+		///--------------------------------------------------------------------------------
+		protected virtual void OnSearchCommand()
+		{
+			Search();
+		}
+
+		private RelayCommand _previousCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for processing previous commands.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand PreviousCommand
+		{
+			get
+			{
+				if (_previousCommand == null)
+					_previousCommand = new RelayCommand(param => this.OnPreviousCommand());
+
+				return _previousCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for handling the previousw command execution.
+		///--------------------------------------------------------------------------------
+		protected virtual void OnPreviousCommand()
+		{
+			StartIndex = StartIndex - PageSize;
+			if (StartIndex < 0)
+			{
+				StartIndex = 0;
+			}
+			Search();
+		}
+
+		private RelayCommand _nextCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for processing next commands.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand NextCommand
+		{
+			get
+			{
+				if (_nextCommand == null)
+					_nextCommand = new RelayCommand(param => this.OnNextCommand());
+
+				return _nextCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for handling the next command execution.
+		///--------------------------------------------------------------------------------
+		protected virtual void OnNextCommand()
+		{
+			StartIndex = StartIndex + PageSize;
+			Search();
+		}
+
+		private RelayCommand _newCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for processing new commands.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand NewCommand
+		{
+			get
+			{
+				if (_newCommand == null)
+					_newCommand = new RelayCommand(param => this.OnNewCommand());
+
+				return _newCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is for handling the new command execution.
+		///--------------------------------------------------------------------------------
+		protected virtual void OnNewCommand()
+		{
+			ProcessNew%%><%%=BLLClassName%%><%%-Command();
+		}
+
+		#endregion "Command Processing"
+
+		#region "Properties"%%>
+		with (Project)
+		{
+			foreach (Project)
+			{
+				if (../ProjectCount == 1 || Tags.Contains("DS") == true)
+				{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Context.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=../Namespace%%><%%-.DataService.%%><%%=DSModelClassName%%><%%- Context
+		{
+			get
+			{
+				return DataServiceClient.Context;
+			}
+		}%%>
+				}
+			}
+		}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Title.</summary>
+		///--------------------------------------------------------------------------------
+		public string Title
+		{
+			get
+			{
+				return "%%><%%=BLLPluralEntityName%%><%%-";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TabTitle.</summary>
+		///--------------------------------------------------------------------------------
+		public override string TabTitle
+		{
+			get
+			{
+				return "%%><%%=BLLPluralEntityName%%><%%-";
+			}
+		}
+
+		private int _totalRecords = 0;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets TotalRecords.</summary>
+		///--------------------------------------------------------------------------------
+		public int TotalRecords
+		{
+			get
+			{
+				return _totalRecords;
+			}
+			set
+			{
+				_totalRecords = value;
+			}
+		}
+
+		private bool _maximumListSizeExceeded = false;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets MaximumListSizeExceeded.</summary>
+		///--------------------------------------------------------------------------------
+		public bool MaximumListSizeExceeded
+		{
+			get
+			{
+				return _maximumListSizeExceeded;
+			}
+			set
+			{
+				_maximumListSizeExceeded = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets %%><%%=BLLPluralEntityName%%><%%- lists.</summary>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection<%%><%%=VMBLLViewModelClassName%%><%%-> %%><%%=BLLPluralEntityName%%><%%- { get; set; }%%>
+		if (CurrentMethod != null)
+		{
+			with (CurrentMethod)
+			{
+				foreach (Parameter)
+				{
+				<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets %%><%%=BLLPropertyName%%><%%- for searching.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLDataType%%><%%- %%><%%=BLLPropertyName%%><%%- { get; set; }%%>
+				}
+			}
+		}
+		<%%-
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method searches items for loading into the view model.</summary>
+		///--------------------------------------------------------------------------------
+		public void Search()
+		{
+			try
+			{
+				// search for %%><%%=BLLPluralEntityName%%><%%- and attach as %%><%%=BLLPluralEntityName%%><%%- and Items
+				Items.Clear();
+				if (%%><%%=BLLPluralEntityName%%><%%- == null)
+				{
+					%%><%%=BLLPluralEntityName%%><%%- = new SortableObservableCollection<%%><%%=VMBLLViewModelClassName%%><%%->();
+				}
+				%%><%%=BLLPluralEntityName%%><%%-.Clear();
+				
+				var items = (from i in Context.%%><%%=BLLPluralEntityName%%>
+				log("VMEFDSViewPluralModelClassCode", "ExpandProperties", null)
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					if (EntityID != ../EntityID)
+					{
+						if (LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") == null)
+						{
+							log("VMEFDSViewPluralModelClassCode", "ExpandProperties", BLLClassName)
+						}
+						else
+						{
+							log("VMEFDSViewPluralModelClassCode", "ExpandProperties", LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") + "/" + BLLClassName)
+						}
+						<%%-.Expand("%%><%%=LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties")%%><%%-")%%>
+					}
+				}
+				if (CurrentMethod != null)
+				{
+					with (CurrentMethod)
+					{
+						foreach (Parameter)
+						{
+							if (ItemIndex > 0)
+							{
+							<%%-
+							 && %%>
+							}
+							else
+							{
+							<%%-
+							 where %%>
+							}
+							with (Property from Solution.Find(ReferencedPropertyID))
+							{
+								log("VMEFDSViewPluralModelClassCode", "ExpandProperties", null)
+								with (CurrentEntity)
+								{
+									foreach (Entity in EntityAndBaseEntities)
+									{
+										if (EntityID != CurrentEntity.EntityID)
+										{
+											if (LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") == null)
+											{
+												log("VMEFDSViewPluralModelClassCode", "ExpandProperties", "." + BLLClassName)
+											}
+											else
+											{
+												log("VMEFDSViewPluralModelClassCode", "ExpandProperties", LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") + "." + BLLClassName)
+											}
+										}
+										if (EntityID == ../../EntityID)
+										{
+											break
+										}
+									}
+								}
+								switch (DataTypeCode)
+								{
+									case 16: // String
+									case 17: // StringUnicode
+									case 19: // Text
+									case 20: // TextUnicode
+										 <%%-(String.IsNullOrEmpty(%%><%%=BLLPropertyName%%><%%-) || i%%>
+										 if (LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") != null)
+										 {
+										 	<%%=LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties")%%>
+										 }
+										 <%%-.%%><%%=BLLPropertyName%%><%%-.Contains(%%><%%=BLLPropertyName%%><%%-))%%>
+										break
+									default:
+										 <%%-i%%>
+										 if (LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties") != null)
+										 {
+										 	<%%=LogValue("VMEFDSViewPluralModelClassCode", "ExpandProperties")%%>
+										 }
+										 <%%-.%%><%%=BLLPropertyName%%><%%- != %%><%%=BLLPropertyName%%>
+										break
+								}
+							}
+						}
+					}
+				}
+							 <%%-
+							 select i).Skip(StartIndex).Take(PageSize).ToList<%%><%%=BLLClassName%%><%%->();
+
+				foreach (%%><%%=BLLClassName%%><%%- item in items)
+				{
+					%%><%%=VMBLLViewModelClassName%%><%%- view = new %%><%%=VMBLLViewModelClassName%%><%%-(%%>
+					foreach (Entity in EntityAndBaseEntities)
+					{
+						if (ItemIndex == 0)
+						{
+							log("VMEFDSViewPluralModelClassCode", "EntityParameters", "item")
+							<%%=LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters")%%>
+						}
+						else
+						{
+							log("VMEFDSViewPluralModelClassCode", "EntityParameters", LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters") + "." + BLLClassName)
+							<%%-, %%><%%=LogValue("VMEFDSViewPluralModelClassCode", "EntityParameters")%%>
+						}
+					}
+					<%%-);
+					%%><%%=BLLPluralEntityName%%><%%-.Add(view);
+					Items.Add(view);
+				}
+			}
+			catch (System.Exception ex)
+			{
+				ShowException(ex, true);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method refreshes the view model.</summary>
+		/// 
+		/// <param name="refreshChildren">Flag indicating whether children should be refreshed.</param>
+		///--------------------------------------------------------------------------------
+		public void Refresh(bool refreshChildren, int refreshLevel = 0)
+		{
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method disposes of resources in the view model.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnDispose()
+		{
+			base.OnDispose();
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor (for reflection, etc.).</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLViewPluralModelClassName%%><%%-()
+		{
+			WorkspaceID = Guid.NewGuid();
+			Search();
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLViewPluralModelClassFilePath) == null || (File(VMBLLViewPluralModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewPluralModelClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLViewPluralModelClassFilePath)
+}
+%%></OUTPUT>

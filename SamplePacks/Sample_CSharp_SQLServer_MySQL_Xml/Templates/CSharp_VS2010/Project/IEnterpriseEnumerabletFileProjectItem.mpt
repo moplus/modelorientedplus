@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME IEnterpriseEnumerabletFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=IEnterpriseEnumerableFilePath.Substring(IEnterpriseEnumerableFilePath.IndexOf("IEnterpriseEnumerable")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

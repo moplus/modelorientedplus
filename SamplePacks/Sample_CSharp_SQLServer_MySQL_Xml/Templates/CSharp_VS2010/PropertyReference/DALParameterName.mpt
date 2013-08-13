@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DALParameterName
+	CATEGORY DAL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyReferenceName.CamelCase()%%></CONTENT>

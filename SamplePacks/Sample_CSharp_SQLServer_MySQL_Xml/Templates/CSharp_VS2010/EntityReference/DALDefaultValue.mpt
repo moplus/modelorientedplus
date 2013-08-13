@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALDefaultValue
+	CATEGORY DAL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%-null%%></CONTENT>

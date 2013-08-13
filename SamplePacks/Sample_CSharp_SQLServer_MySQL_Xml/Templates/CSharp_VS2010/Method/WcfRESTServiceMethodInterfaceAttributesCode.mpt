@@ -1,0 +1,108 @@
+<CONFIG>
+	NAME WcfRESTServiceMethodInterfaceAttributesCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/", Method = "POST")]%%>
+		}
+		break
+	case 9: // UpdateOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-/%%>
+				}
+				<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+			}
+		}
+		<%%-", Method = "PUT")]%%>
+		break
+	case 10: // DeleteOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-/%%>
+				}
+				<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+			}
+		}
+		<%%-", Method = "DELETE")]%%>
+		break
+	case 1: // GetOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-")]
+			[WebGet(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+		}
+		foreach (Parameter)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+		}
+		<%%-")]%%>
+		break
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-")]
+			[WebGet(UriTemplate = "/%%><%%=LIBPluralEntityName%%>
+		}
+		foreach (Parameter)
+		{
+			if (ItemIndex == 0)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%=BLLPropertyName%%><%%-={%%><%%=BLLParameterName%%><%%-}%%>
+		}
+		if (ParameterCount == 0)
+		{
+			<%%-?%%>
+		}
+		else
+		{
+			<%%-&%%>
+		}
+		<%%-SortColumn={sortColumn}&SortDirection={sortDirection}&PageSize={pageSize}&StartIndex={startIndex}")]%%>
+		break
+}
+<%%-
+[XmlSerializerFormat]%%>
+%%></CONTENT>

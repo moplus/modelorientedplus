@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WcfSOAPMethodCode
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPMethodCommentsCode%%>
+<%%=WcfSOAPMethodAttributesCode%%><%%-
+%%><%%=WcfSOAPMethodSignatureCode%%>
+<%%=WcfSOAPMethodBodyCode%%></CONTENT>

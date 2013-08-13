@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTExtendedClassFilePath
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.ProjectNamespace%%><%%-\Exts\%%><%%=Feature.FeatureName%%><%%-\%%><%%=WcfRESTExtendedClassFileName%%></CONTENT>

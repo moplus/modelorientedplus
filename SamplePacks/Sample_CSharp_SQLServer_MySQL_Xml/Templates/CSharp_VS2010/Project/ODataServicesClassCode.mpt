@@ -1,0 +1,103 @@
+<CONFIG>
+	NAME ODataServicesClassCode
+	CATEGORY DataServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Data.Services;
+using System.Data.Services.Common;
+using System.Linq;
+using System.ServiceModel.Web;
+using System.Web;%%>
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as BLL
+	foreach (Project where Tags.Contains("BLL") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>The %%><%%=DSDataServiceName%%><%%- data service is a WCF
+	/// data service wrapper around an entity framework model to provide REST
+	/// style web based data services.</summary>
+	///
+	/// This code was generated from a template, and should not be modified
+	/// unless absolutely necessary.  If you need to customize this file, change
+	/// the Status value below to something other than Generated to prevent
+	/// changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class %%><%%=DSDataServiceName%%>
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as BLL
+	foreach (Project where Tags.Contains("BLL") == true)
+	{
+		<%%- : ODataService<%%><%%=DSModelClassName%%><%%->%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+		<%%- : ODataService<%%><%%=DSModelClassName%%><%%->%%>
+	}
+}
+	<%%-
+	{
+		// This method is called only once to initialize service-wide policies.
+		public static void InitializeService(DataServiceConfiguration config)
+		{%%>
+        foreach (Entity in Solution where Tags.Contains("DB") == true)
+        {
+        	progress
+        <%%-
+			config.SetEntitySetAccessRule("%%><%%=BLLPluralEntityName%%><%%-", EntitySetRights.All);%%>
+        	progress
+        }
+            <%%-
+			config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V2;
+			config.DataServiceBehavior.AcceptProjectionRequests = true; 
+		}
+
+		protected override void HandleException(HandleExceptionArgs e) 
+		{
+			// add additional handling here if desired
+			base.HandleException(e);
+		} 
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(DataServicesClassFilePath) == null || (File(DataServicesClassFilePath).Contains("<Status>Generated</Status>") == true && File(DataServicesClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(DataServicesClassFilePath)
+}
+%%></OUTPUT>

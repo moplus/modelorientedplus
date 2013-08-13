@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME WcfSOAPResponseClassBodyStartCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%=TAB -500%%>
+<%%=WcfSOAPGlobalCopyrightCode%%>
+<%%=WcfSOAPResponseClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfSOAPResponseClassCommentsCode%%><%%-
+	[Serializable()]
+	[XmlRoot(Namespace = "", ElementName = "%%><%%=WcfSOAPResponseClassName%%><%%-")]
+	[DataContract]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public class %%><%%=WcfSOAPResponseClassName%%><%%- : WebResponseBase
+	{%%><%%=TAB 1%%></CONTENT>

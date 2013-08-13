@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebSOAPWebResponseBaseFilePath
+	CATEGORY WebSOAP
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebResponseBase_G.cs%%></CONTENT>

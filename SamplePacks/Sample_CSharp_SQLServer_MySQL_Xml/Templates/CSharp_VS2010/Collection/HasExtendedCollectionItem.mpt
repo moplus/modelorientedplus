@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME HasExtendedCollectionItem
+	CATEGORY LIB
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (Entity)
+{
+	foreach (Collection)
+	{
+		with (ReferencedEntity)
+		{
+			if (BaseEntity.EntityID == ../EntityID)
+			{
+				<%%-true%%>
+				return
+			}
+		}
+	}
+}
+%%>
+<%%-false%%></CONTENT>

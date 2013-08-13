@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIVisualItemHelperFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\VisualItemHelper_G.cs%%></CONTENT>

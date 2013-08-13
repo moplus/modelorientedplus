@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALDefaultValue
+	CATEGORY DAL
+	NODE Collection
+</CONFIG>
+<CONTENT>
+<%%-null%%></CONTENT>

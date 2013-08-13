@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME SqlHelperFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=SqlHelperFilePath.Substring(SqlHelperFilePath.IndexOf("SqlHelper")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

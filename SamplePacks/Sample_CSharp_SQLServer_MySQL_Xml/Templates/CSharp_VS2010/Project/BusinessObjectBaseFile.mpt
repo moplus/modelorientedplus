@@ -1,0 +1,309 @@
+<CONFIG>
+	NAME BusinessObjectBaseFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.ComponentModel;
+using System.Text;
+using System.Data.Services;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is the base business object implementation for this
+	/// project.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	[DataContract]
+	[IgnoreProperties("SortDirection", "FilterElements")]
+	public abstract partial class BusinessObjectBase : DataAccessObjectBase, IEnterpriseBusinessObject
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property determines how data for this entity is to be paged and
+		/// sorted.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual DataAccessOptions DataAccessOptions { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the DebugLevel property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual int DebugLevel
+		{
+			get
+			{
+				return DataAccessOptions.DebugLevel;
+			}
+			set
+			{
+				DataAccessOptions.DebugLevel = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the IncludeInactive property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual bool IncludeInactive
+		{
+			get
+			{
+				return DataAccessOptions.IncludeInactive;
+			}
+			set
+			{
+				DataAccessOptions.IncludeInactive = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the PageSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual int PageSize
+		{
+			get
+			{
+				return DataAccessOptions.PageSize;
+			}
+			set
+			{
+				DataAccessOptions.PageSize = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the StartIndex property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual int StartIndex
+		{
+			get
+			{
+				return DataAccessOptions.StartIndex;
+			}
+			set
+			{
+				DataAccessOptions.StartIndex = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the MaximumListSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual int MaximumListSize
+		{
+			get
+			{
+				return DataAccessOptions.MaximumListSize;
+			}
+			set
+			{
+				DataAccessOptions.MaximumListSize = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortColumn property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual string SortColumn
+		{
+			get
+			{
+				return DataAccessOptions.SortColumn;
+			}
+			set
+			{
+				DataAccessOptions.SortColumn = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortDirection property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual ListSortDirection SortDirection
+		{
+			get
+			{
+				return DataAccessOptions.SortDirection;
+			}
+			set
+			{
+				DataAccessOptions.SortDirection = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the FilterElements property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		[IgnoreDataMember]
+		public virtual NameObjectCollection FilterElements
+		{
+			get
+			{
+				return DataAccessOptions.FilterElements;
+			}
+			set
+			{
+				DataAccessOptions.FilterElements = value;
+			}
+		}
+		string _name = String.Empty;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the Name.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(null)]
+		public virtual string Name
+		{
+			get
+			{
+				if (String.IsNullOrEmpty(_name))
+				{
+					GenericEntity inputEntity = null;
+					inputEntity = DataTransformHelper.EntityPropertyFieldInfoCache.GenericEntityCache[GetType().FullName] as GenericEntity;
+					if (inputEntity == null)
+					{
+						inputEntity = DataTransformHelper.EntityPropertyFieldInfoCache.AddNewEntityWithPropertyFieldInfo(this);
+					}
+					foreach (GenericProperty loopInputProperty in inputEntity.PropertyList)
+					{
+						if (loopInputProperty.PropertyName != "Name" && loopInputProperty.PropertyName.EndsWith("Name") == true)
+						{
+							if (String.IsNullOrEmpty(_name))
+							{
+								_name = GetPropertyValueString(loopInputProperty.PropertyName);
+							}
+							else
+							{
+								_name = _name + " " + GetPropertyValueString(loopInputProperty.PropertyName);
+							}
+						}
+					}
+				}
+				return _name;
+			}
+			set
+			{
+				_name = value;
+			}
+		}
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads the data for this entity (presumably from a database),
+		/// based on the primary identifying property or properties.</summary>
+		/// 
+		/// <remarks>This property needs to be overridden in actual enterprise classes.</remarks>
+		///--------------------------------------------------------------------------------
+		public virtual void Load()
+		{
+			_isLoaded = true;
+			_isModified = false;
+			#region protected
+			#endregion protected
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads the data for this entity from an xml file.</summary>
+		/// 
+		/// <param name="inputFilePath">The path of the file to load from.</param>
+		///--------------------------------------------------------------------------------
+		public override void Load(string inputFilePath)
+		{
+			base.Load(inputFilePath);
+			_isLoaded = true;
+			_isModified = false;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves the data for this entity (presumably to a database).</summary>
+		/// 
+		/// <remarks>This property needs to be overridden in actual enterprise classes.</remarks>
+		///--------------------------------------------------------------------------------
+		public virtual void Save()
+		{
+			_isLoaded = true;
+			_isModified = false;
+			#region protected
+			#endregion protected
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves the data for this entity as an xml file.</summary>
+		/// 
+		/// <param name="inputFilePath">The path of the file to save to.</param>
+		///--------------------------------------------------------------------------------
+		public override void Save(string inputFilePath)
+		{
+			base.Save(inputFilePath);
+			_isLoaded = true;
+			_isModified = false;
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor ensures that default DataAccessOptions are set up for
+		/// collection manager operations.</summary>
+		///--------------------------------------------------------------------------------
+		public BusinessObjectBase()
+		{
+			BusinessConfiguration configuration = new BusinessConfiguration();
+			if (DataAccessOptions == null)
+			{
+				DataAccessOptions = new DataAccessOptions();
+				DataAccessOptions.PageSize = configuration.DbPageSize;
+				DataAccessOptions.MaximumListSize = configuration.DbMaximumListSize;
+			}
+			configuration = null;
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BusinessObjectBaseFilePath) == null || (File(BusinessObjectBaseFilePath).Contains("<Status>Generated</Status>") == true && File(BusinessObjectBaseFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BusinessObjectBaseFilePath)
+}
+%%></OUTPUT>

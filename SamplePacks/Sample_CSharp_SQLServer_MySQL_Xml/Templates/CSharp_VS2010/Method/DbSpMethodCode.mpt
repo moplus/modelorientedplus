@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DbSpMethodCode
+	CATEGORY DbSp
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+CurrentMethod = Method
+%%>
+<%%=DbSpMethodSignatureCode%%><%%- AS%%>
+<%%=DbSpGlobalCopyrightCode%%>
+<%%=DbSpMethodCommentsCode%%>
+<%%=DbSpMethodBodyCode%%><%%=TAB -1%%><%%-
+GO%%><%%=TAB -1%%></CONTENT>

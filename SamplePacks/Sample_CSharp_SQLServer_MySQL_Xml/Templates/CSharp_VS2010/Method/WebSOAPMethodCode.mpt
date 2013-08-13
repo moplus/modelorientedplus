@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WebSOAPMethodCode
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WebSOAPMethodCommentsCode%%>
+<%%=WebSOAPMethodAttributesCode%%><%%-
+%%><%%=WebSOAPMethodSignatureCode%%>
+<%%=WebSOAPMethodBodyCode%%></CONTENT>

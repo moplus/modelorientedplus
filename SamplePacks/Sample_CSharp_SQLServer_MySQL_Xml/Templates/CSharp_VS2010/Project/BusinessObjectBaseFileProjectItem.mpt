@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME BusinessObjectBaseFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=BusinessObjectBaseFilePath.Substring(BusinessObjectBaseFilePath.IndexOf("BusinessObjectBase")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WcfRESTGlobalCopyrightCode
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-/*<copyright>%%><%%-
+%%><%%=Solution.Copyright%%><%%-
+</copyright>*/%%></CONTENT>

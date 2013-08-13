@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BusinessObjectBaseFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\BusinessObjectBase_G.cs%%></CONTENT>

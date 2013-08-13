@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME TemplateUsageTest
+	CATEGORY Test
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// This test demonstrates how templates
+// can be used by other templates
+//
+<%%-String properties for %%><%%=EntityName%%><%%-:
+%%>
+<%%:
+foreach (Property where IsStringProperty == true) // template is used in an expression
+{
+// use a template to append to this template's content
+// call a template with a parameter, passing in another template value
+<%%-
+%%><%%=TestPropertyInfo(info="string type is " + IsStringProperty)%%>
+}
+%%></CONTENT><OUTPUT>
+<%%=SolutionDirectory%%><%%-\TestResults\%%><%%=EntityName%%><%%-Results.txt%%>
+<%%:
+if (File(Path) == null || File(Path) != Text)
+{
+	update(Path)
+}
+%%></OUTPUT>

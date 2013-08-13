@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME TestPropertyInfo
+	CATEGORY Test
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param info
+<%%=PropertyName%%><%%- (%%><%%=info%%><%%-)%%>
+%%></CONTENT>

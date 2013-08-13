@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME WebSOAPMethodAttributesCode
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[WebMethod]
+[SoapHeader("ServiceHeader", Direction = SoapHeaderDirection.InOut)]%%></CONTENT>

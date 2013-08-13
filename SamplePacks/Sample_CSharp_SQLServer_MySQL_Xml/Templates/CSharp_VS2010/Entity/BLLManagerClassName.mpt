@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLManagerClassName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-Manager%%></CONTENT>

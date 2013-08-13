@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLSerializationPropertySignatureCode
+	CATEGORY BLL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-public virtual %%><%%=BLLDataType%%><%%- _S_%%><%%=BLLPropertyName%%></CONTENT>

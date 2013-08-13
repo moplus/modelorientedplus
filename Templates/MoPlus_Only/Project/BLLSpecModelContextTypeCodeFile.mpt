@@ -1,0 +1,66 @@
+<CONFIG>
+	NAME BLLSpecModelContextTypeCodeFile
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+var enumCode = 0
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.ComponentModel;
+using System.Xml;
+using System.Xml.Serialization;
+using MoPlus.Common;
+using MoPlus.Data;
+using %%><%%=Namespace%%><%%-;
+
+namespace %%><%%=Namespace%%><%%-.BLL.Interpreter
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This enumeration is used to hold values used by business rules for
+	/// spec current item types.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public enum SpecModelContextTypeCode
+	{
+		/// <summary>None.</summary>
+		None = 0,%%>
+		foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
+		{
+			if (LogValue("SpecContextType", BLLClassName) == null)
+			{
+				enumCode = enumCode + 1
+				<%%-
+		/// <summary>For %%><%%=BLLClassName%%><%%- spec template types.</summary>
+		%%><%%=BLLClassName%%><%%- = %%><%%=enumCode%%><%%-,%%>
+				log("SpecContextType", BLLClassName, true)
+			}
+		}
+		<%%-
+
+		#region protected
+		#endregion protected
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLSpecModelContextTypeCodeFilePath) == null || File(BLLSpecModelContextTypeCodeFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update(BLLSpecModelContextTypeCodeFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME BLLClassIncludesCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Data.Services;%%>
+<%%:
+with (Project)
+{
+	<%%-
+	using BLL = %%><%%=Namespace%%><%%-.BLL;
+	using DAL = %%><%%=Namespace%%><%%-.DAL;%%>
+}
+%%></CONTENT>

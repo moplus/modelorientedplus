@@ -1,0 +1,72 @@
+﻿<lib:ToolBoxControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Diagrams.ToolBoxPropertiesControl"
+			xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+			xmlns:uent="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Entities"
+			xmlns:vm="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
+			xmlns:svm="clr-namespace:MoPlus.ViewModel.Solutions;assembly=MoPlus.ViewModel"
+			xmlns:evm="clr-namespace:MoPlus.ViewModel.Entities;assembly=MoPlus.ViewModel"
+			xmlns:wvm="clr-namespace:MoPlus.ViewModel.Workflows;assembly=MoPlus.ViewModel"
+			xmlns:dvm="clr-namespace:MoPlus.ViewModel.Diagrams;assembly=MoPlus.ViewModel"
+            xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
+			mc:Ignorable="d" 
+			d:DesignHeight="300" d:DesignWidth="300">
+	<lib:ToolBoxControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme.xaml" />
+				<ResourceDictionary Source="../../Resources/DiagramTheme.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+			<vm:LabelHelper x:Key="labels" />
+			<!-- collection -->
+			<DataTemplate DataType="{x:Type evm:CollectionViewModel}">
+				<uent:CollectionPropertiesControl />
+			</DataTemplate>
+			<!-- property reference  -->
+			<DataTemplate DataType="{x:Type evm:PropertyReferenceViewModel}">
+				<uent:PropertyReferencePropertiesControl />
+			</DataTemplate>
+			<!-- entity -->
+			<DataTemplate DataType="{x:Type dvm:DiagramEntityViewModel}">
+				<uent:EntityPropertiesControl DataContext="{Binding EntityViewModel, Mode=OneWay}" />
+			</DataTemplate>
+			<DataTemplate DataType="{x:Type evm:EntityViewModel}">
+				<uent:EntityPropertiesControl />
+			</DataTemplate>
+			<!-- property -->
+			<DataTemplate DataType="{x:Type evm:PropertyViewModel}">
+				<uent:PropertyPropertiesControl Width="600" />
+			</DataTemplate>
+			<!-- method -->
+			<DataTemplate DataType="{x:Type evm:MethodViewModel}">
+				<uent:MethodPropertiesControl />
+			</DataTemplate>
+			<!-- entity reference -->
+			<DataTemplate DataType="{x:Type evm:EntityReferenceViewModel}">
+				<uent:EntityReferencePropertiesControl />
+			</DataTemplate>
+			<!-- index -->
+			<DataTemplate DataType="{x:Type evm:IndexViewModel}">
+				<uent:IndexPropertiesControl />
+			</DataTemplate>
+			<!-- relationship -->
+			<DataTemplate DataType="{x:Type dvm:DiagramRelationshipViewModel}">
+				<uent:RelationshipPropertiesControl DataContext="{Binding RelationshipViewModel, Mode=OneWay}" Width="600" />
+			</DataTemplate>
+		</ResourceDictionary>
+	</lib:ToolBoxControl.Resources>
+	<Grid>
+		<Grid.LayoutTransform>
+			<TransformGroup>
+				<ScaleTransform ScaleX="{Binding Source={x:Static Settings:UserSettingsHelper.Instance}, Path=ControlSize, Mode=TwoWay}"
+					                          ScaleY="{Binding Source={x:Static Settings:UserSettingsHelper.Instance}, Path=ControlSize, Mode=TwoWay}"/>
+			</TransformGroup>
+		</Grid.LayoutTransform>
+		<!-- Property Window -->
+		<Expander Header="{Binding Source={StaticResource labels}, Path=PropertiesToolBoxHeader}" IsExpanded="True">
+			<ContentControl Content="{Binding CurrentItem, Mode=OneWay}" />
+		</Expander>
+	</Grid>
+</lib:ToolBoxControl>

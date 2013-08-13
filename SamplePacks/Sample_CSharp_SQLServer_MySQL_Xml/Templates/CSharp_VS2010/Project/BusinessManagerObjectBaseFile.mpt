@@ -1,0 +1,284 @@
+<CONFIG>
+	NAME BusinessManagerObjectBaseFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.ComponentModel;
+using System.Text;
+using System.Runtime.Serialization;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is the base business manager object implementation for this
+	/// project.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	public abstract partial class BusinessManagerObjectBase
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property determines what database this entity is associated with,
+		/// and how that database should be accessed.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(null)]
+		public virtual DatabaseOptions DatabaseOptions { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the ConnectionString property of DatabaseOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual string ConnectionString
+		{
+			get
+			{
+				return DatabaseOptions.ConnectionString;
+			}
+			set
+			{
+				DatabaseOptions.ConnectionString = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the CommandTimeout property of DatabaseOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual int CommandTimeout
+		{
+			get
+			{
+				return DatabaseOptions.CommandTimeout;
+			}
+			set
+			{
+				DatabaseOptions.CommandTimeout = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property determines how data for this entity is to be paged and
+		/// sorted.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(null)]
+		public virtual DataAccessOptions DataAccessOptions { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the DebugLevel property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual int DebugLevel
+		{
+			get
+			{
+				return DataAccessOptions.DebugLevel;
+			}
+			set
+			{
+				DataAccessOptions.DebugLevel = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the IncludeInactive property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual bool IncludeInactive
+		{
+			get
+			{
+				return DataAccessOptions.IncludeInactive;
+			}
+			set
+			{
+				DataAccessOptions.IncludeInactive = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the PageSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual int PageSize
+		{
+			get
+			{
+				return DataAccessOptions.PageSize;
+			}
+			set
+			{
+				DataAccessOptions.PageSize = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the StartIndex property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual int StartIndex
+		{
+			get
+			{
+				return DataAccessOptions.StartIndex;
+			}
+			set
+			{
+				DataAccessOptions.StartIndex = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the MaximumListSize property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual int MaximumListSize
+		{
+			get
+			{
+				return DataAccessOptions.MaximumListSize;
+			}
+			set
+			{
+				DataAccessOptions.MaximumListSize = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortColumn property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual string SortColumn
+		{
+			get
+			{
+				return DataAccessOptions.SortColumn;
+			}
+			set
+			{
+				DataAccessOptions.SortColumn = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the SortDirection property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual ListSortDirection SortDirection
+		{
+			get
+			{
+				return DataAccessOptions.SortDirection;
+			}
+			set
+			{
+				DataAccessOptions.SortDirection = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property accesses the FilterElements property of DataAccessOptions.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual NameObjectCollection FilterElements
+		{
+			get
+			{
+				return DataAccessOptions.FilterElements;
+			}
+			set
+			{
+				DataAccessOptions.FilterElements = value;
+			}
+		}%%>
+		<%%:
+		foreach (AuditProperty)
+		{
+			with (Property from Solution.Find(PropertyName, PropertyName))
+			{
+			<%%-
+			
+		protected %%><%%=DALDataType%%><%%- %%><%%=DALFieldName%%>
+				if (IsNullable == true)
+				{
+					<%%- = null%%>
+				}
+		<%%-;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the %%><%%=DALPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(null)]
+		public virtual %%><%%=DALDataType%%><%%- %%><%%=DALPropertyName%%><%%-
+		{
+			get
+			{
+				return %%><%%=DALFieldName%%><%%-;
+			}
+			set
+			{
+				if (%%><%%=DALFieldName%%><%%- != value)
+				{
+					%%><%%=DALFieldName%%><%%- = value;
+				}
+			}
+		}%%>
+			}
+		}
+		%%><%%-
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor ensures that default Database options and DataAccessOptions
+		/// are set up for manager operations.</summary>
+		///--------------------------------------------------------------------------------
+		public BusinessManagerObjectBase()
+		{
+			BusinessConfiguration configuration = new BusinessConfiguration();
+			if (DatabaseOptions == null)
+			{
+				DatabaseOptions = new DatabaseOptions(configuration.DbConnectionString, configuration.DbCommandTimeout);
+			}
+			if (DataAccessOptions == null)
+			{
+				DataAccessOptions = new DataAccessOptions();
+				DataAccessOptions.PageSize = configuration.DbPageSize;
+				DataAccessOptions.MaximumListSize = configuration.DbMaximumListSize;
+			}
+			configuration = null;
+		}
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BusinessManagerObjectBaseFilePath) == null || (File(BusinessManagerObjectBaseFilePath).Contains("<Status>Generated</Status>") == true && File(BusinessManagerObjectBaseFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BusinessManagerObjectBaseFilePath)
+}
+%%></OUTPUT>

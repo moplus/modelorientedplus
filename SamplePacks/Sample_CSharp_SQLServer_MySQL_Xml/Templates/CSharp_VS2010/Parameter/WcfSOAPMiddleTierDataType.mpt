@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierDataType
+	CATEGORY WcfSOAP
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=BLLDataType%%></CONTENT>

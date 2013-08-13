@@ -1,0 +1,55 @@
+<CONFIG>
+	NAME DataArrayItemAttributeFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to manage the DataArrayItem attribute for transforming
+	/// data between dissimilar objects and other purposes.  For transforming data between
+	/// dissimilar objects, there should be a match with either a property name or one of
+	/// these attributes defined with a matching name.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple=true, Inherited=false)]
+	public class DataArrayItemAttribute : Attribute
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the name of the elements.</summary>
+		///--------------------------------------------------------------------------------
+		public string ElementName { get; set; }
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(DataArrayItemAttributeFilePath) == null || (File(DataArrayItemAttributeFilePath).Contains("<Status>Generated</Status>") == true && File(DataArrayItemAttributeFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(DataArrayItemAttributeFilePath)
+}
+%%></OUTPUT>

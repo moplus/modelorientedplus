@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLClassFileProjectPath
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-BLL\%%><%%=FeatureName%%><%%-\%%><%%=BLLClassFileName%%></CONTENT>

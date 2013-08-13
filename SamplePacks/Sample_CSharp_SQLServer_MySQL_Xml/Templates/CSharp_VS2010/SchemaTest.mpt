@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME SchemaTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// a schema test 
+<%%:
+foreach (Project)
+{
+	foreach (SqlTable)
+	{
+		<%%-
+		[%%><%%=Schema%%><%%-].[%%><%%=SqlTableName%%><%%-]%%>
+	}
+}
+foreach (Entity in Solution)
+{
+	<%%-
+	[%%><%%=DbSchema%%><%%-].[%%><%%=EntityName%%><%%-]%%>
+}
+%%></CONTENT>

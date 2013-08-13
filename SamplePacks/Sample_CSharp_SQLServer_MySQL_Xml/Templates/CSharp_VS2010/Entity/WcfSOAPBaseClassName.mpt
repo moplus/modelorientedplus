@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPBaseClassName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-WebServiceBase%%></CONTENT>

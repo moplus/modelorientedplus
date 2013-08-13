@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME WebSOAPMarkupClassCode
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<%@ WebService Language="C#" CodeBehind="%%><%%=WebSOAPClassFileName%%><%%-" Class="%%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WebSOAPClassName%%><%%-" %>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebSOAPMarkupClassFilePath) == null || (File(WebSOAPMarkupClassFilePath).Contains("<Status>Generated</Status>") == true && File(WebSOAPMarkupClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WebSOAPMarkupClassFilePath)
+}
+%%></OUTPUT>

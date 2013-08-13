@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME BLLEnumerationName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%=PropertyName%%>
+		break
+	}
+%%></CONTENT>

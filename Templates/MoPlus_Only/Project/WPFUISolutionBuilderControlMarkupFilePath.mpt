@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUISolutionBuilderControlMarkupFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\SolutionBuilderControl_G.xaml%%></CONTENT>

@@ -1,0 +1,60 @@
+<CONFIG>
+	NAME VMBLLMediatorMessagesFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+
+Based on code written by Marlon Grech and Josh Smith, available at the MVVM Foundation (http://mvvmfoundation.codeplex.com/)
+</copyright>*/
+
+namespace %%><%%=Namespace%%><%%-.Messaging
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>For use in passing messages using the Mediator.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public static class MediatorMessages
+	{
+		// general item messages
+		#region protected
+		#endregion protected%%>
+<%%:
+foreach (Entity in Solution where Tags.Contains("DB") == true && EntityTypeCode == 3 /* Primary */)
+{
+	<%%-
+		
+		// %%><%%=BLLClassName%%><%%- edit related messages
+		public const string Command_Edit%%><%%=BLLClassName%%><%%-Requested = "Command_Edit%%><%%=BLLClassName%%><%%-Requested";
+		public const string Command_Delete%%><%%=BLLClassName%%><%%-Requested = "Command_Delete%%><%%=BLLClassName%%><%%-Requested";
+		public const string Command_Edit%%><%%=BLLClassName%%><%%-Performed = "Command_Edit%%><%%=BLLClassName%%><%%-Performed";%%>
+}
+%%>
+		<%%-
+
+		// event related messages
+		public const string Event_StatusChanged = "Event_StatusChanged";
+		public const string Event_OutputChanged = "Event_OutputChanged";
+		public const string Event_ProgressChanged = "Event_ProgressChanged";
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLMediatorMessagesFilePath) == null || (File(VMBLLMediatorMessagesFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLMediatorMessagesFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(VMBLLMediatorMessagesFilePath)
+}
+%%></OUTPUT>

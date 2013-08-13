@@ -1,0 +1,604 @@
+<CONFIG>
+	NAME VMBLLDesignerViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using MoPlus.Data;
+using System.ComponentModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
+using System.Windows.Data;
+using %%><%%=Project.Namespace%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.Messaging;
+using %%><%%=Project.Namespace%%><%%-.Events;
+using %%><%%=Project.Namespace%%><%%-.Conventions;%%>
+foreach (Feature in Solution where Tags.Contains("DB") == true)
+{
+	foreach (Entity where Tags.Contains("DB") == true && EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && Tags.Contains("IgnoreView") == false && Tags.Contains("IgnoreUI") == false && FeatureName != "Specifications" limit 1)
+	{
+<%%-
+using %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-;%%>
+	}
+}
+foreach (Project where Tags.Contains("BLL") == true)
+{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	foreach (Feature in Solution)
+	{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+	}
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides the view for the designer workspaces.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class DesignerViewModel : WorkspaceViewModel
+	{
+		#region "Command Processing"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes show Help messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_ShowHelpRequested, ParameterType = typeof(HelpEventArgs))]
+		public void ProcessShowHelpRequested(HelpEventArgs data)
+		{
+			ProcessShowHelp(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the show Help command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessShowHelp(HelpEventArgs args)
+		{
+			bool itemExists = false;
+			if (args.HelpViewModel == null)
+				return;
+
+			if (args.WorkspaceID != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (HelpViewModel item in Items.OfType<HelpViewModel>())
+				{
+					if (item.WorkspaceID == args.WorkspaceID)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{
+					HelpViewModel view = new HelpViewModel(args.HelpViewModel.Title, args.HelpViewModel.Paragraph1, args.HelpViewModel.Paragraph2, args.HelpViewModel.Paragraph3, args.HelpViewModel.Paragraph4, args.HelpViewModel.Paragraph5, args.HelpViewModel.Paragraph6);
+					view.Image = args.HelpViewModel.Image;
+					view.ItemID = args.HelpViewModel.ItemID;
+					view.WorkspaceID = args.HelpViewModel.WorkspaceID;
+					SelectedItem = view;
+					view.IsSelected = true;
+					Items.Add(view);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes close item messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_CloseItemRequested, ParameterType = typeof(WorkspaceEventArgs))]
+		public void ProcessCloseItemRequested(WorkspaceEventArgs data)
+		{
+			if (data != null)
+			{
+				CloseItem(data.ItemID);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes close solution item messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_CloseSolutionItemsRequested, ParameterType = typeof(SolutionEventArgs))]
+		public void ProcessCloseSolutionItemsRequested(SolutionEventArgs data)
+		{
+			if (data != null && data.Solution != null)
+			{
+				CloseAllItemsForSolution(data.Solution.SolutionID, data.ForceClose);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes manage (tag) item messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_ManageItemRequested, ParameterType = typeof(SolutionEventArgs))]
+		public void ProcessManageItemRequested(SolutionEventArgs data)
+		{
+			ProcessManageItem(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the manage (tag) item command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessManageItem(SolutionEventArgs args)
+		{
+			bool itemExists = false;
+			if (args.Solution == null)
+				return;
+
+			if (args.Solution.SolutionID != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (TagManagementViewModel item in Items.OfType<TagManagementViewModel>())
+				{
+					if (item.Solution.SolutionID == args.Solution.SolutionID)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{
+					// create new view model and add item to tabs
+					TagManagementViewModel tagView = new TagManagementViewModel(args.Solution);
+					SelectedItem = tagView;
+					tagView.IsSelected = true;
+					Items.Add(tagView);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes breakpoint reached messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_BreakpointReached, ParameterType = typeof(SolutionDebugEventArgs))]
+		public void ProcessBreakpointReachedRequested(SolutionDebugEventArgs data)
+		{
+			ProcessBreakpointReached(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the breakpoint reached command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessBreakpointReached(SolutionDebugEventArgs args)
+		{
+			foreach (CodeTemplateViewModel item in Items.OfType<CodeTemplateViewModel>())
+			{
+				item.SetDebugVisibility(DebugAction.Breaking, args.InterpreterType, args.TemplateContext.TemplateID);
+				if (item.TemplateID == args.TemplateContext.TemplateID)
+				{
+					item.IsSelected = true;
+					item.HandleBreakpoint(args.InterpreterType, args.ModelContext, args.LineNumber);
+				}
+				else
+				{
+					item.IsSelected = false;
+				}
+			}
+			foreach (SpecTemplateViewModel item in Items.OfType<SpecTemplateViewModel>())
+			{
+				item.SetDebugVisibility(DebugAction.Breaking, args.InterpreterType, args.TemplateContext.TemplateID);
+				if (item.TemplateID == args.TemplateContext.TemplateID)
+				{
+					item.IsSelected = true;
+					item.HandleBreakpoint(args.InterpreterType, args.ModelContext, args.LineNumber);
+				}
+				else
+				{
+					item.IsSelected = false;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes debug finished messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_DebugFinished, ParameterType = typeof(SolutionDebugEventArgs))]
+		public void ProcessDebugFinishedRequested(SolutionDebugEventArgs data)
+		{
+			ProcessDebugFinished(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the debug finished command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessDebugFinished(SolutionDebugEventArgs args)
+		{
+			foreach (CodeTemplateViewModel item in Items.OfType<CodeTemplateViewModel>())
+			{
+				item.SetDebugVisibility(DebugAction.None, args.InterpreterType, args.TemplateContext.TemplateID);
+				if (item.TemplateID == args.TemplateContext.TemplateID)
+				{
+					item.IsSelected = true;
+				}
+				else
+				{
+					item.IsSelected = false;
+				}
+			}
+			foreach (SpecTemplateViewModel item in Items.OfType<SpecTemplateViewModel>())
+			{
+				item.SetDebugVisibility(DebugAction.None, args.InterpreterType, args.TemplateContext.TemplateID);
+				if (item.TemplateID == args.TemplateContext.TemplateID)
+				{
+					item.IsSelected = true;
+				}
+				else
+				{
+					item.IsSelected = false;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit solution messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditSolutionRequested, ParameterType = typeof(SolutionEventArgs))]
+		public void ProcessEditSolutionRequested(SolutionEventArgs data)
+		{
+			ProcessEditSolution(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit solution command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessEditSolution(SolutionEventArgs args)
+		{
+			bool itemExists = false;
+			if (args.Solution == null)
+				return;
+
+			if (args.Solution.SolutionID != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (SolutionViewModel item in Items.OfType<SolutionViewModel>())
+				{
+					if (item.Solution.SolutionID == args.Solution.SolutionID)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{
+					// create new view model and add item to tabs
+					SolutionViewModel solutionView = new SolutionViewModel(args.Solution, false);
+
+					// set as edit view model so that the solution model is not disposed
+					solutionView.IsEditViewModel = true;
+					SelectedItem = solutionView;
+					solutionView.IsSelected = true;
+					Items.Add(solutionView);
+				}
+			}
+		}%%>
+		foreach (Entity in Solution where Tags.Contains("DB") == true && EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && Tags.Contains("IgnoreView") == false && Tags.Contains("IgnoreUI") == false && FeatureName != "Specifications" && BLLClassName != "Solution")
+		{
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit %%><%%=BLLClassName%%><%%- messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, ParameterType = typeof(%%><%%=BLLClassName%%><%%-EventArgs))]
+		public void ProcessEdit%%><%%=BLLClassName%%><%%-Requested(%%><%%=BLLClassName%%><%%-EventArgs data)
+		{
+			ProcessEdit%%><%%=BLLClassName%%><%%-(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit %%><%%=BLLClassName%%><%%- command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessEdit%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName%%><%%-EventArgs args)
+		{
+			bool itemExists = false;
+			if (args.%%><%%=BLLClassName%%><%%- == null)
+				return;
+
+			if (args.%%><%%=BLLClassName%%><%%- .%%><%%=BLLPrimaryKeyPropertyName%%><%%- != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in Items.OfType<%%><%%=VMBLLViewModelClassName%%><%%->())
+				{
+					if (item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == args.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{%%>
+				if (Tags.Contains("CustomDesigner") == true)
+				{
+					<%%-
+					#region protected
+					#endregion protected
+					%%>
+				}
+				else if (Tags.Contains("Template") == true)
+				{
+					<%%-
+					// load template if file path is specified
+					if (!String.IsNullOrEmpty(args.%%><%%=BLLClassName%%><%%-.FilePath))
+					{
+						args.%%><%%=BLLClassName%%><%%-.LoadTemplateFileData();
+					}
+
+					// create new view model and add item to tabs
+					%%><%%=VMBLLViewModelClassName%%><%%- view = new %%><%%=VMBLLViewModelClassName%%><%%-(args.%%><%%=BLLClassName%%><%%-, args.Solution, args.Path%%>
+					if (Tags.Contains("Specification") == true)
+					{
+					<%%-, args.%%><%%=BLLClassName%%><%%-.SpecificationDirectory%%>
+					}
+					<%%-);
+					SelectedItem = view;
+					view.IsSelected = true;
+					Items.Add(view);%%>
+				}
+				else
+				{
+					<%%-
+					// create new view model and add item to tabs
+					%%><%%=VMBLLViewModelClassName%%><%%- view = new %%><%%=VMBLLViewModelClassName%%><%%-(args.%%><%%=BLLClassName%%><%%-, args.Solution, %%>
+					if (HasCustomUIProperty == true)
+					{
+						<%%-true%%>
+					}
+					else
+					{
+						<%%-false%%>
+					}
+					<%%-);
+					SelectedItem = view;
+					view.IsSelected = true;
+					Items.Add(view);%%>
+				}
+				<%%-
+				}
+			}
+		}%%>
+		}
+		<%%-
+
+		#endregion "Command Processing"
+
+		#region "Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets SelectedItem, which is only used to get around
+		/// an AvalonDock issue.</summary>
+		///--------------------------------------------------------------------------------
+		public IWorkspaceViewModel SelectedItem { get; set; }
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method closes all items without a prompt to save/cancel.</summary>
+		/// 
+		/// <param name="solutionID">The solution to close items for (null if all solutions).</param>
+		///--------------------------------------------------------------------------------
+		public void CloseNoPromptAllItems(Guid? solutionID = null)
+		{
+			IList<IEditWorkspaceViewModel> items = Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>();
+			foreach (IEditWorkspaceViewModel item in items)
+			{
+				if (solutionID == null || item.Solution.SolutionID == solutionID)
+				{
+					item.CloseCommand.Execute(null);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method requests all items other than the indicated one to close.</summary>
+		/// 
+		/// <param name="itemToKeepOpen">The tab to keep open.</param>
+		///--------------------------------------------------------------------------------
+		public void CloseAllItemsButThis(IEditWorkspaceViewModel itemToKeepOpen)
+		{
+			IList<IEditWorkspaceViewModel> items = Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>();
+			foreach (IEditWorkspaceViewModel item in items)
+			{
+				if (item != itemToKeepOpen)
+				{
+					item.CloseConfirmCommand.Execute(null);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method determines if there are any open edits.</summary>
+		/// 
+		/// <param name="solutionID">The solution to check for edits (null if all solutions).</param>
+		///--------------------------------------------------------------------------------
+		public bool HasEdits(Guid? solutionID = null)
+		{
+			foreach (IEditWorkspaceViewModel item in Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>())
+			{
+				if (solutionID == null || item.Solution.SolutionID == solutionID)
+				{
+					if (item.IsEdited == true)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves any open edits.</summary>
+		/// 
+		/// <param name="solutionID">The solution to check for edits (null if all solutions).</param>
+		///--------------------------------------------------------------------------------
+		public void SaveEdits(Guid? solutionID = null)
+		{
+			foreach (IEditWorkspaceViewModel item in Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>())
+			{
+				if (solutionID == null || item.Solution.SolutionID == solutionID)
+				{
+					if (item.IsEdited == true)
+					{
+						item.UpdateCommand.Execute(null);
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method requests all items for a solution to close.</summary>
+		/// 
+		/// <param name="solutionID">The solution to close items for.</param>
+		///--------------------------------------------------------------------------------
+		public void CloseAllItemsForSolution(Guid solutionID, bool forceClose)
+		{
+			foreach (IEditWorkspaceViewModel item in Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>())
+			{
+				if (item.Solution != null && item.Solution.SolutionID == solutionID)
+				{
+					if (forceClose == true)
+					{
+						item.CloseForceSaveCommand.Execute(null);
+					}
+					else
+					{
+						item.CloseConfirmCommand.Execute(null);
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method closes a requested item.</summary>
+		/// 
+		/// <param name="itemID">The item to close.</param>
+		///--------------------------------------------------------------------------------
+		public void CloseItem(Guid itemID)
+		{
+			foreach (IEditWorkspaceViewModel item in Items.OfType<IEditWorkspaceViewModel>().ToList<IEditWorkspaceViewModel>())
+			{
+				if (item.ItemID == itemID)
+				{
+					item.CloseCommand.Execute(null);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles items changes.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void OnItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.NewItems != null && e.NewItems.Count != 0)
+			{
+				foreach (IEditWorkspaceViewModel item in e.NewItems)
+				{
+					item.RequestClose += this.OnItemRequestClose;
+					SendEditItemsCountForSolution(item.SolutionID);
+				}
+			}
+			if (e.OldItems != null && e.OldItems.Count != 0)
+			{
+				foreach (IEditWorkspaceViewModel item in e.OldItems)
+				{
+					item.RequestClose -= this.OnItemRequestClose;
+					SendEditItemsCountForSolution(item.SolutionID);
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message relating to how many items are being edited for a solution.</summary>
+		/// 
+		/// <param name="solution">The solution to send edit item counts for.</param>
+		///--------------------------------------------------------------------------------
+		private void SendEditItemsCountForSolution(Guid solutionID)
+		{
+			int solutionItemCount = (from item in Items.OfType<IEditWorkspaceViewModel>()
+									 where item.SolutionID == solutionID
+									 select item).ToList<IEditWorkspaceViewModel>().Count;
+			SolutionEditEventArgs message = new SolutionEditEventArgs();
+			message.SolutionID = solutionID;
+			message.EditItemsCount = solutionItemCount;
+			Mediator.NotifyColleagues<SolutionEditEventArgs>(MediatorMessages.Command_SolutionEditItemCount, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles closing of an item.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void OnItemRequestClose(object sender, EventArgs e)
+		{
+			if (DebugHelper.DebugAction != DebugAction.None && DebugHelper.DebugAction != DebugAction.Run)
+			{
+				if (sender is CodeTemplateViewModel || sender is SpecTemplateViewModel)
+				{
+					// prevent closing during debugging session
+					return;
+				}
+			}
+			WorkspaceViewModel workspace = sender as WorkspaceViewModel;
+			workspace.Dispose();
+			this.Items.Remove(workspace);
+			workspace = null;
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor.</summary>
+		///--------------------------------------------------------------------------------
+		public DesignerViewModel()
+		{
+			// Register all decorated methods to the Mediator
+			Mediator.Register(this);
+			Items.CollectionChanged += this.OnItemsChanged;
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLDesignerViewModelFilePath) == null || (File(VMBLLDesignerViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLDesignerViewModelFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(VMBLLDesignerViewModelFilePath)
+}
+%%></OUTPUT>

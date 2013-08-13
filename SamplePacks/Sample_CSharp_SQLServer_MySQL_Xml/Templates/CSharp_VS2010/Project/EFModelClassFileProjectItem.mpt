@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME EFModelClassFileProjectItem
+	CATEGORY EF
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=EFModelClassFilePath.Substring(EFModelClassFilePath.IndexOf(DSModelClassName))%%><%%-">
+      <DependentUpon>%%><%%=EFModelMarkupFileName%%><%%-</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    %%></CONTENT>

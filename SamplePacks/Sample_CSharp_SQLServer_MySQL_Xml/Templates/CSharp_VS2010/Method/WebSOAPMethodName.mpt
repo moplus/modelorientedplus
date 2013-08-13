@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMethodName
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=MethodName%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLWeakActionFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Messaging\WeakAction_G.cs%%></CONTENT>

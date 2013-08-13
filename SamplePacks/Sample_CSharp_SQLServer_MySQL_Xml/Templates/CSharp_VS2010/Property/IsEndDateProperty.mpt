@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME IsEndDateProperty
+	CATEGORY LIB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+if (DataTypeCode != 24 /* DateTime */)
+{
+	<%%-false%%>
+	return
+}
+if (PropertyName.ToLower().StartsWith("end") == true || PropertyName.ToLower().EndsWith("end") == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

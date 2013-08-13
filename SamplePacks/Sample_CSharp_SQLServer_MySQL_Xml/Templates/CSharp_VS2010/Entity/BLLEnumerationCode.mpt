@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME BLLEnumerationCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLEnumerationBodyStartCode%%>
+<%%-
+/// <summary>None.</summary>
+None = 0,%%>
+<%%:
+foreach (Record)
+{
+	<%%-
+	/// <summary>%%><%%=Column(PrimaryDescriptionProperty)%%><%%-</summary>
+	%%><%%=Column(PrimaryNameProperty).Replace(" ", "").Replace(".", "")%%><%%- = %%><%%=Column(PrimaryIntKeyProperty)%%><%%-,%%>
+}%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLEnumerationFilePath) == null || (File(BLLEnumerationFilePath).Contains("<Status>Generated</Status>") == true && File(BLLEnumerationFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BLLEnumerationFilePath)
+}
+%%></OUTPUT>

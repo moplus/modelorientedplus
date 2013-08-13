@@ -1,0 +1,95 @@
+<CONFIG>
+	NAME ReportingTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in Solution)
+{
+	<%%-
+		Entity: %%><%%=EntityName%%>
+	foreach (EntityReference)
+	{
+		<%%-
+			Entity Reference: %%><%%=EntityReferenceName%%>
+		foreach (PropertyRelationship)
+		{
+			<%%-
+				RelationshipID: %%><%%=RelationshipID%%>
+		}
+	}
+}
+<%%-
+List of properties that end in "code":%%>
+// get a list of properties that end in "code"
+foreach (Feature)
+{
+	foreach (Entity)
+	{
+		foreach (Property)
+		{
+			if (BLLPropertyName.ToLower().Contains("code") == true)
+			{
+<%%-
+%%><%%=FeatureName%%><%%-.%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+			}
+		}
+	}
+}
+<%%-
+
+List of properties that end in "code" (again):%%>
+// get a list of properties that end in "code"
+foreach (Property in Solution sort PropertyName)
+{
+	if (BLLPropertyName.ToLower().Contains("code") == true)
+	{
+<%%-
+%%><%%=FeatureName%%><%%-.%%><%%=Entity.BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+	}
+}
+<%%-
+
+List of entities that extend another entity:%%>
+// get a list of entities that have base entities
+foreach (Entity in Solution)
+{
+	with (BaseEntity)
+	{
+<%%-
+%%><%%=../FeatureName%%><%%-.%%><%%=../EntityName%%><%%- extends %%><%%=FeatureName%%><%%-.%%><%%=EntityName%%>
+	}
+}
+<%%-
+
+List of ignored entities:%%>
+foreach (Entity in Solution)
+{
+	foreach (Tag)
+	{
+		if (TagName == "Ignore")
+		{
+<%%-
+%%><%%=../EntityName%%>
+		}
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+foreach (Project)
+{
+	forfiles(ProjectDirectory, ".cs")
+	{
+		<%%-
+		%%><%%=ItemPath%%>
+	}
+}
+foreach (Entity)
+{
+	log("Entity", EntityName, EntityID)
+	<%%-
+	Log Value: %%><%%=LogValue("Entity", EntityName).ToUpper()%%>
+}
+%%></OUTPUT>

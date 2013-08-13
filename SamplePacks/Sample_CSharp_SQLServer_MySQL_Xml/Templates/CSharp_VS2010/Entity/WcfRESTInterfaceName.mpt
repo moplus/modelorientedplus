@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTInterfaceName
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-I%%><%%=WcfRESTMiddleTierPluralEntityName%%></CONTENT>

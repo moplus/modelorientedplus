@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME WcfRESTWebServiceMarkupFileProjectItem
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=WcfRESTWebServiceMarkupFilePath.Substring(WcfRESTWebServiceMarkupFilePath.IndexOf(WcfRESTWebServiceName))%%><%%-" />
+    %%></CONTENT>

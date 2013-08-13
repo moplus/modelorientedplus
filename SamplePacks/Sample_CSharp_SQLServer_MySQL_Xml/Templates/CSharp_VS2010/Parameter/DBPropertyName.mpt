@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DBPropertyName
+	CATEGORY DB
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPExtendedClassIncludesCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPClassIncludesCode%%></CONTENT>

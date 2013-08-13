@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DataHelperFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DataHelperFilePath.Substring(DataHelperFilePath.IndexOf("DataHelper")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

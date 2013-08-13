@@ -1,0 +1,92 @@
+<CONFIG>
+	NAME TestExtendedCollections
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in Solution where BaseEntityID != null)
+{
+	<%%-
+	Entity: %%><%%=EntityName%%>
+	foreach (Property in EntityAndBaseEntities where IsBaseProperty == false)
+	{
+		<%%-
+		Property: %%><%%=PropertyName%%>
+	}
+	foreach (PropertyReference  in EntityAndBaseEntities)
+	{
+		<%%-
+		PropertyReference: %%><%%=PropertyReferenceName%%>
+	}
+	foreach (EntityReference  in EntityAndBaseEntities)
+	{
+		<%%-
+		EntityReference: %%><%%=EntityReferenceName%%>
+	}
+	foreach (Collection  in EntityAndBaseEntities)
+	{
+		<%%-
+		Collection: %%><%%=CollectionName%%>
+	}
+	foreach (Index  in EntityAndBaseEntities)
+	{
+		<%%-
+		Index: %%><%%=IndexName%%>
+	}
+	foreach (Relationship  in EntityAndBaseEntities)
+	{
+		<%%-
+		Relationship: %%><%%=RelationshipName%%>
+	}
+	foreach (Method  in EntityAndBaseEntities)
+	{
+		<%%-
+		Method: %%><%%=MethodName%%>
+	}
+}
+<%%-
+
+%%>
+foreach (Entity in Solution where BaseEntityID == null)
+{
+	<%%-
+	Entity: %%><%%=EntityName%%>
+	foreach (Property in ExtendingEntities where IsBaseProperty == false)
+	{
+		<%%-
+		Property: %%><%%=PropertyName%%>
+	}
+	foreach (PropertyReference  in ExtendingEntities)
+	{
+		<%%-
+		PropertyReference: %%><%%=PropertyReferenceName%%>
+	}
+	foreach (EntityReference  in ExtendingEntities)
+	{
+		<%%-
+		EntityReference: %%><%%=EntityReferenceName%%>
+	}
+	foreach (Collection  in ExtendingEntities)
+	{
+		<%%-
+		Collection: %%><%%=CollectionName%%>
+	}
+	foreach (Index  in ExtendingEntities)
+	{
+		<%%-
+		Index: %%><%%=IndexName%%>
+	}
+	foreach (Relationship  in ExtendingEntities)
+	{
+		<%%-
+		Relationship: %%><%%=RelationshipName%%>
+	}
+	foreach (Method  in ExtendingEntities)
+	{
+		<%%-
+		Method: %%><%%=MethodName%%>
+	}
+}
+%%></CONTENT>

@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME DALClassCode
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=DALClassBodyStartCode%%>
+<%%=DALClassConstantsCode%%>
+<%%=DALClassPropertiesCode%%><%%-
+%%><%%=DALClassMethodsCode%%><%%-
+%%><%%=DALClassConstructorsCode%%>
+<%%=DALGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(DALClassFilePath) == null || (File(DALClassFilePath).Contains("<Status>Generated</Status>") == true && File(DALClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(DALClassFilePath)
+}
+%%></OUTPUT>

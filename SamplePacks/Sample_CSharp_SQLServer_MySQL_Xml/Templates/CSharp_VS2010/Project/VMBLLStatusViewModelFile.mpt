@@ -1,0 +1,122 @@
+<CONFIG>
+	NAME VMBLLStatusViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides the view for the status workspace.</summary>
+	/// 
+	/// <remarks>Derived from Microsoft MVVM design pattern example (http://msdn.microsoft.com/en-us/magazine/dd419663.aspx).</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class StatusViewModel : WorkspaceViewModel
+	{
+		#region "Properties"
+		public delegate void StatusChangeEventHandler(object sender, StatusEventArgs args);
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling progress changes.</summary>
+		///--------------------------------------------------------------------------------
+		public event StatusChangeEventHandler ProgressChanged;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling status changes.</summary>
+		///--------------------------------------------------------------------------------
+		public event StatusChangeEventHandler StatusChanged;
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes progress changes.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Event_ProgressChanged, ParameterType = typeof(StatusEventArgs))]
+		private void ProcessReportProgress(StatusEventArgs data)
+		{
+			OnProgressChanged(this, data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles progress changes.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnProgressChanged(object sender, StatusEventArgs args)
+		{
+			if (ProgressChanged != null)
+			{
+				ProgressChanged(this, args);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes status changes.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Event_StatusChanged, ParameterType = typeof(StatusEventArgs))]
+		private void ProcessStatusChange(StatusEventArgs data)
+		{
+			OnStatusChanged(this, data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles status changes.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnStatusChanged(object sender, StatusEventArgs args)
+		{
+			if (StatusChanged != null)
+			{
+				StatusChanged(this, args);
+			}
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor.</summary>
+		///--------------------------------------------------------------------------------
+		public StatusViewModel()
+		{
+			// Register all decorated methods to the Mediator
+			Mediator.Register(this);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLStatusViewModelFilePath) == null || (File(VMBLLStatusViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLStatusViewModelFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLStatusViewModelFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DALPropertyName
+	CATEGORY DAL
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=CollectionName%%></CONTENT>

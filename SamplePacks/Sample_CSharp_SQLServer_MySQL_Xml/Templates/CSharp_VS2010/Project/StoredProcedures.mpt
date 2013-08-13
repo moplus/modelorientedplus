@@ -1,0 +1,53 @@
+<CONFIG>
+	NAME StoredProcedures
+	CATEGORY DB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+if (DbName != null)
+{
+	<%%-
+use [%%><%%=DbName%%><%%-]
+GO
+	%%>
+}
+%%>
+<%%-
+DECLARE @name nvarchar(255)
+DECLARE deleteSprocCursor CURSOR FOR
+	SELECT a.name from sys.procedures a
+	INNER JOIN syscomments b on a.object_id=b.id
+	WHERE b.text like '%<Status>Generated</Status>%'
+
+OPEN deleteSprocCursor
+FETCH NEXT FROM deleteSprocCursor INTO @name   
+
+WHILE @@FETCH_STATUS = 0   
+BEGIN
+    DECLARE @DropScript nvarchar(255)
+    SET @DropScript = 'DROP PROCEDURE [dbo].[' + @name + ']'
+    EXEC (@DropScript)
+
+    FETCH NEXT FROM deleteSprocCursor INTO @name   
+END   
+
+CLOSE deleteSprocCursor
+GO
+%%>
+<%%=USETABS true%%><%%=TAB -500%%><%%-
+%%>
+<%%:
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	<%%=DbSpProceduresCode%%>
+	progress
+	progress
+}
+%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Scripts\%%><%%-StoredProcedures.sql%%>
+<%%:
+update(Path)
+%%></OUTPUT>

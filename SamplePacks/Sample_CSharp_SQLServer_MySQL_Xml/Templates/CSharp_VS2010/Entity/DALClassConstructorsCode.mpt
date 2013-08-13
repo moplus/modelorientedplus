@@ -1,0 +1,65 @@
+<CONFIG>
+	NAME DALClassConstructorsCode
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Constructors"
+
+///--------------------------------------------------------------------------------
+/// <summary>The default constructor (for reflection, etc.).</summary>
+///--------------------------------------------------------------------------------
+public %%><%%=DALClassName%%><%%-(){}
+
+///--------------------------------------------------------------------------------
+/// <summary>This constructor creates a data access %%><%%=DALClassName%%><%%- instance
+/// with primary key values.</summary>
+///
+/// <param name="primaryKeyValues">The primary key values to initialize the instance with.</param>
+///--------------------------------------------------------------------------------
+public %%><%%=DALClassName%%><%%-(string primaryKeyValues)
+{%%>
+	<%%=TAB 1%%><%%-
+	PrimaryKeyValues = primaryKeyValues;%%>
+<%%=TAB -1%%><%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This constructor creates a data access %%><%%=DALClassName%%><%%- instance
+/// with primary key properties individually.</summary>
+///
+%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-/// <param name="%%><%%=DALParameterName%%><%%-">The input value for %%><%%=DALPropertyName%%><%%-.</param>%%>
+	}
+%%>
+<%%-
+///--------------------------------------------------------------------------------
+public %%><%%=DALClassName%%><%%-(%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%=DALDataType%%><%%- %%><%%=DALParameterName%%>
+	}
+	<%%-)%%>
+%%><%%-
+{%%>
+<%%:
+	<%%=TAB 1%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-
+		%%>	<%%=DALPropertyName%%><%%- = %%><%%=DALParameterName%%><%%-;%%>
+	}
+%%><%%=TAB -1%%><%%-
+}%%>
+<%%-
+#endregion "Constructors"%%></CONTENT>

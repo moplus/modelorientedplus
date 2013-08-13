@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WPFUIDetailClassName
+	CATEGORY WPFUI
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%><%%-Detail%%></CONTENT>

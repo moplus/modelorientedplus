@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLEnumerationIncludesCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;%%></CONTENT>

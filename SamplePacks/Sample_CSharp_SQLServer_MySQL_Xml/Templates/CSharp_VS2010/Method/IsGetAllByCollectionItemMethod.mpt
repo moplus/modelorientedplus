@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsGetAllByCollectionItemMethod
+	CATEGORY LIB
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (MethodTypeCode ==12 /* GetAllByCollectionItem */)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>

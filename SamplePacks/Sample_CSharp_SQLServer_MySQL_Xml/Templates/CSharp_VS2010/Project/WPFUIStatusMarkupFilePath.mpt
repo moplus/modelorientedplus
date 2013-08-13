@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIStatusMarkupFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\Status_G.xaml%%></CONTENT>

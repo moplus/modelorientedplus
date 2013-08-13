@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME BLLPropertyCommentsCode
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>This property gets or sets the %%><%%=BLLPropertyName%%><%%-.</summary>
+///--------------------------------------------------------------------------------%%></CONTENT>

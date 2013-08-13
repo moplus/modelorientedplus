@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DALDataType
+	CATEGORY DAL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (ReferencedProperty)
+{
+	<%%=CSharpDataType%%>}
+%%></CONTENT>

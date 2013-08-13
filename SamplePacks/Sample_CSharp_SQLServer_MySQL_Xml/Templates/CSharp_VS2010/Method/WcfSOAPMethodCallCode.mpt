@@ -1,0 +1,53 @@
+<CONFIG>
+	NAME WcfSOAPMethodCallCode
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=WcfSOAPMethodName%%><%%-(%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%- item%%>
+		break
+	case 9: // UpdateOne
+		with (Entity)
+		{
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=WcfSOAPParameterName%%>
+			}
+			<%%-, item%%>
+		}
+		break
+	case 10: // DeleteOne
+		with (Entity)
+		{
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=WcfSOAPParameterName%%>
+			}
+		}
+		break
+	case 1: // GetOne
+		foreach (Parameter)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=WcfSOAPParameterName%%>
+		}
+		break
+}
+<%%-)%%>
+%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPResponseClassName
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-Response%%></CONTENT>

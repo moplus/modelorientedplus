@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME WcfRESTInterfaceBodyStartCode
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%=TAB -500%%>
+<%%=WcfRESTGlobalCopyrightCode%%>
+<%%=WcfRESTInterfaceIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfRESTInterfaceCommentsCode%%><%%-
+	[ServiceContract]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public interface %%><%%=WcfRESTInterfaceName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

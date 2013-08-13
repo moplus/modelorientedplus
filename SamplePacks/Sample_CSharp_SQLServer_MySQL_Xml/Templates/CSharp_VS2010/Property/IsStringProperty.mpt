@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME IsStringProperty
+	CATEGORY Test
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// return whether or not data type is a string type
+//
+switch (DataTypeCode)
+{
+	case 16: // String
+	case 17: // StringUnicode
+	case 19: // Text
+	case 20: // TextUnicode
+		<%%-true%%>
+		break
+	default:
+		<%%-false%%>
+		break
+}
+%%></CONTENT>

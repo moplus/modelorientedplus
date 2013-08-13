@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DALMethodCommentsCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+/// <param name="databaseOptions">The database options for connecting to the database.</param>
+///--------------------------------------------------------------------------------%%></CONTENT>

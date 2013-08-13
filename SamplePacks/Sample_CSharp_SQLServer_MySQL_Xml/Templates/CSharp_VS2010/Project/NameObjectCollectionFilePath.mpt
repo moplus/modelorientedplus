@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME NameObjectCollectionFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\NameObjectCollection_G.cs%%></CONTENT>

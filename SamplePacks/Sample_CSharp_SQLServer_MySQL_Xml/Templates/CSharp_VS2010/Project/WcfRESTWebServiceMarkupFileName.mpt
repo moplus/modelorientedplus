@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTWebServiceMarkupFileName
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTWebServiceName%%><%%-.svc%%></CONTENT>

@@ -1,0 +1,73 @@
+<CONFIG>
+	NAME BLLDefaultValue
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+	switch (DataTypeCode)
+	{
+		case 21: // IntTiny
+		case 2: // IntShort
+			<%%-0%%>
+			break
+		case 3: // Int
+			<%%-0%%>
+			break
+		case 4: // IntLong
+			<%%-0%%>
+			break
+		case 22: // UIntTiny
+		case 6: // UIntShort
+			<%%-0%%>
+			break
+		case 7: // UInt
+			<%%-0%%>
+			break
+		case 8: // UIntLong
+			<%%-0%%>
+			break
+		case 24: // DateTime
+			<%%-DateTime.MinValue%%>
+			break
+		case 26: // Guid
+			<%%-Guid.Empty%%>
+			break
+		case 9: // FloatSingle
+			<%%-0%%>
+			break
+		case 10: // FloatDouble
+			<%%-0%%>
+			break
+		case 18: // Currency
+		case 11: // Decimal
+			<%%-0%%>
+			break
+		case 23: // Binary
+		case 5: // Byte
+		case 25: // Timestamp
+		case 15: // Object
+			<%%-null%%>
+			break
+		case 1: // SByte
+			<%%-0%%>
+			break
+		case 12: // Boolean
+			<%%-false%%>
+			break
+		case 16: // String
+		case 17: // StringUnicode
+		case 19: // Text
+		case 20: // TextUnicode
+			<%%-""%%>
+			break
+		case 13: // Char
+		case 14: // CharUnicode
+			<%%-' '%%>
+			break
+		default:
+			<%%-null%%>
+			break
+	}
+%%></CONTENT>

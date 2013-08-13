@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME VMBLLViewPluralModelClassName
+	CATEGORY VMBLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLPluralEntityName%%><%%-ViewModel%%></CONTENT>

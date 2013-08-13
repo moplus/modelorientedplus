@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME WcfRESTValidEntity
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+if (EntityTypeCode == 1 /*Relational */ || EntityTypeCode == 2/* PrimaryLogging */)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

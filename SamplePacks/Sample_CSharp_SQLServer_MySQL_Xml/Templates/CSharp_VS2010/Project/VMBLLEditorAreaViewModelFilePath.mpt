@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLEditorAreaViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\EditorAreaViewModel_G.cs%%></CONTENT>

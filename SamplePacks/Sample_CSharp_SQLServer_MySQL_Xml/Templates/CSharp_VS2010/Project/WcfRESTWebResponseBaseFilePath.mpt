@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTWebResponseBaseFilePath
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebResponseBase_G.cs%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFModelClassFileName
+	CATEGORY EF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=DSModelClassName%%><%%-.Designer.cs%%></CONTENT>

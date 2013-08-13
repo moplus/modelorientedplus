@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WPFUIChildItemsSource
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (Tags.Contains("CustomItems") == true)
+{
+	<%%-CustomItems%%>
+}
+else
+{
+	<%%-Items%%>
+}
+%%></CONTENT>

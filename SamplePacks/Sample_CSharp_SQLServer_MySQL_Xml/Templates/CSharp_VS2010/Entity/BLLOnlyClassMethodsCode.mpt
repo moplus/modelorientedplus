@@ -1,0 +1,109 @@
+<CONFIG>
+	NAME BLLOnlyClassMethodsCode
+	CATEGORY BLLOnly
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"
+
+///--------------------------------------------------------------------------------
+/// <summary>This method gets the %%><%%=BLLClassName%%><%%- instance from an xml file.</summary>
+///
+/// <param name="inputFilePath">The path of the file to load from.</param>
+///--------------------------------------------------------------------------------
+public override void Load(string inputFilePath)
+{%%>
+<%%=TAB 1%%>
+	<%%-
+	base.Load(inputFilePath);
+	ResetLoaded(true);
+	ResetModified(false);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method saves the %%><%%=BLLClassName%%><%%- instance to an xml file.</summary>
+///
+/// <param name="inputFilePath">The path of the file to save to.</param>
+///--------------------------------------------------------------------------------
+public override void Save(string inputFilePath)
+{%%>
+<%%=TAB 1%%>
+<%%-
+	base.Save(inputFilePath);
+	ResetLoaded(true);
+	ResetModified(false);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method resets the IsLoaded state for the instance.</summary>
+///
+/// <param name="isLoaded">The reset value for the IsLoaded property.</param>
+///--------------------------------------------------------------------------------
+public override void ResetLoaded(bool isLoaded)
+{%%>
+<%%=TAB 1%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		base.ResetLoaded(isLoaded);%%>
+	}
+	else
+	{
+		<%%-
+		_isLoaded = isLoaded;%%>
+	}
+	foreach (Collection)
+	{
+		<%%-
+		if (%%>
+		<%%=BLLFieldName%%>
+		<%%- != null) %%>
+		<%%=BLLFieldName%%>
+		<%%-.ResetLoaded(isLoaded);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method resets the IsModified state for the instance.</summary>
+///
+/// <param name="isLoaded">The reset value for the IsModified property.</param>
+///--------------------------------------------------------------------------------
+public override void ResetModified(bool isModified)
+{%%>
+<%%=TAB 1%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		base.ResetModified(isModified);%%>
+	}
+	else
+	{
+		<%%-
+		_isModified = isModified;%%>
+	}
+	foreach (Collection)
+	{
+		<%%-
+		if (%%>
+		<%%=BLLFieldName%%>
+		<%%- != null) %%>
+		<%%=BLLFieldName%%>
+		<%%-.ResetModified(isModified);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+#endregion "Methods"%%></CONTENT>

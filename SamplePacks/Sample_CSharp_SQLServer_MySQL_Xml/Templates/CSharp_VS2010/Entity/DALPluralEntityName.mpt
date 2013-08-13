@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALPluralEntityName
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=LIBPluralEntityName%%></CONTENT>

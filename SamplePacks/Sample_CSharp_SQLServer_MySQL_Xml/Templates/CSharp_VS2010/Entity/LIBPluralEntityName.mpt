@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME LIBPluralEntityName
+	CATEGORY LIB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+if (EntityName.ToLower().EndsWith("y") == true)
+{
+	<%%=EntityName.Substring(0, EntityName.Length - 1)%%><%%-ies%%>
+	return
+}
+if (EntityName.ToLower().EndsWith("s") == true || EntityName.ToLower().EndsWith("x") == true)
+{
+	<%%=EntityName%%><%%-es%%>
+	return
+}
+<%%=EntityName%%><%%-s%%>
+%%></CONTENT>

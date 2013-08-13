@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTParameterName
+	CATEGORY WcfREST
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.CamelCase()%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPClassSolutionFilePath
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=WcfSOAPClassFileName%%></CONTENT>

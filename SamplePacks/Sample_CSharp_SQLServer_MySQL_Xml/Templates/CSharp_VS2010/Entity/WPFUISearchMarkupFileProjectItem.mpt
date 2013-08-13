@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUISearchMarkupFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Page Include="%%><%%=WPFUISearchMarkupFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    %%></CONTENT>

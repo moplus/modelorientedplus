@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME IsActivationDateProperty
+	CATEGORY LIB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+if (PropertyName == "StartDate" || PropertyName == "EndDate")
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

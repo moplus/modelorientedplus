@@ -1,0 +1,82 @@
+<CONFIG>
+	NAME VMEFDSDataServiceClientFile
+	CATEGORY VMEFDS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%:
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.Services.Client;
+using System.Configuration;
+using %%><%%=Namespace%%><%%-.DataService;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class sets up the data service context to enable
+	/// view models to perform data operations.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public static partial class DataServiceClient
+	{%%>
+		foreach (Project)
+		{
+			if (../ProjectCount == 1 || Tags.Contains("DS") == true)
+			{
+		<%%-
+		private static %%><%%=../Namespace%%><%%-.DataService.%%><%%=DSModelClassName%%><%%- _context = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the DataService Context.</summary>
+		///--------------------------------------------------------------------------------
+		public static %%><%%=../Namespace%%><%%-.DataService.%%><%%=DSModelClassName%%><%%- Context
+		{
+			get
+			{
+				if (_context == null)
+				{
+					_context = new %%><%%=../Namespace%%><%%-.DataService.%%><%%=DSModelClassName%%><%%-(new Uri(ConfigurationManager.AppSettings["ServiceURI"], UriKind.RelativeOrAbsolute));
+				}
+				return _context;
+			}
+			set
+			{
+				_context = value;
+			}
+		}%%>
+			}
+		}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method clears the  Context.</summary>
+		///--------------------------------------------------------------------------------
+		public static void ClearContext()
+		{
+			_context = null;
+		}
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMEFDSDataServiceClientFilePath) == null || (File(VMEFDSDataServiceClientFilePath).Contains("<Status>Generated</Status>") == true && File(VMEFDSDataServiceClientFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMEFDSDataServiceClientFilePath)
+}
+%%></OUTPUT>

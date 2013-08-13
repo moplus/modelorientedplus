@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPDataType
+	CATEGORY WebSOAP
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

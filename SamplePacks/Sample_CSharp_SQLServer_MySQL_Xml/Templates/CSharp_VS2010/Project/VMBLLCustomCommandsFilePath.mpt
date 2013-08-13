@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLCustomCommandsFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\CustomCommands_G.cs%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPExtRelativePath
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\Assembly_Exts\%%><%%=FeatureName%%><%%-\%%></CONTENT>

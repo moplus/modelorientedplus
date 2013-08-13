@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME BLLPropertyName
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (PropertyName == "Name" || PropertyName == "Title" || PropertyName == EntityName)
+{
+	<%%=Entity.BLLClassName%%><%%=PropertyName%%>
+}
+else
+{
+	<%%=PropertyName%%>
+}
+%%></CONTENT>

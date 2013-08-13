@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME DebugTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+/*
+This is a debugging test
+*/
+<%%-Debug Test
+%%>
+foreach (Entity)
+{
+<%%-
+%%><%%=BLLClassName%%>
+}
+%%></CONTENT>

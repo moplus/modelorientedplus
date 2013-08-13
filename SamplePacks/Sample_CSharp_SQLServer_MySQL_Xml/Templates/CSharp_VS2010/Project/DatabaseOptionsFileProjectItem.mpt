@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DatabaseOptionsFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=DatabaseOptionsFilePath.Substring(DatabaseOptionsFilePath.IndexOf("DatabaseOptions")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

@@ -1,0 +1,201 @@
+<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file outside of protected areas to prevent changes
+ from being overwritten.
+
+ <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
+ <CreatedDate>5/23/2013</CreatedDate>
+ <Status>Generated</Status>
+-->
+<lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Entities.IndexDialogControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:VM="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
+                     xmlns:EntitiesVM="clr-namespace:MoPlus.ViewModel.Entities;assembly=MoPlus.ViewModel"
+                     xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+                     xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
+                     mc:Ignorable="d" 
+                     d:DesignHeight="300" d:DesignWidth="300">
+ 	<lib:EditControl.CommandBindings>
+		<!-- region protected -->
+		<CommandBinding Command="New" CanExecute="NewCanExecute" Executed="NewExecuted"></CommandBinding>
+		<CommandBinding Command="Delete" PreviewCanExecute="PreviewDeleteCanExecute" Executed="DeleteExecuted"></CommandBinding>
+		<!-- endregion protected -->
+	</lib:EditControl.CommandBindings>
+	<lib:EditControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<Style x:Key="IndexIDInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IndexIDCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IndexIDValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="IndexNameInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IndexNameCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IndexNameValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="IsPrimaryKeyIndexInput" BasedOn="{StaticResource BasicCheckBox}" TargetType="{x:Type CheckBox}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsPrimaryKeyIndexCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IsPrimaryKeyIndexValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="IsUniqueIndexInput" BasedOn="{StaticResource BasicCheckBox}" TargetType="{x:Type CheckBox}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IsUniqueIndexCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IsUniqueIndexValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="DescriptionInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding DescriptionCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding DescriptionValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="IndexPropertyListInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IndexPropertyListCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IndexPropertyListValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="TagsInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding TagsCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding TagsValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<VM:LabelHelper x:Key="labels" />
+		</ResourceDictionary>
+	</lib:EditControl.Resources>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}">
+		<Grid DataContextChanged="Grid_DataContextChanged"
+			  MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}}"
+			  RenderTransformOrigin="0.5,0.5">
+			<Grid.LayoutTransform>
+				<TransformGroup>
+					<ScaleTransform ScaleX="{Binding Source={x:Static Settings:UserSettingsHelper.Instance}, Path=ControlSize, Mode=TwoWay}"
+					                          ScaleY="{Binding Source={x:Static Settings:UserSettingsHelper.Instance}, Path=ControlSize, Mode=TwoWay}"/>
+				</TransformGroup>
+			</Grid.LayoutTransform>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Margin="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="{Binding Title, Mode=OneWay}" />
+			<!--Label  Margin="1" Grid.Row="1" Grid.Column="0" Style="{DynamicResource IndexIDInput}" Content="{Binding IndexIDLabel, Mode=OneWay}" /-->
+			<Label Margin="1" Grid.Row="2" Grid.Column="0" Style="{DynamicResource IndexNameInput}" Content="{Binding IndexNameLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="4" Grid.Column="0" Style="{DynamicResource IndexPropertyListInput}" Content="{Binding IndexPropertyListLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="5" Grid.Column="0" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="6" Grid.Column="0" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
+			<Border Name="PlaceHolderBorder" Grid.Column="1" Margin="1"/>
+			<!--Label Margin="1" Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelValue}" Content="{Binding IndexID, Mode=OneWay}" /-->
+			<TextBox Margin="0" Grid.Row="2" Grid.Column="1" ToolTip="{Binding IndexNameValidationMessage, Mode=OneWay}" Text="{Binding IndexName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}" Loaded="TextBox_Loaded"/>
+			<WrapPanel Margin="1" Grid.Row="3" Grid.Column="1">
+				<StackPanel Orientation="Horizontal">
+					<CheckBox Style="{DynamicResource IsPrimaryKeyIndexInput}" Content="{Binding IsPrimaryKeyIndexLabel, Mode=OneWay}" IsChecked="{Binding IsPrimaryKeyIndex}" />
+					<CheckBox Style="{DynamicResource IsUniqueIndexInput}" Content="{Binding IsUniqueIndexLabel, Mode=OneWay}" IsChecked="{Binding IsUniqueIndex}" />
+				</StackPanel>
+			</WrapPanel>
+			<!-- region protected -->
+			<GroupBox Header="{Binding Source={StaticResource labels}, Path=PropertiesHeader}" Grid.Row="4" Grid.Column="1" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}">
+				<Grid Margin="2">
+					<DataGrid Name="ItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" ItemsSource="{Binding Items}" lib:DataGridHelper.DataGridCommitOnUnfocused="True">
+						<DataGrid.ContextMenu>
+							<ContextMenu>
+								<MenuItem Header="{Binding MenuLabelNewIndexProperty}" Command="New"></MenuItem>
+								<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+							</ContextMenu>
+						</DataGrid.ContextMenu>
+						<DataGrid.Columns>
+							<lib:BindableDataGridComboBoxColumn Header="{Binding Source={StaticResource labels}, Path=PropertyHeader}" DisplayMemberPath="PropertyName" SelectedValuePath="PropertyID" SelectedValueBinding="{Binding PropertyID, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding PropertyIDItems}" />
+							<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=OrderHeader}" Binding="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto" />
+							<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=DescriptionHeader}" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+						</DataGrid.Columns>
+					</DataGrid>
+				</Grid>
+			</GroupBox>
+			<!-- endregion protected -->
+			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="5" Margin="7"/>
+			<TextBox Margin="0" Grid.Row="5" Grid.Column="1" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<TextBox Margin="0" Grid.Row="6" Grid.Column="1" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
+			<StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" Margin="2">
+				<Button Command="{Binding OKCommand}" Content="{Binding OKButtonLabel}"></Button>
+				<Button Command="{Binding CancelCommand}" Content="{Binding CancelButtonLabel}"></Button>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</lib:EditControl>

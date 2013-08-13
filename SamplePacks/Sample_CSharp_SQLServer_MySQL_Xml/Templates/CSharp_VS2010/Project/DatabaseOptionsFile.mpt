@@ -1,0 +1,115 @@
+<CONFIG>
+	NAME DatabaseOptionsFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to hold options for accessing a database.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	public class DatabaseOptions
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the database connection string.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual string ConnectionString { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the database command timeout.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual int CommandTimeout { get; set; }
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor initializes a default DataOptions instance with
+		/// default values.</summary>
+		///--------------------------------------------------------------------------------
+		public DatabaseOptions()
+		{
+			// initialize a default DataOptions instance
+			ConnectionString = String.Empty;
+			CommandTimeout = 200;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor initializes a default DataOptions instance with
+		/// the connection string.</summary>
+		/// 
+		/// <param name="connectionString">The connection string for connecting to the database.</param>
+		///--------------------------------------------------------------------------------
+		public DatabaseOptions(string connectionString)
+		{
+			// initialize a default DataOptions instance
+			ConnectionString = connectionString;
+			CommandTimeout = 200;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor initializes a default DataOptions instance with
+		/// the server and database name.</summary>
+		/// 
+		/// <param name="serverName">The name of the database server to connect to.</param>
+		/// <param name="databaseName">The name of the database to connect to.</param>
+		///--------------------------------------------------------------------------------
+		public DatabaseOptions(string serverName, string databaseName)
+		{
+			// initialize a default DataOptions instance
+			ConnectionString = "Server=" + serverName + ";Database=" + databaseName + ";Trusted_Connection=true";
+			CommandTimeout = 200;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor initializes a default DataOptions instance with
+		/// the connection string and command timeout.</summary>
+		/// 
+		/// <param name="connectionString">The connection string for connecting to the database.</param>
+		/// <param name="commandTimeout">The timeout for database commands.</param>
+		///--------------------------------------------------------------------------------
+		public DatabaseOptions(string connectionString, int commandTimeout)
+		{
+			// initialize a default DataOptions instance
+			ConnectionString = connectionString;
+			CommandTimeout = commandTimeout;
+			if (CommandTimeout == DefaultValue.Int)
+			{
+				CommandTimeout = 200;
+			}
+		}
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(DatabaseOptionsFilePath) == null || (File(DatabaseOptionsFilePath).Contains("<Status>Generated</Status>") == true && File(DatabaseOptionsFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(DatabaseOptionsFilePath)
+}
+%%></OUTPUT>

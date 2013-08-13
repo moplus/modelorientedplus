@@ -1,0 +1,136 @@
+<lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Models.PropertyCollectionItemControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:VM="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
+                     xmlns:ModelsVM="clr-namespace:MoPlus.ViewModel.Models;assembly=MoPlus.ViewModel"
+                     xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+                     xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
+                     mc:Ignorable="d">
+	<lib:EditControl.CommandBindings>
+		<!-- region protected -->
+		<CommandBinding Command="New" CanExecute="NewCanExecute" Executed="NewExecuted"></CommandBinding>
+		<CommandBinding Command="Delete" PreviewCanExecute="PreviewDeleteCanExecute" Executed="DeleteExecuted"></CommandBinding>
+		<!-- endregion protected -->
+	</lib:EditControl.CommandBindings>
+	<lib:EditControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<Style x:Key="PropertyValueInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding PropertyInstanceViewModel.PropertyValueCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding PropertyInstanceViewModel.PropertyValueValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<VM:LabelHelper x:Key="labels" />
+		</ResourceDictionary>
+	</lib:EditControl.Resources>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}">
+		<Grid DataContextChanged="Grid_DataContextChanged" Margin="2"
+			  MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Row="0" Grid.Column="1" Style="{DynamicResource PropertyValueInput}" Content="{Binding ModelPropertyNameLabel, Mode=OneWay}" />
+			<Border Name="PlaceHolderBorder" Grid.Column="2" Margin="7"/>
+			<Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding ObjectInstanceListVisiblity}" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}">
+				<DataGrid Name="ObjectInstanceListItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" ItemsSource="{Binding PropertyInstances}" lib:DataGridHelper.DataGridCommitOnUnfocused="True">
+					<DataGrid.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewPropertyInstance}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+						</ContextMenu>
+					</DataGrid.ContextMenu>
+					<DataGrid.Columns>
+						<lib:BindableDataGridComboBoxColumn Header="{Binding Source={StaticResource labels}, Path=PropertyValueHeader}" DisplayMemberPath="DisplayName" SelectedValuePath="ObjectInstanceID" SelectedValueBinding="{Binding SelectedObjectInstanceID, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ObjectInstanceListItems}">
+							<lib:BindableDataGridComboBoxColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+									<Setter Property="ToolTip" Value="{Binding PropertyValueValidationMessage}"/>
+								</Style>
+							</lib:BindableDataGridComboBoxColumn.CellStyle>
+						</lib:BindableDataGridComboBoxColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=OrderHeader}" Binding="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+							<DataGridTextColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+									<Setter Property="ToolTip" Value="{Binding OrderValidationMessage}"/>
+								</Style>
+							</DataGridTextColumn.CellStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=DescriptionHeader}" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+			<Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding ValueListVisiblity}" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}">
+				<DataGrid Name="ValueListItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" ItemsSource="{Binding PropertyInstances}" lib:DataGridHelper.DataGridCommitOnUnfocused="True">
+					<DataGrid.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewPropertyInstance}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+						</ContextMenu>
+					</DataGrid.ContextMenu>
+					<DataGrid.Columns>
+						<lib:BindableDataGridComboBoxColumn Header="{Binding Source={StaticResource labels}, Path=PropertyValueHeader}" DisplayMemberPath="EnumValue" SelectedValuePath="EnumValue" SelectedValueBinding="{Binding PropertyValue, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding ValueListItems}">
+							<lib:BindableDataGridComboBoxColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+									<Setter Property="ToolTip" Value="{Binding PropertyValueValidationMessage}"/>
+								</Style>
+							</lib:BindableDataGridComboBoxColumn.CellStyle>
+						</lib:BindableDataGridComboBoxColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=OrderHeader}" Binding="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+							<DataGridTextColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+									<Setter Property="ToolTip" Value="{Binding OrderValidationMessage}"/>
+								</Style>
+							</DataGridTextColumn.CellStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=DescriptionHeader}" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+			<Grid Grid.Row="0" Grid.Column="2" Visibility="{Binding ValueVisibility}" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}">
+				<DataGrid Name="ValueItemsGrid" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" ItemsSource="{Binding PropertyInstances}" lib:DataGridHelper.DataGridCommitOnUnfocused="True">
+					<DataGrid.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewPropertyInstance}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+						</ContextMenu>
+					</DataGrid.ContextMenu>
+					<DataGrid.Columns>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=PropertyValueHeader}" Binding="{Binding PropertyValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+							<DataGridTextColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+									<Setter Property="ToolTip" Value="{Binding PropertyValueValidationMessage}"/>
+								</Style>
+							</DataGridTextColumn.CellStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=OrderHeader}" Binding="{Binding Order, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+							<DataGridTextColumn.CellStyle>
+								<Style TargetType="{x:Type DataGridCell}">
+										<Setter Property="ToolTip" Value="{Binding OrderValidationMessage}"/>
+								</Style>
+							</DataGridTextColumn.CellStyle>
+						</DataGridTextColumn>
+						<DataGridTextColumn Header="{Binding Source={StaticResource labels}, Path=DescriptionHeader}" Binding="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+					</DataGrid.Columns>
+				</DataGrid>
+			</Grid>
+		</Grid>
+	</ScrollViewer>
+</lib:EditControl>

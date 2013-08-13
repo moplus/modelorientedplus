@@ -1,0 +1,53 @@
+<CONFIG>
+	NAME VMBLLExtendedEventArgsClassCode
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.Windows;
+using %%><%%=Project.Namespace%%><%%-.Events;
+
+namespace %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary></summary>
+	///
+	/// This file is for adding customizations to the %%><%%=BLLClassName%%><%%- class
+	/// (change the Status below to something other than Generated).
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLEventArgsClassName%%><%%- : WorkspaceEventArgs
+	{
+		#region "Properties"
+		#endregion "Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+
+		#region "Constructors"
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLExtendedEventArgsClassFilePath) == null || (File(VMBLLExtendedEventArgsClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLExtendedEventArgsClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLExtendedEventArgsClassFilePath)
+}
+%%></OUTPUT>

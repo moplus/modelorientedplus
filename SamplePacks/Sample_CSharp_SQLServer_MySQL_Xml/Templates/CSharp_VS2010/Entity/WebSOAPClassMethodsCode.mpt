@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WebSOAPClassMethodsCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"%%>
+<%%:
+foreach (Method where WebSOAPValidMethod == true)
+{
+	<%%=WebSOAPMethodCode%%>
+}
+%%>
+<%%-
+#endregion "Methods"%%></CONTENT>

@@ -1,0 +1,106 @@
+<CONFIG>
+	NAME WcfRESTServiceJSONMethodInterfaceAttributesCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-JSON")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/json", Method = "POST", ResponseFormat = WebMessageFormat.Json)]%%>
+		}
+		break
+	case 9: // UpdateOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-JSON")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-/%%>
+				}
+				<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+			}
+		}
+		<%%-/json", Method = "PUT", ResponseFormat = WebMessageFormat.Json)]%%>
+		break
+	case 10: // DeleteOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-JSON")]
+			[WebInvoke(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-/%%>
+				}
+				<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+			}
+		}
+		<%%-/json", Method = "DELETE", ResponseFormat = WebMessageFormat.Json)]%%>
+		break
+	case 1: // GetOne
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-JSON")]
+			[WebGet(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/%%>
+			}
+		foreach (Parameter)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-/%%>
+			}
+			<%%-{%%><%%=WcfRESTParameterName%%><%%-}%%>
+		}
+		<%%-/json")]%%>
+		break
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+		<%%-
+		[OperationContract(Name = "%%><%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%>
+		with (Entity)
+		{
+			<%%-JSON")]
+			[WebGet(UriTemplate = "/%%><%%=LIBPluralEntityName%%><%%-/json%%>
+		}
+		foreach (Parameter)
+		{
+			if (ItemIndex == 0)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%=BLLPropertyName%%><%%-={%%><%%=BLLParameterName%%><%%-}%%>
+		}
+		if (ParameterCount == 0)
+		{
+			<%%-?%%>
+		}
+		else
+		{
+			<%%-&%%>
+		}
+		<%%-SortColumn={sortColumn}&SortDirection={sortDirection}&PageSize={pageSize}&StartIndex={startIndex}", ResponseFormat = WebMessageFormat.Json)]%%>
+		break
+}
+%%></CONTENT>

@@ -1,0 +1,30 @@
+<CONFIG>
+	NAME BLLClassBodyStartCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLGlobalCopyrightCode%%>
+<%%=BLLClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+<%%=BLLClassCommentsCode%%><%%-
+[Serializable()]
+[XmlRoot(Namespace="", ElementName="%%><%%=BLLClassName%%><%%-")]
+[DataContract]
+[IgnoreProperties("Manager", "IsModified"%%>
+<%%:
+if (BaseEntityID == null)
+{
+	<%%-, "PrimaryKeyProperties", "PrimaryKeyValues"%%>
+}
+%%>
+<%%-)]
+[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+public partial class %%><%%=BLLClassName%%><%%- : %%><%%=BLLBaseClassName%%><%%-
+{%%>
+<%%=TAB 1%%></CONTENT>

@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME GenericObjectsFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=GenericObjectsFilePath.Substring(GenericObjectsFilePath.IndexOf("GenericObjects")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

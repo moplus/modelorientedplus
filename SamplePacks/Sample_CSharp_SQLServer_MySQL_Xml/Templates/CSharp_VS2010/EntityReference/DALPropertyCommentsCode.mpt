@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME DALPropertyCommentsCode
+	CATEGORY DAL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>This property gets or sets a reference to the %%><%%=DALPropertyName%%><%%-.</summary>
+///--------------------------------------------------------------------------------%%></CONTENT>

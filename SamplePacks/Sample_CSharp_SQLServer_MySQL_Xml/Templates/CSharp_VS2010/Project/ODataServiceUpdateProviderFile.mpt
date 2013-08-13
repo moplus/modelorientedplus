@@ -1,0 +1,328 @@
+<CONFIG>
+	NAME ODataServiceUpdateProviderFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Services.Providers;
+using System.Collections;
+using System.Reflection;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides update information for OData services.</summary>
+	/// 
+	/// <remarks>This code is based on an example provided by Alex D. James in his blog
+	/// at http://blogs.msdn.com/b/alexj/archive/2010/01/04/creating-a-data-service-provider-part-1-intro.aspx .</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class ODataServiceUpdateProvider<T> : IDataServiceUpdateProvider where T : IODataContext
+	{
+		#region "Fields and Properties"
+		private IDataServiceMetadataProvider _metadata;
+		private ODataServiceQueryProvider<T> _query;
+		private List<Action> _actions;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the CurrentDataSource.</summary>
+		///--------------------------------------------------------------------------------
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the current OData context (data source).</summary>
+		///--------------------------------------------------------------------------------
+		public T GetContext()
+		{
+			return ((T)_query.CurrentDataSource);
+		} 
+	
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets concurrency values.</summary>
+		/// 
+		/// <param name="resourceCookie">The resource cookie.</param>
+		/// <param name="checkForEquality">Flag for checking for equality.</param>
+		/// <param name="concurrencyValues">The concurrency values.</param>
+		///--------------------------------------------------------------------------------
+		public void SetConcurrencyValues(object resourceCookie, bool? checkForEquality, IEnumerable<KeyValuePair<string, object>> concurrencyValues)
+		{
+			throw new NotImplementedException();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets a reference.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="propertyValue">The property value.</param>
+		///--------------------------------------------------------------------------------
+		public void SetReference(object targetResource, string propertyName, object propertyValue)
+		{
+			_actions.Add(() => ReallySetReference(targetResource, propertyName, propertyValue));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets a reference.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="propertyValue">The property value.</param>
+		///--------------------------------------------------------------------------------
+		public void ReallySetReference(object targetResource, string propertyName, object propertyValue)
+		{
+			targetResource.SetPropertyValue(propertyName, propertyValue);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds a reference to a collection.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="resourceToBeAdded">The resource to be added.</param>
+		///--------------------------------------------------------------------------------
+		public void AddReferenceToCollection(object targetResource, string propertyName, object resourceToBeAdded)
+		{
+			_actions.Add(() => ReallyAddReferenceToCollection(targetResource, propertyName, resourceToBeAdded));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds a reference to a collection.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="resourceToBeAdded">The resource to be added.</param>
+		///--------------------------------------------------------------------------------
+		public void ReallyAddReferenceToCollection(object targetResource, string propertyName, object resourceToBeAdded)
+		{
+			var collection = targetResource.GetPropertyValue(propertyName);
+			if (collection is IList)
+			{
+				(collection as IList).Add(resourceToBeAdded);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method removes a reference from a collection.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="resourceToBeRemoved">The resource to be removed.</param>
+		///--------------------------------------------------------------------------------
+		public void RemoveReferenceFromCollection(object targetResource, string propertyName, object resourceToBeRemoved)
+		{
+			_actions.Add(() => ReallyRemoveReferenceFromCollection(targetResource, propertyName, resourceToBeRemoved));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method removes a reference from a collection.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="resourceToBeRemoved">The resource to be removed.</param>
+		///--------------------------------------------------------------------------------
+		public void ReallyRemoveReferenceFromCollection(object targetResource, string propertyName, object resourceToBeRemoved)
+		{
+			var collection = targetResource.GetPropertyValue(propertyName);
+			if (collection is IList)
+			{
+				(collection as IList).Remove(resourceToBeRemoved);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method clears changes from the transaction.</summary>
+		///--------------------------------------------------------------------------------
+		public void ClearChanges()
+		{
+			_actions.Clear();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves changes for all actions in the context.</summary>
+		///--------------------------------------------------------------------------------
+		public void SaveChanges()
+		{
+			foreach (var a in _actions)
+				a();
+			GetContext().SaveChanges();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method creates a resource.</summary>
+		/// 
+		/// <param name="containerName">The container name.</param>
+		/// <param name="fullTypeName">The full type name.</param>
+		///--------------------------------------------------------------------------------
+		public object CreateResource(string containerName, string fullTypeName)
+		{
+			ResourceType type = null;
+			if (_metadata.TryResolveResourceType(fullTypeName, out type))
+			{
+				var context = GetContext();
+				var resource = context.CreateResource(type);
+				_actions.Add(() => context.AddResource(type, resource));
+				return resource;
+			}
+			throw new Exception(
+				string.Format("Type {0} not found", fullTypeName)
+			);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes a resource.</summary>
+		/// 
+		/// <param name="targetResource">The resource to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void DeleteResource(object targetResource)
+		{
+			_actions.Add(() => GetContext().DeleteResource(targetResource));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a resource.</summary>
+		/// 
+		/// <param name="query">The reource query.</param>
+		/// <param name="fullTypeName">The full type name.</param>
+		///--------------------------------------------------------------------------------
+		public object GetResource(IQueryable query, string fullTypeName)
+		{
+			var enumerator = query.GetEnumerator();
+			if (!enumerator.MoveNext())
+				throw new Exception("Resource not found");
+			var resource = enumerator.Current;
+			if (enumerator.MoveNext())
+				throw new Exception("Resource not uniquely identified");
+
+			if (fullTypeName != null)
+			{
+				ResourceType type = null;
+				if (!_metadata.TryResolveResourceType(fullTypeName, out type))
+					throw new Exception("ResourceType not found");
+				if (!type.InstanceType.IsAssignableFrom(resource.GetType()))
+					throw new Exception("Unexpected resource type");
+			}
+			return resource;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets a resource.</summary>
+		/// 
+		/// <param name="resource">The input resource.</param>
+		///--------------------------------------------------------------------------------
+		public object ResetResource(object resource)
+		{
+			_actions.Add(() => ReallyResetResource(resource));
+			return resource;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets a resource.</summary>
+		/// 
+		/// <param name="resource">The input resource.</param>
+		///--------------------------------------------------------------------------------
+		public void ReallyResetResource(object resource)
+		{
+			// Create an new 'blank' instance of the resource 
+			var clrType = resource.GetType();
+			ResourceType resourceType =
+			   _metadata.Types.Single(t => t.InstanceType == clrType);
+			var resetTemplate = GetContext().CreateResource(resourceType);
+
+			// Copy non-key property values from the 'blank' resource 
+			foreach (var prop in resourceType
+					 .Properties
+					 .Where(p => (p.Kind & ResourcePropertyKind.Key)
+								 != ResourcePropertyKind.Key))
+			{
+				// Obviously for perf reasons you could might want to 
+				// cache the result of these reflection calls. 
+				var clrProp = clrType
+				   .GetProperties()
+				   .Single(p => p.Name == prop.Name);
+
+				var defaultPropValue = clrProp
+				   .GetGetMethod()
+				   .Invoke(resetTemplate, new object[] { });
+
+				clrProp
+				   .GetSetMethod()
+				   .Invoke(resource, new object[] { defaultPropValue });
+			}
+		}
+	
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resolves a resource.</summary>
+		/// 
+		/// <param name="resource">The input resource.</param>
+		///--------------------------------------------------------------------------------
+		public object ResolveResource(object resource)
+		{
+			return resource;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a value.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		///--------------------------------------------------------------------------------
+		public object GetValue(object targetResource, string propertyName)
+		{
+			var value = targetResource.GetType().GetProperties().Single(p => p.Name == propertyName).GetGetMethod().Invoke(targetResource, new object[] { });
+			return value;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets a value.</summary>
+		/// 
+		/// <param name="targetResource">The target resource.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <param name="propertyValue">The property value.</param>
+		///--------------------------------------------------------------------------------
+		public void SetValue(object targetResource, string propertyName, object propertyValue)
+		{
+			targetResource.GetType().GetProperties().Single(p => p.Name == propertyName).GetSetMethod().Invoke(targetResource, new[] { propertyValue });
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor sets up the metadata.</summary>
+		/// 
+		/// <param name="metadata">The input metadata.</param>
+		/// <param name="query">The input query.</param>
+		///--------------------------------------------------------------------------------
+		public ODataServiceUpdateProvider(IDataServiceMetadataProvider metadata, ODataServiceQueryProvider<T> query)
+		{
+			_metadata = metadata;
+			_query = query;
+			_actions = new List<Action>();
+		}
+		#endregion "Constructors"
+	}
+}%%></CONTENT><OUTPUT>
+<%%:
+if (File(ODataServiceUpdateProviderFilePath) == null || (File(ODataServiceUpdateProviderFilePath).Contains("<Status>Generated</Status>") == true && File(ODataServiceUpdateProviderFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(ODataServiceUpdateProviderFilePath)
+}
+%%></OUTPUT>

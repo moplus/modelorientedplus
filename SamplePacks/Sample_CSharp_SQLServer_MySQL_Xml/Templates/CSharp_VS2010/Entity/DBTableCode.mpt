@@ -1,0 +1,65 @@
+<CONFIG>
+	NAME DBTableCode
+	CATEGORY DB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+var isFirstItem = true
+<%%-
+
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE Name='%%><%%=DBTableName%%><%%-')
+	BEGIN
+		CREATE TABLE [%%><%%=DBTableName%%><%%-] (%%>
+foreach (Property where Tags.Contains("DB") == true)
+{
+<%%-
+			%%>
+	if (isFirstItem == true)
+	{
+		<%%-  %%>
+	}
+	else
+	{
+		<%%-, %%>
+	}
+	isFirstItem = false
+			<%%=DBColumnName%%><%%- %%><%%=DBDataType%%>
+	if (IsNullable == true)
+	{
+			<%%- NULL%%>
+	}
+	else
+	{
+			<%%- NOT NULL%%>
+	}
+}
+ <%%-
+		)
+	END
+	ELSE
+	BEGIN%%>
+foreach (Property where Tags.Contains("DB") == true)
+{
+<%%-
+		IF NOT EXISTS (SELECT * FROM information_schema.columns WHERE table_name = '%%><%%=../DBTableName%%><%%-' AND column_name = '%%><%%=OriginalName%%><%%-')
+		BEGIN
+			ALTER TABLE [%%><%%=../DBTableName%%><%%-]
+			ADD %%><%%=DBColumnName%%><%%- %%><%%=DBDataType%%>
+	if (IsNullable == true)
+	{
+		<%%- NULL%%>
+	}
+	else
+	{
+		<%%- NOT NULL DEFAULT %%><%%=DBDefaultValue%%>
+	}
+<%%-
+		END%%>
+}
+<%%-
+	END
+GO%%>
+%%></CONTENT>

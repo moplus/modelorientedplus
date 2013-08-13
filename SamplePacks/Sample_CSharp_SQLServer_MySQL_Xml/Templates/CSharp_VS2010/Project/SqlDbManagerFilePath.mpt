@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME SqlDbManagerFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\SqlDbManager_G.cs%%></CONTENT>

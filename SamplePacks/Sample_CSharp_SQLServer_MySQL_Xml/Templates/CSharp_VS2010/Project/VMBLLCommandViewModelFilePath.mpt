@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLCommandViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\CommandViewModel_G.cs%%></CONTENT>

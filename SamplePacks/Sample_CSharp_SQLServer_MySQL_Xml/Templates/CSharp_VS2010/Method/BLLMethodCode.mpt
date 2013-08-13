@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME BLLMethodCode
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+%%><%%=BLLMethodCommentsCode%%>
+<%%=BLLMethodAttributesCode%%><%%-
+%%><%%=BLLMethodSignatureCode%%>
+<%%=BLLMethodBodyCode%%></CONTENT>

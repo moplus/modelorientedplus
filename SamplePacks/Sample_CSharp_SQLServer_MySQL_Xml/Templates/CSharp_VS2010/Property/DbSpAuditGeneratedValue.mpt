@@ -1,0 +1,58 @@
+<CONFIG>
+	NAME DbSpAuditGeneratedValue
+	CATEGORY DbSp
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+// returns the auto generated value for an audit (or normal) property
+if (IsNullable == true)
+{
+	<%%-NULL%%>
+	return
+}
+switch (DataTypeCode)
+{
+	case 2: // IntShort
+	case 3: // Int
+	case 4: // IntLong
+	case 6: // UIntShort
+	case 7: // UInt
+	case 8: // UIntLong
+	case 21: // IntTiny
+	case 22: // UIntTiny
+		<%%-0%%>
+		break
+	case 9: // FloatSingle
+	case 10: // FloatDouble
+	case 11: // Decimal
+	case 18: // Currency
+	case 23: // Binary
+	case 5: // Byte
+	case 1: // SByte
+	case 12: // Boolean
+		<%%-0%%>
+		break
+	case 16: // String
+	case 17: // StringUnicode
+	case 19: // Text
+	case 20: // TextUnicode
+	case 13: // Char
+	case 14: // CharUnicode
+		<%%-''%%>
+		break
+	case 24: // DateTime
+		<%%-getdate()%%>
+		break
+	case 25: // Timestamp
+		<%%-timestamp%%>
+		break
+	case 26: // Guid
+		// use newid() if prefer more security over performance
+		<%%-newsequentialid()%%>
+		break
+	default:
+		<%%-NULL%%>
+		break
+}
+%%></CONTENT>

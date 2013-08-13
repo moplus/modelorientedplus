@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME BLLPropertyAttributesCode
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+[XmlElement()]
+[DataMember]
+[DataElement]
+[DefaultValue(%%>
+if (IsNullable == true)
+{
+	<%%-null%%>
+}
+else
+{
+	<%%=BLLDefaultConstantValue%%>
+}
+<%%-)]%%>
+%%></CONTENT>

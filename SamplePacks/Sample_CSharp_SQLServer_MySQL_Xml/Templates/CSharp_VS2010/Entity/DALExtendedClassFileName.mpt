@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALExtendedClassFileName
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=DALClassName%%><%%-_Ext.cs%%></CONTENT>

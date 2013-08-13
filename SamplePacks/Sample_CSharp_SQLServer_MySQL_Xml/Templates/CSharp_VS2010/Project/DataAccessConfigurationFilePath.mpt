@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataAccessConfigurationFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataAccessConfiguration_G.cs%%></CONTENT>

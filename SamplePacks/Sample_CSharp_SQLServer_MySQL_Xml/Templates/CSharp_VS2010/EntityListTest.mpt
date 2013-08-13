@@ -1,0 +1,36 @@
+<CONFIG>
+	NAME EntityListTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// Template: EntityListTest
+//
+// Get a list of all entities and their descriptions.
+<%%:
+foreach (Entity)
+{
+<%%-
+%%><%%=CapitalEntityName%%>
+	if (Solution.DescriptionBlurbTest != null)
+	{
+		<%%-: Uh oh, shouldn't get a description here!%%>
+	}
+	if (Solution.DescriptionBlurbTest(description = Description) != null)
+	{
+		<%%=Solution.DescriptionBlurbTest(description = Description)%%>
+	}
+	else
+	{
+		<%%-: No description found.%%>
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+param filePath
+if (filePath != null)
+{
+	update(filePath)
+}
+%%></OUTPUT>

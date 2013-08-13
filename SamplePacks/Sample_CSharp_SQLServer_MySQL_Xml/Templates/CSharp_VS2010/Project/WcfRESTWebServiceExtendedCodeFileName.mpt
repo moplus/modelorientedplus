@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTWebServiceExtendedCodeFileName
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTWebServiceName%%><%%-_Ext.svc.c%%></CONTENT>

@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME PrimaryIntKeyProperty
+	CATEGORY LIB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where (DataTypeCode == 2 || DataTypeCode == 3 || DataTypeCode == 4 || DataTypeCode == 6 || DataTypeCode == 7 || DataTypeCode == 8) limit 1)
+{
+	<%%=PropertyName%%>
+}
+%%></CONTENT>

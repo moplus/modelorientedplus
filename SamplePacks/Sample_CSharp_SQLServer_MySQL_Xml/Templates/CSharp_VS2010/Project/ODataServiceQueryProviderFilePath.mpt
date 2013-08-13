@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ODataServiceQueryProviderFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ODataServiceQueryProvider_G.cs%%></CONTENT>

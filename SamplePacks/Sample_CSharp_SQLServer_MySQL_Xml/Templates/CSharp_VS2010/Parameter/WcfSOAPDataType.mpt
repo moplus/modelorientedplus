@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME WcfSOAPDataType
+	CATEGORY WcfSOAP
+	NODE Parameter
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (Property from Solution.Find(ReferencedPropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+with (PropertyReference from Solution.Find(ReferencedPropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+with (Collection from Solution.Find(ReferencedPropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+with (EntityReference from Solution.Find(ReferencedPropertyID))
+{
+	<%%=BLLDataType%%>
+	break
+}
+%%></CONTENT>

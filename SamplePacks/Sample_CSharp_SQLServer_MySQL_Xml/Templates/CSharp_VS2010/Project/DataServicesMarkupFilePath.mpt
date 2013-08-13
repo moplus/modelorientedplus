@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataServicesMarkupFilePath
+	CATEGORY DataServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\%%><%%=DataServicesMarkupFileName%%></CONTENT>

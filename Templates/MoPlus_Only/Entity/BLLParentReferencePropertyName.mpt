@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME BLLParentReferencePropertyName
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where Tags.Contains("Parent") == true limit 1)
+	{
+		<%%=BLLPropertyName%%>
+		return
+	}
+}
+%%></CONTENT>

@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME BLLPropertyAttributesCode
+	CATEGORY BLL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[XmlIgnore]%%></CONTENT>

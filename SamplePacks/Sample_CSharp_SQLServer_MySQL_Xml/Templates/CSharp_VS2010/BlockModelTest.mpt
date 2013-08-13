@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME BlockModelTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%: 
+<%%-Block Model Data:%%>
+//foreach (ObjectInstance where ModelObjectName == "Block")
+foreach (Block)
+{
+<%%-
+	Block:%%>
+		<%%-
+		BlockID: %%><%%=BlockID%%>
+		<%%-
+		BlockName: %%><%%=BlockName%%>
+	foreach(Element)
+	{
+		<%%-
+		Element:%%>
+			<%%-
+			ElementID: %%><%%=ElementID%%>
+			<%%-
+			ElementName: %%><%%=ElementName%%>
+			<%%-
+			ElementDataType: %%><%%=ElementDataType%%>
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+update(Solution.SolutionDirectory + "\\BlockModelTest.txt")%%></OUTPUT>

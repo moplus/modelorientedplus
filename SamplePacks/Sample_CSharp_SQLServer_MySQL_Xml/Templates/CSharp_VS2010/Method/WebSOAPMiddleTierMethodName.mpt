@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierMethodName
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=BLLMethodName%%></CONTENT>

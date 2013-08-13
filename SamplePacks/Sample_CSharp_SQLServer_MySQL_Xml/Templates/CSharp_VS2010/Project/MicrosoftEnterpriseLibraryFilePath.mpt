@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME MicrosoftEnterpriseLibraryFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\MicrosoftEnterpriseLibrary_G.cs%%></CONTENT>

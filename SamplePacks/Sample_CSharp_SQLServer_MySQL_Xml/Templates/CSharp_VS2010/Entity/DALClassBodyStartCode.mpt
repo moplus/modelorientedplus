@@ -1,0 +1,37 @@
+<CONFIG>
+	NAME DALClassBodyStartCode
+	CATEGORY DAL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=DALGlobalCopyrightCode%%>
+<%%=DALClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.DAL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+<%%=BLLClassCommentsCode%%><%%-
+[Serializable()]
+[XmlRoot(Namespace="", ElementName="%%><%%=DALClassName%%><%%-")]
+[DataContract]
+[IgnoreProperties("IsModified"%%>
+<%%:
+if (BaseEntityID == null)
+{
+	<%%-, "PrimaryKeyProperties", "PrimaryKeyValues"%%>
+}
+if (CollectionCount > 0)
+{
+	foreach (Collection)
+	{
+		<%%-, "%%><%%=CollectionName%%><%%-"%%>
+	}
+}
+%%>
+<%%-)]
+[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+public partial class %%><%%=DALClassName%%><%%- : %%><%%=DALBaseClassName%%><%%-
+{%%>
+<%%=TAB 1%%></CONTENT>

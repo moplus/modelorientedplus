@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTFieldName
+	CATEGORY WcfREST
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.UnderscoreCase()%%></CONTENT>

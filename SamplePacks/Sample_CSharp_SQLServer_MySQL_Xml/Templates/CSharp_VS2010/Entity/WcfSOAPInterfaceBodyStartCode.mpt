@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME WcfSOAPInterfaceBodyStartCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPGlobalCopyrightCode%%>
+<%%=WcfSOAPInterfaceIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WcfSOAPInterfaceCommentsCode%%><%%-
+	[ServiceContract(Namespace="http://%%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-", Name="%%><%%=WcfSOAPClassName%%><%%-")]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public interface %%><%%=WcfSOAPInterfaceName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

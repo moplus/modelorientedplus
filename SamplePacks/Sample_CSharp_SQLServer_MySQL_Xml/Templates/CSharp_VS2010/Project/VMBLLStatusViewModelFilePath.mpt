@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLStatusViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\StatusViewModel_G.cs%%></CONTENT>

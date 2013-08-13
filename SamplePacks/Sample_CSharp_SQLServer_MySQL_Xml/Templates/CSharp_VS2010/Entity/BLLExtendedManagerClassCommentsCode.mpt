@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME BLLExtendedManagerClassCommentsCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary></summary>
+///
+/// This file is for adding customizations to the %%><%%=BLLManagerClassName%%><%%- class.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

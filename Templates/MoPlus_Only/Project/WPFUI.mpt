@@ -1,0 +1,334 @@
+<CONFIG>
+	NAME WPFUI
+	NODE Project
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{%%><%%=ProjectID.ToUpper()%%><%%-}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>%%><%%=Namespace%%><%%-</RootNamespace>
+    <AssemblyName>%%><%%=Namespace%%><%%-</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Theme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EditorArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\NavigationArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Output.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Status.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UIControl.cs" />
+    <Compile Include="VisualItemHelper.cs" />
+    <Compile Include="DisableButtonStringConverter.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\EditorArea.xaml.cs">
+      <DependentUpon>EditorArea.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\NavigationArea.xaml.cs">
+      <DependentUpon>NavigationArea.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\Output.xaml.cs">
+      <DependentUpon>Output.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UserControls\Status.xaml.cs">
+      <DependentUpon>Status.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="%%><%%=LibraryDirectory%%><%%-\VS2010\InCode.Common\InCode.Common.csproj">
+      <Project>{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}</Project>
+      <Name>InCode.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="%%><%%=LibraryDirectory%%><%%-\VS2010\InCode.Data\InCode.Data.csproj">
+      <Project>{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}</Project>
+      <Name>InCode.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="%%><%%=LibraryDirectory%%><%%-\VS2010\InCode.Net\InCode.Net.csproj">
+      <Project>{63BF2E2B-52AE-4156-A859-96C09F73775C}</Project>
+      <Name>InCode.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="%%><%%=LibraryDirectory%%><%%-\VS2010\\InCode.IO\InCode.IO.csproj">
+      <Project>{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}</Project>
+      <Name>InCode.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>%%></CONTENT><OUTPUT>
+<%%=ProjectFilePath%%>
+<%%:
+// create project file if it does not exist
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// make sure standard project files are present
+<%%>AssemblyInfoFile%%>
+<%%>WPFUISolutionDesignerControlCodeFile%%>
+log("GeneratedFile", WPFUISolutionDesignerControlCodeFilePath, true)
+<%%>WPFUISolutionDesignerControlMarkupFile%%>
+log("GeneratedFile", WPFUISolutionDesignerControlMarkupFilePath, true)
+<%%>WPFUISolutionBuilderControlCodeFile%%>
+log("GeneratedFile", WPFUISolutionBuilderControlCodeFilePath, true)
+<%%>WPFUISolutionBuilderControlMarkupFile%%>
+log("GeneratedFile", WPFUISolutionBuilderControlMarkupFilePath, true)
+
+foreach (Entity in Solution where Tags.Contains("DB") == false)
+{
+	// report progress
+	progress
+	progress
+}
+
+// add generated files that should be part of the solution
+foreach (Entity in Solution where Tags.Contains("DB") == true && EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && Tags.Contains("IgnoreView") == false && Tags.Contains("Template") == false && Tags.Contains("CustomDesigner") == false && Tags.Contains("IgnoreUI") == false && FeatureName != "Specifications")
+{
+	// output detail class file
+	<%%>WPFUIDetailClassCode%%>
+	log("GeneratedFile", WPFUIDetailClassFilePath, true)
+	if (File(Path).Contains(WPFUIDetailClassFileProjectPath) == false)
+	{
+		// debug("adding: " + WPFUIDetailClassFilePath)
+		// add to project file
+		insert(../../ProjectFilePath, "<Compile Include=", "/>", "MainWindow.xaml.cs", WPFUIDetailClassFileProjectItem)
+	}
+	
+	// output detail markup file
+	<%%>WPFUIDetailMarkupCode%%>
+	log("GeneratedFile", WPFUIDetailMarkupFilePath, true)
+	if (File(Path).Contains(WPFUIDetailMarkupFileProjectPath) == false)
+	{
+		// debug("adding: " + WPFUIDetailMarkupFilePath)
+		// add to project file
+		insert(../../ProjectFilePath, "<Page Include=", "/>", "MainWindow.xaml", WPFUIDetailMarkupFileProjectItem)
+	}
+
+	// report progress
+	progress
+
+	// output dialog class file
+	<%%>WPFUIDialogClassCode%%>
+	log("GeneratedFile", WPFUIDialogClassFilePath, true)
+	if (File(Path).Contains(WPFUIDialogClassFileProjectPath) == false)
+	{
+		// debug("adding: " + WPFUIDialogClassFilePath)
+		// add to project file
+		insert(../../ProjectFilePath, "<Compile Include=", "/>", "MainWindow.xaml.cs", WPFUIDialogClassFileProjectItem)
+	}
+	
+	// output dialog markup file
+	<%%>WPFUIDialogMarkupCode%%>
+	log("GeneratedFile", WPFUIDialogMarkupFilePath, true)
+	if (File(Path).Contains(WPFUIDialogMarkupFileProjectPath) == false)
+	{
+		// debug("adding: " + WPFUIDialogMarkupFilePath)
+		// add to project file
+		insert(../../ProjectFilePath, "<Page Include=", "/>", "MainWindow.xaml", WPFUIDialogMarkupFileProjectItem)
+	}
+	
+	if (Tags.Contains("EntityDialog") == true)
+	{
+		// output properties class file
+		<%%>WPFUIPropertiesClassCode%%>
+		log("GeneratedFile", WPFUIPropertiesClassFilePath, true)
+		if (File(Path).Contains(WPFUIPropertiesClassFileProjectPath) == false)
+		{
+			// debug("adding: " + WPFUIPropertiesClassFilePath)
+			// add to project file
+			insert(../../ProjectFilePath, "<Compile Include=", "/>", "MainWindow.xaml.cs", WPFUIPropertiesClassFileProjectItem)
+		}
+		
+		// output properties markup file
+		<%%>WPFUIPropertiesMarkupCode%%>
+		log("GeneratedFile", WPFUIPropertiesMarkupFilePath, true)
+		if (File(Path).Contains(WPFUIPropertiesMarkupFileProjectPath) == false)
+		{
+			// debug("adding: " + WPFUIPropertiesMarkupFilePath)
+			// add to project file
+			insert(../../ProjectFilePath, "<Page Include=", "/>", "MainWindow.xaml", WPFUIPropertiesMarkupFileProjectItem)
+		}
+		
+		if (BLLClassName != "Entity")
+		{
+			// output properties diagram class file
+			<%%>WPFUIPropertiesDiagramClassCode%%>
+			log("GeneratedFile", WPFUIPropertiesDiagramClassFilePath, true)
+			if (File(Path).Contains(WPFUIPropertiesDiagramClassFileProjectPath) == false)
+			{
+				// debug("adding: " + WPFUIPropertiesDiagramClassFilePath)
+				// add to project file
+				insert(../../ProjectFilePath, "<Compile Include=", "/>", "MainWindow.xaml.cs", WPFUIPropertiesDiagramClassFileProjectItem)
+			}
+			
+			// output properties diagram markup file
+			<%%>WPFUIPropertiesDiagramMarkupCode%%>
+			log("GeneratedFile", WPFUIPropertiesDiagramMarkupFilePath, true)
+			if (File(Path).Contains(WPFUIPropertiesDiagramMarkupFileProjectPath) == false)
+			{
+				// debug("adding: " + WPFUIPropertiesDiagramMarkupFilePath)
+				// add to project file
+				insert(../../ProjectFilePath, "<Page Include=", "/>", "MainWindow.xaml", WPFUIPropertiesDiagramMarkupFileProjectItem)
+			}
+		}
+	}
+
+	// report progress
+	progress
+}
+
+// delete generated files that are no longer part of the solution
+forfiles(ProjectDirectory, ".cs")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Compile Include=", "/>", ItemPath.Substring(ItemPath.IndexOf(ProjectDirectory)))
+		remove(Path, "<Compile Include=", "</Compile>", ItemPath.Substring(ItemPath.IndexOf("Generated")))
+	}
+}
+forfiles(ProjectDirectory, ".asmx")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// trace("deleting: " + ItemPath)
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Content Include=", "/>", ItemPath.Substring(ItemPath.IndexOf("Generated")))
+	}
+}
+
+forfiles(ProjectDirectory, ".xaml")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// trace("deleting: " + ItemPath)
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Page Include=", "/Page>", ItemPath.Substring(ItemPath.IndexOf(ProjectDirectory)))
+		remove(Path, "<Page Include=", "/Page>", ItemPath.Substring(ItemPath.IndexOf("UserControls")))
+	}
+}
+
+// make sure project references are present
+if (ProjectReferenceCount > 0)
+{
+	foreach (Project)
+	{
+		if (File(Path).Contains(ProjectFileName) == false)
+		{
+			// add to project file
+			insert(../ProjectFilePath, "<ProjectReference", ProjectReferenceProjectItem)
+		}
+	}
+}
+%%></OUTPUT>

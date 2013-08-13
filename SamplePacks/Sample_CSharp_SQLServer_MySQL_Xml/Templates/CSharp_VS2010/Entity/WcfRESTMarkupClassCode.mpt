@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME WcfRESTMarkupClassCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<%@ ServiceHost Language="C#" Debug="true" Service="%%><%%=Project.ProjectNamespace%%><%%-.%%><%%=FeatureName%%><%%-.%%><%%=WcfRESTClassName%%><%%-" CodeBehind="%%><%%=WcfRESTClassFileName%%><%%-" Factory="System.ServiceModel.Activation.WebServiceHostFactory"%>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTMarkupClassFilePath) == null || (File(WcfRESTMarkupClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTMarkupClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTMarkupClassFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BusinessConfigurationFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\BusinessConfiguration_G.cs%%></CONTENT>

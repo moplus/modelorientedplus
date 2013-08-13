@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataAccessObjectBaseFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataAccessObjectBase_G.cs%%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLPropertySignatureCode
+	CATEGORY BLL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%-public virtual %%><%%=BLLDataType%%><%%- %%><%%=BLLPropertyName%%></CONTENT>

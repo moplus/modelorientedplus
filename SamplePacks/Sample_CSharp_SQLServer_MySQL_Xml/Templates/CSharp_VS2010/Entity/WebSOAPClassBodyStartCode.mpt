@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME WebSOAPClassBodyStartCode
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WebSOAPGlobalCopyrightCode%%>
+<%%=WebSOAPClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=WebSOAPClassCommentsCode%%>
+	<%%-
+	[WebService(Namespace = "http://tempuri.org/")]
+	[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+	[ToolboxItem(false)]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public partial class %%><%%=WebSOAPClassName%%><%%- : %%><%%=WebSOAPBaseClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

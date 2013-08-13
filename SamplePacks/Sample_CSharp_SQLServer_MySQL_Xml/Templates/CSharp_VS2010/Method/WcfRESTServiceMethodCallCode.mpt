@@ -1,0 +1,69 @@
+<CONFIG>
+	NAME WcfRESTServiceMethodCallCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTMethodName%%><%%=Entity.BLLClassName%%><%%-(%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%- item%%>
+		break
+	case 9: // UpdateOne
+		with (Entity)
+		{
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=WcfRESTParameterName%%>
+			}
+			<%%-, item%%>
+		}
+		break
+	case 10: // DeleteOne
+		with (Entity)
+		{
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=WcfRESTParameterName%%>
+			}
+		}
+		break
+	case 1: // GetOne
+		foreach (Parameter)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=WcfRESTParameterName%%>
+		}
+		break
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+		foreach (Parameter)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=WcfRESTParameterName%%>
+		}
+		if (ParameterCount > 0)
+		{
+			<%%-, %%>
+		}
+		<%%-sortColumn, sortDirection, pageSize, startIndex%%>
+		break
+}
+<%%-)%%>
+%%></CONTENT>

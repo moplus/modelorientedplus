@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WebSOAPClassCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WebSOAPClassBodyStartCode%%>
+<%%=WebSOAPClassMethodsCode%%>
+<%%=WebSOAPGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebSOAPClassFilePath) == null || (File(WebSOAPClassFilePath).Contains("<Status>Generated</Status>") == true && File(WebSOAPClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WebSOAPClassFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALFieldName
+	CATEGORY DAL
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=PropertyName.UnderscoreCase()%%></CONTENT>

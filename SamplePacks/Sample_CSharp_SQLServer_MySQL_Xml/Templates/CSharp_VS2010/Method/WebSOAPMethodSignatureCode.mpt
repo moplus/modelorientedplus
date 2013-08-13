@@ -1,0 +1,42 @@
+<CONFIG>
+	NAME WebSOAPMethodSignatureCode
+	CATEGORY WebSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-public %%><%%=WebSOAPReturnType%%><%%- %%><%%=WebSOAPMethodName%%><%%-(%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+		with (Entity)
+		{
+			<%%=WebSOAPMiddleTierDataType%%><%%- item, %%>
+		}
+		break
+}
+foreach (Parameter)
+{
+	<%%=WebSOAPDataType%%><%%- %%><%%=WebSOAPParameterName%%><%%-, %%>
+}
+switch (MethodTypeCode)
+{
+	case 2: // GetAll
+	case 12: // GetAllByCollectionItem
+	case 5: // GetAllByCriteria
+	case 4: // GetAllByForeignkey
+		<%%-int cascadeDepth, string sortColumn, string sortDirection)%%>
+		break
+	case 3: // GetMany
+	case 13: // GetManyByCollectionItem
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		<%%-int cascadeDepth, string sortColumn, string sortDirection, int startIndex, int pageSize, int maximumListSize)%%>
+		break
+	default:
+		<%%-int cascadeDepth)%%>
+		break
+}
+%%></CONTENT>

@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DbSpMethodDropCode
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+
+IF OBJECT_ID ('%%><%%=DbSpMethodName%%><%%-', 'P' ) IS NOT NULL%%><%%=TAB 1%%><%%-
+	DROP PROCEDURE %%><%%=DbSpMethodName%%><%%-;%%><%%=TAB -1%%><%%-
+GO%%></CONTENT>

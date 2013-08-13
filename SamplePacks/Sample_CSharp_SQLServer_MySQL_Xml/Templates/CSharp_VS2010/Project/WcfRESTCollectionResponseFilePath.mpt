@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTCollectionResponseFilePath
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\CollectionResponse_G.cs%%></CONTENT>

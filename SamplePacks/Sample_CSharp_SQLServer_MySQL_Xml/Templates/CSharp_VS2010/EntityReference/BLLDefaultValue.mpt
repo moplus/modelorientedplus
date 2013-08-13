@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLDefaultValue
+	CATEGORY BLL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%-null%%></CONTENT>

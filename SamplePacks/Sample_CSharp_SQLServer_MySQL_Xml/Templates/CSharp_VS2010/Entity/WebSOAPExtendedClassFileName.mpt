@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPExtendedClassFileName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPClassName%%><%%-_Ext.asmx.cs%%></CONTENT>

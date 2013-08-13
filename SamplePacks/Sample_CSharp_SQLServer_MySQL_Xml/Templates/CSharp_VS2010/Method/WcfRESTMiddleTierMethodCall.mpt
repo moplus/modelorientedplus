@@ -1,0 +1,37 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierMethodCall
+	CATEGORY WcfREST
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTMiddleTierMethodName%%><%%-(%%>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+		<%%-item, %%>
+		break
+}
+foreach (Parameter)
+{
+	// convert service parameter to middle tier type
+	<%%=WcfRESTParameterName%%>
+	with (Property from Solution.Find(ReferencedPropertyID))
+	{
+		<%%=GetDataHelperGetMethod%%>
+	}
+	<%%-, %%>
+}
+switch (MethodTypeCode)
+{
+	case 3: // GetMany
+	case 7: // GetManyByCriteria
+	case 6: // GetManyByForeignKey
+		<%%-out totalRecords, out maximumListSizeExceeded, %%>
+		break
+}
+<%%-cascadeDepth)%%>
+%%></CONTENT>

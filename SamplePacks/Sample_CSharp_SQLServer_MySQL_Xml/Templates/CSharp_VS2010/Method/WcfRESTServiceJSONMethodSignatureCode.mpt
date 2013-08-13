@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTServiceJSONMethodSignatureCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-public %%><%%=WcfRESTServiceJSONMethodBaseSignatureCode%%></CONTENT>

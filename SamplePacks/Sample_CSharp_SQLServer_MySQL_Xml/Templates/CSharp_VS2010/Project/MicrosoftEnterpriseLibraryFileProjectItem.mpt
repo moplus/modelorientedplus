@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME MicrosoftEnterpriseLibraryFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=MicrosoftEnterpriseLibraryFilePath.Substring(MicrosoftEnterpriseLibraryFilePath.IndexOf("MicrosoftEnterpriseLibrary")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

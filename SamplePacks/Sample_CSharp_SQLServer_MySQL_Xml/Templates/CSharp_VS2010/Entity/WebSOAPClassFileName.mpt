@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebSOAPClassFileName
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPClassName%%><%%-.asmx.cs%%></CONTENT>

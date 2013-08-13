@@ -1,0 +1,70 @@
+<CONFIG>
+	NAME WcfRESTValidMethod
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsAutoUpdated == false)
+{
+	// exclude custom methods from generated services (may want to allow these)
+	<%%-false%%>
+	return
+}
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+	case 1: // GetOne
+
+		// include standard CRUD methods
+		if (IsPrimaryMethod == true)
+		{
+			<%%-true%%>
+		}
+		else
+		{
+			<%%-false%%>
+		}
+		break
+	case 11: // DeleteAllByForeignKey
+
+		// exclude heavy delete operation from generated services
+		<%%-false%%>
+		break
+}
+if (Text != null)
+{
+	return
+}
+switch (Entity.EntityTypeCode)
+{
+	case 1: // Lookup
+	case 2: // LookupBusiness
+	case 8: // Relational
+		switch (MethodTypeCode)
+		{
+			// for smaller table entities, use get all
+			case 3: // GetMany
+				<%%-true%%>
+				break
+		}
+		break
+	default:
+		switch (MethodTypeCode)
+		{
+			case 7: // GetManyByCriteria
+
+				// for larger table entities, use default search
+				<%%-true%%>
+				break
+		}
+		break
+}
+if (Text != null)
+{
+	return
+}
+<%%-false%%>
+%%></CONTENT>

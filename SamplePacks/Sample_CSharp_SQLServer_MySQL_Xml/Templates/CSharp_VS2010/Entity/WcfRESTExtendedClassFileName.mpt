@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTExtendedClassFileName
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTClassName%%><%%-_Ext.svc.cs%%></CONTENT>

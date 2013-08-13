@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME ThisTest
+	CATEGORY Test
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-This test for entity: %%><%%=this.EntityName%%>
+<%%:
+foreach (Entity)
+{
+<%%-
+Entity: %%><%%=EntityName%%>
+	foreach (Property)
+	{
+		with (this.Entity)
+		{
+<%%-
+This entity: %%><%%=this.EntityName%%>
+		}
+	}
+}
+%%></CONTENT>

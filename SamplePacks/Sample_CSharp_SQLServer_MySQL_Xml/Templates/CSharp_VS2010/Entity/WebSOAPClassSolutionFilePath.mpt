@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPClassSolutionFilePath
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=WebSOAPClassFileName%%></CONTENT>

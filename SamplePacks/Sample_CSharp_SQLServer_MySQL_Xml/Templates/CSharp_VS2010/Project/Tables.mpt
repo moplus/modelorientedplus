@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME Tables
+	CATEGORY DB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+if (DbName != null)
+{
+<%%-
+use [%%><%%=DbName%%><%%-]
+GO
+%%>
+}
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	<%%=DBTableCode%%>
+	progress
+	progress
+}
+%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Scripts\%%><%%-Tables.sql%%>
+<%%:
+update(Path)
+%%></OUTPUT>

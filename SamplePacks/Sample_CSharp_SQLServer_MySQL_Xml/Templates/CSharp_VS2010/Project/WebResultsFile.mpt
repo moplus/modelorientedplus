@@ -1,0 +1,86 @@
+<CONFIG>
+	NAME WebResultsFile
+	CATEGORY Web
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Net;
+using System.IO;
+using System.Text;
+using System.Web;
+using System.ServiceModel.Web;
+using System.ComponentModel;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>The methods in this class are to be used to help wrap web response,
+	/// especially as xml.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	[XmlRoot(Namespace = "", ElementName = "WebResults")]
+	[DataContract]
+	public class WebResults
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the status code.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue(0)]
+		[DataMember]
+		public int StatusCode { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the status description.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DefaultValue("")]
+		[DataMember]
+		public string StatusDescription { get; set; }
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets the results and outgoing response status.</summary>
+		///
+		/// <param name="statusCode">The http status code.</param>
+		/// <param name="statusDescription">The description of the status.</param>
+		///--------------------------------------------------------------------------------
+		public void SetWebResponseAndStatus(HttpStatusCode statusCode, string statusDescription)
+		{
+			// show outgoing response with status even if there is a problem
+			WebHelper.SetOutgoingResponseStatus(statusCode, statusDescription, false);
+			StatusCode = (int)statusCode;
+			StatusDescription = statusDescription;
+		}
+
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebResultsFilePath) == null || (File(WebResultsFilePath).Contains("<Status>Generated</Status>") == true && File(WebResultsFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(WebResultsFilePath)
+}
+%%></OUTPUT>

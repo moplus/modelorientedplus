@@ -1,0 +1,53 @@
+<CONFIG>
+	NAME SolutionFile
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "#region protected"%%>
+<%%=PROTECTEDAREAEND "#endregion protected"%%>
+<%%=USEIGNOREDAREAS true%%>
+<%%=IGNOREDAREASTART "<CreatedByUserName>"%%>
+<%%=IGNOREDAREAEND "</Status>"%%>
+<%%-Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+%%></CONTENT><OUTPUT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Solution.OutputSolutionFileName%%>
+<%%:
+progress(Solution.EntityCount * 2 * ProjectCount)
+
+// create solution file if it does not exist
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// Add projects
+foreach (Project)
+{
+	CurrentProject = Project
+	
+	// add project to solution if it is not present in solution
+	if (File(Path).Contains(ProjectItemPath) == false)
+	{
+		insert(Path, "Global", ProjectSolutionItem)
+		insert(Path, "EndGlobalSection", "EndGlobalSection", "GlobalSection(SolutionProperties) = preSolution", ProjectSolutionBuildItem)
+	}
+	
+	// output project contents
+	<%%>Template%%>
+}
+%%></OUTPUT>

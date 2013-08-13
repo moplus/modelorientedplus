@@ -1,0 +1,40 @@
+<CONFIG>
+	NAME StateModelTest
+	NODE StateModel
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// this is a state model test
+<%%:
+<%%-Test results for walking through state models:%%>
+foreach (StateModel)
+{
+	<%%-
+	StateModel:
+		StateModelID: %%><%%=StateModelID%%><%%-
+		StateModelName: %%><%%=StateModelName%%><%%-
+		Description: %%><%%=Description%%><%%-
+		Tags: %%><%%=Tags%%>
+	foreach (State)
+	{
+		<%%-
+		State:
+			StateID: %%><%%=StateID%%><%%-
+			StateName: %%><%%=StateName%%><%%-
+			Description: %%><%%=Description%%><%%-
+			Tags: %%><%%=Tags%%><%%-
+			StateModelID: %%><%%=StateModelID%%>
+		foreach (StateTransition)
+		{
+			<%%-
+			StateTransition:
+				StateTransitionID: %%><%%=StateTransitionID%%><%%-
+				StateTransitionName: %%><%%=StateTransitionName%%><%%-
+				Description: %%><%%=Description%%><%%-
+				Tags: %%><%%=Tags%%><%%-
+				FromStateID: %%><%%=FromStateID%%><%%-
+				ToStateID: %%><%%=ToStateID%%>
+		}
+	}
+}
+%%></CONTENT>

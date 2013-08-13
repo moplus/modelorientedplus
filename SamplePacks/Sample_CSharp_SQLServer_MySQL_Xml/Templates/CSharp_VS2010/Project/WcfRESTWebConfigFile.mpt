@@ -1,0 +1,128 @@
+<CONFIG>
+	NAME WcfRESTWebConfigFile
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<?xml version="1.0"?>
+<configuration>
+	<configSections>
+		<section name="loggingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.LoggingSettings, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+		<section name="exceptionHandling" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration.ExceptionHandlingSettings, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+		<section name="securityCryptographyConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.Configuration.CryptographySettings, Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+	</configSections>
+	<loggingConfiguration name="Logging Application Block" tracingEnabled="true" defaultCategory="General" logWarningsWhenNoCategoriesMatch="true">
+		<listeners>
+			<add source="Enterprise Library Logging" formatter="Text Formatter" log="Application" machineName="" listenerDataType="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.FormattedEventLogTraceListenerData, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" traceOutputOptions="None" filter="All" type="Microsoft.Practices.EnterpriseLibrary.Logging.TraceListeners.FormattedEventLogTraceListener, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="Formatted EventLog TraceListener"/>
+		</listeners>
+		<formatters>
+			<add template="Timestamp: {timestamp}&#xA;Message: {message}&#xA;Category: {category}&#xA;Priority: {priority}&#xA;EventId: {eventid}&#xA;Severity: {severity}&#xA;Title:{title}&#xA;Machine: {machine}&#xA;Application Domain: {appDomain}&#xA;Process Id: {processId}&#xA;Process Name: {processName}&#xA;Win32 Thread Id: {win32ThreadId}&#xA;Thread Name: {threadName}&#xA;Extended Properties: {dictionary({key} - {value}&#xA;)}" type="Microsoft.Practices.EnterpriseLibrary.Logging.Formatters.TextFormatter, Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="Text Formatter"/>
+		</formatters>
+		<categorySources>
+			<add switchValue="All" name="General">
+				<listeners>
+					<add name="Formatted EventLog TraceListener"/>
+				</listeners>
+			</add>
+		</categorySources>
+		<specialSources>
+			<allEvents switchValue="All" name="All Events"/>
+			<notProcessed switchValue="All" name="Unprocessed Category"/>
+			<errors switchValue="All" name="Logging Errors &amp; Warnings">
+				<listeners>
+					<add name="Formatted EventLog TraceListener"/>
+				</listeners>
+			</errors>
+		</specialSources>
+	</loggingConfiguration>
+	<exceptionHandling>
+		<exceptionPolicies>
+			<add name="Application Layer Policy">
+				<exceptionTypes>
+					<add type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="None" name="Exception">
+						<exceptionHandlers>
+							<add exceptionMessage="An error has occurred, please try again or contact your system administrator for assistance." exceptionMessageResourceName="" exceptionMessageResourceType="" replaceExceptionType="System.ApplicationException, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.ReplaceHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="Replace Handler"/>
+						</exceptionHandlers>
+					</add>
+				</exceptionTypes>
+			</add>
+			<add name="Business Logic Layer Policy">
+				<exceptionTypes>
+					<add type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="ThrowNewException" name="Exception">
+						<exceptionHandlers>
+							<add exceptionMessage="An exception has been encountered in the business logic layer." exceptionMessageResourceType="" exceptionMessageResourceName="" wrapExceptionType="System.ApplicationException, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WrapHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="Wrap Handler"/>
+						</exceptionHandlers>
+					</add>
+				</exceptionTypes>
+			</add>
+			<add name="Data Access Layer Policy">
+				<exceptionTypes>
+					<add type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="ThrowNewException" name="Exception">
+						<exceptionHandlers>
+							<add exceptionMessage="An exception has been encountered in the data access layer." exceptionMessageResourceType="" exceptionMessageResourceName="" wrapExceptionType="System.ApplicationException, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WrapHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="Wrap Handler"/>
+						</exceptionHandlers>
+					</add>
+				</exceptionTypes>
+			</add>
+			<add name="Library Layer Policy">
+				<exceptionTypes>
+					<add type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="NotifyRethrow" name="Exception"/>
+				</exceptionTypes>
+			</add>
+		</exceptionPolicies>
+	</exceptionHandling>
+	<securityCryptographyConfiguration>
+		<symmetricCryptoProviders>
+			<add algorithmType="System.Security.Cryptography.RijndaelManaged, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" protectedKeyFilename="C:\InCode\Common\DefaultSecureKey.key" protectedKeyProtectionScope="LocalMachine" type="Microsoft.Practices.EnterpriseLibrary.Security.Cryptography.SymmetricAlgorithmProvider, Microsoft.Practices.EnterpriseLibrary.Security.Cryptography, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" name="RijndaelManaged"/>
+		</symmetricCryptoProviders>
+	</securityCryptographyConfiguration>
+	<appSettings>
+		<add key="DebugLevel" value="1"/>
+		<add key="DbCommandTimeout" value="500"/>
+		<add key="DbPageSize" value="50"/>
+		<add key="DbConnectionString" value="Server=%%><%%=DbServerName%%><%%-;Database=%%><%%=DbName%%><%%-;Trusted_Connection=True;"/>
+		<add key="DbMaximumListSize" value="2000"/>
+	</appSettings>
+	<connectionStrings/>
+	<system.web>
+		<!-- 
+            Set compilation debug="true" to insert debugging 
+            symbols into the compiled page. Because this 
+            affects performance, set this value to true only 
+            during development.
+        -->
+		<compilation debug="true" targetFramework="4.0">
+		</compilation>
+		<!--
+            The <authentication> section enables configuration 
+            of the security authentication mode used by 
+            ASP.NET to identify an incoming user. 
+        -->
+		<authentication mode="Windows"/>
+		<!--
+            The <customErrors> section enables configuration 
+            of what to do if/when an unhandled error occurs 
+            during the execution of a request. Specifically, 
+            it enables developers to configure html error pages 
+            to be displayed in place of a error stack trace.
+
+        <customErrors mode="RemoteOnly" defaultRedirect="GenericErrorPage.htm">
+            <error statusCode="403" redirect="NoAccess.htm" />
+            <error statusCode="404" redirect="FileNotFound.htm" />
+        </customErrors>
+        -->
+		<pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"/></system.web>
+	<!-- 
+        The system.webServer section is required for running ASP.NET AJAX under Internet
+        Information Services 7.0.  It is not necessary for previous version of IIS.
+    -->
+</configuration>
+%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Web.Config%%>
+<%%:
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+%%></OUTPUT>

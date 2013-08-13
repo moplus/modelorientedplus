@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DbSpGlobalCopyrightCode
+	CATEGORY DbSp
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/%%></CONTENT>

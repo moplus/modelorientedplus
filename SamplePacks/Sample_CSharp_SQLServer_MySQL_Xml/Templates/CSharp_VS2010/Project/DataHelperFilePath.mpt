@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataHelperFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataHelper_G.cs%%></CONTENT>

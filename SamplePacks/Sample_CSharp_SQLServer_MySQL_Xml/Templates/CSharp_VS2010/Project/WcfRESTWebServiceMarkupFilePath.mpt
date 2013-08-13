@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTWebServiceMarkupFilePath
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\%%><%%=WcfRESTWebServiceMarkupFileName%%></CONTENT>

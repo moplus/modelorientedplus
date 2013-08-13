@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME WcfRESTWebServiceInterfaceFileProjectItem
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WcfRESTWebServiceInterfaceFilePath.Substring(WcfRESTWebServiceInterfaceFilePath.IndexOf(WcfRESTWebServiceInterfaceFileName))%%><%%-">
+      <SubType>Code</SubType>
+    </Compile>
+    %%></CONTENT>

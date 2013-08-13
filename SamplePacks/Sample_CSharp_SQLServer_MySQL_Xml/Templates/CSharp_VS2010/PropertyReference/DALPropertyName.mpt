@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DALPropertyName
+	CATEGORY DAL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyReferenceName%%></CONTENT>

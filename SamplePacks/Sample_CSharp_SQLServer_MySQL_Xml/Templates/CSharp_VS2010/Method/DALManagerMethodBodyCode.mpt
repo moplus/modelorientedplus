@@ -1,0 +1,355 @@
+<CONFIG>
+	NAME DALManagerMethodBodyCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetAllByForeignkey":
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+		case "DeleteAllByForeignKey":
+			<%%-
+			{%%><%%=TAB 1%%>
+				switch (MethodTypeName)
+				{
+					case "GetAll":
+					case "GetAllByCriteria":
+					case "GetAllByForeignkey":
+						<%%-
+						%%><%%=DALReturnType%%><%%- items = new %%><%%=DALReturnType%%><%%-();%%>
+						break
+					case "GetMany":
+					case "GetManyByCriteria":
+					case "GetManyByForeignKey":
+						<%%-
+						%%><%%=DALReturnType%%><%%- items = new %%><%%=DALReturnType%%><%%-();
+						totalRecords = 0;
+						maximumListSizeExceeded = false;%%>
+						break
+				}
+			<%%-
+				try
+				{%%><%%=TAB 1%%>
+				switch (MethodTypeName)
+				{
+					case "GetAllByForeignkey":
+						<%%-
+						// get items from the database
+						NameObjectCollection sprocParameters = new NameObjectCollection();%%>
+						foreach (Parameter)
+						{
+							<%%-
+							sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+						}
+						<%%-
+						DbCommand command = null;
+						DbDataReader reader = sqlDbManager.ExecuteReader("%%><%%=DbSpMethodName%%><%%-", sprocParameters, out command);
+						
+						// get items from the db reader
+						while (reader.Read())
+						{%%><%%=TAB 1%%><%%-
+							// populate item and add to items
+							%%><%%=Entity.DALDataType%%><%%- item = new %%><%%=Entity.DALDataType%%><%%-();
+							DataTransformHelper.TransformDataFromDbReader(reader, item, dataAccessOptions.FilterElements);
+							item._isLoaded = true;
+							items.Add(item);%%><%%=TAB -1%%><%%-
+						}
+						
+						// get output parameters
+						sqlDbManager.CloseConnectionAndPopulateOutputParameters(command, sprocParameters);
+						
+						// throw a sql error if found
+						SqlHelper.ThrowSqlErrorIfFound(sprocParameters);%%>
+						break
+					case "AddOne":
+						with (Entity)
+						{
+							with (BaseEntity)
+							{
+								foreach (Method where IsPrimaryMethod == true && IsAddOneMethod == true limit 1)
+								{
+									<%%-
+									// add base item to the database
+									%%>
+									<%%=../FeatureName%%><%%-.%%><%%=../DALClassName%%><%%-.%%><%%=DALMethodName%%><%%-(%%>
+									switch (MethodTypeName)
+									{
+										case "AddOne":
+										case "UpdateOne":
+										case "DeleteOne":
+											<%%-item, %%>
+											break
+									}
+									foreach (Parameter)
+									{
+										<%%=DALParameterName%%><%%-, %%>
+									}
+									switch (MethodTypeName)
+									{
+										case "GetMany":
+										case "GetManyByCriteria":
+										case "GetManyByForeignKey":
+											<%%-out totalRecords, out maximumListSizeExceeded, %%>
+											break
+									}
+									switch (MethodTypeName)
+									{
+										case "GetAllByForeignkey":
+										case "DeleteAllByForeignKey":
+											<%%-cascadeDepth - 1, dataAccessOptions, sqlDbManager)%%>
+											break
+										default:
+											<%%-cascadeDepth, dataAccessOptions, sqlDbManager)%%>
+											break
+									}
+									<%%-;
+									%%>
+								}
+							}
+						}
+						<%%-
+						// add item to the database
+						NameObjectCollection sprocParameters = new NameObjectCollection();
+						if (dataAccessOptions != null)
+						{%%><%%=TAB 1%%><%%-
+							DataHelper.PopulateCollectionWithPublicPropertyValues(sprocParameters, dataAccessOptions);%%><%%=TAB -1%%><%%-
+						}
+						DataHelper.PopulateCollectionWithDataElementPropertyValues(sprocParameters, item);%%>
+						foreach (Parameter)
+						{
+							<%%-
+							sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+						}
+						<%%-
+						sqlDbManager.ExecuteNonQuery("%%><%%=DbSpMethodName%%><%%-", sprocParameters);
+						
+						// throw a sql error if found, else continue
+						SqlHelper.ThrowSqlErrorIfFound(sprocParameters);
+						item._isLoaded = true;%%>
+						foreach (Property in Entity)
+						{
+							if (IsPrimaryKeyMember == true)
+							{
+								<%%-
+								item.%%><%%=DALPropertyName%%><%%- = sprocParameters["%%><%%=DALPropertyName%%><%%-"]%%><%%=GetDataHelperGetMethod%%><%%-;%%>
+							}
+							else if (IsAuditProperty == true && DataTypeCode == 25 /*Timestamp*/)
+							{
+								<%%-
+								item.%%><%%=DALPropertyName%%><%%- = ((System.Byte[])(sprocParameters["%%><%%=DALPropertyName%%><%%-"]));%%>
+							}
+						}
+						if (Entity.CollectionCount > 0)
+						{
+							<%%-
+							if (cascadeDepth > 0)
+							{%%><%%=TAB 1%%><%%-
+								// perform cascade operations
+								Add%%><%%=Entity.EntityName%%><%%-CollectionItems(item, cascadeDepth, dataAccessOptions, sqlDbManager);%%><%%=TAB -1%%><%%-
+							}%%>
+						}
+						break
+					case "UpdateOne":
+						with (Entity)
+						{
+							with (BaseEntity)
+							{
+								foreach (Method where IsPrimaryMethod == true && IsUpdateOneMethod == true limit 1)
+								{
+									<%%-
+									// update base item to the database"
+									%%>
+									<%%=../FeatureName%%><%%-.%%><%%=../DALClassName%%><%%-.%%><%%=DALMethodName%%><%%-(%%>
+									switch (MethodTypeName)
+									{
+										case "AddOne":
+										case "UpdateOne":
+										case "DeleteOne":
+											<%%-item, %%>
+											break
+									}
+									foreach (Parameter)
+									{
+										<%%=DALParameterName%%><%%-, %%>
+									}
+									switch (MethodTypeName)
+									{
+										case "GetMany":
+										case "GetManyByCriteria":
+										case "GetManyByForeignKey":
+											<%%-out totalRecords, out maximumListSizeExceeded, %%>
+											break
+									}
+									switch (MethodTypeName)
+									{
+										case "GetAllByForeignkey":
+										case "DeleteAllByForeignKey":
+											<%%-cascadeDepth - 1, dataAccessOptions, sqlDbManager)%%>
+											break
+										default:
+											<%%-cascadeDepth, dataAccessOptions, sqlDbManager)%%>
+											break
+									}
+									<%%-;
+									%%>
+								}
+							}
+						}
+						<%%-
+						// update item to the database
+						NameObjectCollection sprocParameters = new NameObjectCollection();
+						if (dataAccessOptions != null)
+						{%%><%%=TAB 1%%><%%-
+							DataHelper.PopulateCollectionWithPublicPropertyValues(sprocParameters, dataAccessOptions);%%><%%=TAB -1%%><%%-
+						}
+						DataHelper.PopulateCollectionWithDataElementPropertyValues(sprocParameters, item);%%>
+						foreach (Parameter)
+						{
+							<%%-
+							sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%>
+						}
+						<%%-
+						sqlDbManager.ExecuteNonQuery("%%><%%=DbSpMethodName%%><%%-", sprocParameters);
+						
+						// throw a sql error if found, else continue
+						SqlHelper.ThrowSqlErrorIfFound(sprocParameters);
+						item._isLoaded = true;%%>
+						foreach (Property in Entity)
+						{
+							if (IsAuditProperty == true && DataTypeCode == 25 /*Timestamp*/)
+							{
+								<%%-
+								item.%%><%%=DALPropertyName%%><%%- = ((System.Byte[])(sprocParameters["%%><%%=DALPropertyName%%><%%-"]));%%>
+							}
+						}
+						if (Entity.CollectionCount > 0)
+						{
+							<%%-
+							if (cascadeDepth > 0)
+							{%%><%%=TAB 1%%><%%-
+								// perform cascade operations"));
+								Update%%><%%=Entity.EntityName%%><%%-CollectionItems(item, cascadeDepth, dataAccessOptions, sqlDbManager);%%><%%=TAB -1%%><%%-
+							}%%>
+						}
+						break
+					case "DeleteOne":
+						if (Entity.CollectionCount > 0)
+						{
+							<%%-
+							if (cascadeDepth > 0)
+							{%%><%%=TAB 1%%><%%-
+								// perform cascade operations
+								Delete%%><%%=Entity.EntityName%%><%%-CollectionItems(item, cascadeDepth, dataAccessOptions, sqlDbManager);%%><%%=TAB -1%%><%%-
+							}
+							%%>
+						}
+						<%%-
+						// delete item from the database
+						NameObjectCollection sprocParameters = new NameObjectCollection();
+						if (dataAccessOptions != null)
+						{%%><%%=TAB 1%%><%%-
+							DataHelper.PopulateCollectionWithPublicPropertyValues(sprocParameters, dataAccessOptions);%%><%%=TAB -1%%><%%-
+						}
+						DataHelper.PopulateCollectionWithDataElementPropertyValues(sprocParameters, item);%%>
+						foreach (Parameter)
+						{
+							<%%-
+							sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+						}
+						<%%-
+						sqlDbManager.ExecuteNonQuery("%%><%%=DbSpMethodName%%><%%-", sprocParameters);
+						
+						// throw a sql error if found, else continue
+						SqlHelper.ThrowSqlErrorIfFound(sprocParameters);
+						item._isLoaded = false;%%>
+						with (Entity)
+						{
+							with (BaseEntity)
+							{
+								foreach (Method where IsPrimaryMethod == true && IsDeleteOneMethod == true limit 1)
+								{
+									<%%-
+									
+									// delete base item from the database
+									%%>
+									<%%=../FeatureName%%><%%-.%%><%%=../DALClassName%%><%%-.%%><%%=DALMethodName%%><%%-(%%>
+									switch (MethodTypeName)
+									{
+										case "AddOne":
+										case "UpdateOne":
+										case "DeleteOne":
+											<%%-item, %%>
+											break
+									}
+									foreach (Parameter)
+									{
+										<%%=DALParameterName%%><%%-, %%>
+									}
+									switch (MethodTypeName)
+									{
+										case "GetMany":
+										case "GetManyByCriteria":
+										case "GetManyByForeignKey":
+											<%%-out totalRecords, out maximumListSizeExceeded, %%>
+											break
+									}
+									switch (MethodTypeName)
+									{
+										case "GetAllByForeignkey":
+										case "DeleteAllByForeignKey":
+											<%%-cascadeDepth - 1, dataAccessOptions, sqlDbManager)%%>
+											break
+										default:
+											<%%-cascadeDepth, dataAccessOptions, sqlDbManager)%%>
+											break
+									}
+									<%%-;%%>
+								}
+							}
+						}
+						break
+					case "DeleteAllByForeignKey":
+						<%%-
+						// delete items from the database
+						NameObjectCollection sprocParameters = new NameObjectCollection();%%>
+						foreach (Parameter)
+						{
+							<%%-
+							sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+						}
+						<%%-
+						sqlDbManager.ExecuteNonQuery("%%><%%=DbSpMethodName%%><%%-", sprocParameters);
+						
+						// throw a sql error if found, else continue
+						SqlHelper.ThrowSqlErrorIfFound(sprocParameters);%%>
+						break
+				}
+				<%%=TAB -1%%>
+			<%%-
+				}
+				catch (ApplicationException ex)
+				{%%><%%=TAB 1%%><%%-
+					throw ex;%%><%%=TAB -1%%><%%-
+				}
+				catch (Exception ex)
+				{%%><%%=TAB 1%%><%%-
+					bool reThrow = DataAccessConfiguration.HandleException(ex);
+					if (reThrow) throw;%%><%%=TAB -1%%><%%-
+				}%%>
+				switch (MethodTypeName)
+				{
+					case "GetAllByForeignkey":
+						<%%-
+						return items;%%>
+						break
+				}
+			<%%=TAB -1%%><%%-
+			}%%>
+		break
+	}
+%%></CONTENT>

@@ -1,0 +1,122 @@
+<CONFIG>
+	NAME BLLPropertyBodyCode
+	CATEGORY BLL
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		if (%%><%%=BLLFieldName%%><%%- == null)
+		{%%><%%=TAB 1%%>
+<%%:
+	with (ReferencedEntity)
+	{
+		<%%-
+		%%><%%=FeatureName%%><%%-.%%><%%=BLLManagerClassName%%><%%- manager = new %%><%%=FeatureName%%><%%-.%%><%%=BLLManagerClassName%%><%%-();
+		manager.DataAccessOptions = DataAccessOptions;
+		%%>
+	}
+	<%%=BLLFieldName%%><%%- = manager.%%>
+	with (ReferencedEntity)
+	{
+		foreach (Method where IsGetOneMethod == true && IsPrimaryMethod == true limit 1)
+		{
+			<%%=BLLMethodName%%><%%-(%%>
+			/*foreach (Parameter)
+			{
+				with (Property from Solution.Find(ReferencedPropertyID))
+				{
+					if (IsNullable == true)
+					{
+						<%%=BLLPropertyName%%><%%- as %%><%%=BLLNonNullableDataType%%><%%-, %%>
+					}
+					else
+					{
+						<%%=BLLPropertyName%%><%%-, %%>
+					}
+				}
+			}*/
+		}
+	}
+	// Warning: getting parameters through the property relationship may not ensure the correct order or number of parameters
+	with (Relationship)
+	{
+		foreach (RelationshipProperty)
+		{
+			with (Property from Solution.Find(PropertyID))
+			{
+				if (IsNullable == true)
+					{
+						<%%-(%%><%%=BLLNonNullableDataType%%><%%-)%%><%%=BLLPropertyName%%><%%-, %%>
+					}
+					else
+					{
+						<%%=BLLPropertyName%%><%%-, %%>
+					}
+			}
+		}
+	}
+	<%%-0);
+	%%><%%=BLLFieldName%%><%%-.DataAccessOptions = DataAccessOptions;
+	manager = null;%%>
+%%>
+<%%-
+			if (%%><%%=BLLFieldName%%><%%- != null)
+			{%%><%%=TAB 1%%><%%-
+				%%><%%=BLLFieldName%%><%%- = new %%><%%=BLLDataType%%><%%-();%%><%%=TAB -1%%><%%-
+			}%%><%%=TAB -1%%><%%-
+		}
+		return %%><%%=BLLFieldName%%><%%-;%%><%%=TAB -1%%><%%-
+	}
+	set
+	{%%><%%=TAB 1%%><%%-
+		if (%%><%%=BLLFieldName%%><%%- == null || %%><%%=BLLFieldName%%><%%-.Equals(value) == false)
+		{%%><%%=TAB 1%%><%%-
+			if (value != null)
+			{%%><%%=TAB 1%%>
+				<%%:
+					with (Entity from Solution.Find(EntityID))
+					{
+						foreach (PropertyReference where ReferencedEntityID == ../../ReferencedEntityID)
+						{
+							<%%-
+							%%><%%=BLLFieldName%%><%%- = value.%%>
+							with (Property from Solution.Find(ReferencedPropertyID))
+							{
+								<%%=BLLPropertyName%%><%%-;%%>
+							}
+						}
+					}
+				%%>
+				<%%-
+				if (%%><%%=BLLFieldName%%><%%- != null && %%><%%=BLLFieldName%%><%%-.PrimaryKeyValues != value.PrimaryKeyValues)
+				{%%><%%=TAB 1%%><%%-
+					_isModified = true;%%><%%=TAB -1%%><%%-
+				}%%>
+				<%%:
+				with (Relationship)
+				{
+					foreach (RelationshipProperty)
+					{
+						with (Property from Solution.Find(PropertyID))
+						{
+							<%%-
+							%%><%%=BLLPropertyName%%><%%- = value.%%>
+						}
+						with (Property from Solution.Find(ReferencedPropertyID))
+						{
+							<%%=BLLPropertyName%%><%%-;%%>
+						}
+					}
+				}
+				%%>
+				<%%=TAB -1%%><%%-
+			}
+			%%><%%=BLLFieldName%%><%%- = value;%%><%%=TAB -1%%><%%-
+		}%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

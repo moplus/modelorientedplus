@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME DALPropertyAttributesCode
+	CATEGORY DAL
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+[XmlArray(ElementName = "%%><%%=DALPropertyName%%><%%-")]%%>
+<%%:
+with (ReferencedEntity)
+{
+	<%%-
+	[XmlArrayItem(typeof(%%><%%=DALDataType%%><%%-), ElementName = "%%><%%=DALClassName%%><%%-")]%%>
+}
+%%><%%-
+[DataMember(Name = "%%><%%=DALPropertyName%%><%%-")]
+[DataArrayItem(ElementName = "%%><%%=DALPropertyName%%><%%-")]%%></CONTENT>

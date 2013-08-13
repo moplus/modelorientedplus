@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DBPropertyName
+	CATEGORY DB
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyReferenceName%%></CONTENT>

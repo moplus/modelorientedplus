@@ -1,0 +1,243 @@
+<CONFIG>
+	NAME WebSOAP
+	NODE Project
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+//
+// This template is for creating a Web SOAP data services layer that utilizes data operations
+// in a business logic layer (such as a BLL project generated using the MiddleTier template).
+//
+// Note: Tag projects using this template with DS to best work with higher layer projects in this library.
+//
+<%%=USETABS false%%>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<!--<ProjectType>WEBSOAP</ProjectType>-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{%%><%%=ProjectID.ToUpper()%%><%%-}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>%%><%%=Namespace%%><%%-</RootNamespace>
+    <AssemblyName>%%><%%=Namespace%%><%%-</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.ServiceModel.Web">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebHeader_G.cs" />
+    <Compile Include="WebHelper_G.cs" />
+    <Compile Include="WebResponseBase_G.cs" />
+    <Compile Include="WebResults_G.cs" />
+    <Compile Include="WebServiceBase_G.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4244</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
+%%></CONTENT><OUTPUT>
+<%%=ProjectFilePath%%>
+<%%:
+// delete project file if of a different type
+if (File(Path).Contains("<ProjectType>WEBSOAP</ProjectType>") == false)
+{
+	delete(Path)
+}
+
+// create project file if it does not exist
+if (FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// make sure standard project files are present
+<%%>AssemblyInfoFile%%>
+<%%>WebSOAPWebConfigFile%%>
+<%%>WebSOAPWebHeaderFile%%>
+log("GeneratedFile", WebSOAPWebHeaderFilePath, true)
+<%%>WebHelperFile%%>
+log("GeneratedFile", WebHelperFilePath, true)
+<%%>WebSOAPWebResponseBaseFile%%>
+log("GeneratedFile", WebSOAPWebResponseBaseFilePath, true)
+<%%>WebResultsFile%%>
+log("GeneratedFile", WebResultsFilePath, true)
+<%%>WebSOAPWebServiceBaseFile%%>
+log("GeneratedFile", WebSOAPWebServiceBaseFilePath, true)
+
+// add generated files that should be part of the solution
+foreach (Feature sort FeatureName)
+{
+	foreach (Entity sort EntityName)
+	{
+		// output Web SOAP class file
+		<%%>WebSOAPClassCode%%>
+		log("GeneratedFile", WebSOAPClassFilePath, true)
+		if (File(Path).Contains(WebSOAPClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// debug("adding: " + WebSOAPClassFilePath)
+			// add to project file
+			insert(../../ProjectFilePath, "<Compile Include=", "/>", "WebHeader.cs", WebSOAPClassFileProjectItem)
+		}
+		
+		// output Web SOAP markup class file
+		<%%>WebSOAPMarkupClassCode%%>
+		log("GeneratedFile", WebSOAPMarkupClassFilePath, true)
+		if (File(Path).Contains(WebSOAPMarkupClassFilePath.Substring(Project.ProjectDirectory.Length + 1) + "\"") == false)
+		{
+			// debug("adding: " + WebSOAPMarkupClassFilePath)
+			// add to project file
+			insert(../../ProjectFilePath, "<Content Include=", "/>", "Web.config", WebSOAPMarkupClassFileProjectItem)
+		}
+		
+		// output Web SOAP extended class file (don't add to project)
+		<%%>WebSOAPExtendedClassCode%%>
+		log("GeneratedFile", WebSOAPExtendedClassFilePath, true)
+		
+		// report progress
+		progress
+		
+		// output Web SOAP response class file
+		<%%>WebSOAPResponseClassCode%%>
+		log("GeneratedFile", WebSOAPResponseClassFilePath, true)
+		if (File(Path).Contains(WebSOAPResponseClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// add to project file
+			insert(../../ProjectFilePath, "<Compile Include=", "/>", "BusinessObjectBase_Ext.cs", WebSOAPResponseClassFileProjectItem)
+		}
+			
+		// report progress
+		progress
+	}
+}
+
+// delete generated files that are no longer part of the solution
+forfiles(ProjectDirectory, ".cs")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Compile Include=", "</Compile>", ItemPath.Substring(ProjectDirectory.Length + 1))
+	}
+}
+forfiles(ProjectDirectory, ".asmx")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null)
+	{
+		// trace("deleting: " + ItemPath)
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Content Include=", "/>", ItemPath.Substring(Project.ProjectDirectory.Length + 1))
+	}
+}
+
+// make sure project references are present
+if (ProjectReferenceCount > 0)
+{
+	foreach (Project)
+	{
+		if (File(Path).Contains(ProjectFileName) == false)
+		{
+			if (File(Path).Contains("<ProjectReference") == true)
+			{
+				// add to project file
+				insert(../ProjectFilePath, "<ProjectReference", ProjectReferenceProjectItem)
+			}
+			else
+			{
+				// add to project file as new ItemGroup
+				insert(../ProjectFilePath, "<Import Project", ProjectReferenceProjectItemGroup)
+			}
+		}
+	}
+}
+%%></OUTPUT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIDisableButtonStringConverterFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DisableButtonStringConverter_G.cs%%></CONTENT>

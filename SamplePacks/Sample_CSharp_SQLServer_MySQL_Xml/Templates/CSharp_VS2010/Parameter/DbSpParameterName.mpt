@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DbSpParameterName
+	CATEGORY DbSp
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%-@%%><%%=ParameterName.CamelCase()%%></CONTENT>

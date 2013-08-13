@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALMethodSignatureCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=DALCoreMethodSignatureCode%%><%%-DatabaseOptions databaseOptions)%%></CONTENT>

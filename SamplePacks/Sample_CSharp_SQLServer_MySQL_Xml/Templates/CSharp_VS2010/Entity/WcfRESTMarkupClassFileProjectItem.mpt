@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME WcfRESTMarkupClassFileProjectItem
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=WcfRESTMarkupClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

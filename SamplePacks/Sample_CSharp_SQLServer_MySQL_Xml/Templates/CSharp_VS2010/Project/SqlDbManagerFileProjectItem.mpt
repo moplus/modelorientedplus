@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME SqlDbManagerFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=SqlDbManagerFilePath.Substring(SqlDbManagerFilePath.IndexOf("SqlDbManager")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

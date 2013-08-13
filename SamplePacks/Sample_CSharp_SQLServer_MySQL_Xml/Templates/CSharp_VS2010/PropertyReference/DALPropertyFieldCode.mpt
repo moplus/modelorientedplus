@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DALPropertyFieldCode
+	CATEGORY DAL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+protected %%><%%=DALDataType%%><%%- %%><%%=DALFieldName%%><%%- = %%><%%=DALDefaultValue%%><%%-;%%></CONTENT>

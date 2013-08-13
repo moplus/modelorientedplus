@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMiddleTierMethodName
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=BLLMethodName%%></CONTENT>

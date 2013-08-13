@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME BLLManagerClassConstructorsCode
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Constructors"
+
+///--------------------------------------------------------------------------------
+/// <summary>The default constructor (for reflection, etc.).</summary>
+///--------------------------------------------------------------------------------
+public %%><%%=BLLManagerClassName%%><%%-(){}
+
+#endregion "Constructors"%%></CONTENT>

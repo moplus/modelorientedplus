@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME BLLExtendedManagerClassIncludesCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using InCode.Common;
+using InCode.Data;
+using DAL = %%><%%=Project.Namespace%%><%%-.DAL;%%></CONTENT>

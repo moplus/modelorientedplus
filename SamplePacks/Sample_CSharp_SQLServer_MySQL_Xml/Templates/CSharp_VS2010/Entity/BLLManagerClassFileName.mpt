@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLManagerClassFileName
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=BLLManagerClassName%%><%%-_G.cs%%></CONTENT>

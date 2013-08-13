@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME WebSOAPValidEntity
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+if (EntityTypeCode == 1 /*Relational */ || EntityTypeCode == 2/* PrimaryLogging */)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

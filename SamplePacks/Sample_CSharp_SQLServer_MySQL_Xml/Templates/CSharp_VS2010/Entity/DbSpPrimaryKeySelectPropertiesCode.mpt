@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME DbSpPrimaryKeySelectPropertiesCode
+	CATEGORY DbSp
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true && Tags.Contains("DB") == true)
+{
+	if (ItemIndex > 0)
+	{
+		<%%-
+		, %%>
+	}
+	else
+	{
+		<%%-
+		%%><%%=Solution.LIBDoubleSpace%%>
+	}
+	<%%=DbSpAliasColumnName%%>
+}
+%%></CONTENT>

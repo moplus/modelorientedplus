@@ -1,0 +1,284 @@
+<CONFIG>
+	NAME DALMethodBodyCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+	// output begin body
+	<%%-
+	{%%><%%=TAB 1%%>
+	
+	// output any necessary initializations prior to try/catch block by method type
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			<%%-
+			%%><%%=DALReturnType%%><%%- item = null;%%>
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+			<%%-
+			EnterpriseDataObjectList<%%><%%=Entity.DALDataType%%><%%-> items = new EnterpriseDataObjectList<%%><%%=Entity.DALDataType%%><%%->();%%>
+			break
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			EnterpriseDataObjectList<%%><%%=Entity.DALDataType%%><%%-> items = new EnterpriseDataObjectList<%%><%%=Entity.DALDataType%%><%%->();
+			totalRecords = 0;
+			maximumListSizeExceeded = false;%%>
+			break
+	}
+	<%%-
+	SqlDbManager sqlDbManager = null;%%>
+	
+	// output begin try/catch block
+	<%%-
+	try
+	{%%><%%=TAB 1%%>
+	
+	// output main body
+	<%%-	
+	// create database manager to manage transaction
+	sqlDbManager = new SqlDbManager(databaseOptions);%%>
+	
+	// output tasks by method type
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			<%%-
+			
+			// get item from the database
+			NameObjectCollection sprocParameters = new NameObjectCollection();%%>
+			foreach (Parameter)
+			{
+				<%%-
+				sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+			}
+			<%%-
+			if (dataAccessOptions != null)
+			{%%><%%=TAB 1%%><%%-
+				DataHelper.PopulateCollectionWithPublicPropertyValues(sprocParameters, dataAccessOptions);%%><%%=TAB -1%%><%%-
+			}
+			else
+			{%%><%%=TAB 1%%><%%-
+				sprocParameters["IncludeInactive"] = false;%%><%%=TAB -1%%><%%-
+			}
+			DbCommand command = null;
+			DbDataReader reader = sqlDbManager.ExecuteReader("%%><%%=DbSpMethodName%%><%%-", sprocParameters, out command);
+			
+			// get item from the db reader
+			while (reader.Read())
+			{%%><%%=TAB 1%%><%%-
+				// populate item
+				item = new %%><%%=Entity.DALDataType%%><%%-();
+				DataTransformHelper.TransformDataFromDbReader(reader, item, dataAccessOptions.FilterElements);
+				item._isLoaded = true;
+				break; // should be only 1 item%%><%%=TAB -1%%><%%-
+			}
+			
+			// get output parameters
+			sqlDbManager.CloseConnectionAndPopulateOutputParameters(command, sprocParameters);
+			
+			// throw a sql error if found
+			SqlHelper.ThrowSqlErrorIfFound(sprocParameters);%%>
+	
+			// cascade get
+			if (Entity.CollectionCount > 0)
+			{
+				<%%-
+				if (cascadeDepth > 0)
+				{%%><%%=TAB 1%%><%%-
+				// perform cascade operations
+				Get%%><%%=Entity.EntityName%%><%%-CollectionItems(item, cascadeDepth, dataAccessOptions, sqlDbManager);%%><%%=TAB -1%%><%%-
+				}%%>
+			}
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			
+			// get items from the database
+			NameObjectCollection sprocParameters = new NameObjectCollection();
+			items = new EnterpriseDataObjectList<%%><%%=Entity.DALDataType%%><%%->();%%>
+			foreach (Parameter)
+			{
+				if (DALNeedsSQLInjectionWrapping == true)
+				{
+					<%%-
+					sprocParameters["%%><%%=DALPropertyName%%><%%-"] = SqlHelper.WrapSQLSearchCharacters(%%><%%=DALParameterName%%><%%-);%%>
+				}
+				else
+				{
+					<%%-
+					sprocParameters["%%><%%=DALPropertyName%%><%%-"] = %%><%%=DALParameterName%%><%%-;%%>
+				}
+			}
+			<%%-
+			if (dataAccessOptions != null)
+			{%%><%%=TAB 1%%><%%-
+				DataHelper.PopulateCollectionWithPublicPropertyValues(sprocParameters, dataAccessOptions);%%><%%=TAB -1%%><%%-
+			}
+			else
+			{%%><%%=TAB 1%%><%%-
+				sprocParameters["IncludeInactive"] = false;%%><%%=TAB -1%%><%%-
+			}
+			DbCommand command = null;
+			DbDataReader reader = sqlDbManager.ExecuteReader("%%><%%=DbSpMethodName%%><%%-", sprocParameters, out command);
+			
+			// get items from the db reader
+			while (reader.Read())
+			{%%><%%=TAB 1%%><%%-
+				// populate item and add to items
+				%%><%%=Entity.DALDataType%%><%%- item = new %%><%%=Entity.DALDataType%%><%%-();
+				DataTransformHelper.TransformDataFromDbReader(reader, item, dataAccessOptions.FilterElements);
+				item._isLoaded = true;
+				items.Add(item);%%><%%=TAB -1%%><%%-
+			}
+			
+			// get output parameters
+			sqlDbManager.CloseConnectionAndPopulateOutputParameters(command, sprocParameters);%%>
+			switch (MethodTypeName)
+			{
+				case "GetMany":
+				case "GetManyByCriteria":
+				case "GetManyByForeignKey":
+					<%%-
+					totalRecords = sprocParameters["TotalRecords"].GetInt();
+					maximumListSizeExceeded = sprocParameters["MaximumListSizeExceeded"].GetBool();%%>
+					break
+			}
+			<%%-
+			
+			// throw a sql error if found
+			SqlHelper.ThrowSqlErrorIfFound(sprocParameters);%%>
+			break
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+		case "DeleteAllByForeignKey":
+			<%%-
+			// perform data management task within transaction
+			%%>
+			<%%=Entity.FeatureName%%><%%-.%%><%%=Entity.DALClassName%%><%%-.%%><%%=DALMethodName%%><%%-(%%>
+			switch (MethodTypeName)
+			{
+				case "AddOne":
+				case "UpdateOne":
+				case "DeleteOne":
+					<%%-item, %%>
+					break
+			}
+			foreach (Parameter)
+			{
+				<%%=DALParameterName%%><%%-, %%>
+			}
+			switch (MethodTypeName)
+			{
+				case "GetMany":
+				case "GetManyByCriteria":
+				case "GetManyByForeignKey":
+					<%%-out totalRecords, out maximumListSizeExceeded, %%>
+					break
+			}
+			switch (MethodTypeName)
+			{
+				case "GetAllByForeignkey":
+				case "DeleteAllByForeignKey":
+					<%%-cascadeDepth - 1, dataAccessOptions, sqlDbManager)%%>
+					break
+				default:
+					<%%-cascadeDepth, dataAccessOptions, sqlDbManager)%%>
+					break
+			}
+			<%%-;
+			
+			// commit transaction
+			sqlDbManager.Commit();%%>
+			break
+	}
+	
+	// output end try/catch block
+	<%%=TAB -1%%><%%-
+	}
+	catch (ApplicationException ex)
+	{%%><%%=TAB 1%%>
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+		case "DeleteAllByForeignKey":
+	
+			// rollback transaction output
+			<%%-
+			try
+			{%%><%%=TAB 1%%><%%-
+				sqlDbManager.Rollback();%%><%%=TAB -1%%><%%-
+			}
+			catch { }%%>
+			break
+	}
+	<%%-
+	throw ex;%%><%%=TAB -1%%><%%-
+	}
+	catch (Exception ex)
+	{%%><%%=TAB 1%%>
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+		case "DeleteAllByForeignKey":
+	
+			// rollback transaction output
+			<%%-
+			try
+			{%%><%%=TAB 1%%><%%-
+			sqlDbManager.Rollback();%%><%%=TAB -1%%><%%-
+			}
+			catch { }%%>
+			break
+	}
+	<%%-
+		bool reThrow = DataAccessConfiguration.HandleException(ex);
+		if (reThrow) throw;%%><%%=TAB -1%%><%%-
+	}
+	finally
+	{%%><%%=TAB 1%%><%%-
+		sqlDbManager.Close();
+		sqlDbManager = null;%%><%%=TAB -1%%><%%-
+	}%%>
+	
+	// output return code by method type
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			<%%-
+			return item;%%>
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+			<%%-
+			return items;%%>
+			break
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			return items;%%>
+			break
+	}
+	
+	// output end body
+	<%%=TAB -1%%><%%-
+	}%%>
+%%></CONTENT>

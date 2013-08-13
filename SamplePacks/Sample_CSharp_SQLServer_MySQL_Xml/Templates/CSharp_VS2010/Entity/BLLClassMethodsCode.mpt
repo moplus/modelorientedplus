@@ -1,0 +1,369 @@
+<CONFIG>
+	NAME BLLClassMethodsCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"
+
+///--------------------------------------------------------------------------------
+/// <summary>This method gets the %%><%%=BLLClassName%%><%%- instance from the database,
+/// using its primary key values.</summary>
+///--------------------------------------------------------------------------------
+public override void Load()
+{%%>
+<%%=TAB 1%%>
+<%%-
+	Load(%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%=PropertyName%%>
+		<%%-, %%>
+	}
+	<%%-0);%%>
+%%>
+<%%=TAB -1%%>
+<%%-
+}%%>
+
+<%%-
+
+///--------------------------------------------------------------------------------
+/// <summary>This method gets the %%><%%=BLLClassName%%><%%- instance from the database,
+/// using its primary key values and performing a deeper get based on cascade depth.</summary>
+///
+/// <param name="cascadeDepth">The depth of retrieving related items to this instance.</param>
+///--------------------------------------------------------------------------------%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		public override void Load(int cascadeDepth)%%>
+	}
+	else
+	{
+		<%%-
+		public virtual void Load(int cascadeDepth)%%>
+	}
+%%>
+<%%-
+{%%>
+<%%=TAB 1%%>
+<%%-
+	Load(%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%=PropertyName%%>
+		<%%-, %%>
+	}
+	<%%-cascadeDepth);%%>
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method gets the %%><%%=BLLClassName%%><%%- instance from the database,
+/// using the input primary key values and performing a deeper get based on cascade depth.</summary>
+///%%>
+<%%:
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-
+			/// <param name="%%>
+		<%%=BLLParameterName%%>
+		<%%-">The value for the %%>
+		<%%=PropertyName%%>
+		<%%- property.</param>%%>
+	}
+%%>
+<%%-
+/// <param name="cascadeDepth">The depth of retrieving related items to this instance.</param>
+///--------------------------------------------------------------------------------%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		public override void Load(%%>
+	}
+	else
+	{
+		<%%-
+		public virtual void Load(%%>
+	}
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%=BLLDataType%%>
+		<%%- %%>
+		<%%=BLLParameterName%%>
+		<%%-, %%>
+	}
+	<%%-int cascadeDepth)%%>
+%%>
+<%%-
+{%%>
+	<%%=TAB 1%%><%%-
+	%%><%%=BLLDataType%%>
+	<%%- businessObject = null;%%>
+
+<%%:
+	foreach (Method where IsGetOneMethod == true && IsPrimaryMethod == true limit 1)
+	{
+		<%%-
+		businessObject = Manager.%%>
+		<%%=BLLMethodName%%>
+		<%%-(%%>
+		foreach (Parameter)
+		{
+			with (Property from Solution.Find(ReferencedPropertyID))
+			{
+				<%%=BLLParameterName%%>
+				<%%-, %%>
+			}
+		}
+		<%%-cascadeDepth);%%>
+	}
+%%>
+<%%-
+	if (businessObject != null)
+	{%%>
+	<%%=TAB 1%%>
+		<%%-
+		TransformDataFromObject(businessObject, Manager.DataAccessOptions.FilterElements);%%>
+	<%%=TAB -1%%>
+<%%-
+	}%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method gets the %%><%%=BLLClassName%%><%%- instance from an xml file.</summary>
+///
+/// <param name="inputFilePath">The path of the file to load from.</param>
+///--------------------------------------------------------------------------------
+public override void Load(string inputFilePath)
+{%%>
+<%%=TAB 1%%>
+	<%%-
+	base.Load(inputFilePath);
+	ResetLoaded(true);
+	ResetModified(false);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method saves the %%><%%=BLLClassName%%><%%- instance to the database.</summary>
+///--------------------------------------------------------------------------------
+public override void Save()
+{%%>
+<%%=TAB 1%%>
+<%%-
+		Save(0);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method saves the %%><%%=BLLClassName%%><%%- instance to the database,
+/// performing a deeper save based on cascade depth.</summary>
+///
+/// <param name="cascadeDepth">The depth of saving related items to this instance.</param>
+///--------------------------------------------------------------------------------%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		public override void Save(int cascadeDepth)%%>
+	}
+	else
+	{
+		<%%-
+		public virtual void Save(int cascadeDepth)%%>
+	}
+%%>
+<%%-
+{%%>
+<%%=TAB 1%%>
+<%%-
+	if (IsLoaded == false)
+	{%%>
+	<%%=TAB 1%%>
+<%%:
+	foreach (Method where IsAddOneMethod == true && IsPrimaryMethod == true limit 1)
+	{
+		<%%-
+		Manager.%%>
+		<%%=BLLMethodName%%>
+		<%%-(this, cascadeDepth);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+	}
+	else
+	{%%>
+	<%%=TAB 1%%>
+<%%:
+	foreach (Method where IsUpdateOneMethod == true && IsPrimaryMethod == true limit 1)
+	{
+		<%%-
+		Manager.%%>
+		<%%=BLLMethodName%%>
+		<%%-(this, cascadeDepth);%%>
+	}
+%%>
+	<%%=TAB -1%%>
+<%%-
+	}%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method saves the %%><%%=BLLClassName%%><%%- instance to an xml file.</summary>
+///
+/// <param name="inputFilePath">The path of the file to save to.</param>
+///--------------------------------------------------------------------------------
+public override void Save(string inputFilePath)
+{%%>
+<%%=TAB 1%%>
+<%%-
+	base.Save(inputFilePath);
+	ResetLoaded(true);
+	ResetModified(false);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method deletes the %%><%%=BLLClassName%%><%%- instance from the database.</summary>
+///--------------------------------------------------------------------------------%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		public override void Delete()%%>
+	}
+	else
+	{
+		<%%-
+		public virtual void Delete()%%>
+	}
+%%>
+<%%-
+{%%>
+<%%=TAB 1%%>
+<%%-
+	Delete(0);%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method deletes the %%><%%=BLLClassName%%><%%- instance from the database,
+/// performing a deeper delete based on cascade depth.</summary>
+///
+/// <param name="cascadeDepth">The depth of saving related items to this instance.</param>
+///--------------------------------------------------------------------------------%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		public override void Delete(int cascadeDepth)%%>
+	}
+	else
+	{
+		<%%-
+		public virtual void Delete(int cascadeDepth)%%>
+	}
+%%>
+<%%-
+{%%>
+<%%=TAB 1%%>
+<%%:
+	foreach (Method where IsDeleteOneMethod == true && IsPrimaryMethod == true limit 1)
+	{
+		<%%-
+		Manager.%%>
+		<%%=BLLMethodName%%>
+		<%%-(this, cascadeDepth);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method resets the IsLoaded state for the instance.</summary>
+///
+/// <param name="isLoaded">The reset value for the IsLoaded property.</param>
+///--------------------------------------------------------------------------------
+public override void ResetLoaded(bool isLoaded)
+{%%>
+<%%=TAB 1%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		base.ResetLoaded(isLoaded);%%>
+	}
+	else
+	{
+		<%%-
+		_isLoaded = isLoaded;%%>
+	}
+	foreach (Collection)
+	{
+		<%%-
+		if (%%>
+		<%%=BLLFieldName%%>
+		<%%- != null) %%>
+		<%%=BLLFieldName%%>
+		<%%-.ResetLoaded(isLoaded);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+///--------------------------------------------------------------------------------
+/// <summary>This method resets the IsModified state for the instance.</summary>
+///
+/// <param name="isLoaded">The reset value for the IsModified property.</param>
+///--------------------------------------------------------------------------------
+public override void ResetModified(bool isModified)
+{%%>
+<%%=TAB 1%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		base.ResetModified(isModified);%%>
+	}
+	else
+	{
+		<%%-
+		_isModified = isModified;%%>
+	}
+	foreach (Collection)
+	{
+		<%%-
+		if (%%>
+		<%%=BLLFieldName%%>
+		<%%- != null) %%>
+		<%%=BLLFieldName%%>
+		<%%-.ResetModified(isModified);%%>
+	}
+%%>
+<%%=TAB -1%%>
+<%%-
+}
+
+#endregion "Methods"%%></CONTENT>

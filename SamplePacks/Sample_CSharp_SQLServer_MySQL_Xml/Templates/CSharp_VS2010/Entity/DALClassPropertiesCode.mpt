@@ -1,0 +1,128 @@
+<CONFIG>
+	NAME DALClassPropertiesCode
+	CATEGORY DAL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Fields and Properties"%%>
+<%%:
+foreach (Property)
+{
+	if (IsAuditProperty == false && IsBaseProperty == false)
+	{
+		<%%=DALPropertyCode%%>
+	}
+}
+foreach (PropertyReference)
+{
+	if (IsAuditProperty == false && IsBaseProperty == false)
+	{
+		<%%=DALPropertyCode%%>
+	}
+}
+foreach (Collection)
+{
+	if (IsBaseProperty == false)
+	{
+		<%%=DALPropertyCode%%>
+	}
+}
+if (BaseEntity == null)
+{
+	<%%-
+	
+	///-------------------------------------------------------------------------------
+	/// <summary>This property gets the primary key properties.</summary>
+	///--------------------------------------------------------------------------------
+	[XmlIgnore]
+	[DefaultValue(DefaultValue.StringStr)]
+	public override string PrimaryKeyProperties
+	{%%><%%=TAB 1%%><%%-
+		get
+		{%%><%%=TAB 1%%><%%-
+			return "%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=DALPropertyName%%>
+		}
+			<%%-";%%><%%=TAB -1%%><%%-
+		}%%><%%=TAB -1%%><%%-
+	}
+	
+	///--------------------------------------------------------------------------------
+	/// <summary>This property gets or sets the primary key values.</summary>
+	///--------------------------------------------------------------------------------
+	[XmlIgnore]
+	[DefaultValue(DefaultValue.StringStr)]
+	public override string PrimaryKeyValues
+	{%%><%%=TAB 1%%><%%-
+		get
+		{%%><%%=TAB 1%%><%%-
+			return %%>
+			foreach  (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%- + ", " + %%>
+				}
+				<%%=DALPropertyName%%><%%-.GetString()%%>
+			}
+			<%%=TAB -1%%><%%-;
+		}
+		set
+		{%%><%%=TAB 1%%><%%-
+			string[] primaryKeyValues = value.Split(',');
+			if (primaryKeyValues.Length > 0)
+			{%%><%%=TAB 1%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-
+			%%><%%=DALPropertyName%%><%%- = primaryKeyValues[%%><%%=ItemIndex%%><%%-]%%><%%=GetDataHelperGetMethod%%><%%-;%%>
+		}
+			<%%=TAB -1%%><%%-
+			}%%><%%=TAB -1%%><%%-
+		}%%><%%=TAB -1%%><%%-
+	}%%>
+}
+%%>
+<%%-
+
+///--------------------------------------------------------------------------------
+/// <summary>This property determines if the data has been modified since the
+/// last load from a resource such as a database.</summary>
+///--------------------------------------------------------------------------------
+[XmlIgnore]
+[DefaultValue(DefaultValue.Bool)]
+public override bool IsModified
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%>
+<%%:
+	if (BaseEntity != null)
+	{
+		<%%-
+		if (base.IsModified == true) return true;%%>
+	}
+	else
+	{
+		<%%-
+		if (_isModified == true) return true;%%>
+	}
+	foreach (Collection)
+	{
+		<%%-
+		if (%%><%%=DALFieldName%%><%%- != null && %%><%%=DALFieldName%%><%%-.IsModified == true) return true;%%>
+	}
+%%>
+<%%-
+		return false;%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}
+#endregion "Fields and Properties"%%></CONTENT>

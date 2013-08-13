@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLFieldName
+	CATEGORY BLL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyReferenceName.UnderscoreCase()%%></CONTENT>

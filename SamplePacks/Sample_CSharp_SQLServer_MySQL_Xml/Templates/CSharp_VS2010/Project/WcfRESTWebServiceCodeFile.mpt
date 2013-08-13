@@ -1,0 +1,133 @@
+<CONFIG>
+	NAME WcfRESTWebServiceCodeFile
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%=TAB -500%%>
+<%%:
+<%%-/*<copyright>%%><%%-
+%%><%%=Solution.Copyright%%><%%-
+</copyright>*/
+
+using System;
+using System.CodeDom.Compiler;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.ServiceModel.Activation;
+using System.Net;%%>
+with (CurrentProject)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+			<%%-
+			using %%><%%=Namespace%%><%%-.%%><%%=WcfRESTMiddleTierAlias%%><%%-;%%>
+			foreach (Feature)
+			{
+				<%%-
+				using %%><%%=../Namespace%%><%%-.%%><%%=../WcfRESTMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+			<%%-
+			using %%><%%=Namespace%%><%%-.%%><%%=WcfRESTMiddleTierAlias%%><%%-;%%>
+			foreach (Feature)
+			{
+				<%%-
+				using %%><%%=../Namespace%%><%%-.%%><%%=../WcfRESTMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+}
+foreach (Feature)
+{
+	<%%-
+	using %%><%%=../Namespace%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-
+{%%><%%=TAB 1%%><%%-
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to provide REST based web services for
+	/// %%><%%=WcfRESTWebServiceName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize, change the Status value below to something
+	/// other than Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[ServiceBehavior(IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public partial class %%><%%=WcfRESTWebServiceName%%><%%- : WebServiceBase, I%%><%%=WcfRESTWebServiceName%%><%%-
+	{%%><%%=TAB 1%%><%%-
+		#region "Methods"		
+		///--------------------------------------------------------------------------------
+		/// <summary>This web service method is used to get high level information
+		/// (in JSON format).</summary>
+		///--------------------------------------------------------------------------------
+		public  CollectionResponse SearchJSON()
+		{%%><%%=TAB 1%%><%%-
+			return Search();%%><%%=TAB -1%%><%%-
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This web service method is used to get high level information.</summary>
+		///--------------------------------------------------------------------------------
+		public CollectionResponse Search()
+		{%%><%%=TAB 1%%><%%-
+			CollectionResponse results = null;
+			try
+			{%%><%%=TAB 1%%><%%-
+				// execute business logic methods
+				ProcessRequest();
+				results = CollectionResponse.SiteCollections;
+				ProcessResponse();%%><%%=TAB -1%%><%%-
+			}
+			catch (ApplicationException ex)
+			{%%><%%=TAB 1%%><%%-
+				results.SetWebResponseAndStatus(HttpStatusCode.InternalServerError, ex.Message);%%><%%=TAB -1%%><%%-
+			}
+			catch (Exception ex)
+			{%%><%%=TAB 1%%><%%-
+				results.SetWebResponseAndStatus(HttpStatusCode.InternalServerError, ex.Message);%%><%%=TAB -1%%><%%-
+			}
+			return results;%%><%%=TAB -1%%><%%-
+		}%%>
+		foreach (Entity in Solution)
+		{
+			foreach (Method where WcfRESTValidMethod == true)
+			{
+				<%%=WcfRESTServiceJSONMethodCommentsCode%%><%%-
+				%%><%%=WcfRESTServiceJSONMethodSignatureCode%%>
+				<%%=WcfRESTServiceJSONMethodBodyCode%%>
+
+				<%%=WcfRESTServiceMethodCommentsCode%%><%%-
+				%%><%%=WcfRESTServiceMethodSignatureCode%%>
+				<%%=WcfRESTServiceMethodBodyCode%%>
+			}
+			progress
+		}
+		<%%-
+		#endregion "Methods"%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTWebServiceCodeFilePath) == null || (File(WcfRESTWebServiceCodeFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTWebServiceCodeFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTWebServiceCodeFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTDataType
+	CATEGORY WcfREST
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

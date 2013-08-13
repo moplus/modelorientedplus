@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME WcfRESTClassBodyStartCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTGlobalCopyrightCode%%>
+<%%=WcfRESTClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.ProjectNamespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=WcfRESTClassCommentsCode%%>
+	<%%-
+	[ServiceBehavior(IncludeExceptionDetailInFaults = true, InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
+	[AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public partial class %%><%%=WcfRESTClassName%%><%%- : %%><%%=WcfRESTBaseClassName%%><%%-, %%><%%=WcfRESTInterfaceName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

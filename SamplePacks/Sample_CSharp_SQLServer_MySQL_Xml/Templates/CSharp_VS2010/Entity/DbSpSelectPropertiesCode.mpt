@@ -1,0 +1,56 @@
+<CONFIG>
+	NAME DbSpSelectPropertiesCode
+	CATEGORY DbSp
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+CurrentEntity = Entity
+var isFirstItem = true
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	foreach (Property where IsBaseProperty == false  && Tags.Contains("DB") == true)
+	{
+		if (isFirstItem == false)
+		{
+			<%%-
+			, %%>
+		}
+		else
+		{
+			<%%-
+			%%><%%=Solution.LIBDoubleSpace%%>
+		}
+		isFirstItem = false
+		if (PropertyName != OriginalName)
+		{
+			<%%-'%%><%%=DBPropertyName%%><%%-' = %%>
+		}
+		<%%=DbSpAliasColumnName%%>
+	}
+	foreach (PropertyReference where Tags.Contains("DB") == true)
+	{
+		if (isFirstItem == false)
+		{
+			<%%-
+			, %%>
+		}
+		else
+		{
+			<%%-
+			%%><%%=Solution.LIBDoubleSpace%%>
+		}
+		with (ReferencedProperty)
+		{
+			isFirstItem = false
+			if (DBPropertyName != ../DBPropertyName || ../PropertyReferenceName != ../OriginalName)
+			{
+				<%%-'%%><%%=../DBPropertyName%%><%%-' = %%>
+			}
+			<%%=../DbSpAliasColumnName%%>
+		}
+	}
+}
+%%></CONTENT>

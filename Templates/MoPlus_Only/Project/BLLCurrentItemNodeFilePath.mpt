@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLCurrentItemNodeFilePath
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\BLL\Interpreter\CurrentItemNode_G.cs%%></CONTENT>

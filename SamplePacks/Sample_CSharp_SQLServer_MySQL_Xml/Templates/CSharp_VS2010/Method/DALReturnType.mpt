@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME DALReturnType
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassName%%>
+			}
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-EnterpriseDataObjectList<DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassName%%><%%->%%>
+			}
+			break
+		default:
+			<%%-void%%>
+			break
+	}
+%%></CONTENT>

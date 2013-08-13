@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME EFSourceRoleName
+	CATEGORY EF
+	NODE Relationship
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntityID == EntityID)
+{
+	// handle self referential case
+	foreach (RelationshipProperty limit 1)
+	{
+		<%%=Property.BLLPropertyName%%>
+	}
+}
+<%%=Entity.BLLClassName%%>
+%%></CONTENT>

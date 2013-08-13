@@ -1,0 +1,41 @@
+<CONFIG>
+	NAME EventLogTitle
+	CATEGORY LIB
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var title = null
+if (CompanyName != null)
+{
+	title = CompanyName
+}
+if (ProductName != null)
+{
+	if (title != null)
+	{
+		title = title + " " + ProductName
+	}
+	else
+	{
+		title = ProductName
+	}
+}
+if (ProductVersion != null)
+{
+	if (title != null)
+	{
+		title = title + " " + ProductVersion
+	}
+	else
+	{
+		title = ProductVersion
+	}
+}
+if (title == null)
+{
+	title = "Issue"
+}
+<%%=title%%>
+%%></CONTENT>

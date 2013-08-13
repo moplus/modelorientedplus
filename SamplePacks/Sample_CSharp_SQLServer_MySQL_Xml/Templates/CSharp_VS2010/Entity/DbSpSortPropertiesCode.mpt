@@ -1,0 +1,44 @@
+<CONFIG>
+	NAME DbSpSortPropertiesCode
+	CATEGORY DbSp
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+CurrentEntity = Entity
+<%%-
+%%><%%=Solution.LIBDoubleSpace%%><%%-CASE WHEN @SortDirection = 'Random' THEN NEWID() END%%>
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	foreach (Property where IsBaseProperty == false && Tags.Contains("DB") == true)
+	{
+		<%%-
+		, CASE WHEN @sortDirection = 'Ascending' AND @sortColumn = '%%>
+		<%%=DBPropertyName%%>
+		<%%-' THEN %%>
+		<%%=DbSpAliasColumnName%%>
+		<%%- END
+		, CASE WHEN @sortDirection = 'Descending' AND @sortColumn = '%%>
+		<%%=DBPropertyName%%>
+		<%%-' THEN %%>
+		<%%=DbSpAliasColumnName%%>
+		<%%- END DESC%%>
+	}
+	foreach (PropertyReference where Tags.Contains("DB") == true)
+	{
+		<%%-
+		, CASE WHEN @sortDirection = 'Ascending' AND @sortColumn = '%%>
+		<%%=DBPropertyName%%>
+		<%%-' THEN %%>
+		<%%=DbSpAliasColumnName%%>
+		<%%- END
+		, CASE WHEN @sortDirection = 'Descending' AND @sortColumn = '%%>
+		<%%=DBPropertyName%%>
+		<%%-' THEN %%>
+		<%%=DbSpAliasColumnName%%>
+		<%%- END DESC%%>
+	}
+}
+%%></CONTENT>

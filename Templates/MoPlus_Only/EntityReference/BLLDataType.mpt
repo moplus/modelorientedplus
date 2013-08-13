@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME BLLDataType
+	CATEGORY BLL
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (ReferencedEntity)
+{
+	<%%-BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%>
+}
+%%></CONTENT>

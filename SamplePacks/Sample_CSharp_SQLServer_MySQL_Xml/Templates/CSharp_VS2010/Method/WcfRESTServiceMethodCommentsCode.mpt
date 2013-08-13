@@ -1,0 +1,152 @@
+<CONFIG>
+	NAME WcfRESTServiceMethodCommentsCode
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+
+///--------------------------------------------------------------------------------%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get an instance of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "AddOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to add an instance of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "UpdateOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to update an instance of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to delete an instance of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "DeleteAllByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to delete a number of instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetAll":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all of the instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetAllByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetAllByForeignkey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get all instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+		case "GetMany":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to a number of the instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-.</summary>%%>
+			}
+			break
+		case "GetManyByCriteria":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get a number of instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-
+				/// by input criteria.</summary>%%>
+			}
+			break
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				/// <summary>This web service method is used to get a number of instances of %%><%%=WcfRESTMiddleTierClassName%%><%%-
+				/// by a foreign key.</summary>%%>
+			}
+			break
+	}
+%%>
+<%%-
+///%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+			with (Entity)
+			{
+				<%%-
+				/// <param name="item">The instance of %%><%%=WcfRESTMiddleTierClassName%%><%%- to perform the add  operation on.</param>%%>
+			}
+			break
+		case "UpdateOne":
+			with (Entity)
+			{
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-
+					/// <param name="%%><%%=WcfRESTParameterName%%><%%-">A key to get an instance of %%><%%=../WcfRESTMiddleTierClassName%%><%%- for updating.</param>%%>
+				}
+				<%%-
+				/// <param name="item">The instance of %%><%%=WcfRESTMiddleTierClassName%%><%%- to perform the update  operation on.</param>%%>
+			}
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-
+					/// <param name="%%><%%=WcfRESTParameterName%%><%%-">A key to get an instance of %%><%%=../WcfRESTMiddleTierClassName%%><%%- for deletion.</param>%%>
+				}
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%-
+		/// <param name="%%><%%=WcfRESTParameterName%%><%%-">The value for the %%><%%=WcfRESTPropertyName%%><%%- property.</param>%%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			/// <param name="sortColumn">The column name to perform a sort by.</param>
+			/// <param name="sortDirection">The direction to sort, ascending, descending, or random.</param>
+			/// <param name="pageSize">The size of the page of records to return.</param>
+			/// <param name="startIndex">The starting index of results to return.</param>%%>
+			break
+	}
+%%>
+<%%-
+///--------------------------------------------------------------------------------%%></CONTENT>

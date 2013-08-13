@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLEnumerationFileProjectItem
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=BLLEnumerationFilePath.Substring(Project.ProjectDirectory.Length + 1).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

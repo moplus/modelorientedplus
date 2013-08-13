@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME WcfRESTClassMethodsCode
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+#region "Methods"%%>
+<%%:
+foreach (Method where WcfRESTValidMethod == true)
+{
+	<%%=WcfRESTJSONMethodCode%%>
+	<%%=WcfRESTMethodCode%%>
+}
+%%>
+<%%-
+#endregion "Methods"%%></CONTENT>

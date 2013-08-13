@@ -1,0 +1,378 @@
+<CONFIG>
+	NAME ODataServiceFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%:
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data.Services;
+using System.Data.Services.Providers;
+using BLL = %%><%%=Namespace%%><%%-.BLL;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides metadata and operations for
+	/// OData services.</summary>
+	/// 
+	/// <remarks>This code is based on an example provided by Alex D. James in his blog
+	/// at http://blogs.msdn.com/b/alexj/archive/2010/01/04/creating-a-data-service-provider-part-1-intro.aspx .</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class ODataService<T> : DataService<T>, IServiceProvider where T : IODataContext
+	{
+		#region "Fields and Properties"
+		private ODataServiceMetadataProvider _metadata;
+		private ODataServiceQueryProvider<T> _query;
+		private ODataServiceUpdateProvider<T> _updater;
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated service base on type.</summary>
+		/// 
+		/// <param name="serviceType">The service type.</param>
+		///--------------------------------------------------------------------------------
+		public object GetService(Type serviceType)
+		{
+			if (serviceType == typeof(IDataServiceMetadataProvider))
+			{
+				return _metadata;
+			}
+			else if (serviceType == typeof(IDataServiceQueryProvider))
+			{
+				return _query;
+			}
+			else if (serviceType == typeof(IDataServiceUpdateProvider))
+			{
+				return _updater;
+			}
+			else
+			{
+				return null;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated metadata provider.</summary>
+		/// 
+		/// <param name="dataSourceType">The data source type.</param>
+		///--------------------------------------------------------------------------------
+		public ODataServiceMetadataProvider GetMetadataProvider(Type dataSourceType)
+		{
+			ODataServiceMetadataProvider metadata = new ODataServiceMetadataProvider();%%>
+			log("ODataServiceFile", "EntitiesFound", true)
+			while (LogValue("ODataServiceFile", "EntitiesFound") == true)
+			{
+				log("ODataServiceFile", "EntitiesFound", false)
+				foreach (Entity in Solution where LogValue("ODataServiceFile", EntityID) == null && (BaseEntityID == null || LogValue("ODataServiceFile", BaseEntityID) != null))
+				{
+					// add entity definition
+					log("ODataServiceFile", "EntitiesFound", true)
+					log("ODataServiceFile", EntityID, true)
+			<%%-
+			
+			// %%><%%=BLLClassName%%><%%- metadata
+			ResourceType %%><%%=BLLParameterName%%><%%- = new ResourceType(
+				typeof(BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-),
+				ResourceTypeKind.EntityType,%%>
+					// reenable this code once DataServices supports inheritance
+					/*
+					if (BaseEntity != null)
+					{
+						with (BaseEntity)
+						{
+				<%%-
+				%%><%%=BLLParameterName%%><%%-,%%>
+						}
+					}
+					else
+					{*/
+				<%%-
+				null,%%>
+				//	}
+				<%%-
+				"%%><%%=Project.Namespace%%><%%-",
+				"%%><%%=BLLClassName%%><%%-",
+				false
+			);%%>
+					foreach (Entity in EntityAndBaseEntities)
+					{
+						foreach (Property where IsBaseProperty == false && IsAuditProperty == false)
+						{
+							// add property definition
+							if (IsPrimaryKeyMember == true)
+							{
+			<%%-
+			ResourceProperty %%><%%=../../BLLParameterName%%><%%=BLLPropertyName%%><%%- = new ResourceProperty(
+			   "%%><%%=BLLPropertyName%%><%%-",
+			   ResourcePropertyKind.Key |
+			   ResourcePropertyKind.Primitive,
+			   ResourceType.GetPrimitiveResourceType(typeof(%%><%%=CSharpDataType%%><%%-))
+			);%%>
+							}
+							else
+							{
+			<%%-
+			ResourceProperty %%><%%=../../BLLParameterName%%><%%=BLLPropertyName%%><%%- = new ResourceProperty(
+			   "%%><%%=BLLPropertyName%%><%%-",
+			   ResourcePropertyKind.Primitive,
+			   ResourceType.GetPrimitiveResourceType(typeof(%%><%%=CSharpDataType%%><%%-))
+			);%%>
+							}
+			<%%-
+			%%><%%=../../BLLParameterName%%><%%-.AddProperty(%%><%%=../../BLLParameterName%%><%%=BLLPropertyName%%><%%-);%%>
+						}
+					}
+				}
+			}
+			<%%-
+			
+			// resource sets%%>
+			foreach (Entity in Solution)
+			{
+			<%%-
+			var %%><%%=BLLParameterName%%><%%-Set = new ResourceSet("%%><%%=BLLPluralEntityName%%><%%-", %%><%%=BLLParameterName%%><%%-);%%>
+			}
+			<%%-
+
+			// entity references%%>
+			foreach (Entity in Solution)
+			{
+				foreach (EntityReference)
+				{
+					log("ODataServiceFile", "ReferenceHasCollection", false)
+					with (ReferencedEntity)
+					{
+						foreach (Collection)
+						{
+							if (ReferencedEntityID == ../../../EntityID)
+							{
+								log("ODataServiceFile", "ReferenceHasCollection", true)
+							}
+						}
+					}
+					if (LogValue("ODataServiceFile", "ReferenceHasCollection") == true)
+					{
+					if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+					{
+			<%%-
+			/*%%>
+					}
+					// add reference navigation property
+			<%%-
+			
+			var %%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%- = new ResourceProperty(
+				"%%><%%=BLLPropertyName%%><%%-",
+				ResourcePropertyKind.ResourceReference,
+				%%>
+					with (ReferencedEntity)
+					{
+					<%%=BLLParameterName%%>
+					}
+				<%%-
+			);
+			%%><%%=../BLLParameterName%%><%%-.AddProperty(%%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-);%%>
+					if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+					{
+			<%%-
+			*/%%>
+					}
+					}
+				}
+			}
+			<%%-
+			
+			// collections%%>
+			foreach (Entity in Solution)
+			{
+				foreach (Collection)
+				{
+					if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+					{
+			<%%-
+			/*%%>
+					}
+					// add collection navigation property
+			<%%-
+			
+			var %%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%- = new ResourceProperty(
+				"%%><%%=BLLPropertyName%%><%%-",
+				ResourcePropertyKind.ResourceSetReference,
+				%%>
+					with (ReferencedEntity)
+					{
+					<%%=BLLParameterName%%>
+					}
+				<%%-
+			);
+			%%><%%=../BLLParameterName%%><%%-.AddProperty(%%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-);%%>
+					if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+					{
+			<%%-
+			*/%%>
+					}
+				}
+			}
+			<%%-
+			
+			// add resource types and sets%%>
+			foreach (Entity in Solution)
+			{
+			<%%-
+			metadata.AddResourceType(%%><%%=BLLParameterName%%><%%-);
+			metadata.AddResourceSet(%%><%%=BLLParameterName%%><%%-Set);%%>
+			}
+			<%%-
+			
+			// add resource associations%%>
+			foreach (Entity in Solution)
+			{
+				foreach (Collection)
+				{
+					log("ODataServiceFile", "RelationshipID", null)
+					log("ODataServiceFile", "PropertyID", null)
+					foreach (PropertyRelationship limit 1)
+					{
+						log("ODataServiceFile", "RelationshipID", RelationshipID)
+					}
+					if (LogValue("ODataServiceFile", "RelationshipID") != null)
+					{
+						with (ReferencedEntity)
+						{
+							foreach (EntityReference)
+							{
+								foreach (PropertyRelationship limit 1)
+								{
+									if (RelationshipID == LogValue("ODataServiceFile", "RelationshipID"))
+									{
+										log("ODataServiceFile", "PropertyID", ../PropertyID)
+									}
+								}
+							}
+						}
+					}
+					if (LogValue("ODataServiceFile", "PropertyID") != null)
+					{
+						if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+						{
+			<%%-
+			/*%%>
+						}
+			<%%-
+			
+			ResourceAssociationSet %%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-Set = new ResourceAssociationSet(
+				"%%><%%=../BLLClassName%%><%%=BLLPropertyName%%><%%-",
+				new ResourceAssociationSetEnd(
+					%%><%%=../BLLParameterName%%><%%-Set,
+					%%><%%=../BLLParameterName%%><%%-,
+					%%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-
+				),
+				new ResourceAssociationSetEnd(
+					%%>
+						with (ReferencedEntity)
+						{
+					<%%=BLLParameterName%%><%%-Set,
+					%%><%%=BLLParameterName%%>
+						}
+					<%%-,
+					%%>
+						with (ReferencedEntity)
+						{
+						<%%=BLLParameterName%%>
+						}
+						with (EntityReference from Solution.Find(LogValue("ODataServiceFile", "PropertyID")))
+						{
+						<%%=BLLPropertyName%%>
+						}
+					<%%-
+				)
+			);
+			%%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-.CustomState = %%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-Set;
+			%%>
+						with (ReferencedEntity)
+						{
+				<%%=BLLParameterName%%>
+						}
+						with (EntityReference from Solution.Find(LogValue("ODataServiceFile", "PropertyID")))
+						{
+				<%%=BLLPropertyName%%>
+						}
+			<%%-.CustomState = %%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-Set;
+			metadata.AddAssociationSet(%%><%%=../BLLParameterName%%><%%=BLLPropertyName%%><%%-Set);%%>
+						if (../BaseEntityID != null || ReferencedEntity.BaseEntityID != null)
+						{
+			<%%-
+			*/%%>
+						}
+					}
+				}
+			}
+			<%%-
+			
+			return metadata;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated query provider.</summary>
+		/// 
+		/// <param name="metadata">The input metadata.</param>
+		///--------------------------------------------------------------------------------
+		public ODataServiceQueryProvider<T> GetQueryProvider(ODataServiceMetadataProvider metadata)
+		{
+			return new ODataServiceQueryProvider<T>(metadata);
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the associated update provider.</summary>
+		/// 
+		/// <param name="metadata">The input metadata.</param>
+		/// <param name="query">The input query provider.</param>
+		///--------------------------------------------------------------------------------
+		public ODataServiceUpdateProvider<T> GetUpdateProvider(ODataServiceMetadataProvider metadata, ODataServiceQueryProvider<T> query)
+		{
+			return new ODataServiceUpdateProvider<T>(metadata, query);
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>This default constructor sets up the metadata,
+		/// query, and update providers.</summary>
+		///--------------------------------------------------------------------------------
+		public ODataService()
+		{
+			_metadata = GetMetadataProvider(typeof(T));
+			_query = GetQueryProvider(_metadata);
+			_updater = GetUpdateProvider(_metadata, _query);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(ODataServiceFilePath) == null || (File(ODataServiceFilePath).Contains("<Status>Generated</Status>") == true && File(ODataServiceFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(ODataServiceFilePath)
+}
+%%></OUTPUT>

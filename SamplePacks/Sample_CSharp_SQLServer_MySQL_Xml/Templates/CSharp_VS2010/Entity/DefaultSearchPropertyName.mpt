@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME DefaultSearchPropertyName
+	CATEGORY LIB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property)
+	{
+		if (IsCandidateSearchProperty == true)
+		{
+			<%%=PropertyName%%>
+			return
+		}
+	}
+	foreach (Property)
+	{
+		if (DataTypeCode == 24 /* DateTime */)
+		{
+			foreach (AuditProperty where PropertyName == ../PropertyName)
+			{
+				<%%=PropertyName%%>
+				return
+			}
+		}
+	}
+}
+<%%-null%%>
+%%></CONTENT>

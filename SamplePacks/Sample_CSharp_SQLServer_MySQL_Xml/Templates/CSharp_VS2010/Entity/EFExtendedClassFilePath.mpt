@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFExtendedClassFilePath
+	CATEGORY EF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\Exts\EF\%%><%%=BLLClassFileName%%></CONTENT>

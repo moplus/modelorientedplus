@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME BLLManagerClassCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%=TAB -500%%>
+<%%=BLLManagerClassBodyStartCode%%>
+<%%=BLLManagerClassConstantsCode%%>
+<%%=BLLManagerClassPropertiesCode%%><%%-
+%%><%%=BLLManagerClassMethodsCode%%><%%-
+%%><%%=BLLManagerClassConstructorsCode%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLManagerClassFilePath) == null || (File(BLLManagerClassFilePath).Contains("<Status>Generated</Status>") == true && File(BLLManagerClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(BLLManagerClassFilePath)
+}
+%%></OUTPUT>

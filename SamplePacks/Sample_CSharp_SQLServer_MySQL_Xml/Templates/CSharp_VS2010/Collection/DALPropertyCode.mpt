@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME DALPropertyCode
+	CATEGORY DAL
+	NODE Collection
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+%%><%%=DALPropertyFieldCode%%>
+<%%=DALPropertyCommentsCode%%>
+<%%=DALPropertyAttributesCode%%><%%-
+%%><%%=DALPropertySignatureCode%%>
+<%%=DALPropertyBodyCode%%></CONTENT>

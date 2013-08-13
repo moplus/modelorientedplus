@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WcfRESTWebServiceBaseFilePath
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebServiceBase_G.cs%%></CONTENT>

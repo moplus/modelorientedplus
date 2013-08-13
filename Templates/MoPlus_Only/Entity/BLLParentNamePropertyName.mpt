@@ -1,0 +1,40 @@
+<CONFIG>
+	NAME BLLParentNamePropertyName
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var relationshipID
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where Tags.Contains("Parent") == true limit 1)
+	{
+		foreach (PropertyRelationship limit 1)
+		{
+			if (relationshipID == null)
+			{
+				relationshipID = Relationship.RelationshipID
+			}
+		}
+	}
+}
+if (relationshipID != null)
+{
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (PropertyReference where BLLPropertyName.EndsWith("Name") == true)
+		{
+			foreach (PropertyRelationship limit 1)
+			{
+				if (Relationship.RelationshipID == relationshipID)
+				{
+					<%%=../BLLPropertyName%%>
+					return
+				}
+			}
+		}
+	}
+}
+%%></CONTENT>

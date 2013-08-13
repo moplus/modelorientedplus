@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WcfRESTReturnType
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+with (Entity)
+{
+	<%%=WcfRESTResponseClassName%%>
+}
+%%></CONTENT>

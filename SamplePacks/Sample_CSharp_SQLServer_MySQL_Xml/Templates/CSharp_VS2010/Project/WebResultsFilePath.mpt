@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebResultsFilePath
+	CATEGORY Web
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebResults_G.cs%%></CONTENT>

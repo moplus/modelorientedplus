@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME BLLPropertyCode
+	CATEGORY BLL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%-
+%%><%%=BLLPropertyFieldAttributesCode%%>
+<%%=BLLPropertyFieldCode%%>
+<%%=BLLPropertyCommentsCode%%>
+<%%=BLLPropertyAttributesCode%%><%%-
+%%><%%=BLLPropertySignatureCode%%>
+<%%=BLLPropertyBodyCode%%></CONTENT>

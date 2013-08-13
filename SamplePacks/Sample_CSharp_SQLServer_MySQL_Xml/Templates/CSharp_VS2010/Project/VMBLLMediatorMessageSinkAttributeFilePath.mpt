@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLMediatorMessageSinkAttributeFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Messaging\MediatorMessageSinkAttribute_G.cs%%></CONTENT>

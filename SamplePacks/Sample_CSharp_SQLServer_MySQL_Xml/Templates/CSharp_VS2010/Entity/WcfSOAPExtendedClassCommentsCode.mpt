@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WcfSOAPExtendedClassCommentsCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-///--------------------------------------------------------------------------------
+/// <summary></summary>
+///
+/// This file is for adding customizations to the %%><%%=WcfSOAPClassName%%><%%- class.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Customized</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

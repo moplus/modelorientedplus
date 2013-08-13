@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierDataType
+	CATEGORY WebSOAP
+	NODE Parameter
+</CONFIG>
+<CONTENT>
+<%%=BLLDataType%%></CONTENT>

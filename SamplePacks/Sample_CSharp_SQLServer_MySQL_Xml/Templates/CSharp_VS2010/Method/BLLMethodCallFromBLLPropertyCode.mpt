@@ -1,0 +1,62 @@
+<CONFIG>
+	NAME BLLMethodCallFromBLLPropertyCode
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+	<%%=BLLMethodName%%><%%-(%%>
+	switch (MethodTypeCode)
+	{
+		case 8: // AddOne
+		case 9: // UpdateOne
+		case 10: // DeleteOne
+			<%%-item, %%>
+			break
+	}
+	switch (MethodTypeCode)
+	{
+		case 4: // GetAllByForeignKey
+		case 6: // GetManyByForeignKey
+		case 11: // DeleteAllByForeignKey
+			foreach (Parameter)
+			{
+				foreach (MethodRelationship in ../)
+				{
+					with (Relationship)
+					{
+						foreach (RelationshipProperty)
+						{
+							if (PropertyID == ../../../PropertyID)
+							{
+								with (Property from ../PrimaryEntity.Find(PropertyID, PrimaryPropertyID))
+								{
+									<%%=BLLPropertyName%%><%%-, %%>
+								}
+							}
+						}
+					}
+				}
+			}
+			break
+		default:
+			foreach (Parameter)
+			{
+				with (Property from Solution.Find(PropertyID))
+				{
+					<%%=BLLPropertyName%%><%%-, %%>
+				}
+			}
+			break
+	}
+	switch (MethodTypeCode)
+	{
+		case 3: // GetMany
+		case 6: // GetManyByForeignKey
+		case 7: // GetManyByCriteria
+			<%%-out totalRecords, out maximumListSizeExceeded, %%>
+			break
+	}
+	<%%-cascadeDepth)%%>
+	break
+%%></CONTENT>

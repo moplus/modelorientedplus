@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPClassName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WebSOAPMiddleTierClassName%%><%%-Service%%></CONTENT>

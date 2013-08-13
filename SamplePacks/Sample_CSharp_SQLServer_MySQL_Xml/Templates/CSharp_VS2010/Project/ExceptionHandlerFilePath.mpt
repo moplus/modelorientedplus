@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ExceptionHandlerFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ExceptionHandler_G.cs%%></CONTENT>

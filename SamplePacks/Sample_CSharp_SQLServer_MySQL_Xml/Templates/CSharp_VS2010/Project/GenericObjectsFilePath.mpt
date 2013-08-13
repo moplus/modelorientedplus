@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME GenericObjectsFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\GenericObjects_G.cs%%></CONTENT>

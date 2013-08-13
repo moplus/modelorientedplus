@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebSOAPWebServiceBaseFilePath
+	CATEGORY WebSOAP
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebServiceBase_G.cs%%></CONTENT>

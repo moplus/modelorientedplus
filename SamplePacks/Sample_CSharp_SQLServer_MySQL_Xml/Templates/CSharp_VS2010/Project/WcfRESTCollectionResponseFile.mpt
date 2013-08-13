@@ -1,0 +1,125 @@
+<CONFIG>
+	NAME WcfRESTCollectionResponseFile
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.CodeDom.Compiler;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to show available collections in
+	/// this WCF REST service.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	[XmlRoot(Namespace = "", ElementName = "CollectionResponse")]
+	[DataContract]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public class CollectionResponse : WebResponseBase
+	{
+		#region "Fields and Properties"
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the CollectionCount count.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		public int CollectionCount
+		{
+			get
+			{
+				if (Collections != null)
+				{
+					return Collections.Count;
+				}
+				return 0;
+			}
+			set {}
+		}
+
+		protected EnterpriseDataObjectList<Collection> _collections = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Collections.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlArray(ElementName = "Collections")]
+		[XmlArrayItem(typeof(Collection), ElementName = "Collection")]
+		[DataMember(Name = "Collections")]
+		[DataArrayItem(ElementName = "Collections")]
+		public EnterpriseDataObjectList<Collection> Collections
+		{
+			get
+			{
+				if (_collections == null)
+				{
+					_collections = new EnterpriseDataObjectList<Collection>();
+				}
+				return _collections;
+			}
+			set
+			{
+				_collections = value;
+			}
+		}
+
+		private static CollectionResponse _siteCollections = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the available SiteCollections.</summary>
+		///--------------------------------------------------------------------------------
+		public static CollectionResponse SiteCollections
+		{
+			get
+			{
+				if (_siteCollections == null)
+				{
+					_siteCollections = new CollectionResponse();
+					Collection collection = null;%%>
+					<%%:
+					foreach (Entity in Solution)
+					{
+					<%%-
+					collection = new Collection();
+					collection.CollectionID = Guid.NewGuid();
+					collection.CollectionName = "%%><%%=BLLPluralEntityName%%><%%-";
+					collection.Description = "Accessing /%%><%%=BLLPluralEntityName%%><%%- will return a collection of available %%><%%=BLLPluralEntityName%%><%%- from this site.%%>
+						if (Description != null)
+						{
+							<%%- %%><%%=Description%%>
+						}
+					<%%-";
+					_siteCollections.Collections.Add(collection);%%>
+					}
+					%%>
+					<%%-
+				}
+				return _siteCollections;
+			}
+		}
+
+		#endregion "Fields and Properties"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTCollectionResponseFilePath) == null || (File(WcfRESTCollectionResponseFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTCollectionResponseFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTCollectionResponseFilePath)
+}
+%%></OUTPUT>

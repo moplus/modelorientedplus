@@ -1,0 +1,96 @@
+<CONFIG>
+	NAME BLLDefaultValue
+	CATEGORY BLL
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+	with (ReferencedProperty)
+	{
+		switch (DataTypeCode)
+		{
+			case 1: // SByte
+				<%%-DefaultValue.SByte%%>
+				break
+			case 2: // IntShort
+				<%%-DefaultValue.Short%%>
+				break
+			case 3: // Int
+				<%%-DefaultValue.Int%%>
+				break
+			case 4: // IntLong
+				<%%-DefaultValue.Long%%>
+				break
+		       case 5: // Byte
+				<%%-DefaultValue.Byte%%>
+				break
+		 	case 6: // UIntShort
+				<%%-DefaultValue.UShort%%>
+				break
+			case 7: // UInt
+				<%%-DefaultValue.UInt%%>
+				break
+			case 8: // UIntLong
+				<%%-DefaultValue.ULong%%>
+				break
+			case 9: // FloatSingle
+				<%%-DefaultValue.Float%%>
+				break
+			case 10: // FloatDouble
+				<%%-DefaultValue.Double%%>
+				break
+		       case 11: // Decimal
+				<%%-DefaultValue.Decimal%%>
+				break
+			case 12: // Boolean
+				<%%-DefaultValue.Bool%%>
+				break
+			case 13: // Char
+				<%%-DefaultValue.Char%%>
+				break
+		       case 14: // CharUnicode
+				<%%-DefaultValue.Char%%>
+				break
+			case 15: // Object
+				<%%-null%%>
+				break
+			case 16: // String
+				<%%-DefaultValue.String%%>
+				break
+		       case 17: // StringUnicode
+				<%%-DefaultValue.String%%>
+				break
+			case 18: // Currency
+				<%%-DefaultValue.Decimal%%>
+				break
+		       case 19: // Text
+				<%%-DefaultValue.String%%>
+				break
+		       case 20: // TextUnicode
+				<%%-DefaultValue.String%%>
+				break
+			case 21: // IntTiny
+				<%%-DefaultValue.Short%%>
+				break
+			case 22: // UIntTiny
+				<%%-DefaultValue.UShort%%>
+				break
+			case 23: // Binary
+				<%%-DefaultValue.Byte%%>
+				break
+			case 24: // DateTime
+				<%%-DefaultValue.DateTime%%>
+				break
+			case 25: // Timestamp
+				<%%-DefaultValue.Byte%%>
+				break
+			case 26: // Guid
+				<%%-DefaultValue.Guid%%>
+				break
+			default:
+				<%%-DefaultValue.String%%>
+				break
+		}
+	}
+%%></CONTENT>

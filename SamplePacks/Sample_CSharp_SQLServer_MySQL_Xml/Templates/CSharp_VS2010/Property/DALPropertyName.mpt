@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALPropertyName
+	CATEGORY DAL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

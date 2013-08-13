@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME BLLPropertyFieldCode
+	CATEGORY BLL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+protected %%><%%=BLLDataType%%><%%- %%><%%=BLLFieldName%%><%%- = %%><%%=BLLDefaultValue%%><%%-;%%></CONTENT>

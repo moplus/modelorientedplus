@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLRelativePath
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\BLL\%%><%%=Feature.FeatureName%%><%%-\%%></CONTENT>

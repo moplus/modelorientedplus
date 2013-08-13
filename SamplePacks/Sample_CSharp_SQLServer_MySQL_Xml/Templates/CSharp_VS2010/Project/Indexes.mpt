@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME Indexes
+	CATEGORY DB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+if (DbName != null)
+{
+<%%-
+use [%%><%%=DbName%%><%%-]
+GO
+%%>
+}
+foreach (Index in Solution where Tags.Contains("DB") == true)
+{
+	<%%=DBIndexCode%%>
+	progress
+	progress
+}
+%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Scripts\%%><%%-Indexes.sql%%>
+<%%:
+update(Path)
+%%></OUTPUT>

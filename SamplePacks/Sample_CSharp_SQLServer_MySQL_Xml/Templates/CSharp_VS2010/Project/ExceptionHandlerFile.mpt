@@ -1,0 +1,63 @@
+<CONFIG>
+	NAME ExceptionHandlerFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Text;
+using System.Diagnostics;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>The methods in this class are to be used as the default exception handler.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class ExceptionHandler
+	{
+		#region "Fields and Properties"
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>Handle the exception, performing logging and other tasks.</summary>
+		///
+		/// <param name="ex">The exception to handle.</param>
+		/// 
+		/// <returns>True if a rethrow of the exception is recommended.</returns>
+		///--------------------------------------------------------------------------------
+		public static bool HandleException(Exception ex)
+		{
+			bool reThrow = true;
+			
+			#region protected
+			#endregion protected
+			
+			// write issue to event log
+			EventLog.WriteEntry("%%><%%=Solution.EventLogTitle%%><%%-", ex.Message);
+			return reThrow;
+		}
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(ExceptionHandlerFilePath) == null || (File(ExceptionHandlerFilePath).Contains("<Status>Generated</Status>") == true && File(ExceptionHandlerFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(ExceptionHandlerFilePath)
+}
+%%></OUTPUT>

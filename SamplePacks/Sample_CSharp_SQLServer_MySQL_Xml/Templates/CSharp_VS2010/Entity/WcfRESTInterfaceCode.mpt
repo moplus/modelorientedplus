@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WcfRESTInterfaceCode
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfRESTInterfaceBodyStartCode%%>
+<%%=WcfRESTInterfaceMethodsCode%%>
+<%%=WcfRESTGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTInterfaceFilePath) == null || (File(WcfRESTInterfaceFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTInterfaceFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(WcfRESTInterfaceFilePath)
+}
+%%></OUTPUT>

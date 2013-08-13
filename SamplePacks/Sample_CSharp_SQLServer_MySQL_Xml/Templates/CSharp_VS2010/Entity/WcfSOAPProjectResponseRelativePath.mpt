@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPProjectResponseRelativePath
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=FeatureName%%><%%-\%%></CONTENT>

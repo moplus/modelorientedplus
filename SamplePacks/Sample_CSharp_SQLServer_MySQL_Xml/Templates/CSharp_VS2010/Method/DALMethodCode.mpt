@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME DALMethodCode
+	CATEGORY DAL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%-
+%%><%%=DALCoreMethodCommentsCode%%>
+<%%=DALMethodCommentsCode%%>
+<%%=DALMethodAttributesCode%%><%%-
+%%><%%=DALMethodSignatureCode%%>
+<%%=DALMethodBodyCode%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+		case "DeleteAllByForeignKey":
+		case "GetAllByForeignkey":
+			<%%-
+			%%><%%=DALCoreMethodCommentsCode%%>
+			<%%=DALManagerMethodCommentsCode%%>
+			<%%=DALManagerMethodAttributesCode%%><%%-
+			%%><%%=DALManagerMethodSignatureCode%%>
+			<%%=DALManagerMethodBodyCode%%>
+			break
+	}
+%%></CONTENT>

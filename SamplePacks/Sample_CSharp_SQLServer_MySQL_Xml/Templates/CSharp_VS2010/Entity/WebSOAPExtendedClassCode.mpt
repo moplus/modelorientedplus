@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME WebSOAPExtendedClassCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WebSOAPExtendedClassBodyStartCode%%>
+<%%-
+#region "Constants"
+#endregion "Constants"
+
+#region "Fields and Properties"
+#endregion "Fields and Properties"
+
+#region "Methods"
+#endregion "Methods"%%>
+<%%=WebSOAPGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebSOAPExtendedClassFilePath) == null || (File(WebSOAPExtendedClassFilePath).Contains("<Status>Generated</Status>") == true && File(WebSOAPExtendedClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WebSOAPExtendedClassFilePath)
+}
+%%></OUTPUT>

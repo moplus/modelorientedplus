@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME EFModelMarkupFileProjectItem
+	CATEGORY EF
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<ItemGroup>
+    <EntityDeploy Include="%%><%%=EFModelMarkupFilePath.Substring(EFModelMarkupFilePath.IndexOf(DSModelClassName))%%><%%-">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>%%><%%=EFModelClassFileName%%><%%-</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  %%></CONTENT>

@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME WebSOAPExtendedClassBodyStartCode
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WebSOAPGlobalCopyrightCode%%>
+<%%=WebSOAPExtendedClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%><%%-
+	%%><%%=WebSOAPExtendedClassCommentsCode%%><%%-
+	public partial class %%><%%=WebSOAPClassName%%><%%- : %%><%%=WebSOAPBaseClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

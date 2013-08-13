@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALExtRelativePath
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-\Assembly_Exts\DAL\%%><%%=Feature.FeatureName%%><%%-\%%></CONTENT>

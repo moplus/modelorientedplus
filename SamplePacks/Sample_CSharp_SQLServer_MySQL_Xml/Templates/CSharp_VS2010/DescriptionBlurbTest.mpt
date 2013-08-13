@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME DescriptionBlurbTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// Template: DescriptionBurbTest
+//
+// Use a parameter to output a description.
+<%%:
+param description
+if (description != null)
+{
+	<%%-: %%><%%=description%%>
+}
+%%></CONTENT>

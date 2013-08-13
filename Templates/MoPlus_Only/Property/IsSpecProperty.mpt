@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsSpecProperty
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (FeatureName == "Specifications")
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

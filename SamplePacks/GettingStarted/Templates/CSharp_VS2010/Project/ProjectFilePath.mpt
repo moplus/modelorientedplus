@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ProjectFilePath
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\%%><%%=ProjectFileName%%></CONTENT>

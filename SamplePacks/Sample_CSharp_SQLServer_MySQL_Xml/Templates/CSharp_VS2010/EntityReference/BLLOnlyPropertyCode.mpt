@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME BLLOnlyPropertyCode
+	CATEGORY BLLOnly
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+%%><%%=BLLPropertyFieldCode%%>
+<%%=BLLPropertyCommentsCode%%>
+<%%=BLLPropertyAttributesCode%%><%%-
+%%><%%=BLLPropertySignatureCode%%>
+<%%=BLLOnlyPropertyBodyCode%%></CONTENT>

@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME IsCurrentModelEntity
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (BLLClassName == "Solution")
+{
+	<%%-false%%>
+	return
+}
+if (IsSolutionModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

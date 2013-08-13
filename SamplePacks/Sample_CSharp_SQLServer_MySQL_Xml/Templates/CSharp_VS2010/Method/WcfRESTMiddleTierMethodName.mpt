@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierMethodName
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=BLLMethodName%%></CONTENT>

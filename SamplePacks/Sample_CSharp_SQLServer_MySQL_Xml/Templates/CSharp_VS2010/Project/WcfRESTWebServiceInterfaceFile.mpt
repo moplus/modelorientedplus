@@ -1,0 +1,116 @@
+<CONFIG>
+	NAME WcfRESTWebServiceInterfaceFile
+	CATEGORY WcfREST
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%=TAB -500%%>
+<%%:
+<%%-/*<copyright>%%><%%-
+%%><%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.CodeDom.Compiler;
+using System.ServiceModel;
+using System.ServiceModel.Web;
+using System.ServiceModel.Activation;
+using System.Net;%%>
+with (CurrentProject)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+			<%%-
+			using %%><%%=Namespace%%><%%-.%%><%%=WcfRESTMiddleTierAlias%%><%%-;%%>
+			foreach (Feature)
+			{
+				<%%-
+				using %%><%%=../Namespace%%><%%-.%%><%%=../WcfRESTMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+			<%%-
+			using %%><%%=Namespace%%><%%-.%%><%%=WcfRESTMiddleTierAlias%%><%%-;%%>
+			foreach (Feature)
+			{
+				<%%-
+				using %%><%%=../Namespace%%><%%-.%%><%%=../WcfRESTMiddleTierAlias%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+}
+foreach (Feature)
+{
+	<%%-
+	using %%><%%=../Namespace%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-
+{%%><%%=TAB 1%%><%%-
+	///--------------------------------------------------------------------------------
+	/// <summary>This interface is used to define REST based web services for
+	/// %%><%%=WcfRESTWebServiceName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize, change the Status value below to something
+	/// other than Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	[ServiceContract]
+	[GeneratedCode("%%><%%=Solution.CompanyName%%><%%- %%><%%=Solution.ProductName%%><%%-", "%%><%%=Solution.ProductVersion%%><%%-")]
+	public interface I%%><%%=WcfRESTWebServiceName%%><%%-
+	{%%><%%=TAB 1%%>
+		<%%-
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This web service method is used to get high level information
+		/// (in JSON format).</summary>
+		///--------------------------------------------------------------------------------
+		[OperationContract(Name = "SearchJSON")]
+		[WebGet(UriTemplate = "/json")]
+		CollectionResponse SearchJSON();
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This web service method is used to get high level information.</summary>
+		///--------------------------------------------------------------------------------
+		[OperationContract(Name = "Search")]
+		[WebGet(UriTemplate = "/")]
+		[XmlSerializerFormat]
+		CollectionResponse Search();%%>
+		foreach (Entity in Solution)
+		{
+			foreach (Method where WcfRESTValidMethod == true)
+			{
+				<%%=WcfRESTServiceJSONMethodCommentsCode%%>
+				<%%=WcfRESTServiceJSONMethodInterfaceAttributesCode%%><%%-
+				%%><%%=WcfRESTServiceJSONMethodInterfaceSignatureCode%%>
+				
+				<%%=WcfRESTServiceMethodCommentsCode%%>
+				<%%=WcfRESTServiceMethodInterfaceAttributesCode%%><%%-
+				%%><%%=WcfRESTServiceMethodInterfaceSignatureCode%%>
+			}
+			progress
+		}
+		<%%-
+		#endregion "Methods"%%>
+	<%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfRESTWebServiceInterfaceFilePath) == null || (File(WcfRESTWebServiceInterfaceFilePath).Contains("<Status>Generated</Status>") == true && File(WcfRESTWebServiceInterfaceFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfRESTWebServiceInterfaceFilePath)
+}
+%%></OUTPUT>

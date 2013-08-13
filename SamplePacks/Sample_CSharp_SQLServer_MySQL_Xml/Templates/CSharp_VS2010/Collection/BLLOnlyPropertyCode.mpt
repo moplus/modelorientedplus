@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME BLLOnlyPropertyCode
+	CATEGORY BLLOnly
+	NODE Collection
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+%%><%%=BLLPropertyFieldCode%%>
+<%%=BLLPropertyCommentsCode%%>
+<%%=BLLIgnorePropertyAttributesCode%%><%%-
+%%><%%=BLLPropertySignatureCode%%>
+<%%=BLLOnlyPropertyBodyCode%%>
+<%%=BLLSerializationPropertyAttributesCode%%><%%-
+%%><%%=BLLSerializationPropertySignatureCode%%>
+<%%=BLLSerializationPropertyBodyCode%%></CONTENT>

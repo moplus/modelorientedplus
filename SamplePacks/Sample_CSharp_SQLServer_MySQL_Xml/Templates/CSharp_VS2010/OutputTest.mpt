@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME OutputTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+</CONTENT><OUTPUT>
+<%%:
+//
+// this is a test to demonstrate how updating of files is done
+//
+foreach (Entity)
+{
+	// output the template usage info
+	<%%>TemplateUsageTest%%>
+}
+%%></OUTPUT>

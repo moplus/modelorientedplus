@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLManagerClassFileProjectItem
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=BLLManagerClassFilePath.Substring(Project.ProjectDirectory.Length + 1).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

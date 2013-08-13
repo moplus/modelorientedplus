@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WcfSOAPClassCode
+	CATEGORY WcfSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=WcfSOAPClassBodyStartCode%%>
+<%%=WcfSOAPClassMethodsCode%%>
+<%%=WcfSOAPGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(WcfSOAPClassFilePath) == null || (File(WcfSOAPClassFilePath).Contains("<Status>Generated</Status>") == true && File(WcfSOAPClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WcfSOAPClassFilePath)
+}
+%%></OUTPUT>

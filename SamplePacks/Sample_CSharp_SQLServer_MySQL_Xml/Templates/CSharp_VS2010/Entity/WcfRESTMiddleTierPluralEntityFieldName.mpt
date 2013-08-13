@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTMiddleTierPluralEntityFieldName
+	CATEGORY WcfREST
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=WcfRESTMiddleTierPluralEntityName.UnderscoreCase()%%></CONTENT>

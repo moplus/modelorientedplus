@@ -1,0 +1,160 @@
+<CONFIG>
+	NAME VMBLLCustomCommandsFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Diagnostics;
+using System.Windows.Input;
+using %%><%%=Namespace%%><%%-.Messaging;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class represents command whose sole purpose is to relay its functionality
+	/// to other objects by invoking delegates. The default return value for the CanExecute
+	/// method is 'true'.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class CustomCommands
+	{
+		#region "Fields and Properties"
+		
+		private static RoutedUICommand newChildItem;
+		private static RoutedUICommand saveAs;
+		private static RoutedUICommand saveAll;
+		private static RoutedUICommand update;
+		private static RoutedUICommand close;
+		private static RoutedUICommand explicitOpen;
+		private static RoutedUICommand closeTab;
+		private static RoutedUICommand closeOtherTabs;
+		private static RoutedUICommand nextTab;
+		private static RoutedUICommand nextInnerTab;
+		private static RoutedUICommand clearText;
+		
+		public static RoutedUICommand NewChildItem
+		{
+			get { return newChildItem; }
+		}
+
+		public static RoutedUICommand SaveAs
+		{
+			get { return saveAs; }
+		}
+
+		public static RoutedUICommand SaveAll
+		{
+			get { return saveAll; }
+		}
+
+		public static RoutedUICommand Update
+		{
+			get { return update; }
+		}
+
+		public static RoutedUICommand Close
+		{
+			get { return close; }
+		}
+
+		public static RoutedUICommand ExplicitOpen
+		{
+			get { return explicitOpen; }
+		}
+
+		public static RoutedUICommand CloseTab
+		{
+			get { return closeTab; }
+		}
+
+		public static RoutedUICommand CloseOtherTabs
+		{
+			get { return closeOtherTabs; }
+		}
+
+		public static RoutedUICommand NextTab
+		{
+			get { return nextTab; }
+		}
+
+		public static RoutedUICommand NextInnerTab
+		{
+			get { return nextInnerTab; }
+		}
+
+		public static RoutedUICommand ClearText
+		{
+			get { return clearText; }
+		}
+
+		#endregion "Fields and Properties"
+
+		#region "Constructors"
+
+		/// <summary>
+		/// Creates a new command that can always execute.
+		/// </summary>
+		/// <param name="execute">The execution logic.</param>
+		static CustomCommands()
+		{
+			InputGestureCollection inputs = null;
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.N, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+N"));
+			newChildItem = new RoutedUICommand("Cmd_NewChildItem", "Cmd_NewChildItem", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.A, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+A"));
+			saveAs = new RoutedUICommand("Cmd_SaveAs", "Cmd_SaveAs", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.S, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+S"));
+			saveAll = new RoutedUICommand("Cmd_SaveAll", "Cmd_SaveAll", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.E, ModifierKeys.Control, "Ctrl+E"));
+			update = new RoutedUICommand("Cmd_Update", "Cmd_Update", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.X, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+X"));
+			close = new RoutedUICommand("Cmd_Close", "Cmd_Close", typeof(CustomCommands), inputs);
+			explicitOpen = new RoutedUICommand("Cmd_ExplicitOpen", "Cmd_ExplicitOpen", typeof(CustomCommands));
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.T, ModifierKeys.Control, "Ctrl+T"));
+			closeTab = new RoutedUICommand("Cmd_CloseTab", "Cmd_CloseTab", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.T, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+T"));
+			closeOtherTabs = new RoutedUICommand("Cmd_CloseOtherTabs", "Cmd_CloseOtherTabs", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.Z, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+Z"));
+			nextTab = new RoutedUICommand("Cmd_NextTab", "Cmd_NextTab", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.X, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+X"));
+			nextInnerTab = new RoutedUICommand("Cmd_NextInnerTab", "Cmd_NextInnerTab", typeof(CustomCommands), inputs);
+			inputs = new InputGestureCollection();
+			inputs.Add(new KeyGesture(Key.X, ModifierKeys.Control | ModifierKeys.Shift, "Ctrl+Shift+X"));
+			clearText = new RoutedUICommand("Cmd_ClearText", "Cmd_ClearText", typeof(CustomCommands), inputs);
+		}
+		
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLCustomCommandsFilePath) == null || (File(VMBLLCustomCommandsFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLCustomCommandsFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLCustomCommandsFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME IODataContextFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=IODataContextFilePath.Substring(IODataContextFilePath.IndexOf("IODataContext")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

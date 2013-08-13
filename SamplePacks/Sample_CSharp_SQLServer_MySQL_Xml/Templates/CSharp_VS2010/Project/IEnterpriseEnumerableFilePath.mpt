@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME IEnterpriseEnumerableFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\IEnterpriseEnumerable_G.cs%%></CONTENT>

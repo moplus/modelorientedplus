@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME BLLGlobalBodyEndCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

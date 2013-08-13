@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME WcfRESTMethodName
+	CATEGORY WcfREST
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+		<%%-Add%%>
+		break
+	case 9: // UpdateOne
+		<%%-Update%%>
+		break
+	case 10: // DeleteOne
+		<%%-Delete%%>
+		break
+	case 1: // GetOne
+		<%%-Get%%>
+		break
+}
+if (Text == null)
+{
+	<%%-Search%%>
+}
+%%></CONTENT>

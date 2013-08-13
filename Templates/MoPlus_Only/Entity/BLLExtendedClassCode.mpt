@@ -1,0 +1,28 @@
+<CONFIG>
+	NAME BLLExtendedClassCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLExtendedClassBodyStartCode%%>
+<%%-
+#region "Constants"
+#endregion "Constants"
+
+#region "Fields and Properties"
+#endregion "Fields and Properties"
+
+#region "Methods"
+#endregion "Methods"
+
+#region "Constructors"
+#endregion "Constructors"%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLExtendedClassFilePath) == null || (File(BLLExtendedClassFilePath).Contains("<Status>Generated</Status>") == true && File(BLLExtendedClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(BLLExtendedClassFilePath)
+}
+%%></OUTPUT>

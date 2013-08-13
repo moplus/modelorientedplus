@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME BLLOnlyClassCode
+	CATEGORY BLLOnly
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLOnlyClassBodyStartCode%%>
+<%%=BLLClassConstantsCode%%>
+<%%=BLLOnlyClassPropertiesCode%%><%%-
+%%><%%=BLLOnlyClassMethodsCode%%><%%-
+%%><%%=BLLOnlyClassConstructorsCode%%>
+<%%=BLLGlobalBodyEndCode%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLClassFilePath) == null || File(BLLClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update(BLLClassFilePath)
+}
+%%></OUTPUT>

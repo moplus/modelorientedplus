@@ -1,0 +1,122 @@
+<CONFIG>
+	NAME DbSpJoinSelectEntitiesCode
+	CATEGORY DbSp
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+//trace(" Entity for join clause is: " + EntityName)
+// perform join of base entities
+var isFirstItem
+var isCandidateRelationship
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	if (BaseEntity != null)
+	{
+		foreach (Relationship)
+		{
+			if (ReferencedEntity.EntityID == ../BaseEntity.EntityID)
+			{
+				isCandidateRelationship = true
+				foreach (RelationshipProperty)
+				{
+					with (Property)
+					{
+						if (IsPrimaryKeyMember == false)
+						{
+							isCandidateRelationship = false
+							break
+						}
+					}
+					if (isCandidateRelationship == true)
+					{
+						// set up join
+						<%%-
+						INNER JOIN %%>
+						with (ReferencedEntity)
+						{
+							<%%=DBTableName%%>
+						}
+						<%%- %%>
+						with (../../BaseEntity)
+						{
+							with (../../../)
+							{
+								//trace("Base entity name is: " + EntityName)
+								// these aliases must be set for the entity beforehand in order for this to work (in project level template preferably)
+								<%%=LogValue("DBBaseEntityAliasNames" + CurrentEntity.EntityID, ../EntityID)%%>
+							}
+						}
+						<%%- ON %%>
+						isFirstItem = true
+						foreach (RelationshipProperty)
+						{
+							if (isFirstItem == false)
+							{
+								<%%- AND %%>
+							}
+							isFirstItem = false
+							with (ReferencedProperty)
+							{
+								<%%=DbSpAliasColumnName%%>
+							}
+							<%%- = %%>
+							with (Property)
+							{
+								<%%=DbSpAliasColumnName%%>
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+// perform join based on relationship paths
+foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
+{
+	foreach (Relationship in PathRelationships)
+	{
+		foreach (Relationship)
+		{
+			// set up join
+			<%%-
+			INNER JOIN %%>
+			with (ReferencedEntity)
+			{
+				<%%=DBTableName%%><%%- %%>
+				<%%=LogValue("DBEntityAliases" + CurrentEntity.EntityID, EntityID)%%>
+			}
+			<%%- ON %%>
+			isFirstItem = true
+			foreach (RelationshipProperty)
+			{
+				//trace("RelationshipProperty ReferencedPropertyID, PropertyID is: " + ReferencedPropertyID + ", " + PropertyID)
+				if (isFirstItem == false)
+				{
+					<%%- AND %%>
+				}
+				isFirstItem = false
+				with (../ReferencedEntity)
+				{
+					<%%=LogValue("DBEntityAliases" + CurrentEntity.EntityID, EntityID)%%><%%-.%%>
+				}
+				with (ReferencedProperty)
+				{
+					//trace(" Referenced property is: " + PropertyID + ": " + EntityName + "." + PropertyName)
+					<%%=DBColumnName%%>
+				}
+				<%%- = %%>
+				with (Property)
+				{
+					//trace("Property is: " + PropertyID + ": " + EntityName + "." + PropertyName)
+					<%%=DbSpAliasColumnName%%>
+				}
+			}
+		}
+	}
+}
+%%></CONTENT>

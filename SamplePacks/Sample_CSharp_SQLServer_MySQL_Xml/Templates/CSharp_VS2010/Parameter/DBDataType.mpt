@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME DBDataType
+	CATEGORY LIB
+	NODE Parameter
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (Property from Solution.Find(ReferencedPropertyID))
+{
+	<%%=DBDataType%%>
+	break
+}
+%%></CONTENT>

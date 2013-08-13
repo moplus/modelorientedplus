@@ -1,0 +1,42 @@
+<CONFIG>
+	NAME DBRelationshipCode
+	CATEGORY DB
+	NODE Relationship
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+var isFirstItem = true
+<%%-
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = '%%><%%=RelationshipName%%><%%-' AND parent_object_id = OBJECT_ID('%%><%%=Entity.DBTableName%%><%%-'))
+	BEGIN
+		ALTER TABLE %%><%%=Entity.DBTableName%%><%%-
+		ADD CONSTRAINT %%><%%=RelationshipName%%><%%-
+		FOREIGN KEY (%%>
+foreach (RelationshipProperty where Tags.Contains("DB") == true)
+{
+	if (isFirstItem == false)
+	{
+		<%%-, %%>
+	}
+	isFirstItem = false
+	<%%=Property.DBColumnName%%>
+}
+isFirstItem = true
+ <%%-)
+ 		REFERENCES %%><%%=ReferencedEntity.DBTableName%%><%%-(%%>
+foreach (RelationshipProperty where Tags.Contains("DB") == true)
+{
+	if (isFirstItem == false)
+	{
+		<%%-, %%>
+	}
+	isFirstItem = false
+	<%%=ReferencedProperty.DBColumnName%%>
+}
+ <%%-)
+	END
+GO%%>
+%%></CONTENT>

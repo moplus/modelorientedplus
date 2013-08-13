@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfSOAPMethodName
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=MethodName%%></CONTENT>

@@ -1,0 +1,61 @@
+<CONFIG>
+	NAME WorkflowTest
+	NODE Workflow
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// this is a workflow test
+<%%:
+<%%-Test results for walking through workflows:%%>
+foreach (Workflow)
+{
+	<%%-
+	Workflow:
+		WorkflowID: %%><%%=WorkflowID%%><%%-
+		WorkflowName: %%><%%=WorkflowName%%><%%-
+		Description: %%><%%=Description%%><%%-
+		Tags: %%><%%=Tags%%>
+	foreach (Stage)
+	{
+		<%%-
+		Stage:
+			StageID: %%><%%=StageID%%><%%-
+			StageName: %%><%%=StageName%%><%%-
+			Description: %%><%%=Description%%><%%-
+			Tags: %%><%%=Tags%%><%%-
+			WorkflowID: %%><%%=WorkflowID%%>
+		foreach (StageTransition)
+		{
+			<%%-
+			StageTransition:
+				StageTransitionID: %%><%%=StageTransitionID%%><%%-
+				StageTransitionName: %%><%%=StageTransitionName%%><%%-
+				Description: %%><%%=Description%%><%%-
+				Tags: %%><%%=Tags%%><%%-
+				FromStageID: %%><%%=FromStageID%%><%%-
+				ToStageID: %%><%%=ToStageID%%>
+		}
+		foreach (Step)
+		{
+			<%%-
+			Step:
+				StepID: %%><%%=StepID%%><%%-
+				StepName: %%><%%=StepName%%><%%-
+				Description: %%><%%=Description%%><%%-
+				Tags: %%><%%=Tags%%><%%-
+				WorkflowID: %%><%%=WorkflowID%%>
+			foreach (StepTransition)
+			{
+				<%%-
+				StepTransition:
+					StepTransitionID: %%><%%=StepTransitionID%%><%%-
+					StepTransitionName: %%><%%=StepTransitionName%%><%%-
+					Description: %%><%%=Description%%><%%-
+					Tags: %%><%%=Tags%%><%%-
+					FromStepID: %%><%%=FromStepID%%><%%-
+					ToStepID: %%><%%=ToStepID%%>
+			}
+		}
+	}
+}
+%%></CONTENT>

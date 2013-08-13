@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME VMEDSDataServiceName
+	CATEGORY VMEFDS
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as DS
+	foreach (Project where Tags.Contains("DS") == true)
+	{
+		<%%=DSDataServiceName%%>
+	}
+}
+else
+{
+	foreach (Project limit 1)
+	{
+		<%%=DSDataServiceName%%>
+	}
+}
+%%></CONTENT>

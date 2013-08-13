@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WebSOAPMiddleTierPluralEntityName
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLPluralEntityName%%></CONTENT>

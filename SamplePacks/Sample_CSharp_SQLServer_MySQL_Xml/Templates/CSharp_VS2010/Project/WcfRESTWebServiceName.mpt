@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WcfRESTWebServiceName
+	CATEGORY WcfREST
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=DSDataServiceName%%></CONTENT>

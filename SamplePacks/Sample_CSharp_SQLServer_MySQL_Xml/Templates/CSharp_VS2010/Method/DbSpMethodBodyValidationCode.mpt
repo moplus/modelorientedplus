@@ -1,0 +1,100 @@
+<CONFIG>
+	NAME DbSpMethodBodyValidationCode
+	CATEGORY DbSp
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+// output parameter validation
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+
+		// add validation code for add/update/delete
+		if (DbSpMethodBodyValidationPhrase != null)
+		{
+			<%%-
+			
+			-- parameter validation
+			IF (%%><%%=DbSpMethodBodyValidationPhrase%%><%%-)
+			BEGIN%%><%%=TAB 1%%><%%-
+				RAISERROR(50001,16,1)%%><%%=TAB -1%%><%%-
+			END%%>
+		}
+		break
+	case 1: // GetOne
+	case 11: // DeleteAllByForeignKey
+	case 4: // GetAllByForeignkey
+	case 6: // GetManyByForeignKey
+
+		// add validation for each method parameter
+		if (ParameterCount > 0)
+		{
+			<%%-
+			
+			-- parameter validation
+			IF (%%><%%=DbSpMethodBodyValidationPhrase%%><%%-)
+			BEGIN%%><%%=TAB 1%%><%%-
+				RAISERROR(50001,16,1)%%><%%=TAB -1%%><%%-
+			END%%>
+		}
+		break
+}
+
+// output record validation
+switch (MethodTypeCode)
+{
+	case 8: // AddOne
+	case 9: // UpdateOne
+	case 10: // DeleteOne
+		<%%-
+		
+		-- record validation
+		IF %%>
+		switch (MethodTypeCode)
+		{
+			case 9: // UpdateOne
+			case 10: // DeleteOne
+				<%%-NOT %%>
+				break
+		}
+		<%%-EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=Entity.DBTableName%%><%%- WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%-)%%>
+		<%%-
+		BEGIN%%><%%=TAB 1%%>
+		switch (MethodTypeCode)
+		{
+			case 9: // UpdateOne
+			case 10: // DeleteOne
+				<%%-
+				RAISERROR(50003,16,1)%%><%%=TAB -1%%>
+				break
+			default:
+				<%%-
+				RAISERROR(50002,16,1)%%><%%=TAB -1%%>
+				break
+		}
+		<%%-
+		END%%>
+		break
+}
+
+// output timestamp validation
+switch (MethodTypeCode)
+{
+	case 9: // UpdateOne
+		foreach (Property where IsAuditProperty == true && DataTypeCode == 25 /* Timestamp */)
+		{
+			<%%-
+		
+			-- timestamp validation
+			IF (@checkTimestamp = 1) AND EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=Entity.DBTableName%%><%%- WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%- AND %%><%%=DBColumnName%%><%%- <> %%><%%=DBParameterName%%><%%-)
+			BEGIN%%><%%=TAB 1%%><%%-
+				RAISERROR(50004,16,1)%%><%%=TAB -1%%><%%-
+			END%%>
+		}
+		break
+}
+%%></CONTENT>

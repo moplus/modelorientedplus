@@ -1,0 +1,77 @@
+<CONFIG>
+	NAME IODataContextFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.Services.Providers;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This interface defines required members for
+	/// ODataContext classes.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public interface IODataContext
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a queryable resource set.</summary>
+		///
+		/// <param name="set">The input resource set.</param>
+		///--------------------------------------------------------------------------------
+		IQueryable GetQueryable(ResourceSet set); 
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a queryable resource set.</summary>
+		///
+		/// <param name="set">The input resource set.</param>
+		///--------------------------------------------------------------------------------
+		object CreateResource(ResourceType resourceType);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds a resource.</summary>
+		/// 
+		/// <param name="resourceType">The resource type.</param>
+		/// <param name="resource">The resource to add.</param>
+		///--------------------------------------------------------------------------------
+		void AddResource(ResourceType resourceType, object resource);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes a resource.</summary>
+		/// 
+		/// <param name="resource">The resource to delete.</param>
+		///--------------------------------------------------------------------------------
+		void DeleteResource(object resource);
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves changes for all actions in the context.</summary>
+		///--------------------------------------------------------------------------------
+		void SaveChanges();
+	}
+}
+
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(IODataContextFilePath) == null || (File(IODataContextFilePath).Contains("<Status>Generated</Status>") == true && File(IODataContextFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(IODataContextFilePath)
+}
+%%></OUTPUT>

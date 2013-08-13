@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME WPFUIDialogClassFileProjectItem
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=WPFUIDialogClassFileProjectPath%%><%%-">
+      <SubType>Code</SubType>
+      <DependentUpon>%%><%%=WPFUIDialogMarkupFileName%%><%%-</DependentUpon>
+    </Compile>
+    %%></CONTENT>

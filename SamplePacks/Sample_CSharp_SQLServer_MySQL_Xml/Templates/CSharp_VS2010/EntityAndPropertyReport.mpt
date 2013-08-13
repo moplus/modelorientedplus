@@ -1,0 +1,26 @@
+<CONFIG>
+	NAME EntityAndPropertyReport
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-List of entities and their properties:%%><%%:
+foreach (Entity)
+{
+	<%%-
+	Entity: %%><%%=EntityName%%>
+	foreach (Property)
+	{
+		<%%-
+		Property: %%><%%=PropertyName%%>
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%=SolutionDirectory%%><%%-/EntityAndPropertyReport.txt%%>
+<%%:
+if (File(Path) == null || File(Path) != Text)
+{
+	update(Path)
+}
+%%></OUTPUT>

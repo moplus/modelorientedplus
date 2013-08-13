@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME DALExtendedClassBodyStartCode
+	CATEGORY DAL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=DALGlobalCopyrightCode%%>
+<%%=DALExtendedClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.DAL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=DALExtendedClassCommentsCode%%><%%-
+	public partial class %%><%%=DALClassName%%><%%- : %%><%%=DALBaseClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

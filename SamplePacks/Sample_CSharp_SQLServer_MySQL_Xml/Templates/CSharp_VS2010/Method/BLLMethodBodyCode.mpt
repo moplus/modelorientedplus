@@ -1,0 +1,156 @@
+<CONFIG>
+	NAME BLLMethodBodyCode
+	CATEGORY BLL
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+{%%><%%=TAB 1%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			<%%-
+			%%><%%=BLLReturnType%%><%%- item = null;%%>
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+			<%%-
+			%%><%%=BLLReturnType%%><%%- itemList = new %%><%%=BLLReturnType%%><%%-();%%>
+			break
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			%%><%%=BLLReturnType%%><%%- itemList = new %%><%%=BLLReturnType%%><%%-();
+			totalRecords = 0;
+			maximumListSizeExceeded = false;%%>
+			break
+	}
+%%>
+<%%-
+	try
+	{%%><%%=TAB 1%%><%%-
+		// perform business logic tasks%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			with (Entity)
+			{
+				<%%-
+				%%><%%=DALDataType%%><%%- itemDAL = %%><%%=../DALMethodCallFromBLLCode%%><%%-;
+				if (itemDAL != null)
+				{%%><%%=TAB 1%%><%%-
+					item = new %%><%%=BLLDataType%%><%%-(itemDAL, FilterElements);%%><%%=TAB -1%%><%%-
+				}%%>
+			}
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			with (Entity)
+			{
+				<%%-
+				itemList = EnterpriseDataObjectList<%%><%%=BLLDataType%%><%%->.CreateList<%%><%%=DALDataType%%><%%->(%%><%%=../DALMethodCallFromBLLCode%%><%%-, FilterElements);%%>
+			}
+			break
+		case "AddOne":
+			foreach (Property)
+			{
+				with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+				{
+					if (IsAddAuditProperty == true && IsValueGenerated == false)
+					{
+						<%%-
+						item.%%><%%=../BLLPropertyName%%><%%- = %%><%%=../BLLPropertyName%%><%%-;%%>
+					}
+				}
+			}
+			with (Entity)
+			{
+				<%%-
+				%%><%%=DALDataType%%><%%- itemDAL = new %%><%%=DALDataType%%><%%-();%%>
+			}
+			<%%-
+			itemDAL.TransformDataFromObject(item, FilterElements);
+			%%><%%=DALMethodCallFromBLLCode%%><%%-;
+			item.TransformDataFromObject(itemDAL, FilterElements);%%>
+			break
+		case "UpdateOne":
+			foreach (Property)
+			{
+				with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+				{
+					if (IsUpdateAuditProperty == true && IsValueGenerated == false)
+					{
+						<%%-
+						item.%%><%%=../BLLPropertyName%%><%%- = %%><%%=../BLLPropertyName%%><%%-;%%>
+					}
+				}
+			}
+			with (Entity)
+			{
+				<%%-
+				%%><%%=DALDataType%%><%%- itemDAL = new %%><%%=DALDataType%%><%%-();%%>
+			}
+			<%%-
+			itemDAL.TransformDataFromObject(item, FilterElements);
+			%%><%%=DALMethodCallFromBLLCode%%><%%-;
+			item.TransformDataFromObject(itemDAL, FilterElements);%%>
+			break
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%-
+				%%><%%=DALDataType%%><%%- itemDAL = new %%><%%=DALDataType%%><%%-();%%>
+			}
+			<%%-
+			itemDAL.TransformDataFromObject(item, FilterElements);
+			%%><%%=DALMethodCallFromBLLCode%%><%%-;
+			item.TransformDataFromObject(itemDAL, FilterElements);%%>
+			break
+		case "DeleteAllByForeignKey":
+			<%%-
+			%%><%%=DALMethodCallFromBLLCode%%><%%-;%%>
+			break
+	}
+	<%%=TAB -1%%>
+%%>
+<%%-
+	}
+	catch (ApplicationException ex)
+	{%%><%%=TAB 1%%><%%-
+		throw ex;%%><%%=TAB -1%%><%%-
+	}
+	catch (Exception ex)
+	{%%><%%=TAB 1%%><%%-
+		bool reThrow = BusinessConfiguration.HandleException(ex);
+		if (reThrow) throw;%%><%%=TAB -1%%><%%-
+	}%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "GetOne":
+			<%%-
+			return item;%%>
+			break
+		case "GetAll":
+		case "GetAllByCriteria":
+		case "GetAllByForeignkey":
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-
+			return itemList;%%>
+			break
+	}
+%%>
+<%%=TAB -1%%><%%-
+}%%></CONTENT>

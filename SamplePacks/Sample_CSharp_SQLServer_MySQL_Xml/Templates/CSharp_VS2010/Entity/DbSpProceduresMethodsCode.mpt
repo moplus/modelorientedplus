@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DbSpProceduresMethodsCode
+	CATEGORY DbSp
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+if (Tags.Contains("DB") == true)
+{
+	foreach (Method)
+	{
+		<%%=DbSpMethodCode%%><%%-
+		%%>
+	}
+}
+%%></CONTENT>

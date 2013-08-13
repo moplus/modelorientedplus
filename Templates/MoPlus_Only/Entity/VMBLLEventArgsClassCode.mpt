@@ -1,0 +1,113 @@
+<CONFIG>
+	NAME VMBLLEventArgsClassCode
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.Windows;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.BLL.%%><%%=../../FeatureName%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.BLL.%%><%%=../../FeatureName%%><%%-;%%>
+		}
+	}
+}
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Events;
+using %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-;
+
+namespace %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides a container for %%><%%=BLLClassName%%><%%- related messages.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLEventArgsClassName%%><%%- : SolutionModelEventArgs
+	{
+		#region "Properties"%%>
+foreach (Property where IsPrimaryKeyMember == true && BLLPropertyName != "SolutionID")
+{
+		<%%-
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the %%><%%=BLLPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=CSharpDataType%%><%%- %%><%%=BLLPropertyName%%><%%- { get; set; }%%>
+}
+if (BLLParentForeignKeyPropertyName != null && BLLParentForeignKeyPropertyName != "SolutionID")
+{
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the %%><%%=BLLParentForeignKeyPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLParentForeignKeyDataType%%><%%- %%><%%=BLLParentForeignKeyPropertyName%%><%%- { get; set; }%%>
+}
+if (BLLClassName != "Solution")
+{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the %%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- { get; set; }%%>
+}
+		<%%-
+
+		#endregion "Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor (for reflection, etc.).</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLEventArgsClassName%%><%%-() { }
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLEventArgsClassFilePath) == null || (File(VMBLLEventArgsClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLEventArgsClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(VMBLLEventArgsClassFilePath)
+}
+%%></OUTPUT>

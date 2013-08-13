@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME BLLMethodSignatureCode
+	CATEGORY BLL
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%-public %%><%%=BLLReturnType%%><%%- %%><%%=BLLMethodName%%><%%-(%%>
+<%%:
+	switch (MethodTypeName)
+	{
+		case "AddOne":
+		case "UpdateOne":
+		case "DeleteOne":
+			with (Entity)
+			{
+				<%%=BLLDataType%%><%%- item, %%>
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%=BLLDataType%%><%%- %%><%%=BLLParameterName%%><%%-, %%>
+	}
+	switch (MethodTypeName)
+	{
+		case "GetMany":
+		case "GetManyByCriteria":
+		case "GetManyByForeignKey":
+			<%%-out int totalRecords, out bool maximumListSizeExceeded, %%>
+			break
+	}
+	<%%-int cascadeDepth)%%>
+%%></CONTENT>

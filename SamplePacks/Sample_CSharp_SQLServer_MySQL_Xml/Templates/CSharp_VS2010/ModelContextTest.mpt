@@ -1,0 +1,32 @@
+<CONFIG>
+	NAME ModelContextTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// This is a test template to illustrate the 3 different forms of model context: 1. stack 2. structure 3. current
+<%%: // at this point the Solution instance is the only element on the stack
+foreach (Entity)
+{ // the next Entity in the Solution is pushed onto the stack
+	CurrentEntity = Entity // this is setting the current (global) context for an Entity
+<%%-
+
+Entity in Solution is: %%><%%=FeatureName%%><%%-.%%><%%=EntityName%%>
+	foreach (Entity in Feature)
+	{ // the next Entity in the same feature as the (solution) Entity on the stack is pushed onto the stack
+	<%%-
+	
+	Entity in Feature is: %%><%%=FeatureName%%><%%-.%%><%%=EntityName%%>
+		with (../)
+		{ // the (solution) Entity one up the stack is pushed onto the stack (again)
+	<%%-
+	Entity in Feature is: %%><%%=../Feature.FeatureName%%><%%-.%%><%%=../EntityName%%>
+	<%%-
+	Entity in Solution is: %%><%%=FeatureName%%><%%-.%%><%%=EntityName%%>
+	<%%-
+	Entity in Solution is: %%><%%=CurrentEntity.FeatureName%%><%%-.%%><%%=CurrentEntity.EntityName%%>
+		} // the (solution) Entity one up the stack is popped off the stack
+	} // the next Entity in the same feature as the (solution) Entity on the stack is popped off the stack
+} // the next Entity in the Solution is popped off the stack
+%%></CONTENT>

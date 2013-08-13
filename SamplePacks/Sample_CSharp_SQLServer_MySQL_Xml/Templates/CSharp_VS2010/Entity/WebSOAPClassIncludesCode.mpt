@@ -1,0 +1,37 @@
+<CONFIG>
+	NAME WebSOAPClassIncludesCode
+	CATEGORY WebSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Web.Services;
+using System.Web.Services.Protocols;
+using System.Net;%%>
+<%%:
+with (CurrentProject)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+			<%%-
+			using %%><%%=../../WebSOAPMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WebSOAPMiddleTierAlias%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+			<%%-
+			using %%><%%=../../WebSOAPMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WebSOAPMiddleTierAlias%%><%%-;%%>
+		}
+	}
+}
+%%></CONTENT>

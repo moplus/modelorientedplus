@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DALDataType
+	CATEGORY DAL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%-DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassName%%></CONTENT>

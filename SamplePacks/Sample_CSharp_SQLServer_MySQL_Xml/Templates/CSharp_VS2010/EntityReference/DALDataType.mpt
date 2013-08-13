@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME DALDataType
+	CATEGORY DAL
+	NODE EntityReference
+</CONFIG>
+<CONTENT>
+<%%:
+with (ReferenceEntity)
+{
+	<%%-DAL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%>
+}
+%%></CONTENT>

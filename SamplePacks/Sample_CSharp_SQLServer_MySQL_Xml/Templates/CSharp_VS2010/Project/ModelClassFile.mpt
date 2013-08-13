@@ -1,0 +1,221 @@
+<CONFIG>
+	NAME ModelClassFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Linq;
+using System.Data.Services.Providers;
+using BLL = %%><%%=Project.Namespace%%><%%-.BLL;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class manages the set of IQueryable collections
+	/// for an OData source.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=DSModelClassName%%><%%- : IODataContext
+	{
+		#region "Fields and Properties"%%>
+		
+		foreach (Entity in Solution where Tags.Contains("DB") == true)
+		{
+			foreach (Method where MethodTypeCode == 3 /* GetMany */ && ParameterCount == 0 limit 1)
+			{
+				<%%-
+
+		EnterpriseDataObjectList<BLL.%%><%%=../FeatureName%%><%%-.%%><%%=../BLLClassName%%><%%-> _%%><%%=../BLLPluralEntityName.CamelCase()%%><%%- = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property allows querying of %%><%%=../BLLPluralEntityName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public EnterpriseDataObjectList<BLL.%%><%%=../FeatureName%%><%%-.%%><%%=../BLLClassName%%><%%-> %%><%%=../BLLPluralEntityName%%><%%-
+		{
+			get
+			{
+				if (_%%><%%=../BLLPluralEntityName.CamelCase()%%><%%- == null)
+				{
+					BLL.%%><%%=../FeatureName%%><%%-.%%><%%=../BLLClassName%%><%%-Manager manager = new BLL.%%><%%=../FeatureName%%><%%-.%%><%%=../BLLClassName%%><%%-Manager();
+					manager.PageSize = manager.MaximumListSize;
+					int totalRecords;
+					bool maxListExceeded;
+					_%%><%%=../BLLPluralEntityName.CamelCase()%%><%%- = manager.%%><%%=BLLMethodName%%><%%-(out totalRecords, out maxListExceeded, 0);
+				}
+				return _%%><%%=../BLLPluralEntityName.CamelCase()%%><%%-;
+			}
+		}%%>
+			}
+		}
+		<%%-
+		#endregion "Fields and Properties"
+		
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a queryable resource set.</summary>
+		///
+		/// <param name="set">The input resource set.</param>
+		///--------------------------------------------------------------------------------
+		public IQueryable GetQueryable(ResourceSet set)
+		{%%>	
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+	foreach (Method where MethodTypeCode == 3 /* GetMany */ && ParameterCount == 0 limit 1)
+	{
+				<%%-
+			if (set.Name == "%%><%%=../BLLPluralEntityName%%><%%-") return %%><%%=../BLLPluralEntityName%%><%%-.AsQueryable();%%>
+	}
+}
+		<%%-
+			throw new NotSupportedException(string.Format("{0} not found", set.Name));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets a queryable resource set.</summary>
+		///
+		/// <param name="set">The input resource set.</param>
+		///--------------------------------------------------------------------------------
+		public object CreateResource(ResourceType resourceType)
+		{%%>	
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+				<%%-
+			if (resourceType.InstanceType == typeof(BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-))
+			{
+				return new BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-();
+			}%%>
+}
+		<%%-
+			throw new NotSupportedException(string.Format("{0} not found for creating.", resourceType.FullName));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds a resource.</summary>
+		/// 
+		/// <param name="resourceType">The resource type.</param>
+		/// <param name="resource">The resource to add.</param>
+		///--------------------------------------------------------------------------------
+		public void AddResource(ResourceType resourceType, object resource)
+		{%%>	
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+				<%%-
+			if (resourceType.InstanceType == typeof(BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-))
+			{
+				BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%- i = resource as BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-;
+				if (i != null)
+				{
+					%%><%%=BLLPluralEntityName%%><%%-.Add(i);
+					return;
+				}
+			}%%>
+}
+		<%%-
+			throw new NotSupportedException(string.Format("{0} not found for adding.", resourceType.FullName));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes a resource.</summary>
+		/// 
+		/// <param name="resource">The resource to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void DeleteResource(object resource)
+		{%%>	
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+				<%%-
+			if (resource.GetType() == typeof(BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-))
+			{
+				(resource as BLL.%%><%%=FeatureName%%><%%-.%%><%%=BLLClassName%%><%%-).IsDeleted = true;
+				return;
+			}%%>
+}
+		<%%-
+			throw new NotSupportedException(string.Format("{0} not found for deletion.", resource.GetType().FullName));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method saves changes for all actions in the context.</summary>
+		///--------------------------------------------------------------------------------
+		public void SaveChanges()
+		{%%>	
+foreach (Entity in Solution where Tags.Contains("DB") == true)
+{
+				<%%-
+			foreach (var item in %%><%%=BLLPluralEntityName%%><%%-.Where(i => i.IsModified == true))
+			{
+				try
+				{
+					item.Save();
+				}
+				catch (Exception ex)
+				{
+					item.ResetModified(true);
+					throw ex;
+				}
+			}
+			for (int i = %%><%%=BLLPluralEntityName%%><%%-.Count - 1; i >= 0; i--)
+			{
+				if (%%><%%=BLLPluralEntityName%%><%%-[i].IsDeleted == true)
+				{
+					try
+					{
+						bool isDeleted = false;%%>
+	foreach (Entity in ExtendingEntities)
+	{
+		// delete extending entity first - this scheme should be improved...
+		<%%-
+						var %%><%%=BLLClassName.CamelCase()%%><%%- = %%><%%=BLLPluralEntityName%%><%%-.Find(item => item.%%><%%=PrimaryKeyProperty%%><%%- == %%><%%=../BLLPluralEntityName%%><%%-[i].%%><%%=../PrimaryKeyProperty%%><%%-);
+						if (%%><%%=BLLClassName.CamelCase()%%><%%- != null)
+						{
+							if (isDeleted == false)
+							{
+								%%><%%=BLLClassName.CamelCase()%%><%%-.Delete();
+								isDeleted = true;
+							}
+							%%><%%=BLLPluralEntityName%%><%%-.Remove(%%><%%=BLLClassName.CamelCase()%%><%%-);
+						}		%%>
+	}
+						<%%-
+						if (isDeleted == false)
+						{
+							%%><%%=BLLPluralEntityName%%><%%-[i].Delete();
+						}
+						%%><%%=BLLPluralEntityName%%><%%-.Remove(%%><%%=BLLPluralEntityName%%><%%-[i]);
+					}
+					catch (Exception ex)
+					{
+						%%><%%=BLLPluralEntityName%%><%%-[i].IsDeleted = false;
+						throw ex;
+					}
+				}
+			}%%>
+}
+		<%%-
+		}
+		#endregion "Methods"
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(ModelClassFilePath) == null || (File(ModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(ModelClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(ModelClassFilePath)
+}
+%%></OUTPUT>

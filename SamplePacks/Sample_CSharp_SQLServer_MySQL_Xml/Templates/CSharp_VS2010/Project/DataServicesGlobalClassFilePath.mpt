@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DataServicesGlobalClassFilePath
+	CATEGORY DataServices
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Global.asax.cs%%></CONTENT>

@@ -1,0 +1,138 @@
+<CONFIG>
+	NAME DefaultValueFile
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used to hold global default values for typically used
+	/// value types and simple reference types.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class DefaultValue
+	{
+		#region "Constants"
+		#region "Reference Types"
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a string.</summary>
+		///--------------------------------------------------------------------------------
+		public static string String { get { return String.Empty; } }
+		public const string StringStr = "";
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a DateTime.</summary>
+		///--------------------------------------------------------------------------------
+		public static DateTime DateTime { get { return DateTime.MinValue; } }
+		public const string DateTimeStr = "00:00:00.0000000, January 1, 0001";
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a Guid.</summary>
+		///--------------------------------------------------------------------------------
+		public static Guid Guid { get { return Guid.Empty; } }
+		public const string GuidStr = "00000000-0000-0000-0000-000000000000";
+
+		#endregion "Reference Types"
+
+		#region "Value Types
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for an sbyte.</summary>
+		///--------------------------------------------------------------------------------
+		public const sbyte SByte = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a short.</summary>
+		///--------------------------------------------------------------------------------
+		public const short Short = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for an int.</summary>
+		///--------------------------------------------------------------------------------
+		public const int Int = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a long.</summary>
+		///--------------------------------------------------------------------------------
+		public const long Long = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a byte.</summary>
+		///--------------------------------------------------------------------------------
+		public const byte Byte = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a ushort.</summary>
+		///--------------------------------------------------------------------------------
+		public const ushort UShort = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a uint.</summary>
+		///--------------------------------------------------------------------------------
+		public const uint UInt = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a ulong.</summary>
+		///--------------------------------------------------------------------------------
+		public const ulong ULong = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a float.</summary>
+		///--------------------------------------------------------------------------------
+		public const float Float = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a double.</summary>
+		///--------------------------------------------------------------------------------
+		public const double Double = 0;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a decimal.</summary>
+		///--------------------------------------------------------------------------------
+		public const decimal Decimal = decimal.Zero;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a bool.</summary>
+		///--------------------------------------------------------------------------------
+		public const bool Bool = false;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Global default value for a char.</summary>
+		///--------------------------------------------------------------------------------
+		public const char Char = '\0';
+
+		#endregion "Value Types"
+		#endregion "Constants"
+
+		#region "Fields and Properties"
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(DefaultValueFilePath) == null || (File(DefaultValueFilePath).Contains("<Status>Generated</Status>") == true && File(DefaultValueFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(DefaultValueFilePath)
+}
+%%></OUTPUT>

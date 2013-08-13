@@ -1,0 +1,35 @@
+<CONFIG>
+	NAME WcfRESTResponseClassIncludesCode
+	CATEGORY WcfREST
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using System.Xml.Serialization;
+using System.Runtime.Serialization;%%>
+<%%:
+with (CurrentProject)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+			<%%-
+			using %%><%%=../../WcfRESTMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WcfRESTMiddleTierAlias%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+			<%%-
+			using %%><%%=../../WcfRESTMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WcfRESTMiddleTierAlias%%><%%-;%%>
+		}
+	}
+}
+%%></CONTENT>

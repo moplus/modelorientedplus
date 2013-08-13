@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIUIControlFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UIControl_G.cs%%></CONTENT>

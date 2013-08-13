@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME NameObjectCollectionFileProjectItem
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=NameObjectCollectionFilePath.Substring(NameObjectCollectionFilePath.IndexOf("NameObjectCollection")).Replace("\\\\", "\\")%%><%%-" />
+    %%></CONTENT>

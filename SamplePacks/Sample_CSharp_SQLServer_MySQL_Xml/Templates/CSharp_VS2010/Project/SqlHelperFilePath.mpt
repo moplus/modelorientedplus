@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME SqlHelperFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\SqlHelper_G.cs%%></CONTENT>

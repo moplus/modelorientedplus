@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ODataServiceMetadataProviderFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ODataServiceMetadataProvider_G.cs%%></CONTENT>

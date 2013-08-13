@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME Keys
+	CATEGORY DB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+if (DbName != null)
+{
+<%%-
+use [%%><%%=DbName%%><%%-]
+GO
+%%>
+}
+foreach (Relationship in Solution where Tags.Contains("DB") == true)
+{
+	<%%=DBRelationshipCode%%>
+	progress
+	progress
+}
+%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Scripts\%%><%%-Keys.sql%%>
+<%%:
+update(Path)
+%%></OUTPUT>

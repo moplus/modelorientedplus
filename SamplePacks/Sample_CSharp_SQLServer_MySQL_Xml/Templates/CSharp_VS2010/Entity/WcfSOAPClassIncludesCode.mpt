@@ -1,0 +1,36 @@
+<CONFIG>
+	NAME WcfSOAPClassIncludesCode
+	CATEGORY WcfSOAP
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+using System;
+using System.CodeDom.Compiler;
+using System.ServiceModel;
+using System.ServiceModel.Activation;
+using System.Net;%%>
+<%%:
+with (CurrentProject)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+			<%%-
+			using %%><%%=../../WcfSOAPMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WcfSOAPMiddleTierAlias%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+			<%%-
+			using %%><%%=../../WcfSOAPMiddleTierAlias%%><%%- = %%><%%=Namespace%%><%%-.%%><%%=../../WcfSOAPMiddleTierAlias%%><%%-;%%>
+		}
+	}
+}
+%%></CONTENT>

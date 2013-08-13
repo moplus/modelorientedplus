@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DataServicesMarkupFileProjectItem
+	CATEGORY DataServices
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=DataServicesMarkupFilePath.Substring(DataServicesMarkupFilePath.IndexOf("Generated"))%%><%%-" />
+    %%></CONTENT>

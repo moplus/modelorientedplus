@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME PrimaryKeyProperty
+	CATEGORY LIB
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true limit 1)
+{
+	<%%=PropertyName%%>
+}
+%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ODataServiceUpdateProviderFilePath
+	CATEGORY MiddleTier
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ODataServiceUpdateProvider_G.cs%%></CONTENT>

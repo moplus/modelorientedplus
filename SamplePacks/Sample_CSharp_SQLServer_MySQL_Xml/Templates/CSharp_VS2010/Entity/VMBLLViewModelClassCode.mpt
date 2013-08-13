@@ -1,0 +1,336 @@
+<CONFIG>
+	NAME VMBLLViewModelClassCode
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.ComponentModel;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.BLL.%%><%%=../../FeatureName%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.BLL.%%><%%=../../FeatureName%%><%%-;%%>
+		}
+	}
+}
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Messaging;
+using %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-;
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides views for %%><%%=BLLClassName%%><%%- instances.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize, change the Status value below to something
+	/// other than Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLViewModelClassName%%><%%- : EditWorkspaceViewModel
+	{
+		#region "Menus"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				return "New %%><%%=BLLClassName%%><%%-";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelEdit.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelEdit
+		{
+			get
+			{
+				return "Edit";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelDelete.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelDelete
+		{
+			get
+			{
+				return "Delete";
+			}
+		}
+
+		#endregion "Menus"
+
+		#region "Editing Support"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEdited.</summary>
+		///--------------------------------------------------------------------------------
+		public override bool IsEdited
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.IsModified;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets view model property changes upon property changes
+		/// to the %%><%%=BLLClassName%%><%%-.</summary>
+		/// 
+		/// <param name="sender">The event sender.</param>
+		/// <param name="e">The event arguments.</param>
+		///--------------------------------------------------------------------------------
+		void %%><%%=BLLClassName%%><%%-_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			SetPropertiesChanged();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets all of the properties of %%><%%=BLLClassName%%><%%- as changed.</summary>
+		///--------------------------------------------------------------------------------
+		private void SetPropertiesChanged()
+		{
+			OnPropertyChanged("%%><%%=BLLClassName%%><%%-");
+			OnPropertyChanged("TabTitle");%%>
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where IsAuditProperty == false && IsBaseProperty == false)
+		{
+				<%%-
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");%%>
+		}
+	}
+			<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Title.</summary>
+		///--------------------------------------------------------------------------------
+		public string Title
+		{
+			get
+			{
+				return "%%><%%=BLLClassName%%><%%-";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TabTitle.</summary>
+		///--------------------------------------------------------------------------------
+		public override string TabTitle
+		{
+			get
+			{
+				return "%%><%%=BLLClassName%%><%%-" + " (" + Name + ")";
+			}
+		}%%>
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where IsAuditProperty == false && IsBaseProperty == false)
+		{
+				<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the %%><%%=BLLPropertyName%%><%%-Label.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=BLLPropertyName%%><%%-Label
+		{
+			get
+			{
+				return "%%><%%=BLLPropertyName%%><%%-" + ":";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets %%><%%=BLLPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=CSharpDataType%%><%%- %%><%%=BLLPropertyName%%><%%-
+		{
+			get
+			{
+				return %%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;
+			}
+			set
+			{
+				%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = value;
+				OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");
+				Name = "";
+				OnPropertyChanged("TabTitle");
+			}
+		}%%>
+		}
+	}
+		<%%-
+		#endregion "Editing Support"
+
+		#region "Command Processing"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnReset()
+		{
+			try
+			{
+				%%><%%=BLLClassName%%><%%-.Load();
+				SetPropertiesChanged();
+				%%><%%=BLLClassName%%><%%-.ResetModified(false);
+			}
+			catch (System.Exception ex)
+			{
+				ShowException(ex, true);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		public void Reset()
+		{
+			OnReset();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnUpdate()
+		{
+			try
+			{
+				// perform the update of %%><%%=BLLClassName%%><%%-
+				%%><%%=BLLClassName%%><%%-.Save();
+				OnUpdated(this, null);
+				%%><%%=BLLClassName%%><%%-.ResetModified(false);
+				ShowOutput("%%><%%=BLLClassName%%><%%- successfully updated.", "%%><%%=BLLClassName%%><%%- Update", true);
+			}
+			catch (System.Exception ex)
+			{
+				ShowException(ex, true);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		public void Update()
+		{
+			OnUpdate();
+		}
+
+		#endregion "Command Processing"
+
+		#region "Properties"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the %%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Name.</summary>
+		///--------------------------------------------------------------------------------
+		public override string Name
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.Name;
+			}
+			set
+			{
+				%%><%%=BLLClassName%%><%%-.Name = value;
+			}
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads an instance of %%><%%=BLLClassName%%><%%-
+		/// into the view model.</summary>
+		/// 
+		/// <param name="item">The %%><%%=BLLClassName%%><%%- to load.</param>
+		///--------------------------------------------------------------------------------
+		public void Load%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName%%><%%- item)
+		{
+			// attach the %%><%%=BLLClassName%%><%%-
+			%%><%%=BLLClassName%%><%%- = item;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method disposes of resources in the view model.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnDispose()
+		{
+			%%><%%=BLLClassName%%><%%- = null;
+			%%><%%=BLLClassName%%><%%- = null;
+			base.OnDispose();
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor (for reflection, etc.).</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%-ViewModel()
+		{
+			WorkspaceID = Guid.NewGuid();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Create the instance with the designer view and other data.</summary>
+		/// 
+		/// <param name="property">The property to load.</param>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%-ViewModel(%%><%%=BLLClassName%%><%%- property)
+		{
+			WorkspaceID = Guid.NewGuid();
+			Load%%><%%=BLLClassName%%><%%-(property);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLViewModelClassFilePath) == null || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewModelClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLViewModelClassFilePath)
+}
+%%></OUTPUT>

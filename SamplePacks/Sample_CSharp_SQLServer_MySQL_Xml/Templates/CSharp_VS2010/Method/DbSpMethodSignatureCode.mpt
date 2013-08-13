@@ -1,0 +1,139 @@
+<CONFIG>
+	NAME DbSpMethodSignatureCode
+	CATEGORY DbSp
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%><%%-
+CREATE PROCEDURE  %%><%%=DbSpMethodName%%><%%=TAB 1%%><%%-
+	%%><%%=Solution.LIBDoubleSpace%%><%%-@sqlErrorNumber int = 0 OUTPUT
+, @sqlErrorMessage nvarchar(255) = NULL OUTPUT  %%>
+<%%:
+	switch (MethodTypeCode)
+	{
+		case 8: // AddOne
+			foreach (Property)
+			{
+				CurrentAuditProperty = null
+				with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+				{
+					CurrentAuditProperty = AuditProperty
+				}
+				if (CurrentAuditProperty == null || (CurrentAuditProperty.IsAddAuditProperty == true && (CurrentAuditProperty.IsValueGenerated == false || CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)))
+				{
+					if (CurrentAuditProperty != null && CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)
+					{
+						<%%-
+						, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%><%%- = NULL OUTPUT%%>
+					}
+					else
+					{
+						<%%-
+						, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%>
+						if (IsNullable == true)
+						{
+							<%%- = NULL%%>
+						}
+						else if (IsPrimaryKeyMember == true && Entity.LIBShouldPrimaryKeyBeSuppliedOnAdd == false)
+						{
+							<%%- = NULL OUTPUT%%>
+						}
+					}
+				}
+			}
+			break
+		case 9: // UpdateOne
+			log("DbSpMethodSignatureCode", "AddTimestampCheck", false)
+			foreach (Property)
+			{
+				CurrentAuditProperty = null
+				with (AuditProperty from Solution.Find(PropertyName, PropertyName))
+				{
+					CurrentAuditProperty = AuditProperty
+				}
+				if (CurrentAuditProperty == null || (CurrentAuditProperty.IsUpdateAuditProperty == true && (CurrentAuditProperty.IsValueGenerated == false || CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)))
+				{
+					if (CurrentAuditProperty != null && CurrentAuditProperty.DataTypeCode == 25 /* Timestamp */)
+					{
+						<%%-
+						, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%><%%- = NULL OUTPUT%%>
+						log("DbSpMethodSignatureCode", "AddTimestampCheck", true)
+					}
+					else
+					{
+						<%%-
+						, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%>
+						if (IsNullable == true)
+						{
+							<%%- = NULL%%>
+						}
+					}
+				}
+			}
+			if (LogValue("DbSpMethodSignatureCode", "AddTimestampCheck") == true)
+			{
+				<%%-
+				, @checkTimestamp bit = 0%%>
+			}
+			break
+		case 10: // DeleteOne
+			foreach (Property)
+			{
+				if (IsPrimaryKeyMember == true)
+				{
+					<%%-
+					, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%>
+					if (IsNullable == true)
+					{
+						<%%- = NULL%%>
+					}
+				}
+			}
+			break
+	}
+	foreach (Parameter)
+	{
+		<%%-
+		, %%><%%=DbSpParameterName%%><%%- %%><%%=DBDataType%%>
+		with (ReferencedProperty)
+		{
+			if (IsNullable == true)
+			{
+				<%%- = NULL%%>
+			}
+		}
+	}
+	switch (MethodTypeCode)
+	{
+		case 2: // GetAll
+		case 5: // GetAllByCriteria
+		case 4: // GetAllByForeignKey
+			if (Entity.IsActivationEntity == true)
+			{
+				<%%-
+				, @includeInactive bit = 0%%>
+			}
+			<%%-
+			, @sortColumn sysname = '%%><%%=Entity.DefaultSearchPropertyName%%><%%-'
+			, @sortDirection nvarchar(20) = 'Ascending'%%>
+			break
+		case 3: // GetMany
+		case 7: // GetManyByCriteria
+		case 6: // GetManyByForeignKey
+			if (Entity.IsActivationEntity == true)
+			{
+				<%%-
+				, @includeInactive bit = 0%%>
+			}
+			<%%-
+			, @startIndex int = 1
+			, @pageSize int = 50
+			, @maximumListSize int = 0
+			, @sortColumn sysname = '%%><%%=Entity.DefaultSearchPropertyName%%><%%-'
+			, @sortDirection nvarchar(20) = 'Ascending'
+			, @totalRecords int = 0 OUTPUT
+			, @maximumListSizeExceeded bit = 0 OUTPUT%%>
+			break
+	}
+%%></CONTENT>

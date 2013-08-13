@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME BLLExtendedManagerClassBodyStartCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%=BLLGlobalCopyrightCode%%>
+<%%=BLLExtendedManagerClassIncludesCode%%>
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-
+{%%><%%=TAB 1%%>
+	<%%=BLLExtendedManagerClassCommentsCode%%><%%-
+	public partial class %%><%%=BLLManagerClassName%%><%%- : %%><%%=BLLBaseManagerClassName%%><%%-
+	{%%><%%=TAB 1%%></CONTENT>

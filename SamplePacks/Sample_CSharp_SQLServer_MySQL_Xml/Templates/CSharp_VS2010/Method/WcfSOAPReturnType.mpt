@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME WcfSOAPReturnType
+	CATEGORY WcfSOAP
+	NODE Method
+</CONFIG>
+<CONTENT>
+<%%:
+with (Entity)
+{
+	<%%=WcfSOAPResponseClassName%%>
+}
+%%></CONTENT>

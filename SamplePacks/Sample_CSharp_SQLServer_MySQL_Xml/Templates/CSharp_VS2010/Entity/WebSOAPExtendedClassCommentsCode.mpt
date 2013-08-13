@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME WebSOAPExtendedClassCommentsCode
+	CATEGORY WebSOAP
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-///--------------------------------------------------------------------------------
+/// <summary></summary>
+///
+/// This file is for adding customizations to the %%><%%=WebSOAPClassName%%><%%- class.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Customized</Status>
+///--------------------------------------------------------------------------------%%></CONTENT>

@@ -1,0 +1,221 @@
+<CONFIG>
+	NAME WcfSOAPMethodBodyCode
+	CATEGORY WcfSOAP
+	NODE Method
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+	<%%-
+	{%%><%%=TAB 1%%><%%-
+		%%><%%=WcfSOAPReturnType%%><%%- results = new %%><%%=WcfSOAPReturnType%%><%%-();
+		try
+		{%%><%%=TAB 1%%><%%-
+		// execute business logic methods
+		ProcessRequest();
+		%%>
+		with (Entity)
+		{
+			<%%=BLLManagerDataType%%><%%- manager = new %%><%%=BLLManagerDataType%%><%%-();%%>
+		}
+		switch (MethodTypeCode)
+		{
+			case 2: // GetAll
+			case 5: // GetAllByCriteria
+			case 4: // GetAllByForeignkey
+				<%%-
+				manager.DataAccessOptions.SortColumn = sortColumn;
+				manager.DataAccessOptions.SetSortDirection(sortDirection);%%>
+				break
+			case 3: // GetMany
+			case 7: // GetManyByCriteria
+			case 6: // GetManyByForeignKey
+				<%%-
+				manager.DataAccessOptions.SortColumn = sortColumn;
+				manager.DataAccessOptions.SetSortDirection(sortDirection);
+				manager.DataAccessOptions.StartIndex = startIndex;
+				manager.DataAccessOptions.PageSize = pageSize;
+				manager.DataAccessOptions.MaximumListSize = maximumListSize;
+				int totalRecords = 0;
+				bool maximumListSizeExceeded = false;%%>
+				break
+		}
+		switch (MethodTypeCode)
+		{
+			case 1: // GetOne
+				with (Entity)
+				{
+					<%%-
+					%%><%%=WcfSOAPMiddleTierDataType%%>
+				}
+				<%%- result = %%><%%- manager.%%><%%=WcfSOAPMiddleTierMethodCall%%><%%-;
+				results.DataAccessOptions = manager.DataAccessOptions;%%>
+				with (Entity)
+				{
+					<%%-
+					if (result != null)
+					{%%><%%=TAB 1%%><%%-
+						results.%%><%%=WcfSOAPMiddleTierPluralEntityName%%><%%-.Add(result);
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- successfully retrieved.");%%><%%=TAB -1%%><%%-
+					}
+					else
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.NotFound, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- not found.");%%><%%=TAB -1%%><%%-
+					}%%>
+				}
+				break
+			case 2: // GetAll
+			case 5: // GetAllByCriteria
+			case 4: // GetAllByForeignkey
+				<%%-
+				results.%%>
+				with (Entity)
+				{
+					<%%=WcfSOAPMiddleTierPluralEntityName%%>
+				}
+				<%%- =  manager.%%><%%=WcfSOAPMiddleTierMethodCall%%><%%-;
+				results.DataAccessOptions = manager.DataAccessOptions;%%>
+				with (Entity)
+				{
+					<%%-
+					if (results.%%><%%=WcfSOAPMiddleTierClassName%%><%%-Count > 0)
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- items successfully retrieved.");%%><%%=TAB -1%%><%%-
+					}
+					else
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "No %%><%%=WcfSOAPMiddleTierClassName%%><%%- items found.");%%><%%=TAB -1%%><%%-
+					}%%>
+				}
+				break
+			case 3: // GetMany
+			case 7: // GetManyByCriteria
+			case 6: // GetManyByForeignKey
+				<%%-
+				results.%%>
+				with (Entity)
+				{
+					<%%=WcfSOAPMiddleTierPluralEntityName%%>
+				}
+				<%%- =  manager.%%><%%=WcfSOAPMiddleTierMethodCall%%><%%-;
+				results.DataAccessOptions = manager.DataAccessOptions;
+				results.TotalRecords = totalRecords;
+				results.MaximumListSizeExceeded = maximumListSizeExceeded;%%>
+				with (Entity)
+				{
+					<%%-
+					if (results.%%><%%=WcfSOAPMiddleTierClassName%%><%%-Count > 0)
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- items successfully retrieved.");%%><%%=TAB -1%%><%%-
+					}
+					else
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "No %%><%%=WcfSOAPMiddleTierClassName%%><%%- items found.");%%><%%=TAB -1%%><%%-
+					}%%>
+				}
+				break
+			case 8: // AddOne
+				<%%-
+				manager.%%><%%=WcfSOAPMiddleTierMethodCall%%>
+				with (Entity)
+				{
+					<%%-;
+					results.%%><%%=WcfSOAPMiddleTierPluralEntityName%%><%%-.Add(item);
+					results.SetWebResponseAndStatus(HttpStatusCode.Created, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- successfully created.");%%>
+				}
+				break
+			case 9: // UpdateOne
+				with (Entity)
+				{
+					foreach (Method where IsGetOneMethod == true && IsPrimaryMethod == true limit 1)
+					{
+						with (Entity)
+						{
+							<%%-
+							%%><%%=WcfSOAPMiddleTierDataType%%>
+						}
+						<%%- item2 = manager.%%><%%=WcfSOAPMiddleTierMethodName%%><%%-(%%>
+						foreach (Parameter)
+						{
+							with (Property from Solution.Find(ReferencedPropertyID))
+							{
+								<%%-item.%%><%%=WcfSOAPPropertyName%%><%%-, %%>
+							}
+						}
+						<%%-cascadeDepth);
+						if (item2 != null)
+						{%%><%%=TAB 1%%>
+					}
+				}
+				<%%-
+				manager.%%><%%=WcfSOAPMiddleTierMethodCall%%>
+				with (Entity)
+				{
+					<%%-;
+					results.%%><%%=WcfSOAPMiddleTierPluralEntityName%%><%%-.Add(item);
+					results.SetWebResponseAndStatus(HttpStatusCode.OK, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- successfully updated.");%%>
+
+					foreach (Method where IsGetOneMethod == true && IsPrimaryMethod == true limit 1)
+					{
+						<%%=TAB -1%%><%%-
+						}
+						else
+						{%%><%%=TAB 1%%>
+							with (Entity)
+							{
+								<%%-
+								results.SetWebResponseAndStatus(HttpStatusCode.NotFound, "%%><%%=WcfSOAPMiddleTierClassName%%><%%- not found for updating.");%%><%%=TAB -1%%>
+							}
+							<%%-
+						}%%><%%=TAB -1%%>
+					}
+				}
+				break
+			case 10: // DeleteOne
+				foreach (Method where IsGetOneMethod == true && IsPrimaryMethod == true limit 1)
+				{
+					<%%-
+					%%><%%=Entity.WcfSOAPMiddleTierDataType%%><%%- item2 = manager.%%><%%=WcfSOAPMiddleTierMethodName%%><%%-(%%>
+					foreach (Parameter)
+					{
+						with (Property from Solution.Find(ReferencedPropertyID))
+						{
+							<%%-item.%%><%%=WcfSOAPPropertyName%%><%%-, %%>
+						}
+					}
+					<%%-cascadeDepth);
+					if (item2 != null)
+					{%%><%%=TAB 1%%><%%-
+						item.TransformDataFromObject(item2, null);%%>
+						with (../)
+						{
+							<%%-
+							manager.%%><%%=WcfSOAPMiddleTierMethodCall%%>
+						}
+						<%%-;
+						results.%%><%%=Entity.WcfSOAPMiddleTierPluralEntityName%%><%%-.Add(item);
+						results.SetWebResponseAndStatus(HttpStatusCode.OK, "%%><%%=Entity.WcfSOAPMiddleTierClassName%%><%%- successfully deleted.");%%><%%=TAB -1%%><%%-
+					}
+					else
+					{%%><%%=TAB 1%%><%%-
+						results.SetWebResponseAndStatus(HttpStatusCode.NotFound, "%%><%%=Entity.WcfSOAPMiddleTierClassName%%><%%- not found for deletion.");%%><%%=TAB -1%%><%%-
+					}%%>
+				}
+				break
+		}
+		<%%-
+		manager = null;
+		ProcessResponse();%%><%%=TAB -1%%><%%-
+	}
+	catch (ApplicationException ex)
+	{%%><%%=TAB 1%%><%%-
+		results.SetWebResponseAndStatus(HttpStatusCode.InternalServerError, ex.Message);%%><%%=TAB -1%%><%%-
+	}
+	catch (Exception ex)
+	{%%><%%=TAB 1%%><%%-
+		results.SetWebResponseAndStatus(HttpStatusCode.InternalServerError, ex.Message);%%><%%=TAB -1%%><%%-
+	}
+	return results;%%><%%=TAB -1%%><%%-
+}%%>
+%%></CONTENT>
