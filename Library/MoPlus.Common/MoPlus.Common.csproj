@@ -106,10 +106,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Third Party Dlls\Microsoft Enterprise Library 4.1 - October 2008\Bin\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Third Party Dlls\Microsoft Enterprise Library 4.1 - October 2008\Bin\Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Third Party Dlls\Microsoft Enterprise Library 4.1 - October 2008\Bin\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>

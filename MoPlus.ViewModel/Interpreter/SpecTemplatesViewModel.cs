@@ -429,7 +429,7 @@ namespace MoPlus.ViewModel.Interpreter
 		///--------------------------------------------------------------------------------
 		public void LoadTemplateDirectory(string directory, bool refresh = true)
 		{
-			if (!String.IsNullOrEmpty(directory))
+			if (!String.IsNullOrEmpty(directory) && Directory.Exists(directory))
 			{
 				foreach (string file in Directory.GetFiles(directory, "*.mps"))
 				{
