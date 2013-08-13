@@ -97,7 +97,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -137,7 +137,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MoPlusKey.pfx" />
+    <None Include="..\..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

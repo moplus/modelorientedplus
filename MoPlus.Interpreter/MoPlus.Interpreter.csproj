@@ -70,7 +70,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=x86">
@@ -356,8 +356,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="app.config" />
-    <None Include="MoPlusKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

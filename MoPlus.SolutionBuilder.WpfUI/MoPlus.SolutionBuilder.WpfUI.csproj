@@ -95,7 +95,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -148,8 +148,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="app.config" />
-    <None Include="MoPlusKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

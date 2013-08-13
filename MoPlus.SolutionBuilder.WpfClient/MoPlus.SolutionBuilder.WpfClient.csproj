@@ -70,7 +70,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AvalonDock, Version=2.0.1771.0, Culture=neutral, PublicKeyToken=96637cf0d3eefdfb, processorArchitecture=x86">
@@ -1205,15 +1205,17 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MoPlusKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\HelpClosed.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\Images\HelpOpen.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

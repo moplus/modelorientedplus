@@ -70,7 +70,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=4.1.0.7916, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=x86">
@@ -311,7 +311,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MoPlusKey.pfx" />
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="Resources\MoPlusWorkflow.png" />
   </ItemGroup>
   <ItemGroup>

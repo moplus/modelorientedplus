@@ -11,7 +11,7 @@
     <RootNamespace>MoPlus.SolutionBuilder.VSPackage</RootNamespace>
     <AssemblyName>MoPlus.SolutionBuilder.VSPackage</AssemblyName>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -160,7 +160,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="MoPlusKey.pfx" />
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>

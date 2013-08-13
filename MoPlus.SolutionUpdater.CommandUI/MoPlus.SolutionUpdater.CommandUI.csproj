@@ -91,7 +91,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>MoPlusKey.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -107,8 +107,10 @@
     <Compile Include="SolutionUpdater.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="App.config" />
-    <None Include="MoPlusKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Product.ico" />
