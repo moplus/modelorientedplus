@@ -2547,6 +2547,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				EnumerationsToMerge = new EnterpriseDataObjectList<Enumeration>();
 				ValuesToMerge = new EnterpriseDataObjectList<Value>();
 				ClearModel();
+
+                // merge completely custom data
+
 				foreach (DatabaseSource item in DatabaseSourceList)
 				{
 					item.Solution = this;
