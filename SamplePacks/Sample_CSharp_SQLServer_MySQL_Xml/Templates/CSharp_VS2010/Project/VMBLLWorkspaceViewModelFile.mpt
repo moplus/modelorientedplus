@@ -674,19 +674,21 @@ namespace %%><%%=Namespace%%><%%-
 		///--------------------------------------------------------------------------------
 		public void ShowException(Exception ex, bool showMessageBox = true)
 		{
-			string errorMessage = ex.Message;
-			string stackTrace = ex.StackTrace;
+			StringBuilder errorMessage = new StringBuilder();
+			StringBuilder stackTrace = new StringBuilder();
+			errorMessage.Append(ex.Message);
+			stackTrace.Append(ex.StackTrace);
 			Exception innerEx = ex.InnerException;
 
 			// TODO: show inner exception for now, friendlier error messages later once better
 			// exception management is in place
 			while (innerEx != null)
 			{
-				errorMessage = innerEx.Message;
-				stackTrace = innerEx.StackTrace;
+				errorMessage.Append(innerEx.Message);
+				stackTrace.Append(innerEx.StackTrace);
 				innerEx = innerEx.InnerException;
 			}
-			ShowOutput(errorMessage + "\r\n" + stackTrace, "Exception", true, true, showMessageBox);
+			ShowOutput(errorMessage.ToString() + "\r\n" + stackTrace.ToString(), "Exception", true, true, showMessageBox);
 		}
 
 		///--------------------------------------------------------------------------------
