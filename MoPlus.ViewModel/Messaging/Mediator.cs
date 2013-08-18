@@ -59,6 +59,8 @@ namespace MoPlus.ViewModel.Messaging
             throw new InvalidOperationException("This method is not supported in Silverlight");
 #endif
 
+            // we use the callback.Target value as the target of a WeakReference to automatically remove 
+            // registered actions when the containing objects are garbage collected.
 			if (callback.Target == null)
 				throw new InvalidOperationException("Delegate cannot be static");
 
