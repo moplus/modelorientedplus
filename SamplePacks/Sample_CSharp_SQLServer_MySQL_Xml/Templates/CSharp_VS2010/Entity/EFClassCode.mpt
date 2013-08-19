@@ -130,7 +130,7 @@
 	        		}
 	        	}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         <%%-
     
@@ -200,7 +200,7 @@
 	        		}
         		}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         <%%-
     
@@ -253,7 +253,7 @@
 	        		CurrentRelationship = Relationship
         		}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         <%%-
     
@@ -309,7 +309,7 @@
 	        		}
 	        	}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         <%%-
     

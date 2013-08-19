@@ -36,7 +36,7 @@ using System.Runtime.Serialization;
 
 #region EDM Relationship Metadata
 %%>
-foreach (Relationship in Solution where Tags.Contains("DB") == true)
+foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
 <%%-
 [assembly: EdmRelationshipAttribute("%%><%%=Project.DbName%%><%%-Model", "%%><%%=RelationshipName%%><%%-", "%%><%%=ReferencedEntity.BLLClassName%%><%%-", System.Data.Metadata.Edm.RelationshipMultiplicity.%%>

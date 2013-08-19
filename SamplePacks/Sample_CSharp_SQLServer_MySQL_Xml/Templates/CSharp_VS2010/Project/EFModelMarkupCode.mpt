@@ -33,7 +33,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 <%%-
           <EntitySet Name="%%><%%=SourceName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=SourceName%%><%%-" store:Type="Tables" Schema="dbo" />%%>
 }
-foreach (Relationship in Solution where Tags.Contains("DB") == true)
+foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
 	<%%-
           <AssociationSet Name="%%><%%=RelationshipName%%><%%-" Association="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=RelationshipName%%><%%-">%%>
@@ -81,7 +81,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
           <%%-
         </EntityType>%%>
 }
-foreach (Relationship in Solution where Tags.Contains("DB") == true)
+foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
 	<%%-
         <Association Name="%%><%%=RelationshipName%%><%%-">
@@ -165,7 +165,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 	<%%-
           <EntitySet Name="%%><%%=BLLPluralEntityName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-" />%%>
 }
-foreach (Relationship in Solution where Tags.Contains("DB") == true)
+foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
 	<%%-
           <AssociationSet Name="%%><%%=RelationshipName%%><%%-" Association="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-">%%>
@@ -240,7 +240,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 	        		}
 	        	}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         		with (CurrentRelationship)
         		{
@@ -276,7 +276,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 	        		}
         		}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
         		with (CurrentRelationship)
         		{
@@ -295,7 +295,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 	        		CurrentRelationship = Relationship
         		}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
           	<%%-
           <NavigationProperty Name="%%><%%=BLLPropertyName%%>
@@ -318,7 +318,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 	        		}
 	        	}
         	}
-        	if (CurrentRelationship != null)
+        	if (CurrentRelationship != null && CurrentRelationship.Entity.Tags.Contains("DB") == true && CurrentRelationship.ReferencedEntity.Tags.Contains("DB") == true)
         	{
           	<%%-
           <NavigationProperty Name="%%><%%=BLLPropertyName%%>
@@ -331,7 +331,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
           <%%-
         </EntityType>%%>
 }
-foreach (Relationship in Solution where Tags.Contains("DB") == true)
+foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
 	<%%-
         <Association Name="%%><%%=RelationshipName%%><%%-">
