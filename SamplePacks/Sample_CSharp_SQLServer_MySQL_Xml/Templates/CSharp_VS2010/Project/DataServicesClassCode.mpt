@@ -16,7 +16,9 @@ using System.Collections.Generic;
 using System.Data.Services;
 using System.Data.Services.Common;
 using System.Linq;
+using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Reflection;
 using System.Web;%%>
 if (ProjectReferenceCount > 1)
 {
@@ -53,6 +55,7 @@ namespace %%><%%=Namespace%%><%%-
 	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
+	[ServiceBehavior(IncludeExceptionDetailInFaults = true)]
 	public class %%><%%=DSDataServiceName%%>
 if (ProjectReferenceCount > 1)
 {
@@ -84,10 +87,19 @@ else
             <%%-
 			config.DataServiceBehavior.MaxProtocolVersion = DataServiceProtocolVersion.V2;
 			config.DataServiceBehavior.AcceptProjectionRequests = true; 
+			config.UseVerboseErrors = true;
 		}
 
 		protected override void HandleException(HandleExceptionArgs e) 
 		{
+			if ((e.Exception is TargetInvocationException) && e.Exception.InnerException != null)
+			{
+				if (e.Exception.InnerException is DataServiceException)
+					e.Exception = e.Exception.InnerException as DataServiceException;
+				else
+					e.Exception = new DataServiceException(400, e.Exception.InnerException.Message);
+			}
+
 			// add additional handling here if desired
 			base.HandleException(e);
 		} 
