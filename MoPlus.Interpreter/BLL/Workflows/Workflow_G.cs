@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/16/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -748,6 +748,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				WorkflowID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -906,8 +907,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.WorkflowList.Count > 0)
 					{
@@ -920,8 +922,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.WorkflowList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.WorkflowList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.WorkflowList[DataHelper.GetRandomInt(0, solutionContext.WorkflowList.Count - 1)];
 			}
 			isValidContext = false;
@@ -961,6 +964,14 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -977,28 +988,33 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentWorkflow, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentWorkflow.Solution = solutionContext;
+				solutionContext.CurrentWorkflow.AddToParent();
 				Workflow existingItem = solutionContext.WorkflowList.Find(i => i.WorkflowID == solutionContext.CurrentWorkflow.WorkflowID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentWorkflow.Solution = solutionContext;
-					solutionContext.CurrentWorkflow.SetID();
+					// add new item to solution
 					solutionContext.CurrentWorkflow.AssignProperty("WorkflowID", solutionContext.CurrentWorkflow.WorkflowID);
-					Workflow foundItem = solutionContext.WorkflowsToMerge.Find(i => i.WorkflowID == solutionContext.CurrentWorkflow.WorkflowID);
-					if (foundItem != null)
-					{
-						Workflow forwardItem = new Workflow();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentWorkflow.ForwardInstance = forwardItem;
-						solutionContext.CurrentWorkflow.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.WorkflowsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.WorkflowList.Add(solutionContext.CurrentWorkflow);
 					solutionContext.CurrentWorkflow.ReverseInstance.ResetModified(false);
+					solutionContext.WorkflowList.Add(solutionContext.CurrentWorkflow);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Workflow();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentWorkflow, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("WorkflowID", existingItem.WorkflowID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentWorkflow = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

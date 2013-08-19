@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -689,33 +689,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Entities.Method _method = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Method.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Entities.Method Method
-		{
-			get
-			{
-				return _method;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_methodName = value.MethodName;
-					_methodTypeCode = value.MethodTypeCode;
-					if (_method != null && _method.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					MethodID = value.MethodID;
-				}
-				_method = value;
-			}
-		}
-		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -741,6 +714,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 					ReferencedEntityID = value.EntityID;
 				}
 				_referencedEntity = value;
+			}
+		}
+		
+		protected BLL.Entities.Method _method = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Method.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Entities.Method Method
+		{
+			get
+			{
+				return _method;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_methodName = value.MethodName;
+					_methodTypeCode = value.MethodTypeCode;
+					if (_method != null && _method.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					MethodID = value.MethodID;
+				}
+				_method = value;
 			}
 		}
 		
@@ -946,6 +946,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				ParameterID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -975,8 +976,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Method = null;
 			ReferencedEntity = null;
+			Method = null;
 			ReferencedPropertyBase = null;
 			Solution = null;
 			
@@ -1095,8 +1096,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Method)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Method)
 				{
+					solutionContext.NeedsSample = false;
 					Method parent = modelContext as Method;
 					if (parent.ParameterList.Count > 0)
 					{
@@ -1109,8 +1111,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.ParameterList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.ParameterList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.ParameterList[DataHelper.GetRandomInt(0, solutionContext.ParameterList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1154,6 +1157,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Method method = Solution.MethodList.Find(i => i.MethodID == MethodID);
+			if (method != null)
+			{
+				Method = method;
+				SetID();  // id (from saved ids) may change based on parent info
+				Parameter parameter = method.ParameterList.Find(i => i.ParameterID == ParameterID);
+				if (parameter != null)
+				{
+					if (parameter != this)
+					{
+						method.ParameterList.Remove(parameter);
+						method.ParameterList.Add(this);
+					}
+				}
+				else
+				{
+					method.ParameterList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1170,46 +1199,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentParameter, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentParameter.Solution = solutionContext;
+				solutionContext.CurrentParameter.AddToParent();
 				Parameter existingItem = solutionContext.ParameterList.Find(i => i.ParameterID == solutionContext.CurrentParameter.ParameterID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentParameter.Solution = solutionContext;
-					Method method = solutionContext.MethodList.Find(i => i.MethodID == solutionContext.CurrentParameter.MethodID);
-					if (method != null)
-					{
-						solutionContext.CurrentParameter.Method = method;
-						method.ParameterList.Add(solutionContext.CurrentParameter);
-					}
-					Entity referencedEntity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentParameter.ReferencedEntityID);
-					if (referencedEntity != null)
-					{
-						solutionContext.CurrentParameter.ReferencedEntity = referencedEntity;
-						referencedEntity.ReferencedParameterList.Add(solutionContext.CurrentParameter);
-					}
-					PropertyBase referencedPropertyBase = solutionContext.PropertyBaseList.Find(i => i.PropertyID == solutionContext.CurrentParameter.ReferencedPropertyID);
-					if (referencedPropertyBase != null)
-					{
-						solutionContext.CurrentParameter.ReferencedPropertyBase = referencedPropertyBase;
-						referencedPropertyBase.ReferencedParameterList.Add(solutionContext.CurrentParameter);
-					}
-					solutionContext.CurrentParameter.SetID();
+					// add new item to solution
 					solutionContext.CurrentParameter.AssignProperty("ParameterID", solutionContext.CurrentParameter.ParameterID);
-					Parameter foundItem = solutionContext.ParametersToMerge.Find(i => i.ParameterID == solutionContext.CurrentParameter.ParameterID);
-					if (foundItem != null)
-					{
-						Parameter forwardItem = new Parameter();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentParameter.ForwardInstance = forwardItem;
-						solutionContext.CurrentParameter.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.ParametersToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.ParameterList.Add(solutionContext.CurrentParameter);
 					solutionContext.CurrentParameter.ReverseInstance.ResetModified(false);
+					solutionContext.ParameterList.Add(solutionContext.CurrentParameter);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Parameter();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentParameter, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("ParameterID", existingItem.ParameterID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentParameter = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

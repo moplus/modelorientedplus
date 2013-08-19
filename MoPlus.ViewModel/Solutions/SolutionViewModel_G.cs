@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/12/2013</CreatedDate>
+	/// <CreatedDate>8/18/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionViewModel : DialogEditWorkspaceViewModel
@@ -81,28 +81,6 @@ namespace MoPlus.ViewModel.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewCollection.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewCollection
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewCollection;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewCollectionToolTip.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewCollectionToolTip
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewCollectionToolTip;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
 		/// <summary>This property gets MenuLabelNewSpecificationSource.</summary>
 		///--------------------------------------------------------------------------------
 		public string MenuLabelNewSpecificationSource
@@ -121,6 +99,28 @@ namespace MoPlus.ViewModel.Solutions
 			get
 			{
 				return DisplayValues.ContextMenu_NewSpecificationSourceToolTip;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewCollection.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewCollection
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewCollection;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewCollectionToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewCollectionToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewCollectionToolTip;
 			}
 		}
 
@@ -147,28 +147,6 @@ namespace MoPlus.ViewModel.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewEntityReference.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewEntityReference
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewEntityReference;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewEntityReferenceToolTip.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewEntityReferenceToolTip
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewEntityReferenceToolTip;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
 		/// <summary>This property gets MenuLabelNewProperty.</summary>
 		///--------------------------------------------------------------------------------
 		public string MenuLabelNewProperty
@@ -187,6 +165,28 @@ namespace MoPlus.ViewModel.Solutions
 			get
 			{
 				return DisplayValues.ContextMenu_NewPropertyToolTip;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewEntityReference.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewEntityReference
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewEntityReference;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewEntityReferenceToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewEntityReferenceToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewEntityReferenceToolTip;
 			}
 		}
 
@@ -1332,11 +1332,11 @@ namespace MoPlus.ViewModel.Solutions
 			{
 				item.Defaults();
 			}
-			foreach (EntityReferenceViewModel item in Items.OfType<EntityReferenceViewModel>())
+			foreach (PropertyViewModel item in Items.OfType<PropertyViewModel>())
 			{
 				item.Defaults();
 			}
-			foreach (PropertyViewModel item in Items.OfType<PropertyViewModel>())
+			foreach (EntityReferenceViewModel item in Items.OfType<EntityReferenceViewModel>())
 			{
 				item.Defaults();
 			}

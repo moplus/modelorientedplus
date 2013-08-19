@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -510,34 +510,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Entities.Entity _entity = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Entity.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Entities.Entity Entity
-		{
-			get
-			{
-				return _entity;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_entityName = value.EntityName;
-					_entityTypeCode = value.EntityTypeCode;
-					_identifierTypeCode = value.IdentifierTypeCode;
-					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					EntityID = value.EntityID;
-				}
-				_entity = value;
-			}
-		}
-		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -563,6 +535,34 @@ namespace MoPlus.Interpreter.BLL.Entities
 					ReferencedEntityID = value.EntityID;
 				}
 				_referencedEntity = value;
+			}
+		}
+		
+		protected BLL.Entities.Entity _entity = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Entity.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Entities.Entity Entity
+		{
+			get
+			{
+				return _entity;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_entityName = value.EntityName;
+					_entityTypeCode = value.EntityTypeCode;
+					_identifierTypeCode = value.IdentifierTypeCode;
+					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					EntityID = value.EntityID;
+				}
+				_entity = value;
 			}
 		}
 		
@@ -701,6 +701,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public override void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				PropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -730,8 +731,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Entity = null;
 			ReferencedEntity = null;
+			Entity = null;
 			Solution = null;
 			
 			#region protected
@@ -859,8 +860,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Entity)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Entity)
 				{
+					solutionContext.NeedsSample = false;
 					Entity parent = modelContext as Entity;
 					if (parent.EntityReferenceList.Count > 0)
 					{
@@ -873,8 +875,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.EntityReferenceList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.EntityReferenceList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.EntityReferenceList[DataHelper.GetRandomInt(0, solutionContext.EntityReferenceList.Count - 1)];
 			}
 			isValidContext = false;
@@ -918,6 +921,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Entity entity = Solution.EntityList.Find(i => i.EntityID == EntityID);
+			if (entity != null)
+			{
+				Entity = entity;
+				SetID();  // id (from saved ids) may change based on parent info
+				EntityReference entityReference = entity.EntityReferenceList.Find(i => i.PropertyID == PropertyID);
+				if (entityReference != null)
+				{
+					if (entityReference != this)
+					{
+						entity.EntityReferenceList.Remove(entityReference);
+						entity.EntityReferenceList.Add(this);
+					}
+				}
+				else
+				{
+					entity.EntityReferenceList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -934,40 +963,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentEntityReference, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentEntityReference.Solution = solutionContext;
+				solutionContext.CurrentEntityReference.AddToParent();
 				EntityReference existingItem = solutionContext.EntityReferenceList.Find(i => i.PropertyID == solutionContext.CurrentEntityReference.PropertyID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentEntityReference.Solution = solutionContext;
-					Entity entity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentEntityReference.EntityID);
-					if (entity != null)
-					{
-						solutionContext.CurrentEntityReference.Entity = entity;
-						entity.EntityReferenceList.Add(solutionContext.CurrentEntityReference);
-					}
-					Entity referencedEntity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentEntityReference.ReferencedEntityID);
-					if (referencedEntity != null)
-					{
-						solutionContext.CurrentEntityReference.ReferencedEntity = referencedEntity;
-						referencedEntity.ReferencedEntityReferenceList.Add(solutionContext.CurrentEntityReference);
-					}
-					solutionContext.CurrentEntityReference.SetID();
+					// add new item to solution
 					solutionContext.CurrentEntityReference.AssignProperty("PropertyID", solutionContext.CurrentEntityReference.PropertyID);
-					EntityReference foundItem = solutionContext.EntityReferencesToMerge.Find(i => i.PropertyID == solutionContext.CurrentEntityReference.PropertyID);
-					if (foundItem != null)
-					{
-						EntityReference forwardItem = new EntityReference();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentEntityReference.ForwardInstance = forwardItem;
-						solutionContext.CurrentEntityReference.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.EntityReferencesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.EntityReferenceList.Add(solutionContext.CurrentEntityReference);
 					solutionContext.CurrentEntityReference.ReverseInstance.ResetModified(false);
+					solutionContext.EntityReferenceList.Add(solutionContext.CurrentEntityReference);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new EntityReference();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentEntityReference, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("PropertyID", existingItem.PropertyID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentEntityReference = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

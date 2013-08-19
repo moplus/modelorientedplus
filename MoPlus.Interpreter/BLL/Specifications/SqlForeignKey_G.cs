@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -1254,6 +1254,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				SqlForeignKeyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1445,8 +1446,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is SqlTable)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is SqlTable)
 				{
+					solutionContext.NeedsSample = false;
 					SqlTable parent = modelContext as SqlTable;
 					if (parent.SqlForeignKeyList.Count > 0)
 					{

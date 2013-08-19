@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Config
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/18/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -577,6 +577,7 @@ namespace MoPlus.Interpreter.BLL.Config
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				RecentSolutionId = Solution.UsedModelIDs[DefaultSourceName].GetGuid();

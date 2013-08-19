@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Diagrams
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/7/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class DiagramEntityViewModel : DiagramEntityWorkspaceViewModel
@@ -193,8 +193,8 @@ namespace MoPlus.ViewModel.Diagrams
 					{
 						_editDiagramEntity.TransformDataFromObject(DiagramEntity, null, false);
 						_editDiagramEntity.Solution = DiagramEntity.Solution;
-						_editDiagramEntity.Diagram = DiagramEntity.Diagram;
 						_editDiagramEntity.Entity = DiagramEntity.Entity;
+						_editDiagramEntity.Diagram = DiagramEntity.Diagram;
 					}
 					_editDiagramEntity.ResetModified(false);
 				}

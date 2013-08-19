@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -847,6 +847,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				IndexID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1005,8 +1006,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Entity)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Entity)
 				{
+					solutionContext.NeedsSample = false;
 					Entity parent = modelContext as Entity;
 					if (parent.IndexList.Count > 0)
 					{
@@ -1019,8 +1021,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.IndexList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.IndexList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.IndexList[DataHelper.GetRandomInt(0, solutionContext.IndexList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1064,6 +1067,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Entity entity = Solution.EntityList.Find(i => i.EntityID == EntityID);
+			if (entity != null)
+			{
+				Entity = entity;
+				SetID();  // id (from saved ids) may change based on parent info
+				Index index = entity.IndexList.Find(i => i.IndexID == IndexID);
+				if (index != null)
+				{
+					if (index != this)
+					{
+						entity.IndexList.Remove(index);
+						entity.IndexList.Add(this);
+					}
+				}
+				else
+				{
+					entity.IndexList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1080,34 +1109,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentIndex, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentIndex.Solution = solutionContext;
+				solutionContext.CurrentIndex.AddToParent();
 				Index existingItem = solutionContext.IndexList.Find(i => i.IndexID == solutionContext.CurrentIndex.IndexID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentIndex.Solution = solutionContext;
-					Entity entity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentIndex.EntityID);
-					if (entity != null)
-					{
-						solutionContext.CurrentIndex.Entity = entity;
-						entity.IndexList.Add(solutionContext.CurrentIndex);
-					}
-					solutionContext.CurrentIndex.SetID();
+					// add new item to solution
 					solutionContext.CurrentIndex.AssignProperty("IndexID", solutionContext.CurrentIndex.IndexID);
-					Index foundItem = solutionContext.IndexesToMerge.Find(i => i.IndexID == solutionContext.CurrentIndex.IndexID);
-					if (foundItem != null)
-					{
-						Index forwardItem = new Index();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentIndex.ForwardInstance = forwardItem;
-						solutionContext.CurrentIndex.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.IndexesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.IndexList.Add(solutionContext.CurrentIndex);
 					solutionContext.CurrentIndex.ReverseInstance.ResetModified(false);
+					solutionContext.IndexList.Add(solutionContext.CurrentIndex);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Index();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentIndex, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("IndexID", existingItem.IndexID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentIndex = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

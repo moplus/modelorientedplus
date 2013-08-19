@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -722,6 +722,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				MethodRelationshipID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -870,8 +871,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Method)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Method)
 				{
+					solutionContext.NeedsSample = false;
 					Method parent = modelContext as Method;
 					if (parent.MethodRelationshipList.Count > 0)
 					{
@@ -884,8 +886,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.MethodRelationshipList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.MethodRelationshipList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.MethodRelationshipList[DataHelper.GetRandomInt(0, solutionContext.MethodRelationshipList.Count - 1)];
 			}
 			isValidContext = false;
@@ -929,6 +932,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Method method = Solution.MethodList.Find(i => i.MethodID == MethodID);
+			if (method != null)
+			{
+				Method = method;
+				SetID();  // id (from saved ids) may change based on parent info
+				MethodRelationship methodRelationship = method.MethodRelationshipList.Find(i => i.MethodRelationshipID == MethodRelationshipID);
+				if (methodRelationship != null)
+				{
+					if (methodRelationship != this)
+					{
+						method.MethodRelationshipList.Remove(methodRelationship);
+						method.MethodRelationshipList.Add(this);
+					}
+				}
+				else
+				{
+					method.MethodRelationshipList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -945,40 +974,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentMethodRelationship, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentMethodRelationship.Solution = solutionContext;
+				solutionContext.CurrentMethodRelationship.AddToParent();
 				MethodRelationship existingItem = solutionContext.MethodRelationshipList.Find(i => i.MethodRelationshipID == solutionContext.CurrentMethodRelationship.MethodRelationshipID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentMethodRelationship.Solution = solutionContext;
-					Relationship relationship = solutionContext.RelationshipList.Find(i => i.RelationshipID == solutionContext.CurrentMethodRelationship.RelationshipID);
-					if (relationship != null)
-					{
-						solutionContext.CurrentMethodRelationship.Relationship = relationship;
-						relationship.MethodRelationshipList.Add(solutionContext.CurrentMethodRelationship);
-					}
-					Method method = solutionContext.MethodList.Find(i => i.MethodID == solutionContext.CurrentMethodRelationship.MethodID);
-					if (method != null)
-					{
-						solutionContext.CurrentMethodRelationship.Method = method;
-						method.MethodRelationshipList.Add(solutionContext.CurrentMethodRelationship);
-					}
-					solutionContext.CurrentMethodRelationship.SetID();
+					// add new item to solution
 					solutionContext.CurrentMethodRelationship.AssignProperty("MethodRelationshipID", solutionContext.CurrentMethodRelationship.MethodRelationshipID);
-					MethodRelationship foundItem = solutionContext.MethodRelationshipsToMerge.Find(i => i.MethodRelationshipID == solutionContext.CurrentMethodRelationship.MethodRelationshipID);
-					if (foundItem != null)
-					{
-						MethodRelationship forwardItem = new MethodRelationship();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentMethodRelationship.ForwardInstance = forwardItem;
-						solutionContext.CurrentMethodRelationship.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.MethodRelationshipsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.MethodRelationshipList.Add(solutionContext.CurrentMethodRelationship);
 					solutionContext.CurrentMethodRelationship.ReverseInstance.ResetModified(false);
+					solutionContext.MethodRelationshipList.Add(solutionContext.CurrentMethodRelationship);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new MethodRelationship();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentMethodRelationship, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("MethodRelationshipID", existingItem.MethodRelationshipID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentMethodRelationship = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

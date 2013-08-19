@@ -203,6 +203,7 @@ else
 }
 <%%- void SetID()
 {%%><%%=TAB 1%%><%%-
+	_defaultSourceName = null;
 	if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 	{%%><%%=TAB 1%%><%%-
 		%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Solution.UsedModelIDs[DefaultSourceName].GetGuid();%%><%%=TAB -1%%><%%-
@@ -487,8 +488,9 @@ public static IDomainEnterpriseObject GetModelContext(Solution solutionContext, 
 		if (BLLParentClassName != null)
 		{
 		<%%-
-		else if (solutionContext.IsSampleMode == true && modelContext is %%><%%=BLLParentClassName%%><%%-)
+		else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is %%><%%=BLLParentClassName%%><%%-)
 		{%%><%%=TAB 1%%><%%-
+			solutionContext.NeedsSample = false;
 			%%><%%=BLLParentClassName%%><%%- parent = modelContext as %%><%%=BLLParentClassName%%><%%-;
 			if (parent.%%><%%=BLLParentCollectionName%%><%%-.Count > 0)
 			{%%><%%=TAB 1%%><%%-
@@ -506,8 +508,9 @@ public static IDomainEnterpriseObject GetModelContext(Solution solutionContext, 
 		if (FeatureName != "Specifications")
 		{
 	<%%-
-	if (solutionContext.IsSampleMode == true && solutionContext.%%><%%=BLLClassName%%><%%-List.Count > 0)
+	if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.%%><%%=BLLClassName%%><%%-List.Count > 0)
 	{%%><%%=TAB 1%%><%%-
+		solutionContext.NeedsSample = false;
 		return solutionContext.%%><%%=BLLClassName%%><%%-List[DataHelper.GetRandomInt(0, solutionContext.%%><%%=BLLClassName%%><%%-List.Count - 1)];%%><%%=TAB -1%%><%%-
 	}%%>
 		}
@@ -601,6 +604,42 @@ public override IDomainEnterpriseObject GetParentItem()
 <%%-
 
 ///--------------------------------------------------------------------------------
+/// <summary>This method adds this item to the parent, if not found.</summary>
+///--------------------------------------------------------------------------------
+public void AddToParent()
+{%%>
+if (BLLParentClassName != "Solution")
+{
+	<%%=TAB 1%%><%%-
+	%%><%%=BLLParentClassName%%><%%- %%><%%=BLLParentClassName.CamelCase()%%><%%- = Solution.%%><%%=BLLParentClassName%%><%%-List.Find(i => i.%%><%%=BLLParentPrimaryKeyPropertyName%%><%%- == %%><%%=BLLParentForeignKeyPropertyName%%><%%-);
+	if (%%><%%=BLLParentClassName.CamelCase()%%><%%- != null)
+	{%%><%%=TAB 1%%><%%-
+		%%><%%=BLLParentReferencePropertyName%%><%%- = %%><%%=BLLParentClassName.CamelCase()%%><%%-;
+		SetID();  // id (from saved ids) may change based on parent info
+		%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%- = %%><%%=BLLParentClassName.CamelCase()%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Find(i => i.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == %%><%%=BLLPrimaryKeyPropertyName%%><%%-);
+		if (%%><%%=BLLClassName.CamelCase()%%><%%- != null)
+		{%%><%%=TAB 1%%><%%-
+			if (%%><%%=BLLClassName.CamelCase()%%><%%- != this)
+			{%%><%%=TAB 1%%><%%-
+				%%><%%=BLLParentClassName.CamelCase()%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Remove(%%><%%=BLLClassName.CamelCase()%%><%%-);
+				%%><%%=BLLParentClassName.CamelCase()%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Add(this);%%><%%=TAB -1%%><%%-
+			}%%><%%=TAB -1%%><%%-
+		}
+		else
+		{%%><%%=TAB 1%%><%%-
+			%%><%%=BLLParentClassName.CamelCase()%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Add(this);%%><%%=TAB -1%%><%%-
+		}%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%>
+}
+else
+{
+<%%=TAB 1%%><%%-
+	SetID();%%><%%=TAB -1%%>
+}
+<%%-
+}
+
+///--------------------------------------------------------------------------------
 /// <summary>This method adds the current item to the solution, if it is valid
 /// and not already present in the solution.</summary>
 /// 
@@ -616,66 +655,42 @@ public static void AddCurrentItemToSolution(Solution solutionContext, ITemplate 
 		if (!String.IsNullOrEmpty(validationErrors))
 		{%%><%%=TAB 1%%><%%-
 			templateContext.LogException(solutionContext, solutionContext.Current%%><%%=BLLClassName%%><%%-, validationErrors, lineNumber, InterpreterTypeCode.Output);%%><%%=TAB -1%%><%%-
-		}
-		%%><%%=BLLClassName%%><%%- existingItem = solutionContext.%%><%%=BLLClassName%%><%%-List.Find(i => i.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == solutionContext.Current%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-);
-		if (existingItem == null)
-		{%%><%%=TAB 1%%>
+		}%%>
 			foreach (Property where Tags.Contains("SelectParent") limit 1)
 			{
-			<%%-
-			#region protected
-			#endregion protected
-			%%>
+		<%%-
+		#region protected
+		#endregion protected
+		%%>
 			}
-			<%%-
-			solutionContext.Current%%><%%=BLLClassName%%><%%-.Solution = solutionContext;%%>
-			foreach (EntityReference)
-			{
-				if (ReferencedEntity.EntityTypeCode == 3 /* Primary */)
-				{
-					collectionName = null
-					foreach (PropertyRelationship limit 1)
-					{
-						with (../ReferencedEntity)
-						{
-							collectionName = BLLCollectionName(relationshipID = ../RelationshipID)
-						}
-					}
-					if (ReferencedEntity.BLLClassName != "Solution")
-					{
-			<%%-
-			%%><%%=ReferencedEntity.BLLClassName%%><%%- %%><%%=BLLPropertyName.CamelCase()%%><%%- = solutionContext%%>
-			if (../BLLParentClassName != "Solution")
-			{
-			<%%-.%%><%%=ReferencedEntity.BLLClassName%%><%%-List.Find(i => i.%%><%%=ReferencedEntity.BLLPrimaryKeyPropertyName%%><%%- == solutionContext.Current%%><%%=../BLLClassName%%><%%-.%%><%%=BLLReferenceKeyPropertyName%%><%%-)%%>
-			}<%%-;
-			if (%%><%%=BLLPropertyName.CamelCase()%%><%%- != null)
-			{%%><%%=TAB 1%%><%%-
-				solutionContext.Current%%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=BLLPropertyName.CamelCase()%%><%%-;
-				%%><%%=BLLPropertyName.CamelCase()%%><%%-.%%><%%=collectionName%%><%%-.Add(solutionContext.Current%%><%%=../BLLClassName%%><%%-);%%><%%=TAB -1%%><%%-
-			}%%>
-					}
-				}
-			}
-			<%%-
-			solutionContext.Current%%><%%=BLLClassName%%><%%-.SetID();
+		<%%-
+		// link item to known id, solution, and parent
+		solutionContext.Current%%><%%=BLLClassName%%><%%-.Solution = solutionContext;
+		solutionContext.Current%%><%%=BLLClassName%%><%%-.AddToParent();
+		%%><%%=BLLClassName%%><%%- existingItem = solutionContext.%%><%%=BLLClassName%%><%%-List.Find(i => i.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == solutionContext.Current%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-);
+		if (existingItem == null)
+		{%%><%%=TAB 1%%><%%-
+			// add new item to solution
 			solutionContext.Current%%><%%=BLLClassName%%><%%-.AssignProperty("%%><%%=BLLPrimaryKeyPropertyName%%><%%-", solutionContext.Current%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-);
-			%%><%%=BLLClassName%%><%%- foundItem = solutionContext.%%><%%=BLLPluralEntityName%%><%%-ToMerge.Find(i => i.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == solutionContext.Current%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-);
-			if (foundItem != null)
+			solutionContext.Current%%><%%=BLLClassName%%><%%-.ReverseInstance.ResetModified(false);
+			solutionContext.%%><%%=BLLClassName%%><%%-List.Add(solutionContext.Current%%><%%=BLLClassName%%><%%-);%%><%%=TAB -1%%><%%-
+		}
+		else
+		{%%><%%=TAB 1%%><%%-
+			// update existing item in solution
+			if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 			{%%><%%=TAB 1%%><%%-
-				%%><%%=BLLClassName%%><%%- forwardItem = new %%><%%=BLLClassName%%><%%-();
-				forwardItem.TransformDataFromObject(foundItem, null, false);
-				solutionContext.Current%%><%%=BLLClassName%%><%%-.ForwardInstance = forwardItem;
-				solutionContext.Current%%><%%=BLLClassName%%><%%-.TransformDataFromObject(forwardItem, null, false, true);
-				solutionContext.%%><%%=BLLPluralEntityName%%><%%-ToMerge.Remove(foundItem);%%><%%=TAB -1%%><%%-
+				existingItem.ForwardInstance = new %%><%%=BLLClassName%%><%%-();
+				existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);%%><%%=TAB -1%%><%%-
 			}
-
-			#region protected
-			#endregion protected
-			
-			solutionContext.%%><%%=BLLClassName%%><%%-List.Add(solutionContext.Current%%><%%=BLLClassName%%><%%-);
-			solutionContext.Current%%><%%=BLLClassName%%><%%-.ReverseInstance.ResetModified(false);%%><%%=TAB -1%%><%%-
-		}%%><%%=TAB -1%%><%%-
+			existingItem.TransformDataFromObject(solutionContext.Current%%><%%=BLLClassName%%><%%-, null, false);
+			existingItem.AddToParent();
+			existingItem.AssignProperty("%%><%%=BLLPrimaryKeyPropertyName%%><%%-", existingItem.%%><%%=BLLPrimaryKeyPropertyName%%><%%-);
+			existingItem.ReverseInstance.ResetModified(false);
+			solutionContext.Current%%><%%=BLLClassName%%><%%- = existingItem;%%><%%=TAB -1%%><%%-
+		}
+		#region protected
+		#endregion protected%%><%%=TAB -1%%><%%-
 	}%%><%%=TAB -1%%><%%-
 }
 

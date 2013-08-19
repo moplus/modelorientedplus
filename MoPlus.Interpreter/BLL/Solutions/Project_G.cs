@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -992,6 +992,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				ProjectID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1169,8 +1170,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.ProjectList.Count > 0)
 					{
@@ -1187,8 +1189,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.ProjectList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.ProjectList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.ProjectList[DataHelper.GetRandomInt(0, solutionContext.ProjectList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1232,6 +1235,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1248,28 +1259,33 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentProject, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentProject.Solution = solutionContext;
+				solutionContext.CurrentProject.AddToParent();
 				Project existingItem = solutionContext.ProjectList.Find(i => i.ProjectID == solutionContext.CurrentProject.ProjectID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentProject.Solution = solutionContext;
-					solutionContext.CurrentProject.SetID();
+					// add new item to solution
 					solutionContext.CurrentProject.AssignProperty("ProjectID", solutionContext.CurrentProject.ProjectID);
-					Project foundItem = solutionContext.ProjectsToMerge.Find(i => i.ProjectID == solutionContext.CurrentProject.ProjectID);
-					if (foundItem != null)
-					{
-						Project forwardItem = new Project();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentProject.ForwardInstance = forwardItem;
-						solutionContext.CurrentProject.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.ProjectsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.ProjectList.Add(solutionContext.CurrentProject);
 					solutionContext.CurrentProject.ReverseInstance.ResetModified(false);
+					solutionContext.ProjectList.Add(solutionContext.CurrentProject);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Project();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentProject, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("ProjectID", existingItem.ProjectID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentProject = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

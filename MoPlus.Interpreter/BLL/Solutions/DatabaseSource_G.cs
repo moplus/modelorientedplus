@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -649,6 +649,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public override void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				SpecificationSourceID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -788,8 +789,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.DatabaseSourceList.Count > 0)
 					{
@@ -802,8 +804,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.DatabaseSourceList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.DatabaseSourceList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.DatabaseSourceList[DataHelper.GetRandomInt(0, solutionContext.DatabaseSourceList.Count - 1)];
 			}
 			isValidContext = false;
@@ -843,6 +846,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -859,28 +870,33 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentDatabaseSource, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentDatabaseSource.Solution = solutionContext;
+				solutionContext.CurrentDatabaseSource.AddToParent();
 				DatabaseSource existingItem = solutionContext.DatabaseSourceList.Find(i => i.SpecificationSourceID == solutionContext.CurrentDatabaseSource.SpecificationSourceID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentDatabaseSource.Solution = solutionContext;
-					solutionContext.CurrentDatabaseSource.SetID();
+					// add new item to solution
 					solutionContext.CurrentDatabaseSource.AssignProperty("SpecificationSourceID", solutionContext.CurrentDatabaseSource.SpecificationSourceID);
-					DatabaseSource foundItem = solutionContext.DatabaseSourcesToMerge.Find(i => i.SpecificationSourceID == solutionContext.CurrentDatabaseSource.SpecificationSourceID);
-					if (foundItem != null)
-					{
-						DatabaseSource forwardItem = new DatabaseSource();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentDatabaseSource.ForwardInstance = forwardItem;
-						solutionContext.CurrentDatabaseSource.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.DatabaseSourcesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.DatabaseSourceList.Add(solutionContext.CurrentDatabaseSource);
 					solutionContext.CurrentDatabaseSource.ReverseInstance.ResetModified(false);
+					solutionContext.DatabaseSourceList.Add(solutionContext.CurrentDatabaseSource);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new DatabaseSource();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentDatabaseSource, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("SpecificationSourceID", existingItem.SpecificationSourceID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentDatabaseSource = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

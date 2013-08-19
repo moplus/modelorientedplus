@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -391,6 +391,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		///--------------------------------------------------------------------------------
 		public override void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				TemplateID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -529,8 +530,9 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.SpecTemplateList.Count > 0)
 					{
@@ -543,8 +545,9 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.SpecTemplateList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.SpecTemplateList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.SpecTemplateList[DataHelper.GetRandomInt(0, solutionContext.SpecTemplateList.Count - 1)];
 			}
 			isValidContext = false;

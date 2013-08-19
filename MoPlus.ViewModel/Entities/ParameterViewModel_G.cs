@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/12/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ParameterViewModel : DialogEditWorkspaceViewModel
@@ -185,8 +185,8 @@ namespace MoPlus.ViewModel.Entities
 					{
 						_editParameter.TransformDataFromObject(Parameter, null, false);
 						_editParameter.Solution = Parameter.Solution;
-						_editParameter.Method = Parameter.Method;
 						_editParameter.ReferencedEntity = Parameter.ReferencedEntity;
+						_editParameter.Method = Parameter.Method;
 						_editParameter.ReferencedPropertyBase = Parameter.ReferencedPropertyBase;
 					}
 					_editParameter.ResetModified(false);

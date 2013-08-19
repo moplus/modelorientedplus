@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -694,6 +694,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				PropertyRelationshipID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -842,8 +843,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is PropertyBase)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is PropertyBase)
 				{
+					solutionContext.NeedsSample = false;
 					PropertyBase parent = modelContext as PropertyBase;
 					if (parent.PropertyRelationshipList.Count > 0)
 					{
@@ -856,8 +858,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.PropertyRelationshipList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.PropertyRelationshipList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.PropertyRelationshipList[DataHelper.GetRandomInt(0, solutionContext.PropertyRelationshipList.Count - 1)];
 			}
 			isValidContext = false;
@@ -901,6 +904,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			PropertyBase propertyBase = Solution.PropertyBaseList.Find(i => i.PropertyID == PropertyID);
+			if (propertyBase != null)
+			{
+				PropertyBase = propertyBase;
+				SetID();  // id (from saved ids) may change based on parent info
+				PropertyRelationship propertyRelationship = propertyBase.PropertyRelationshipList.Find(i => i.PropertyRelationshipID == PropertyRelationshipID);
+				if (propertyRelationship != null)
+				{
+					if (propertyRelationship != this)
+					{
+						propertyBase.PropertyRelationshipList.Remove(propertyRelationship);
+						propertyBase.PropertyRelationshipList.Add(this);
+					}
+				}
+				else
+				{
+					propertyBase.PropertyRelationshipList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -917,35 +946,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentPropertyRelationship, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentPropertyRelationship.Solution = solutionContext;
+				solutionContext.CurrentPropertyRelationship.AddToParent();
 				PropertyRelationship existingItem = solutionContext.PropertyRelationshipList.Find(i => i.PropertyRelationshipID == solutionContext.CurrentPropertyRelationship.PropertyRelationshipID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentPropertyRelationship.Solution = solutionContext;
-					Relationship relationship = solutionContext.RelationshipList.Find(i => i.RelationshipID == solutionContext.CurrentPropertyRelationship.RelationshipID);
-					if (relationship != null)
-					{
-						solutionContext.CurrentPropertyRelationship.Relationship = relationship;
-						relationship.PropertyRelationshipList.Add(solutionContext.CurrentPropertyRelationship);
-					}
-					PropertyBase propertyBase = solutionContext.PropertyBaseList.Find(i => i.PropertyID == solutionContext.CurrentPropertyRelationship.PropertyID);
-					if (propertyBase != null)
-					{
-						solutionContext.CurrentPropertyRelationship.PropertyBase = propertyBase;
-						propertyBase.PropertyRelationshipList.Add(solutionContext.CurrentPropertyRelationship);
-					}
-					solutionContext.CurrentPropertyRelationship.SetID();
+					// add new item to solution
 					solutionContext.CurrentPropertyRelationship.AssignProperty("PropertyRelationshipID", solutionContext.CurrentPropertyRelationship.PropertyRelationshipID);
-					PropertyRelationship foundItem = solutionContext.PropertyRelationshipsToMerge.Find(i => i.PropertyRelationshipID == solutionContext.CurrentPropertyRelationship.PropertyRelationshipID);
-					if (foundItem != null)
+					solutionContext.CurrentPropertyRelationship.ReverseInstance.ResetModified(false);
+					solutionContext.PropertyRelationshipList.Add(solutionContext.CurrentPropertyRelationship);
+				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
-						PropertyRelationship forwardItem = new PropertyRelationship();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentPropertyRelationship.ForwardInstance = forwardItem;
-						solutionContext.CurrentPropertyRelationship.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.PropertyRelationshipsToMerge.Remove(foundItem);
+						existingItem.ForwardInstance = new PropertyRelationship();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
 					}
-					
-					#region protected
+					existingItem.TransformDataFromObject(solutionContext.CurrentPropertyRelationship, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("PropertyRelationshipID", existingItem.PropertyRelationshipID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentPropertyRelationship = existingItem;
+				}
+				#region protected
 						PropertyReference parentProperty = solutionContext.PropertyReferenceList.FindByID(solutionContext.CurrentPropertyRelationship.PropertyID);
 						if (parentProperty != null)
 						{
@@ -971,10 +997,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 							}
 						}
 						#endregion protected
-					
-					solutionContext.PropertyRelationshipList.Add(solutionContext.CurrentPropertyRelationship);
-					solutionContext.CurrentPropertyRelationship.ReverseInstance.ResetModified(false);
-				}
 			}
 		}
 		

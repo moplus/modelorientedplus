@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -830,6 +830,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				RelationshipPropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -987,8 +988,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Relationship)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Relationship)
 				{
+					solutionContext.NeedsSample = false;
 					Relationship parent = modelContext as Relationship;
 					if (parent.RelationshipPropertyList.Count > 0)
 					{
@@ -1001,8 +1003,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.RelationshipPropertyList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.RelationshipPropertyList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.RelationshipPropertyList[DataHelper.GetRandomInt(0, solutionContext.RelationshipPropertyList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1046,6 +1049,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Relationship relationship = Solution.RelationshipList.Find(i => i.RelationshipID == RelationshipID);
+			if (relationship != null)
+			{
+				Relationship = relationship;
+				SetID();  // id (from saved ids) may change based on parent info
+				RelationshipProperty relationshipProperty = relationship.RelationshipPropertyList.Find(i => i.RelationshipPropertyID == RelationshipPropertyID);
+				if (relationshipProperty != null)
+				{
+					if (relationshipProperty != this)
+					{
+						relationship.RelationshipPropertyList.Remove(relationshipProperty);
+						relationship.RelationshipPropertyList.Add(this);
+					}
+				}
+				else
+				{
+					relationship.RelationshipPropertyList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1062,46 +1091,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentRelationshipProperty, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentRelationshipProperty.Solution = solutionContext;
+				solutionContext.CurrentRelationshipProperty.AddToParent();
 				RelationshipProperty existingItem = solutionContext.RelationshipPropertyList.Find(i => i.RelationshipPropertyID == solutionContext.CurrentRelationshipProperty.RelationshipPropertyID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentRelationshipProperty.Solution = solutionContext;
-					Property property = solutionContext.PropertyList.Find(i => i.PropertyID == solutionContext.CurrentRelationshipProperty.PropertyID);
-					if (property != null)
-					{
-						solutionContext.CurrentRelationshipProperty.Property = property;
-						property.RelationshipPropertyList.Add(solutionContext.CurrentRelationshipProperty);
-					}
-					Property referencedProperty = solutionContext.PropertyList.Find(i => i.PropertyID == solutionContext.CurrentRelationshipProperty.ReferencedPropertyID);
-					if (referencedProperty != null)
-					{
-						solutionContext.CurrentRelationshipProperty.ReferencedProperty = referencedProperty;
-						referencedProperty.ReferencedRelationshipPropertyList.Add(solutionContext.CurrentRelationshipProperty);
-					}
-					Relationship relationship = solutionContext.RelationshipList.Find(i => i.RelationshipID == solutionContext.CurrentRelationshipProperty.RelationshipID);
-					if (relationship != null)
-					{
-						solutionContext.CurrentRelationshipProperty.Relationship = relationship;
-						relationship.RelationshipPropertyList.Add(solutionContext.CurrentRelationshipProperty);
-					}
-					solutionContext.CurrentRelationshipProperty.SetID();
+					// add new item to solution
 					solutionContext.CurrentRelationshipProperty.AssignProperty("RelationshipPropertyID", solutionContext.CurrentRelationshipProperty.RelationshipPropertyID);
-					RelationshipProperty foundItem = solutionContext.RelationshipPropertiesToMerge.Find(i => i.RelationshipPropertyID == solutionContext.CurrentRelationshipProperty.RelationshipPropertyID);
-					if (foundItem != null)
-					{
-						RelationshipProperty forwardItem = new RelationshipProperty();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentRelationshipProperty.ForwardInstance = forwardItem;
-						solutionContext.CurrentRelationshipProperty.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.RelationshipPropertiesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.RelationshipPropertyList.Add(solutionContext.CurrentRelationshipProperty);
 					solutionContext.CurrentRelationshipProperty.ReverseInstance.ResetModified(false);
+					solutionContext.RelationshipPropertyList.Add(solutionContext.CurrentRelationshipProperty);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new RelationshipProperty();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentRelationshipProperty, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("RelationshipPropertyID", existingItem.RelationshipPropertyID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentRelationshipProperty = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

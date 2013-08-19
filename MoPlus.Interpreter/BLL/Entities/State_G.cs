@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -822,6 +822,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				StateID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -989,8 +990,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is StateModel)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is StateModel)
 				{
+					solutionContext.NeedsSample = false;
 					StateModel parent = modelContext as StateModel;
 					if (parent.StateList.Count > 0)
 					{
@@ -1003,8 +1005,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.StateList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.StateList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.StateList[DataHelper.GetRandomInt(0, solutionContext.StateList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1048,6 +1051,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			StateModel stateModel = Solution.StateModelList.Find(i => i.StateModelID == StateModelID);
+			if (stateModel != null)
+			{
+				StateModel = stateModel;
+				SetID();  // id (from saved ids) may change based on parent info
+				State state = stateModel.StateList.Find(i => i.StateID == StateID);
+				if (state != null)
+				{
+					if (state != this)
+					{
+						stateModel.StateList.Remove(state);
+						stateModel.StateList.Add(this);
+					}
+				}
+				else
+				{
+					stateModel.StateList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1064,34 +1093,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentState, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentState.Solution = solutionContext;
+				solutionContext.CurrentState.AddToParent();
 				State existingItem = solutionContext.StateList.Find(i => i.StateID == solutionContext.CurrentState.StateID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentState.Solution = solutionContext;
-					StateModel stateModel = solutionContext.StateModelList.Find(i => i.StateModelID == solutionContext.CurrentState.StateModelID);
-					if (stateModel != null)
-					{
-						solutionContext.CurrentState.StateModel = stateModel;
-						stateModel.StateList.Add(solutionContext.CurrentState);
-					}
-					solutionContext.CurrentState.SetID();
+					// add new item to solution
 					solutionContext.CurrentState.AssignProperty("StateID", solutionContext.CurrentState.StateID);
-					State foundItem = solutionContext.StatesToMerge.Find(i => i.StateID == solutionContext.CurrentState.StateID);
-					if (foundItem != null)
-					{
-						State forwardItem = new State();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentState.ForwardInstance = forwardItem;
-						solutionContext.CurrentState.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.StatesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.StateList.Add(solutionContext.CurrentState);
 					solutionContext.CurrentState.ReverseInstance.ResetModified(false);
+					solutionContext.StateList.Add(solutionContext.CurrentState);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new State();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentState, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("StateID", existingItem.StateID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentState = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

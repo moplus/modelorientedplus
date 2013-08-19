@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>5/22/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -870,6 +870,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				StageID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1056,8 +1057,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Workflow)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Workflow)
 				{
+					solutionContext.NeedsSample = false;
 					Workflow parent = modelContext as Workflow;
 					if (parent.StageList.Count > 0)
 					{
@@ -1070,8 +1072,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.StageList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.StageList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.StageList[DataHelper.GetRandomInt(0, solutionContext.StageList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1115,6 +1118,32 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Workflow workflow = Solution.WorkflowList.Find(i => i.WorkflowID == WorkflowID);
+			if (workflow != null)
+			{
+				Workflow = workflow;
+				SetID();  // id (from saved ids) may change based on parent info
+				Stage stage = workflow.StageList.Find(i => i.StageID == StageID);
+				if (stage != null)
+				{
+					if (stage != this)
+					{
+						workflow.StageList.Remove(stage);
+						workflow.StageList.Add(this);
+					}
+				}
+				else
+				{
+					workflow.StageList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1131,34 +1160,33 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentStage, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentStage.Solution = solutionContext;
+				solutionContext.CurrentStage.AddToParent();
 				Stage existingItem = solutionContext.StageList.Find(i => i.StageID == solutionContext.CurrentStage.StageID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentStage.Solution = solutionContext;
-					Workflow workflow = solutionContext.WorkflowList.Find(i => i.WorkflowID == solutionContext.CurrentStage.WorkflowID);
-					if (workflow != null)
-					{
-						solutionContext.CurrentStage.Workflow = workflow;
-						workflow.StageList.Add(solutionContext.CurrentStage);
-					}
-					solutionContext.CurrentStage.SetID();
+					// add new item to solution
 					solutionContext.CurrentStage.AssignProperty("StageID", solutionContext.CurrentStage.StageID);
-					Stage foundItem = solutionContext.StagesToMerge.Find(i => i.StageID == solutionContext.CurrentStage.StageID);
-					if (foundItem != null)
-					{
-						Stage forwardItem = new Stage();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentStage.ForwardInstance = forwardItem;
-						solutionContext.CurrentStage.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.StagesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.StageList.Add(solutionContext.CurrentStage);
 					solutionContext.CurrentStage.ReverseInstance.ResetModified(false);
+					solutionContext.StageList.Add(solutionContext.CurrentStage);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Stage();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentStage, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("StageID", existingItem.StageID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentStage = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

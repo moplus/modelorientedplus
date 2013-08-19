@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -748,6 +748,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				FeatureID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -906,8 +907,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.FeatureList.Count > 0)
 					{
@@ -920,8 +922,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.FeatureList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.FeatureList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.FeatureList[DataHelper.GetRandomInt(0, solutionContext.FeatureList.Count - 1)];
 			}
 			isValidContext = false;
@@ -961,6 +964,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -977,28 +988,33 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentFeature, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentFeature.Solution = solutionContext;
+				solutionContext.CurrentFeature.AddToParent();
 				Feature existingItem = solutionContext.FeatureList.Find(i => i.FeatureID == solutionContext.CurrentFeature.FeatureID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentFeature.Solution = solutionContext;
-					solutionContext.CurrentFeature.SetID();
+					// add new item to solution
 					solutionContext.CurrentFeature.AssignProperty("FeatureID", solutionContext.CurrentFeature.FeatureID);
-					Feature foundItem = solutionContext.FeaturesToMerge.Find(i => i.FeatureID == solutionContext.CurrentFeature.FeatureID);
-					if (foundItem != null)
-					{
-						Feature forwardItem = new Feature();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentFeature.ForwardInstance = forwardItem;
-						solutionContext.CurrentFeature.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.FeaturesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.FeatureList.Add(solutionContext.CurrentFeature);
 					solutionContext.CurrentFeature.ReverseInstance.ResetModified(false);
+					solutionContext.FeatureList.Add(solutionContext.CurrentFeature);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Feature();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentFeature, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("FeatureID", existingItem.FeatureID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentFeature = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

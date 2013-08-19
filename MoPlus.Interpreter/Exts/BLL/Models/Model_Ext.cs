@@ -28,7 +28,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// (change the Status below to something other than Generated).
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/18/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class Model : BusinessObjectBase

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -879,32 +879,6 @@ namespace MoPlus.Interpreter.BLL.Models
 			}
 		}
 		
-		protected BLL.Models.ModelObject _modelObject = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the ModelObject.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Models.ModelObject ModelObject
-		{
-			get
-			{
-				return _modelObject;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_modelObjectName = value.ModelObjectName;
-					if (_modelObject != null && _modelObject.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					ModelObjectID = value.ModelObjectID;
-				}
-				_modelObject = value;
-			}
-		}
-		
 		protected BLL.Models.ModelObject _definedByModelObject = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the DefinedByModelObject.</summary>
@@ -928,6 +902,32 @@ namespace MoPlus.Interpreter.BLL.Models
 					DefinedByModelObjectID = value.ModelObjectID;
 				}
 				_definedByModelObject = value;
+			}
+		}
+		
+		protected BLL.Models.ModelObject _modelObject = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the ModelObject.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Models.ModelObject ModelObject
+		{
+			get
+			{
+				return _modelObject;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_modelObjectName = value.ModelObjectName;
+					if (_modelObject != null && _modelObject.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					ModelObjectID = value.ModelObjectID;
+				}
+				_modelObject = value;
 			}
 		}
 		
@@ -1144,6 +1144,7 @@ namespace MoPlus.Interpreter.BLL.Models
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				ModelPropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1174,8 +1175,8 @@ namespace MoPlus.Interpreter.BLL.Models
 				ForwardInstance = null;
 			}
 			DefinedByEnumeration = null;
-			ModelObject = null;
 			DefinedByModelObject = null;
+			ModelObject = null;
 			DefinedByValue = null;
 			Solution = null;
 			if (_propertyInstanceList != null)
@@ -1319,8 +1320,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is ModelObject)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is ModelObject)
 				{
+					solutionContext.NeedsSample = false;
 					ModelObject parent = modelContext as ModelObject;
 					if (parent.ModelPropertyList.Count > 0)
 					{
@@ -1333,8 +1335,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.ModelPropertyList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.ModelPropertyList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.ModelPropertyList[DataHelper.GetRandomInt(0, solutionContext.ModelPropertyList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1378,6 +1381,32 @@ namespace MoPlus.Interpreter.BLL.Models
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			ModelObject modelObject = Solution.ModelObjectList.Find(i => i.ModelObjectID == ModelObjectID);
+			if (modelObject != null)
+			{
+				ModelObject = modelObject;
+				SetID();  // id (from saved ids) may change based on parent info
+				ModelProperty modelProperty = modelObject.ModelPropertyList.Find(i => i.ModelPropertyID == ModelPropertyID);
+				if (modelProperty != null)
+				{
+					if (modelProperty != this)
+					{
+						modelObject.ModelPropertyList.Remove(modelProperty);
+						modelObject.ModelPropertyList.Add(this);
+					}
+				}
+				else
+				{
+					modelObject.ModelPropertyList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1394,52 +1423,33 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentModelProperty, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentModelProperty.Solution = solutionContext;
+				solutionContext.CurrentModelProperty.AddToParent();
 				ModelProperty existingItem = solutionContext.ModelPropertyList.Find(i => i.ModelPropertyID == solutionContext.CurrentModelProperty.ModelPropertyID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentModelProperty.Solution = solutionContext;
-					Enumeration definedByEnumeration = solutionContext.EnumerationList.Find(i => i.EnumerationID == solutionContext.CurrentModelProperty.DefinedByEnumerationID);
-					if (definedByEnumeration != null)
-					{
-						solutionContext.CurrentModelProperty.DefinedByEnumeration = definedByEnumeration;
-						definedByEnumeration.DefinedByModelPropertyList.Add(solutionContext.CurrentModelProperty);
-					}
-					ModelObject modelObject = solutionContext.ModelObjectList.Find(i => i.ModelObjectID == solutionContext.CurrentModelProperty.ModelObjectID);
-					if (modelObject != null)
-					{
-						solutionContext.CurrentModelProperty.ModelObject = modelObject;
-						modelObject.ModelPropertyList.Add(solutionContext.CurrentModelProperty);
-					}
-					ModelObject definedByModelObject = solutionContext.ModelObjectList.Find(i => i.ModelObjectID == solutionContext.CurrentModelProperty.DefinedByModelObjectID);
-					if (definedByModelObject != null)
-					{
-						solutionContext.CurrentModelProperty.DefinedByModelObject = definedByModelObject;
-						definedByModelObject.DefinedByModelPropertyList.Add(solutionContext.CurrentModelProperty);
-					}
-					Value definedByValue = solutionContext.ValueList.Find(i => i.ValueID == solutionContext.CurrentModelProperty.DefinedByValueID);
-					if (definedByValue != null)
-					{
-						solutionContext.CurrentModelProperty.DefinedByValue = definedByValue;
-						definedByValue.DefinedByModelPropertyList.Add(solutionContext.CurrentModelProperty);
-					}
-					solutionContext.CurrentModelProperty.SetID();
+					// add new item to solution
 					solutionContext.CurrentModelProperty.AssignProperty("ModelPropertyID", solutionContext.CurrentModelProperty.ModelPropertyID);
-					ModelProperty foundItem = solutionContext.ModelPropertiesToMerge.Find(i => i.ModelPropertyID == solutionContext.CurrentModelProperty.ModelPropertyID);
-					if (foundItem != null)
-					{
-						ModelProperty forwardItem = new ModelProperty();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentModelProperty.ForwardInstance = forwardItem;
-						solutionContext.CurrentModelProperty.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.ModelPropertiesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.ModelPropertyList.Add(solutionContext.CurrentModelProperty);
 					solutionContext.CurrentModelProperty.ReverseInstance.ResetModified(false);
+					solutionContext.ModelPropertyList.Add(solutionContext.CurrentModelProperty);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new ModelProperty();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentModelProperty, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("ModelPropertyID", existingItem.ModelPropertyID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentModelProperty = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

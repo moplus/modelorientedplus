@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -664,6 +664,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected BLL.Config.MethodType _methodType = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the MethodType.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Config.MethodType MethodType
+		{
+			get
+			{
+				return _methodType;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_methodTypeName = value.MethodTypeName;
+					if (_methodType != null && _methodType.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					MethodTypeCode = value.MethodTypeCode;
+				}
+				_methodType = value;
+			}
+		}
+		
 		protected BLL.Entities.Entity _entity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the Entity.</summary>
@@ -689,32 +715,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 					EntityID = value.EntityID;
 				}
 				_entity = value;
-			}
-		}
-		
-		protected BLL.Config.MethodType _methodType = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the MethodType.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Config.MethodType MethodType
-		{
-			get
-			{
-				return _methodType;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_methodTypeName = value.MethodTypeName;
-					if (_methodType != null && _methodType.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					MethodTypeCode = value.MethodTypeCode;
-				}
-				_methodType = value;
 			}
 		}
 		
@@ -899,6 +899,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				MethodID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -928,8 +929,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Entity = null;
 			MethodType = null;
+			Entity = null;
 			Solution = null;
 			if (_parameterList != null)
 			{
@@ -1077,8 +1078,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Entity)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Entity)
 				{
+					solutionContext.NeedsSample = false;
 					Entity parent = modelContext as Entity;
 					if (parent.MethodList.Count > 0)
 					{
@@ -1091,8 +1093,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.MethodList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.MethodList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.MethodList[DataHelper.GetRandomInt(0, solutionContext.MethodList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1136,6 +1139,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Entity entity = Solution.EntityList.Find(i => i.EntityID == EntityID);
+			if (entity != null)
+			{
+				Entity = entity;
+				SetID();  // id (from saved ids) may change based on parent info
+				Method method = entity.MethodList.Find(i => i.MethodID == MethodID);
+				if (method != null)
+				{
+					if (method != this)
+					{
+						entity.MethodList.Remove(method);
+						entity.MethodList.Add(this);
+					}
+				}
+				else
+				{
+					entity.MethodList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1152,34 +1181,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentMethod, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentMethod.Solution = solutionContext;
+				solutionContext.CurrentMethod.AddToParent();
 				Method existingItem = solutionContext.MethodList.Find(i => i.MethodID == solutionContext.CurrentMethod.MethodID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentMethod.Solution = solutionContext;
-					Entity entity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentMethod.EntityID);
-					if (entity != null)
-					{
-						solutionContext.CurrentMethod.Entity = entity;
-						entity.MethodList.Add(solutionContext.CurrentMethod);
-					}
-					solutionContext.CurrentMethod.SetID();
+					// add new item to solution
 					solutionContext.CurrentMethod.AssignProperty("MethodID", solutionContext.CurrentMethod.MethodID);
-					Method foundItem = solutionContext.MethodsToMerge.Find(i => i.MethodID == solutionContext.CurrentMethod.MethodID);
-					if (foundItem != null)
-					{
-						Method forwardItem = new Method();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentMethod.ForwardInstance = forwardItem;
-						solutionContext.CurrentMethod.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.MethodsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.MethodList.Add(solutionContext.CurrentMethod);
 					solutionContext.CurrentMethod.ReverseInstance.ResetModified(false);
+					solutionContext.MethodList.Add(solutionContext.CurrentMethod);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Method();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentMethod, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("MethodID", existingItem.MethodID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentMethod = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

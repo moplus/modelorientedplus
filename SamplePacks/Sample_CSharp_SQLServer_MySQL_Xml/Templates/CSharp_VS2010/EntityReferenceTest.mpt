@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME EntityReferenceTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:foreach (EntityReference in Solution)
+{
+<%%-
+Entity Reference: %%><%%=EntityReferenceName%%>
+<%%-
+	Refereced Entity: %%><%%=ReferencedEntity.BLLClassName%%><%%-
+	Refereced Entity: %%><%%=ReferencedEntity.BLLClassName%%><%%-
+	Refereced Entity: %%><%%=ReferencedEntity.BLLClassName%%><%%-
+	Refereced Entity: %%><%%=ReferencedEntity.BLLClassName%%>
+}%%></CONTENT><OUTPUT>
+<%%:
+update(Solution.SolutionDirectory + "\\EntityReferenceTest.txt")%%></OUTPUT>

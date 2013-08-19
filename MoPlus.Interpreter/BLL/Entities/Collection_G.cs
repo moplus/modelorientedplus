@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -510,34 +510,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Entities.Entity _entity = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Entity.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Entities.Entity Entity
-		{
-			get
-			{
-				return _entity;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_entityName = value.EntityName;
-					_entityTypeCode = value.EntityTypeCode;
-					_identifierTypeCode = value.IdentifierTypeCode;
-					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					EntityID = value.EntityID;
-				}
-				_entity = value;
-			}
-		}
-		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -563,6 +535,34 @@ namespace MoPlus.Interpreter.BLL.Entities
 					ReferencedEntityID = value.EntityID;
 				}
 				_referencedEntity = value;
+			}
+		}
+		
+		protected BLL.Entities.Entity _entity = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Entity.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Entities.Entity Entity
+		{
+			get
+			{
+				return _entity;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_entityName = value.EntityName;
+					_entityTypeCode = value.EntityTypeCode;
+					_identifierTypeCode = value.IdentifierTypeCode;
+					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					EntityID = value.EntityID;
+				}
+				_entity = value;
 			}
 		}
 		
@@ -701,6 +701,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public override void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				PropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -730,8 +731,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Entity = null;
 			ReferencedEntity = null;
+			Entity = null;
 			Solution = null;
 			
 			#region protected
@@ -859,8 +860,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Entity)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Entity)
 				{
+					solutionContext.NeedsSample = false;
 					Entity parent = modelContext as Entity;
 					if (parent.CollectionList.Count > 0)
 					{
@@ -873,8 +875,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.CollectionList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.CollectionList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.CollectionList[DataHelper.GetRandomInt(0, solutionContext.CollectionList.Count - 1)];
 			}
 			isValidContext = false;
@@ -918,6 +921,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Entity entity = Solution.EntityList.Find(i => i.EntityID == EntityID);
+			if (entity != null)
+			{
+				Entity = entity;
+				SetID();  // id (from saved ids) may change based on parent info
+				Collection collection = entity.CollectionList.Find(i => i.PropertyID == PropertyID);
+				if (collection != null)
+				{
+					if (collection != this)
+					{
+						entity.CollectionList.Remove(collection);
+						entity.CollectionList.Add(this);
+					}
+				}
+				else
+				{
+					entity.CollectionList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -934,40 +963,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentCollection, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentCollection.Solution = solutionContext;
+				solutionContext.CurrentCollection.AddToParent();
 				Collection existingItem = solutionContext.CollectionList.Find(i => i.PropertyID == solutionContext.CurrentCollection.PropertyID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentCollection.Solution = solutionContext;
-					Entity entity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentCollection.EntityID);
-					if (entity != null)
-					{
-						solutionContext.CurrentCollection.Entity = entity;
-						entity.CollectionList.Add(solutionContext.CurrentCollection);
-					}
-					Entity referencedEntity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentCollection.ReferencedEntityID);
-					if (referencedEntity != null)
-					{
-						solutionContext.CurrentCollection.ReferencedEntity = referencedEntity;
-						referencedEntity.ReferencedCollectionList.Add(solutionContext.CurrentCollection);
-					}
-					solutionContext.CurrentCollection.SetID();
+					// add new item to solution
 					solutionContext.CurrentCollection.AssignProperty("PropertyID", solutionContext.CurrentCollection.PropertyID);
-					Collection foundItem = solutionContext.CollectionsToMerge.Find(i => i.PropertyID == solutionContext.CurrentCollection.PropertyID);
-					if (foundItem != null)
-					{
-						Collection forwardItem = new Collection();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentCollection.ForwardInstance = forwardItem;
-						solutionContext.CurrentCollection.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.CollectionsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.CollectionList.Add(solutionContext.CurrentCollection);
 					solutionContext.CurrentCollection.ReverseInstance.ResetModified(false);
+					solutionContext.CollectionList.Add(solutionContext.CurrentCollection);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Collection();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentCollection, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("PropertyID", existingItem.PropertyID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentCollection = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -823,6 +823,7 @@ namespace MoPlus.Interpreter.BLL.Models
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				ValueID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -971,8 +972,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Enumeration)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Enumeration)
 				{
+					solutionContext.NeedsSample = false;
 					Enumeration parent = modelContext as Enumeration;
 					if (parent.ValueList.Count > 0)
 					{
@@ -985,8 +987,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.ValueList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.ValueList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.ValueList[DataHelper.GetRandomInt(0, solutionContext.ValueList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1030,6 +1033,32 @@ namespace MoPlus.Interpreter.BLL.Models
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Enumeration enumeration = Solution.EnumerationList.Find(i => i.EnumerationID == EnumerationID);
+			if (enumeration != null)
+			{
+				Enumeration = enumeration;
+				SetID();  // id (from saved ids) may change based on parent info
+				Value value = enumeration.ValueList.Find(i => i.ValueID == ValueID);
+				if (value != null)
+				{
+					if (value != this)
+					{
+						enumeration.ValueList.Remove(value);
+						enumeration.ValueList.Add(this);
+					}
+				}
+				else
+				{
+					enumeration.ValueList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1046,34 +1075,33 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentValue, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentValue.Solution = solutionContext;
+				solutionContext.CurrentValue.AddToParent();
 				Value existingItem = solutionContext.ValueList.Find(i => i.ValueID == solutionContext.CurrentValue.ValueID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentValue.Solution = solutionContext;
-					Enumeration enumeration = solutionContext.EnumerationList.Find(i => i.EnumerationID == solutionContext.CurrentValue.EnumerationID);
-					if (enumeration != null)
-					{
-						solutionContext.CurrentValue.Enumeration = enumeration;
-						enumeration.ValueList.Add(solutionContext.CurrentValue);
-					}
-					solutionContext.CurrentValue.SetID();
+					// add new item to solution
 					solutionContext.CurrentValue.AssignProperty("ValueID", solutionContext.CurrentValue.ValueID);
-					Value foundItem = solutionContext.ValuesToMerge.Find(i => i.ValueID == solutionContext.CurrentValue.ValueID);
-					if (foundItem != null)
-					{
-						Value forwardItem = new Value();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentValue.ForwardInstance = forwardItem;
-						solutionContext.CurrentValue.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.ValuesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.ValueList.Add(solutionContext.CurrentValue);
 					solutionContext.CurrentValue.ReverseInstance.ResetModified(false);
+					solutionContext.ValueList.Add(solutionContext.CurrentValue);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Value();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentValue, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("ValueID", existingItem.ValueID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentValue = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

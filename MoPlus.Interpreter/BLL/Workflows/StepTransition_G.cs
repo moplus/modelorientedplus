@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -771,6 +771,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				StepTransitionID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -911,8 +912,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Step)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Step)
 				{
+					solutionContext.NeedsSample = false;
 					Step parent = modelContext as Step;
 					if (parent.ToStepTransitionList.Count > 0)
 					{
@@ -925,8 +927,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.StepTransitionList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.StepTransitionList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.StepTransitionList[DataHelper.GetRandomInt(0, solutionContext.StepTransitionList.Count - 1)];
 			}
 			isValidContext = false;
@@ -970,6 +973,32 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Step step = Solution.StepList.Find(i => i.StepID == ToStepID);
+			if (step != null)
+			{
+				ToStep = step;
+				SetID();  // id (from saved ids) may change based on parent info
+				StepTransition stepTransition = step.ToStepTransitionList.Find(i => i.StepTransitionID == StepTransitionID);
+				if (stepTransition != null)
+				{
+					if (stepTransition != this)
+					{
+						step.ToStepTransitionList.Remove(stepTransition);
+						step.ToStepTransitionList.Add(this);
+					}
+				}
+				else
+				{
+					step.ToStepTransitionList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -986,40 +1015,33 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentStepTransition, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentStepTransition.Solution = solutionContext;
+				solutionContext.CurrentStepTransition.AddToParent();
 				StepTransition existingItem = solutionContext.StepTransitionList.Find(i => i.StepTransitionID == solutionContext.CurrentStepTransition.StepTransitionID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentStepTransition.Solution = solutionContext;
-					Step fromStep = solutionContext.StepList.Find(i => i.StepID == solutionContext.CurrentStepTransition.FromStepID);
-					if (fromStep != null)
-					{
-						solutionContext.CurrentStepTransition.FromStep = fromStep;
-						fromStep.FromStepTransitionList.Add(solutionContext.CurrentStepTransition);
-					}
-					Step toStep = solutionContext.StepList.Find(i => i.StepID == solutionContext.CurrentStepTransition.ToStepID);
-					if (toStep != null)
-					{
-						solutionContext.CurrentStepTransition.ToStep = toStep;
-						toStep.ToStepTransitionList.Add(solutionContext.CurrentStepTransition);
-					}
-					solutionContext.CurrentStepTransition.SetID();
+					// add new item to solution
 					solutionContext.CurrentStepTransition.AssignProperty("StepTransitionID", solutionContext.CurrentStepTransition.StepTransitionID);
-					StepTransition foundItem = solutionContext.StepTransitionsToMerge.Find(i => i.StepTransitionID == solutionContext.CurrentStepTransition.StepTransitionID);
-					if (foundItem != null)
-					{
-						StepTransition forwardItem = new StepTransition();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentStepTransition.ForwardInstance = forwardItem;
-						solutionContext.CurrentStepTransition.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.StepTransitionsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.StepTransitionList.Add(solutionContext.CurrentStepTransition);
 					solutionContext.CurrentStepTransition.ReverseInstance.ResetModified(false);
+					solutionContext.StepTransitionList.Add(solutionContext.CurrentStepTransition);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new StepTransition();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentStepTransition, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("StepTransitionID", existingItem.StepTransitionID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentStepTransition = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -771,6 +771,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				StageTransitionID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -911,8 +912,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Stage)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Stage)
 				{
+					solutionContext.NeedsSample = false;
 					Stage parent = modelContext as Stage;
 					if (parent.ToStageTransitionList.Count > 0)
 					{
@@ -925,8 +927,9 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.StageTransitionList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.StageTransitionList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.StageTransitionList[DataHelper.GetRandomInt(0, solutionContext.StageTransitionList.Count - 1)];
 			}
 			isValidContext = false;
@@ -970,6 +973,32 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Stage stage = Solution.StageList.Find(i => i.StageID == ToStageID);
+			if (stage != null)
+			{
+				ToStage = stage;
+				SetID();  // id (from saved ids) may change based on parent info
+				StageTransition stageTransition = stage.ToStageTransitionList.Find(i => i.StageTransitionID == StageTransitionID);
+				if (stageTransition != null)
+				{
+					if (stageTransition != this)
+					{
+						stage.ToStageTransitionList.Remove(stageTransition);
+						stage.ToStageTransitionList.Add(this);
+					}
+				}
+				else
+				{
+					stage.ToStageTransitionList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -986,40 +1015,33 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentStageTransition, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentStageTransition.Solution = solutionContext;
+				solutionContext.CurrentStageTransition.AddToParent();
 				StageTransition existingItem = solutionContext.StageTransitionList.Find(i => i.StageTransitionID == solutionContext.CurrentStageTransition.StageTransitionID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentStageTransition.Solution = solutionContext;
-					Stage fromStage = solutionContext.StageList.Find(i => i.StageID == solutionContext.CurrentStageTransition.FromStageID);
-					if (fromStage != null)
-					{
-						solutionContext.CurrentStageTransition.FromStage = fromStage;
-						fromStage.FromStageTransitionList.Add(solutionContext.CurrentStageTransition);
-					}
-					Stage toStage = solutionContext.StageList.Find(i => i.StageID == solutionContext.CurrentStageTransition.ToStageID);
-					if (toStage != null)
-					{
-						solutionContext.CurrentStageTransition.ToStage = toStage;
-						toStage.ToStageTransitionList.Add(solutionContext.CurrentStageTransition);
-					}
-					solutionContext.CurrentStageTransition.SetID();
+					// add new item to solution
 					solutionContext.CurrentStageTransition.AssignProperty("StageTransitionID", solutionContext.CurrentStageTransition.StageTransitionID);
-					StageTransition foundItem = solutionContext.StageTransitionsToMerge.Find(i => i.StageTransitionID == solutionContext.CurrentStageTransition.StageTransitionID);
-					if (foundItem != null)
-					{
-						StageTransition forwardItem = new StageTransition();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentStageTransition.ForwardInstance = forwardItem;
-						solutionContext.CurrentStageTransition.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.StageTransitionsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.StageTransitionList.Add(solutionContext.CurrentStageTransition);
 					solutionContext.CurrentStageTransition.ReverseInstance.ResetModified(false);
+					solutionContext.StageTransitionList.Add(solutionContext.CurrentStageTransition);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new StageTransition();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentStageTransition, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("StageTransitionID", existingItem.StageTransitionID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentStageTransition = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

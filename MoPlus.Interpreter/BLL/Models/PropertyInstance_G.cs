@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -750,6 +750,7 @@ namespace MoPlus.Interpreter.BLL.Models
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				PropertyInstanceID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -922,8 +923,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is ObjectInstance)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is ObjectInstance)
 				{
+					solutionContext.NeedsSample = false;
 					ObjectInstance parent = modelContext as ObjectInstance;
 					if (parent.PropertyInstanceList.Count > 0)
 					{
@@ -936,8 +938,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.PropertyInstanceList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.PropertyInstanceList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.PropertyInstanceList[DataHelper.GetRandomInt(0, solutionContext.PropertyInstanceList.Count - 1)];
 			}
 			isValidContext = false;
@@ -981,6 +984,32 @@ namespace MoPlus.Interpreter.BLL.Models
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			ObjectInstance objectInstance = Solution.ObjectInstanceList.Find(i => i.ObjectInstanceID == ObjectInstanceID);
+			if (objectInstance != null)
+			{
+				ObjectInstance = objectInstance;
+				SetID();  // id (from saved ids) may change based on parent info
+				PropertyInstance propertyInstance = objectInstance.PropertyInstanceList.Find(i => i.PropertyInstanceID == PropertyInstanceID);
+				if (propertyInstance != null)
+				{
+					if (propertyInstance != this)
+					{
+						objectInstance.PropertyInstanceList.Remove(propertyInstance);
+						objectInstance.PropertyInstanceList.Add(this);
+					}
+				}
+				else
+				{
+					objectInstance.PropertyInstanceList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -997,40 +1026,33 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentPropertyInstance, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentPropertyInstance.Solution = solutionContext;
+				solutionContext.CurrentPropertyInstance.AddToParent();
 				PropertyInstance existingItem = solutionContext.PropertyInstanceList.Find(i => i.PropertyInstanceID == solutionContext.CurrentPropertyInstance.PropertyInstanceID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentPropertyInstance.Solution = solutionContext;
-					ModelProperty modelProperty = solutionContext.ModelPropertyList.Find(i => i.ModelPropertyID == solutionContext.CurrentPropertyInstance.ModelPropertyID);
-					if (modelProperty != null)
-					{
-						solutionContext.CurrentPropertyInstance.ModelProperty = modelProperty;
-						modelProperty.PropertyInstanceList.Add(solutionContext.CurrentPropertyInstance);
-					}
-					ObjectInstance objectInstance = solutionContext.ObjectInstanceList.Find(i => i.ObjectInstanceID == solutionContext.CurrentPropertyInstance.ObjectInstanceID);
-					if (objectInstance != null)
-					{
-						solutionContext.CurrentPropertyInstance.ObjectInstance = objectInstance;
-						objectInstance.PropertyInstanceList.Add(solutionContext.CurrentPropertyInstance);
-					}
-					solutionContext.CurrentPropertyInstance.SetID();
+					// add new item to solution
 					solutionContext.CurrentPropertyInstance.AssignProperty("PropertyInstanceID", solutionContext.CurrentPropertyInstance.PropertyInstanceID);
-					PropertyInstance foundItem = solutionContext.PropertyInstancesToMerge.Find(i => i.PropertyInstanceID == solutionContext.CurrentPropertyInstance.PropertyInstanceID);
-					if (foundItem != null)
-					{
-						PropertyInstance forwardItem = new PropertyInstance();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentPropertyInstance.ForwardInstance = forwardItem;
-						solutionContext.CurrentPropertyInstance.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.PropertyInstancesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.PropertyInstanceList.Add(solutionContext.CurrentPropertyInstance);
 					solutionContext.CurrentPropertyInstance.ReverseInstance.ResetModified(false);
+					solutionContext.PropertyInstanceList.Add(solutionContext.CurrentPropertyInstance);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new PropertyInstance();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentPropertyInstance, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("PropertyInstanceID", existingItem.PropertyInstanceID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentPropertyInstance = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

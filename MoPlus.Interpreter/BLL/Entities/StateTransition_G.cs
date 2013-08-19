@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -771,6 +771,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				StateTransitionID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -911,8 +912,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is State)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is State)
 				{
+					solutionContext.NeedsSample = false;
 					State parent = modelContext as State;
 					if (parent.ToStateTransitionList.Count > 0)
 					{
@@ -925,8 +927,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.StateTransitionList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.StateTransitionList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.StateTransitionList[DataHelper.GetRandomInt(0, solutionContext.StateTransitionList.Count - 1)];
 			}
 			isValidContext = false;
@@ -970,6 +973,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			State state = Solution.StateList.Find(i => i.StateID == ToStateID);
+			if (state != null)
+			{
+				ToState = state;
+				SetID();  // id (from saved ids) may change based on parent info
+				StateTransition stateTransition = state.ToStateTransitionList.Find(i => i.StateTransitionID == StateTransitionID);
+				if (stateTransition != null)
+				{
+					if (stateTransition != this)
+					{
+						state.ToStateTransitionList.Remove(stateTransition);
+						state.ToStateTransitionList.Add(this);
+					}
+				}
+				else
+				{
+					state.ToStateTransitionList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -986,40 +1015,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentStateTransition, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentStateTransition.Solution = solutionContext;
+				solutionContext.CurrentStateTransition.AddToParent();
 				StateTransition existingItem = solutionContext.StateTransitionList.Find(i => i.StateTransitionID == solutionContext.CurrentStateTransition.StateTransitionID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentStateTransition.Solution = solutionContext;
-					State fromState = solutionContext.StateList.Find(i => i.StateID == solutionContext.CurrentStateTransition.FromStateID);
-					if (fromState != null)
-					{
-						solutionContext.CurrentStateTransition.FromState = fromState;
-						fromState.FromStateTransitionList.Add(solutionContext.CurrentStateTransition);
-					}
-					State toState = solutionContext.StateList.Find(i => i.StateID == solutionContext.CurrentStateTransition.ToStateID);
-					if (toState != null)
-					{
-						solutionContext.CurrentStateTransition.ToState = toState;
-						toState.ToStateTransitionList.Add(solutionContext.CurrentStateTransition);
-					}
-					solutionContext.CurrentStateTransition.SetID();
+					// add new item to solution
 					solutionContext.CurrentStateTransition.AssignProperty("StateTransitionID", solutionContext.CurrentStateTransition.StateTransitionID);
-					StateTransition foundItem = solutionContext.StateTransitionsToMerge.Find(i => i.StateTransitionID == solutionContext.CurrentStateTransition.StateTransitionID);
-					if (foundItem != null)
-					{
-						StateTransition forwardItem = new StateTransition();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentStateTransition.ForwardInstance = forwardItem;
-						solutionContext.CurrentStateTransition.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.StateTransitionsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.StateTransitionList.Add(solutionContext.CurrentStateTransition);
 					solutionContext.CurrentStateTransition.ReverseInstance.ResetModified(false);
+					solutionContext.StateTransitionList.Add(solutionContext.CurrentStateTransition);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new StateTransition();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentStateTransition, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("StateTransitionID", existingItem.StateTransitionID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentStateTransition = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -1267,32 +1267,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Solutions.Feature _feature = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Feature.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Solutions.Feature Feature
-		{
-			get
-			{
-				return _feature;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_featureName = value.FeatureName;
-					if (_feature != null && _feature.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					FeatureID = value.FeatureID;
-				}
-				_feature = value;
-			}
-		}
-		
 		protected BLL.Config.EntityType _entityType = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the EntityType.</summary>
@@ -1316,6 +1290,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 					EntityTypeCode = value.EntityTypeCode;
 				}
 				_entityType = value;
+			}
+		}
+		
+		protected BLL.Solutions.Feature _feature = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Feature.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Solutions.Feature Feature
+		{
+			get
+			{
+				return _feature;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_featureName = value.FeatureName;
+					if (_feature != null && _feature.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					FeatureID = value.FeatureID;
+				}
+				_feature = value;
 			}
 		}
 		
@@ -1569,6 +1569,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				EntityID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1598,8 +1599,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Feature = null;
 			EntityType = null;
+			Feature = null;
 			IdentifierType = null;
 			Solution = null;
 			if (_propertyList != null)
@@ -1773,35 +1774,20 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 			
 			#region protected
-			Guid previousFeatureID = FeatureID;
+			Guid previousFeatureID = OldFeatureID;
 
 			// handle moving to customized feature
 			if (FeatureID != previousFeatureID && previousFeatureID != Guid.Empty)
 			{
-				if (Feature != null)
+				Feature feature = Solution.FeatureList.Find(i => i.FeatureID == previousFeatureID);
+				if (feature != null && feature.EntityList.Contains(this) == true)
 				{
-					Feature.EntityList.Remove(this);
+					feature.EntityList.Remove(this);
 				}
-				Feature = Solution.FeatureList.FindByID(FeatureID);
-				if (Feature != null)
+				Feature = Solution.FeatureList.Find(i => i.FeatureID == FeatureID);
+				if (Feature != null && Feature.EntityList.Contains(this) == false)
 				{
 					Feature.EntityList.Add(this);
-				}
-				else
-				{
-					if (Solution.FeaturesToMerge != null)
-					{
-						Feature featureToMerge = Solution.FeaturesToMerge.FindByID(FeatureID);
-						if (featureToMerge != null)
-						{
-							Feature mergedFeature = new Feature();
-							mergedFeature.TransformDataFromObject(featureToMerge, null, false);
-							Solution.FeaturesToMerge.Remove(featureToMerge);
-							Solution.FeatureList.Add(mergedFeature);
-							Feature = mergedFeature;
-							mergedFeature.EntityList.Add(this);
-						}
-					}
 				}
 			}
 			#endregion protected
@@ -1965,8 +1951,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Feature)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Feature)
 				{
+					solutionContext.NeedsSample = false;
 					Feature parent = modelContext as Feature;
 					if (parent.EntityList.Count > 0)
 					{
@@ -1979,8 +1966,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.EntityList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.EntityList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.EntityList[DataHelper.GetRandomInt(0, solutionContext.EntityList.Count - 1)];
 			}
 			isValidContext = false;
@@ -2024,6 +2012,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Feature feature = Solution.FeatureList.Find(i => i.FeatureID == FeatureID);
+			if (feature != null)
+			{
+				Feature = feature;
+				SetID();  // id (from saved ids) may change based on parent info
+				Entity entity = feature.EntityList.Find(i => i.EntityID == EntityID);
+				if (entity != null)
+				{
+					if (entity != this)
+					{
+						feature.EntityList.Remove(entity);
+						feature.EntityList.Add(this);
+					}
+				}
+				else
+				{
+					feature.EntityList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -2040,68 +2054,42 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentEntity, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				#region protected
+				Guid previousFeatureID = solutionContext.CurrentEntity.FeatureID;
+				#endregion protected
+				
+				// link item to known id, solution, and parent
+				solutionContext.CurrentEntity.Solution = solutionContext;
+				solutionContext.CurrentEntity.AddToParent();
 				Entity existingItem = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentEntity.EntityID);
 				if (existingItem == null)
 				{
-					#region protected
-					Guid previousFeatureID = solutionContext.CurrentEntity.FeatureID;
-					#endregion protected
-					
-					solutionContext.CurrentEntity.Solution = solutionContext;
-					Feature feature = solutionContext.FeatureList.Find(i => i.FeatureID == solutionContext.CurrentEntity.FeatureID);
-					if (feature != null)
-					{
-						solutionContext.CurrentEntity.Feature = feature;
-						feature.EntityList.Add(solutionContext.CurrentEntity);
-					}
-					solutionContext.CurrentEntity.SetID();
+					// add new item to solution
 					solutionContext.CurrentEntity.AssignProperty("EntityID", solutionContext.CurrentEntity.EntityID);
-					Entity foundItem = solutionContext.EntitiesToMerge.Find(i => i.EntityID == solutionContext.CurrentEntity.EntityID);
-					if (foundItem != null)
-					{
-						Entity forwardItem = new Entity();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentEntity.ForwardInstance = forwardItem;
-						solutionContext.CurrentEntity.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.EntitiesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-
-						// handle moving of customized feature
-						if (solutionContext.CurrentEntity.FeatureID != previousFeatureID && previousFeatureID != Guid.Empty)
-						{
-							if (feature != null)
-							{
-								feature.EntityList.Remove(solutionContext.CurrentEntity);
-							}
-							solutionContext.CurrentEntity.Feature = solutionContext.FeatureList.FindByID(solutionContext.CurrentEntity.FeatureID);
-							if (solutionContext.CurrentEntity.Feature != null)
-							{
-								solutionContext.CurrentEntity.Feature.EntityList.Add(solutionContext.CurrentEntity);
-							}
-							else
-							{
-								if (solutionContext.FeaturesToMerge != null)
-								{
-									Feature featureToMerge = solutionContext.FeaturesToMerge.FindByID(solutionContext.CurrentEntity.FeatureID);
-									if (featureToMerge != null)
-									{
-										Feature mergedFeature = new Feature();
-										mergedFeature.TransformDataFromObject(featureToMerge, null, false);
-										solutionContext.FeaturesToMerge.Remove(featureToMerge);
-										solutionContext.FeatureList.Add(mergedFeature);
-										solutionContext.CurrentEntity.Feature = mergedFeature;
-										mergedFeature.EntityList.Add(solutionContext.CurrentEntity);
-									}
-								}
-							}
-						}
-						#endregion protected
-					
-					solutionContext.EntityList.Add(solutionContext.CurrentEntity);
 					solutionContext.CurrentEntity.ReverseInstance.ResetModified(false);
+					solutionContext.EntityList.Add(solutionContext.CurrentEntity);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Entity();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentEntity, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("EntityID", existingItem.EntityID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentEntity = existingItem;
+				}
+				#region protected
+				if (solutionContext.CurrentEntity.FeatureID != previousFeatureID)
+				{
+					solutionContext.CurrentEntity.AssignProperty("OldFeatureID", previousFeatureID);
+					solutionContext.CurrentEntity.ResetModified(false);
+				}
+				#endregion protected
 			}
 		}
 		

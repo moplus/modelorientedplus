@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -748,6 +748,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				DiagramID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -906,8 +907,9 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.DiagramList.Count > 0)
 					{
@@ -920,8 +922,9 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.DiagramList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.DiagramList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.DiagramList[DataHelper.GetRandomInt(0, solutionContext.DiagramList.Count - 1)];
 			}
 			isValidContext = false;
@@ -961,6 +964,14 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -977,28 +988,33 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentDiagram, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentDiagram.Solution = solutionContext;
+				solutionContext.CurrentDiagram.AddToParent();
 				Diagram existingItem = solutionContext.DiagramList.Find(i => i.DiagramID == solutionContext.CurrentDiagram.DiagramID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentDiagram.Solution = solutionContext;
-					solutionContext.CurrentDiagram.SetID();
+					// add new item to solution
 					solutionContext.CurrentDiagram.AssignProperty("DiagramID", solutionContext.CurrentDiagram.DiagramID);
-					Diagram foundItem = solutionContext.DiagramsToMerge.Find(i => i.DiagramID == solutionContext.CurrentDiagram.DiagramID);
-					if (foundItem != null)
-					{
-						Diagram forwardItem = new Diagram();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentDiagram.ForwardInstance = forwardItem;
-						solutionContext.CurrentDiagram.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.DiagramsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.DiagramList.Add(solutionContext.CurrentDiagram);
 					solutionContext.CurrentDiagram.ReverseInstance.ResetModified(false);
+					solutionContext.DiagramList.Add(solutionContext.CurrentDiagram);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Diagram();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentDiagram, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("DiagramID", existingItem.DiagramID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentDiagram = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

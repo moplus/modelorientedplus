@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME SolutionItemsListTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (IndexProperty sort IndexPropertyID)
+{
+<%%-
+Index Property: %%><%%=IndexName%%><%%-.%%><%%=PropertyName%%><%%-(%%><%%=IndexPropertyID%%><%%-)%%>
+}
+%%></CONTENT>

@@ -8,9 +8,23 @@
 //
 // this is a template used to test other templates
 //
+foreach (PropertyReference in Solution)
+{
+<%%-
+Property Reference: %%><%%=PropertyReferenceName%%>
+<%%-
+	Referenced Property: %%><%%=ReferencedProperty.PropertyName%%>
+}
+foreach (EntityReference in Solution)
+{
+<%%-
+Entity Reference: %%><%%=EntityReferenceName%%>
+<%%-
+	Referenced Entity: %%><%%=ReferencedEntity.EntityName%%>
+}/*
 foreach (Entity in Solution)
 {
 	<%%-
 	Entity Name is: %%><%%=BLLClassName%%>
-}
+}*/
 %%></CONTENT>

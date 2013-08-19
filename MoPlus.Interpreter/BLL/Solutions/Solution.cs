@@ -1275,7 +1275,25 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		/// <summary>This property gets/sets IsSampleMode.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public bool IsSampleMode { get; set; }
+		private bool _isSampleMode = false;
+		public bool IsSampleMode
+		{
+			get
+			{
+				return _isSampleMode;
+			}
+			set
+			{
+				_isSampleMode = value;
+				NeedsSample = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets NeedsSample (whether template gets a random data sample).</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public bool NeedsSample { get; set; }
 
 		private NameObjectCollection _logggedValues = null;
 		///--------------------------------------------------------------------------------
@@ -1908,9 +1926,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This method clears the model for the solution in order
-		/// for it to be rebuilt.  Forward engineering items are put in the forward lists
-		/// to be merged back later.</summary>
+		/// <summary>This method clears the model of reverse engineering items for the
+		/// solution in order for it to be rebuilt.</summary>
 		///--------------------------------------------------------------------------------
 		protected void ClearModel()
 		{
@@ -2460,31 +2477,130 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					}
 				}
 
-				// clear main lists
-				FeatureList = new EnterpriseDataObjectList<Feature>();
+				// clear main lists and add forward engineering data into model;
+				FeatureList = FeaturesToMerge;
 				EntityList = new EnterpriseDataObjectList<Entity>();
+				foreach (Entity item in EntitiesToMerge)
+				{
+					EntityList.Add(item);
+				}
 				PropertyList = new EnterpriseDataObjectList<Property>();
+				foreach (Property item in PropertiesToMerge)
+				{
+					PropertyList.Add(item);
+				}
+				PropertyReferenceList = new EnterpriseDataObjectList<PropertyReference>();
+				foreach (PropertyReference item in PropertyReferencesToMerge)
+				{
+					PropertyReferenceList.Add(item);
+				}
+				EntityReferenceList = new EnterpriseDataObjectList<EntityReference>();
+				foreach (EntityReference item in EntityReferencesToMerge)
+				{
+					EntityReferenceList.Add(item);
+				}
+				CollectionList = new EnterpriseDataObjectList<Collection>();
+				foreach (Collection item in CollectionsToMerge)
+				{
+					CollectionList.Add(item);
+				}
 				IndexList = new EnterpriseDataObjectList<Index>();
+				foreach (Index item in IndexesToMerge)
+				{
+					IndexList.Add(item);
+				}
 				IndexPropertyList = new EnterpriseDataObjectList<IndexProperty>();
+				foreach (IndexProperty item in IndexPropertiesToMerge)
+				{
+					IndexPropertyList.Add(item);
+				}
 				RelationshipList = new EnterpriseDataObjectList<Relationship>();
+				foreach (Relationship item in RelationshipsToMerge)
+				{
+					RelationshipList.Add(item);
+				}
 				RelationshipPropertyList = new EnterpriseDataObjectList<RelationshipProperty>();
+				foreach (RelationshipProperty item in RelationshipPropertiesToMerge)
+				{
+					RelationshipPropertyList.Add(item);
+				}
 				MethodList = new EnterpriseDataObjectList<Method>();
+				foreach (Method item in MethodsToMerge)
+				{
+					MethodList.Add(item);
+				}
 				ParameterList = new EnterpriseDataObjectList<Parameter>();
+				foreach (Parameter item in ParametersToMerge)
+				{
+					ParameterList.Add(item);
+				}
 				PropertyRelationshipList = new EnterpriseDataObjectList<PropertyRelationship>();
+				foreach (PropertyRelationship item in PropertyRelationshipsToMerge)
+				{
+					PropertyRelationshipList.Add(item);
+				}
 				MethodRelationshipList = new EnterpriseDataObjectList<MethodRelationship>();
-				WorkflowList = new EnterpriseDataObjectList<Workflow>();
+				foreach (MethodRelationship item in MethodRelationshipsToMerge)
+				{
+					MethodRelationshipList.Add(item);
+				}
+				WorkflowList = WorkflowsToMerge;
 				StageList = new EnterpriseDataObjectList<Stage>();
+				foreach (Stage item in StagesToMerge)
+				{
+					StageList.Add(item);
+				}
 				StageTransitionList = new EnterpriseDataObjectList<StageTransition>();
+				foreach (StageTransition item in StageTransitionsToMerge)
+				{
+					StageTransitionList.Add(item);
+				}
 				StepList = new EnterpriseDataObjectList<Step>();
+				foreach (Step item in StepsToMerge)
+				{
+					StepList.Add(item);
+				}
 				StepTransitionList = new EnterpriseDataObjectList<StepTransition>();
+				foreach (StepTransition item in StepTransitionsToMerge)
+				{
+					StepTransitionList.Add(item);
+				}
 				StateModelList = new EnterpriseDataObjectList<StateModel>();
+				foreach (StateModel item in StateModelsToMerge)
+				{
+					StateModelList.Add(item);
+				}
 				StateList = new EnterpriseDataObjectList<State>();
+				foreach (State item in StatesToMerge)
+				{
+					StateList.Add(item);
+				}
 				StateTransitionList = new EnterpriseDataObjectList<StateTransition>();
-				ModelList = new EnterpriseDataObjectList<Model>();
+				foreach (StateTransition item in StateTransitionsToMerge)
+				{
+					StateTransitionList.Add(item);
+				}
+				ModelList = ModelsToMerge;
 				ModelObjectList = new EnterpriseDataObjectList<ModelObject>();
+				foreach (ModelObject item in ModelObjectsToMerge)
+				{
+					ModelObjectList.Add(item);
+				}
 				ModelPropertyList = new EnterpriseDataObjectList<ModelProperty>();
+				foreach (ModelProperty item in ModelPropertiesToMerge)
+				{
+					ModelPropertyList.Add(item);
+				}
 				EnumerationList = new EnterpriseDataObjectList<Enumeration>();
+				foreach (Enumeration item in EnumerationsToMerge)
+				{
+					EnumerationList.Add(item);
+				}
 				ValueList = new EnterpriseDataObjectList<Value>();
+				foreach (Value item in ValuesToMerge)
+				{
+					ValueList.Add(item);
+				}
 			}
 			catch (ApplicationAbortException ex)
 			{
@@ -2547,8 +2663,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				EnumerationsToMerge = new EnterpriseDataObjectList<Enumeration>();
 				ValuesToMerge = new EnterpriseDataObjectList<Value>();
 				ClearModel();
-
-                // merge completely custom data
 
 				foreach (DatabaseSource item in DatabaseSourceList)
 				{
@@ -2629,400 +2743,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					// just continue with presenting the rest of the model
 				}
 
-				// add unmerged forward engineering data to model
-				foreach (AuditProperty property in AuditPropertiesToMerge)
-				{
-					AuditProperty newProperty = new AuditProperty();
-					newProperty.TransformDataFromObject(property, null, false);
-					newProperty.Solution = this;
-					AuditPropertyList.Add(newProperty);
-				}
-				foreach (Feature feature in FeaturesToMerge)
-				{
-					Feature newFeature = new Feature();
-					newFeature.TransformDataFromObject(feature, null, false);
-					newFeature.Solution = this;
-					FeatureList.Add(newFeature);
-				}
-				foreach (Entity entity in EntitiesToMerge)
-				{
-					Feature feature = FeatureList.FindByID(entity.FeatureID);
-					if (feature != null)
-					{
-						Entity newEntity = new Entity();
-						newEntity.TransformDataFromObject(entity, null, false);
-						newEntity.Feature = feature;
-						newEntity.Solution = this;
-						feature.EntityList.Add(newEntity);
-						EntityList.Add(newEntity);
-					}
-				}
-				foreach (Property property in PropertiesToMerge)
-				{
-					Entity entity = EntityList.FindByID(property.EntityID);
-					if (entity != null)
-					{
-						Property newProperty = new Property();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Entity = entity;
-						newProperty.Solution = this;
-						entity.PropertyList.Add(newProperty);
-						PropertyList.Add(newProperty);
-					}
-				}
-				foreach (PropertyReference property in PropertyReferencesToMerge)
-				{
-					Entity entity = EntityList.FindByID(property.EntityID);
-					if (entity != null)
-					{
-						PropertyReference newProperty = new PropertyReference();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Entity = entity;
-						newProperty.Solution = this;
-						entity.PropertyReferenceList.Add(newProperty);
-						PropertyReferenceList.Add(newProperty);
-					}
-				}
-				foreach (Collection property in CollectionsToMerge)
-				{
-					Entity entity = EntityList.FindByID(property.EntityID);
-					if (entity != null)
-					{
-						Collection newProperty = new Collection();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Entity = entity;
-						newProperty.Solution = this;
-						entity.CollectionList.Add(newProperty);
-						CollectionList.Add(newProperty);
-					}
-				}
-				foreach (EntityReference property in EntityReferencesToMerge)
-				{
-					Entity entity = EntityList.FindByID(property.EntityID);
-					if (entity != null)
-					{
-						EntityReference newProperty = new EntityReference();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Entity = entity;
-						newProperty.Solution = this;
-						entity.EntityReferenceList.Add(newProperty);
-						EntityReferenceList.Add(newProperty);
-					}
-				}
-				foreach (Method method in MethodsToMerge)
-				{
-					Entity entity = EntityList.FindByID(method.EntityID);
-					if (entity != null)
-					{
-						Method newMethod = new Method();
-						newMethod.TransformDataFromObject(method, null, false);
-						newMethod.Entity = entity;
-						newMethod.Solution = this;
-						entity.MethodList.Add(newMethod);
-						MethodList.Add(newMethod);
-					}
-				}
-				foreach (Parameter parameter in ParametersToMerge)
-				{
-					Method method = MethodList.FindByID(parameter.MethodID);
-					if (method != null)
-					{
-						Parameter newParameter = new Parameter();
-						newParameter.TransformDataFromObject(parameter, null, false);
-						newParameter.Method = method;
-						newParameter.Solution = this;
-						method.ParameterList.Add(newParameter);
-						ParameterList.Add(newParameter);
-					}
-				}
-				foreach (MethodRelationship relationship in MethodRelationshipsToMerge)
-				{
-					Method method = MethodList.FindByID(relationship.MethodID);
-					if (method != null)
-					{
-						MethodRelationship newRelationship = new MethodRelationship();
-						newRelationship.TransformDataFromObject(relationship, null, false);
-						newRelationship.Method = method;
-						newRelationship.Solution = this;
-						method.MethodRelationshipList.Add(newRelationship);
-						MethodRelationshipList.Add(newRelationship);
-					}
-				}
-				foreach (Index index in IndexesToMerge)
-				{
-					Entity entity = EntityList.FindByID(index.EntityID);
-					if (entity != null)
-					{
-						Index newIndex = new Index();
-						newIndex.TransformDataFromObject(index, null, false);
-						newIndex.Entity = entity;
-						newIndex.Solution = this;
-						entity.IndexList.Add(newIndex);
-						IndexList.Add(newIndex);
-					}
-				}
-				foreach (IndexProperty property in IndexPropertiesToMerge)
-				{
-					Index index = IndexList.FindByID(property.IndexID);
-					if (index != null)
-					{
-						IndexProperty newProperty = new IndexProperty();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Index = index;
-						newProperty.Solution = this;
-						index.IndexPropertyList.Add(newProperty);
-						IndexPropertyList.Add(newProperty);
-					}
-				}
-				foreach (Relationship relationship in RelationshipsToMerge)
-				{
-					Entity entity = EntityList.FindByID(relationship.EntityID);
-					if (entity != null)
-					{
-						Relationship newRelationship = new Relationship();
-						newRelationship.TransformDataFromObject(relationship, null, false);
-						newRelationship.Entity = entity;
-						newRelationship.Solution = this;
-						entity.RelationshipList.Add(newRelationship);
-						RelationshipList.Add(newRelationship);
-					}
-				}
-				foreach (RelationshipProperty property in RelationshipPropertiesToMerge)
-				{
-					Relationship relationship = RelationshipList.FindByID(property.RelationshipID);
-					if (relationship != null)
-					{
-						RelationshipProperty newProperty = new RelationshipProperty();
-						newProperty.TransformDataFromObject(property, null, false);
-						newProperty.Relationship = relationship;
-						newProperty.Solution = this;
-						relationship.RelationshipPropertyList.Add(newProperty);
-						RelationshipPropertyList.Add(newProperty);
-					}
-				}
-				foreach (PropertyRelationship relationship in PropertyRelationshipsToMerge)
-				{
-					if (CollectionList.FindByID(relationship.PropertyID) != null)
-					{
-						Collection property = CollectionList.FindByID(relationship.PropertyID);
-						PropertyRelationship newRelationship = new PropertyRelationship();
-						newRelationship.TransformDataFromObject(relationship, null, false);
-						newRelationship.PropertyBase = property;
-						newRelationship.Solution = this;
-						property.PropertyRelationshipList.Add(newRelationship);
-						PropertyRelationshipList.Add(newRelationship);
-					}
-					else if (EntityReferenceList.FindByID(relationship.PropertyID) != null)
-					{
-						EntityReference property = EntityReferenceList.FindByID(relationship.PropertyID);
-						if (property != null)
-						{
-							PropertyRelationship newRelationship = new PropertyRelationship();
-							newRelationship.TransformDataFromObject(relationship, null, false);
-							newRelationship.PropertyBase = property;
-							newRelationship.Solution = this;
-							property.PropertyRelationshipList.Add(newRelationship);
-							PropertyRelationshipList.Add(newRelationship);
-						}
-					}
-					else if (PropertyReferenceList.FindByID(relationship.PropertyID) != null)
-					{
-						PropertyReference property = PropertyReferenceList.FindByID(relationship.PropertyID);
-						if (property != null)
-						{
-							PropertyRelationship newRelationship = new PropertyRelationship();
-							newRelationship.TransformDataFromObject(relationship, null, false);
-							newRelationship.PropertyBase = property;
-							newRelationship.Solution = this;
-							property.PropertyRelationshipList.Add(newRelationship);
-							PropertyRelationshipList.Add(newRelationship);
-						}
-					}
-				}
-				foreach (StateModel item in StateModelsToMerge)
-				{
-					Entity parentItem = EntityList.FindByID(item.EntityID);
-					if (parentItem != null)
-					{
-						StateModel newItem = new StateModel();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Entity = parentItem;
-						newItem.Solution = this;
-						parentItem.StateModelList.Add(newItem);
-						StateModelList.Add(newItem);
-					}
-				}
-				foreach (State item in StatesToMerge)
-				{
-					StateModel parentItem = StateModelList.FindByID(item.StateModelID);
-					if (parentItem != null)
-					{
-						State newItem = new State();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.StateModel = parentItem;
-						newItem.Solution = this;
-						parentItem.StateList.Add(newItem);
-						StateList.Add(newItem);
-					}
-				}
-				foreach (StateTransition item in StateTransitionsToMerge)
-				{
-					State parentItem = StateList.FindByID((Guid)item.ToStateID);
-					if (parentItem != null)
-					{
-						StateTransition newItem = new StateTransition();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ToState = parentItem;
-						newItem.Solution = this;
-						parentItem.ToStateTransitionList.Add(newItem);
-						StateTransitionList.Add(newItem);
-					}
-				}
-				foreach (Model item in ModelsToMerge)
-				{
-					Model newItem = new Model();
-					newItem.TransformDataFromObject(item, null, false);
-					newItem.Solution = this;
-					ModelList.Add(newItem);
-				}
-				foreach (ModelObject item in ModelObjectsToMerge)
-				{
-					Model parentItem = ModelList.Find(i => i.ModelID == item.ModelID);
-					if (parentItem != null)
-					{
-						ModelObject newItem = new ModelObject();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Model = parentItem;
-						newItem.Solution = this;
-						parentItem.ModelObjectList.Add(newItem);
-						ModelObjectList.Add(newItem);
-					}
-				}
-				foreach (ObjectInstance item in ObjectInstancesToMerge)
-				{
-					ModelObject parentItem = ModelObjectList.Find(i => i.ModelObjectID == item.ModelObjectID);
-					if (parentItem != null)
-					{
-						ObjectInstance newItem = new ObjectInstance();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ModelObject = parentItem;
-						newItem.Solution = this;
-						parentItem.ObjectInstanceList.Add(newItem);
-						ObjectInstanceList.Add(newItem);
-					}
-				}
-				foreach (ModelProperty item in ModelPropertiesToMerge)
-				{
-					ModelObject parentItem = ModelObjectList.Find(i => i.ModelObjectID == item.ModelObjectID);
-					if (parentItem != null)
-					{
-						ModelProperty newItem = new ModelProperty();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ModelObject = parentItem;
-						newItem.Solution = this;
-						parentItem.ModelPropertyList.Add(newItem);
-						ModelPropertyList.Add(newItem);
-					}
-				}
-				foreach (PropertyInstance item in PropertyInstancesToMerge)
-				{
-					ObjectInstance parentItem = ObjectInstanceList.Find(i => i.ObjectInstanceID == item.ObjectInstanceID);
-					if (parentItem != null)
-					{
-						PropertyInstance newItem = new PropertyInstance();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ObjectInstance = parentItem;
-						newItem.Solution = this;
-						parentItem.PropertyInstanceList.Add(newItem);
-						PropertyInstanceList.Add(newItem);
-					}
-				}
-				foreach (Enumeration item in EnumerationsToMerge)
-				{
-					Model parentItem = ModelList.Find(i => i.ModelID == item.ModelID);
-					if (parentItem != null)
-					{
-						Enumeration newItem = new Enumeration();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Model = parentItem;
-						newItem.Solution = this;
-						parentItem.EnumerationList.Add(newItem);
-						EnumerationList.Add(newItem);
-					}
-				}
-				foreach (Value item in ValuesToMerge)
-				{
-					Enumeration parentItem = EnumerationList.Find(i => i.EnumerationID == item.EnumerationID);
-					if (parentItem != null)
-					{
-						Value newItem = new Value();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Enumeration = parentItem;
-						newItem.Solution = this;
-						parentItem.ValueList.Add(newItem);
-						ValueList.Add(newItem);
-					}
-				}
-				foreach (Workflow item in WorkflowsToMerge)
-				{
-					Workflow newItem = new Workflow();
-					newItem.TransformDataFromObject(item, null, false);
-					newItem.Solution = this;
-					WorkflowList.Add(newItem);
-				}
-				foreach (Stage item in StagesToMerge)
-				{
-					Workflow parentItem = WorkflowList.FindByID((Guid)item.WorkflowID);
-					if (parentItem != null)
-					{
-						Stage newItem = new Stage();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Workflow = parentItem;
-						newItem.Solution = this;
-						parentItem.StageList.Add(newItem);
-						StageList.Add(newItem);
-					}
-				}
-				foreach (StageTransition item in StageTransitionsToMerge)
-				{
-					Stage parentItem = StageList.FindByID((Guid)item.ToStageID);
-					if (parentItem != null)
-					{
-						StageTransition newItem = new StageTransition();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ToStage = parentItem;
-						newItem.Solution = this;
-						parentItem.ToStageTransitionList.Add(newItem);
-						StageTransitionList.Add(newItem);
-					}
-				}
-				foreach (Step item in StepsToMerge)
-				{
-					Stage parentItem = StageList.FindByID((Guid)item.StageID);
-					if (parentItem != null)
-					{
-						Step newItem = new Step();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.Stage = parentItem;
-						newItem.Solution = this;
-						parentItem.StepList.Add(newItem);
-						StepList.Add(newItem);
-					}
-				}
-				foreach (StepTransition item in StepTransitionsToMerge)
-				{
-					Step parentItem = StepList.FindByID((Guid)item.ToStepID);
-					if (parentItem != null)
-					{
-						StepTransition newItem = new StepTransition();
-						newItem.TransformDataFromObject(item, null, false);
-						newItem.ToStep = parentItem;
-						newItem.Solution = this;
-						parentItem.ToStepTransitionList.Add(newItem);
-						StepTransitionList.Add(newItem);
-					}
-				}
-
 				// link model references and sort
 				FeatureList.Sort("FeatureName", Data.SortDirection.Ascending);
 				foreach (Feature loopFeature in FeatureList)
@@ -3052,7 +2772,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						{
 							if (loopProperty.ReferencedProperty == null)
 							{
-								loopProperty.ReferencedProperty = PropertyList.FindByID(loopProperty.PropertyID);
+								loopProperty.ReferencedProperty = PropertyList.FindByID(loopProperty.ReferencedPropertyID);
 							}
 							loopProperty.Entity = loopEntity;
 							loopProperty.Solution = this;

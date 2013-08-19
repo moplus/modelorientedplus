@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>5/22/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -796,6 +796,7 @@ namespace MoPlus.Interpreter.BLL.Models
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				ModelID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -973,8 +974,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.ModelList.Count > 0)
 					{
@@ -987,8 +989,9 @@ namespace MoPlus.Interpreter.BLL.Models
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.ModelList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.ModelList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.ModelList[DataHelper.GetRandomInt(0, solutionContext.ModelList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1028,6 +1031,14 @@ namespace MoPlus.Interpreter.BLL.Models
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1044,28 +1055,33 @@ namespace MoPlus.Interpreter.BLL.Models
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentModel, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentModel.Solution = solutionContext;
+				solutionContext.CurrentModel.AddToParent();
 				Model existingItem = solutionContext.ModelList.Find(i => i.ModelID == solutionContext.CurrentModel.ModelID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentModel.Solution = solutionContext;
-					solutionContext.CurrentModel.SetID();
+					// add new item to solution
 					solutionContext.CurrentModel.AssignProperty("ModelID", solutionContext.CurrentModel.ModelID);
-					Model foundItem = solutionContext.ModelsToMerge.Find(i => i.ModelID == solutionContext.CurrentModel.ModelID);
-					if (foundItem != null)
-					{
-						Model forwardItem = new Model();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentModel.ForwardInstance = forwardItem;
-						solutionContext.CurrentModel.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.ModelsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.ModelList.Add(solutionContext.CurrentModel);
 					solutionContext.CurrentModel.ReverseInstance.ResetModified(false);
+					solutionContext.ModelList.Add(solutionContext.CurrentModel);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Model();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentModel, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("ModelID", existingItem.ModelID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentModel = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

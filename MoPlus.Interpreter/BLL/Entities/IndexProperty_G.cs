@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -250,7 +250,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 				#region protected
 				if (String.IsNullOrEmpty(_defaultSourceName))
 				{
-					_defaultSourceName = IndexName + "." + PropertyName;
+					if (Property == null)
+					{
+						Property = Solution.PropertyList.Find(i => i.PropertyID == PropertyID);
+					}
+					if (Index != null)
+					{
+						if (Property != null)
+						{
+							_defaultSourceName = Index.DefaultSourceName + "." + DefaultSourcePrefix + Property.DefaultSourceName;
+						}
+						else
+						{
+							_defaultSourceName = Index.DefaultSourceName + "." + DefaultSourcePrefix + SourceIndexProperty.PropertyName;
+						}
+					}
+					else
+					{
+						if (Property != null)
+						{
+							_defaultSourceName = DefaultSourcePrefix + Property.DefaultSourceName;
+						}
+						else
+						{
+							_defaultSourceName = DefaultSourcePrefix + SourceIndexProperty.PropertyName;
+						}
+					}
 				}
 				#endregion protected
 				
@@ -722,6 +747,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				IndexPropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -870,8 +896,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Index)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Index)
 				{
+					solutionContext.NeedsSample = false;
 					Index parent = modelContext as Index;
 					if (parent.IndexPropertyList.Count > 0)
 					{
@@ -884,8 +911,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.IndexPropertyList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.IndexPropertyList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.IndexPropertyList[DataHelper.GetRandomInt(0, solutionContext.IndexPropertyList.Count - 1)];
 			}
 			isValidContext = false;
@@ -929,6 +957,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Index index = Solution.IndexList.Find(i => i.IndexID == IndexID);
+			if (index != null)
+			{
+				Index = index;
+				SetID();  // id (from saved ids) may change based on parent info
+				IndexProperty indexProperty = index.IndexPropertyList.Find(i => i.IndexPropertyID == IndexPropertyID);
+				if (indexProperty != null)
+				{
+					if (indexProperty != this)
+					{
+						index.IndexPropertyList.Remove(indexProperty);
+						index.IndexPropertyList.Add(this);
+					}
+				}
+				else
+				{
+					index.IndexPropertyList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -945,40 +999,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentIndexProperty, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentIndexProperty.Solution = solutionContext;
+				solutionContext.CurrentIndexProperty.AddToParent();
 				IndexProperty existingItem = solutionContext.IndexPropertyList.Find(i => i.IndexPropertyID == solutionContext.CurrentIndexProperty.IndexPropertyID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentIndexProperty.Solution = solutionContext;
-					Property property = solutionContext.PropertyList.Find(i => i.PropertyID == solutionContext.CurrentIndexProperty.PropertyID);
-					if (property != null)
-					{
-						solutionContext.CurrentIndexProperty.Property = property;
-						property.IndexPropertyList.Add(solutionContext.CurrentIndexProperty);
-					}
-					Index index = solutionContext.IndexList.Find(i => i.IndexID == solutionContext.CurrentIndexProperty.IndexID);
-					if (index != null)
-					{
-						solutionContext.CurrentIndexProperty.Index = index;
-						index.IndexPropertyList.Add(solutionContext.CurrentIndexProperty);
-					}
-					solutionContext.CurrentIndexProperty.SetID();
+					// add new item to solution
 					solutionContext.CurrentIndexProperty.AssignProperty("IndexPropertyID", solutionContext.CurrentIndexProperty.IndexPropertyID);
-					IndexProperty foundItem = solutionContext.IndexPropertiesToMerge.Find(i => i.IndexPropertyID == solutionContext.CurrentIndexProperty.IndexPropertyID);
-					if (foundItem != null)
-					{
-						IndexProperty forwardItem = new IndexProperty();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentIndexProperty.ForwardInstance = forwardItem;
-						solutionContext.CurrentIndexProperty.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.IndexPropertiesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.IndexPropertyList.Add(solutionContext.CurrentIndexProperty);
 					solutionContext.CurrentIndexProperty.ReverseInstance.ResetModified(false);
+					solutionContext.IndexPropertyList.Add(solutionContext.CurrentIndexProperty);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new IndexProperty();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentIndexProperty, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("IndexPropertyID", existingItem.IndexPropertyID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentIndexProperty = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME RawItems
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Feature sort FeatureName)
+{
+	<%%-
+	Feature: %%><%%=FeatureName%%>
+}
+foreach (Entity sort EntityName)
+{
+	<%%-
+	Entity: %%><%%=EntityName%%>
+}
+foreach (Property sort PropertyName)
+{
+	<%%-
+	Property: %%><%%=PropertyName%%>
+}
+%%></CONTENT>

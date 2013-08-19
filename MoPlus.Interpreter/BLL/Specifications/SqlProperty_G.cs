@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -901,6 +901,32 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 		}
 		
+		protected BLL.Specifications.SqlForeignKey _sqlForeignKey = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the SqlForeignKey.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Specifications.SqlForeignKey SqlForeignKey
+		{
+			get
+			{
+				return _sqlForeignKey;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_sqlForeignKeyName = value.SqlForeignKeyName;
+					if (_sqlForeignKey != null && _sqlForeignKey.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					SqlForeignKeyID = value.SqlForeignKeyID;
+				}
+				_sqlForeignKey = value;
+			}
+		}
+		
 		protected BLL.Specifications.SqlDatabase _sqlDatabase = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the SqlDatabase.</summary>
@@ -925,32 +951,6 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					SqlDatabaseID = value.SqlDatabaseID;
 				}
 				_sqlDatabase = value;
-			}
-		}
-		
-		protected BLL.Specifications.SqlForeignKey _sqlForeignKey = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the SqlForeignKey.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Specifications.SqlForeignKey SqlForeignKey
-		{
-			get
-			{
-				return _sqlForeignKey;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_sqlForeignKeyName = value.SqlForeignKeyName;
-					if (_sqlForeignKey != null && _sqlForeignKey.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					SqlForeignKeyID = value.SqlForeignKeyID;
-				}
-				_sqlForeignKey = value;
 			}
 		}
 		
@@ -1243,6 +1243,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				SqlPropertyID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1273,8 +1274,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				ForwardInstance = null;
 			}
 			SqlColumn = null;
-			SqlDatabase = null;
 			SqlForeignKey = null;
+			SqlDatabase = null;
 			SqlForeignKeyColumn = null;
 			SqlIndex = null;
 			SqlIndexedColumn = null;
@@ -1383,8 +1384,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is SqlDatabase)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is SqlDatabase)
 				{
+					solutionContext.NeedsSample = false;
 					SqlDatabase parent = modelContext as SqlDatabase;
 					if (parent.SqlPropertyList.Count > 0)
 					{

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -959,34 +959,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Entities.Entity _entity = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Entity.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Entities.Entity Entity
-		{
-			get
-			{
-				return _entity;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_entityName = value.EntityName;
-					_entityTypeCode = value.EntityTypeCode;
-					_identifierTypeCode = value.IdentifierTypeCode;
-					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					EntityID = value.EntityID;
-				}
-				_entity = value;
-			}
-		}
-		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -1012,6 +984,34 @@ namespace MoPlus.Interpreter.BLL.Entities
 					ReferencedEntityID = value.EntityID;
 				}
 				_referencedEntity = value;
+			}
+		}
+		
+		protected BLL.Entities.Entity _entity = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Entity.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Entities.Entity Entity
+		{
+			get
+			{
+				return _entity;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_entityName = value.EntityName;
+					_entityTypeCode = value.EntityTypeCode;
+					_identifierTypeCode = value.IdentifierTypeCode;
+					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					EntityID = value.EntityID;
+				}
+				_entity = value;
 			}
 		}
 		
@@ -1208,6 +1208,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public virtual void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				RelationshipID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -1237,8 +1238,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Entity = null;
 			ReferencedEntity = null;
+			Entity = null;
 			Solution = null;
 			if (_methodRelationshipList != null)
 			{
@@ -1393,8 +1394,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Entity)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Entity)
 				{
+					solutionContext.NeedsSample = false;
 					Entity parent = modelContext as Entity;
 					if (parent.RelationshipList.Count > 0)
 					{
@@ -1437,8 +1439,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.RelationshipList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.RelationshipList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.RelationshipList[DataHelper.GetRandomInt(0, solutionContext.RelationshipList.Count - 1)];
 			}
 			isValidContext = false;
@@ -1486,6 +1489,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			Entity entity = Solution.EntityList.Find(i => i.EntityID == EntityID);
+			if (entity != null)
+			{
+				Entity = entity;
+				SetID();  // id (from saved ids) may change based on parent info
+				Relationship relationship = entity.RelationshipList.Find(i => i.RelationshipID == RelationshipID);
+				if (relationship != null)
+				{
+					if (relationship != this)
+					{
+						entity.RelationshipList.Remove(relationship);
+						entity.RelationshipList.Add(this);
+					}
+				}
+				else
+				{
+					entity.RelationshipList.Add(this);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -1502,40 +1531,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentRelationship, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentRelationship.Solution = solutionContext;
+				solutionContext.CurrentRelationship.AddToParent();
 				Relationship existingItem = solutionContext.RelationshipList.Find(i => i.RelationshipID == solutionContext.CurrentRelationship.RelationshipID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentRelationship.Solution = solutionContext;
-					Entity entity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentRelationship.EntityID);
-					if (entity != null)
-					{
-						solutionContext.CurrentRelationship.Entity = entity;
-						entity.RelationshipList.Add(solutionContext.CurrentRelationship);
-					}
-					Entity referencedEntity = solutionContext.EntityList.Find(i => i.EntityID == solutionContext.CurrentRelationship.ReferencedEntityID);
-					if (referencedEntity != null)
-					{
-						solutionContext.CurrentRelationship.ReferencedEntity = referencedEntity;
-						referencedEntity.ReferencedRelationshipList.Add(solutionContext.CurrentRelationship);
-					}
-					solutionContext.CurrentRelationship.SetID();
+					// add new item to solution
 					solutionContext.CurrentRelationship.AssignProperty("RelationshipID", solutionContext.CurrentRelationship.RelationshipID);
-					Relationship foundItem = solutionContext.RelationshipsToMerge.Find(i => i.RelationshipID == solutionContext.CurrentRelationship.RelationshipID);
-					if (foundItem != null)
-					{
-						Relationship forwardItem = new Relationship();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentRelationship.ForwardInstance = forwardItem;
-						solutionContext.CurrentRelationship.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.RelationshipsToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.RelationshipList.Add(solutionContext.CurrentRelationship);
 					solutionContext.CurrentRelationship.ReverseInstance.ResetModified(false);
+					solutionContext.RelationshipList.Add(solutionContext.CurrentRelationship);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new Relationship();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentRelationship, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("RelationshipID", existingItem.RelationshipID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentRelationship = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		

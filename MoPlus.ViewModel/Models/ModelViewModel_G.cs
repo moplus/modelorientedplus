@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/12/2013</CreatedDate>
+	/// <CreatedDate>8/18/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelViewModel : DialogEditWorkspaceViewModel
@@ -886,20 +886,20 @@ namespace MoPlus.ViewModel.Models
 			Items.Clear();
 			if (loadChildren == true)
 			{
-				// attach Enumerations
-				if (EnumerationsFolder == null)
-				{
-					EnumerationsFolder = new EnumerationsViewModel(model, Solution);
-					EnumerationsFolder.Updated += new EventHandler(Children_Updated);
-					Items.Add(EnumerationsFolder);
-				}
-								
 				// attach ModelObjects
 				if (ModelObjectsFolder == null)
 				{
 					ModelObjectsFolder = new ModelObjectsViewModel(model, Solution);
 					ModelObjectsFolder.Updated += new EventHandler(Children_Updated);
 					Items.Add(ModelObjectsFolder);
+				}
+								
+				// attach Enumerations
+				if (EnumerationsFolder == null)
+				{
+					EnumerationsFolder = new EnumerationsViewModel(model, Solution);
+					EnumerationsFolder.Updated += new EventHandler(Children_Updated);
+					Items.Add(EnumerationsFolder);
 				}
 				#region protected
 				#endregion protected
@@ -917,8 +917,8 @@ namespace MoPlus.ViewModel.Models
 		{
 			if (refreshChildren == true || refreshLevel > 0)
 			{
-				EnumerationsFolder.Refresh(refreshChildren, refreshLevel - 1);
 				ModelObjectsFolder.Refresh(refreshChildren, refreshLevel - 1);
+				EnumerationsFolder.Refresh(refreshChildren, refreshLevel - 1);
 			}
 			
 			#region protected
@@ -946,11 +946,11 @@ namespace MoPlus.ViewModel.Models
 				Model.ReverseInstance = null;
 				Model.IsAutoUpdated = true;
 			}
-			if (EnumerationsFolder.HasErrors == true)
+			if (ModelObjectsFolder.HasErrors == true)
 			{
 				HasErrors = true;
 			}
-			if (ModelObjectsFolder.HasErrors == true)
+			if (EnumerationsFolder.HasErrors == true)
 			{
 				HasErrors = true;
 			}
@@ -964,17 +964,17 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		protected override void OnDispose()
 		{
-			if (EnumerationsFolder != null)
-			{
-				EnumerationsFolder.Updated -= Children_Updated;
-				EnumerationsFolder.Dispose();
-				EnumerationsFolder = null;
-			}
 			if (ModelObjectsFolder != null)
 			{
 				ModelObjectsFolder.Updated -= Children_Updated;
 				ModelObjectsFolder.Dispose();
 				ModelObjectsFolder = null;
+			}
+			if (EnumerationsFolder != null)
+			{
+				EnumerationsFolder.Updated -= Children_Updated;
+				EnumerationsFolder.Dispose();
+				EnumerationsFolder = null;
 			}
 			if (_editModel != null)
 			{
@@ -991,11 +991,11 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		public bool ChildrenHaveAnyCustomizations()
 		{
-			if (EnumerationsFolder != null && EnumerationsFolder.HasCustomizations == true)
+			if (ModelObjectsFolder != null && ModelObjectsFolder.HasCustomizations == true)
 			{
 				return true;
 			}
-			if (ModelObjectsFolder != null && ModelObjectsFolder.HasCustomizations == true)
+			if (EnumerationsFolder != null && EnumerationsFolder.HasCustomizations == true)
 			{
 				return true;
 			}
@@ -1033,12 +1033,12 @@ namespace MoPlus.ViewModel.Models
 		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
 		{
 			EditWorkspaceViewModel parentModel = null;
-			parentModel = EnumerationsFolder.FindParentViewModel(data);
+			parentModel = ModelObjectsFolder.FindParentViewModel(data);
 			if (parentModel != null)
 			{
 				return parentModel;
 			}
-			parentModel = ModelObjectsFolder.FindParentViewModel(data);
+			parentModel = EnumerationsFolder.FindParentViewModel(data);
 			if (parentModel != null)
 			{
 				return parentModel;

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
+	/// <CreatedDate>8/19/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -444,6 +444,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public override void SetID()
 		{
+			_defaultSourceName = null;
 			if (Solution.UsedModelIDs[DefaultSourceName].GetGuid() != Guid.Empty)
 			{
 				SpecificationSourceID = Solution.UsedModelIDs[DefaultSourceName].GetGuid();
@@ -582,8 +583,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					return modelContext;
 				}
-				else if (solutionContext.IsSampleMode == true && modelContext is Solution)
+				else if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && modelContext is Solution)
 				{
+					solutionContext.NeedsSample = false;
 					Solution parent = modelContext as Solution;
 					if (parent.XmlSourceList.Count > 0)
 					{
@@ -596,8 +598,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				if (modelContext is Solution) break;
 				modelContext = modelContext.GetParentItem();
 			}
-			if (solutionContext.IsSampleMode == true && solutionContext.XmlSourceList.Count > 0)
+			if (solutionContext.IsSampleMode == true && solutionContext.NeedsSample == true && solutionContext.XmlSourceList.Count > 0)
 			{
+				solutionContext.NeedsSample = false;
 				return solutionContext.XmlSourceList[DataHelper.GetRandomInt(0, solutionContext.XmlSourceList.Count - 1)];
 			}
 			isValidContext = false;
@@ -637,6 +640,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method adds this item to the parent, if not found.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToParent()
+		{
+			SetID();
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method adds the current item to the solution, if it is valid
 		/// and not already present in the solution.</summary>
 		/// 
@@ -653,28 +664,33 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					templateContext.LogException(solutionContext, solutionContext.CurrentXmlSource, validationErrors, lineNumber, InterpreterTypeCode.Output);
 				}
+				// link item to known id, solution, and parent
+				solutionContext.CurrentXmlSource.Solution = solutionContext;
+				solutionContext.CurrentXmlSource.AddToParent();
 				XmlSource existingItem = solutionContext.XmlSourceList.Find(i => i.SpecificationSourceID == solutionContext.CurrentXmlSource.SpecificationSourceID);
 				if (existingItem == null)
 				{
-					solutionContext.CurrentXmlSource.Solution = solutionContext;
-					solutionContext.CurrentXmlSource.SetID();
+					// add new item to solution
 					solutionContext.CurrentXmlSource.AssignProperty("SpecificationSourceID", solutionContext.CurrentXmlSource.SpecificationSourceID);
-					XmlSource foundItem = solutionContext.XmlSourcesToMerge.Find(i => i.SpecificationSourceID == solutionContext.CurrentXmlSource.SpecificationSourceID);
-					if (foundItem != null)
-					{
-						XmlSource forwardItem = new XmlSource();
-						forwardItem.TransformDataFromObject(foundItem, null, false);
-						solutionContext.CurrentXmlSource.ForwardInstance = forwardItem;
-						solutionContext.CurrentXmlSource.TransformDataFromObject(forwardItem, null, false, true);
-						solutionContext.XmlSourcesToMerge.Remove(foundItem);
-					}
-					
-					#region protected
-					#endregion protected
-					
-					solutionContext.XmlSourceList.Add(solutionContext.CurrentXmlSource);
 					solutionContext.CurrentXmlSource.ReverseInstance.ResetModified(false);
+					solutionContext.XmlSourceList.Add(solutionContext.CurrentXmlSource);
 				}
+				else
+				{
+					// update existing item in solution
+					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
+					{
+						existingItem.ForwardInstance = new XmlSource();
+						existingItem.ForwardInstance.TransformDataFromObject(existingItem, null, false);
+					}
+					existingItem.TransformDataFromObject(solutionContext.CurrentXmlSource, null, false);
+					existingItem.AddToParent();
+					existingItem.AssignProperty("SpecificationSourceID", existingItem.SpecificationSourceID);
+					existingItem.ReverseInstance.ResetModified(false);
+					solutionContext.CurrentXmlSource = existingItem;
+				}
+				#region protected
+				#endregion protected
 			}
 		}
 		
