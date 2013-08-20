@@ -15,25 +15,13 @@ using MoPlus.ViewModel.Solutions;
 namespace MoPlus.ViewModel.Tests.Staging
 {
     [TestClass]
-    public class SimpleTest
+    public class SimpleTest: BaseTest
     {
         /* This tests creates a simple solution containing 1 feature and 1 entity (forward-engineered). There's 1
          * solution template, which iterates the entities and outputs a simple text file containing - featurename-entityname
          */
-
-        [TestMethod]
-        public void DoTest()
+        protected override void DoExecute(string playground)
         {
-            var tempPath = Path.GetTempPath();
-            var Playground = Path.Combine(tempPath, "MoPlus-TestRun-" + Guid.NewGuid().ToString());
-
-            if (Directory.Exists(Playground))
-            {
-                // cleanup potential leftovers
-                Directory.Delete(Playground, true);
-            }
-            Directory.CreateDirectory(Playground);
-
             var solutionDesigner = new DesignerViewModel();
 
             solutionDesigner.Mediator.Register(MediatorMessages.Event_OutputChanged, new Action<StatusEventArgs>(OutputChanged));
@@ -52,8 +40,8 @@ namespace MoPlus.ViewModel.Tests.Staging
             solutionVM.CompanyName = "TestCompany";
             solutionVM.ProductName = "TestProduct";
             solutionVM.ProductVersion = "0.1";
-            solutionVM.SolutionPath = Path.Combine(Playground, "TestSolution.xml");
-            solutionVM.TemplatePath = Path.Combine(Playground, "SolutionFile.mpt");
+            solutionVM.SolutionPath = Path.Combine(playground, "TestSolution.xml");
+            solutionVM.TemplatePath = Path.Combine(playground, "SolutionFile.mpt");
             solutionVM.Update();
             var solution = solutionVM.Solution;
             if (solution == null)
@@ -134,9 +122,8 @@ namespace MoPlus.ViewModel.Tests.Staging
             }
             var expectedOutput = "Entities:\r\n" +
                                  " - TestFeature-TestEntity\r\n";
-            var output = File.ReadAllText(Path.Combine(Playground, "TestSolution.sln"));
+            var output = File.ReadAllText(Path.Combine(playground, "TestSolution.sln"));
             Assert.AreEqual(expectedOutput, output);
-            Directory.Delete(Playground, true);
         }
 
         private void StatusChanged(StatusEventArgs statusEventArgs)

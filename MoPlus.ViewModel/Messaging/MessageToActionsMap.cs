@@ -27,6 +27,15 @@ namespace MoPlus.ViewModel.Messaging
 	{
 		//store a hash where the key is the message and the value is the list of Actions to call
 		readonly Dictionary<string, List<WeakAction>> map = new Dictionary<string, List<WeakAction>>();
+
+        /// <summary>
+        /// Watch out. This method clears the map. This way we can startover in tests.
+        /// </summary>
+	    internal void Clear()
+	    {
+	        map.Clear();
+	    }
+        
 		
 		/// <summary>
 		/// Adds an action to the list

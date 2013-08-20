@@ -332,7 +332,7 @@ namespace MoPlus.ViewModel
 		///--------------------------------------------------------------------------------
 		public Guid ItemID { get; set; }
 
-		static readonly Mediator mediator = new Mediator();
+		internal static readonly Mediator mediator = new Mediator();
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets the mediator for passing messages with data.</summary>
 		///--------------------------------------------------------------------------------

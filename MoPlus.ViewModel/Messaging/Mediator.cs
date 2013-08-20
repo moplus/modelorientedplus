@@ -28,6 +28,14 @@ namespace MoPlus.ViewModel.Messaging
 	{
 		readonly MessageToActionsMap invocationList = new MessageToActionsMap();
 
+        /// <summary>
+        /// Be careful, this method resets the InvocationList. That way all registered handlers are removed.
+        /// </summary>
+	    internal void Clear()
+	    {
+	        invocationList.Clear();
+	    }
+
 		/// <summary>
 		/// Register a ViewModel to the mediator notifications
 		/// This will iterate through all methods of the target passed and will register all methods that are decorated with the MediatorMessageSink Attribute
