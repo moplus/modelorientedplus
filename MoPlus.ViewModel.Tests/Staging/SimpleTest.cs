@@ -17,13 +17,21 @@ namespace MoPlus.ViewModel.Tests.Staging
     [TestClass]
     public class SimpleTest
     {
+        /* This tests creates a simple solution containing 1 feature and 1 entity (forward-engineered). There's 1
+         * solution template, which iterates the entities and outputs a simple text file containing - featurename-entityname
+         */
+
         [TestMethod]
         public void DoTest()
         {
             var tempPath = Path.GetTempPath();
             var Playground = Path.Combine(tempPath, "MoPlus-TestRun-" + Guid.NewGuid().ToString());
-            
-            Directory.Delete(Playground, true);
+
+            if (Directory.Exists(Playground))
+            {
+                // cleanup potential leftovers
+                Directory.Delete(Playground, true);
+            }
             Directory.CreateDirectory(Playground);
 
             var solutionDesigner = new DesignerViewModel();
@@ -121,7 +129,7 @@ namespace MoPlus.ViewModel.Tests.Staging
                 });
                 solutionVM.Updated += updated;
                 solutionVM.UpdateOutputSolution();
-                Assert.IsTrue(resetEvent.WaitOne(15000), "Timeout waiting for solution update!");
+                Assert.IsTrue(resetEvent.WaitOne(60000), "Timeout waiting for solution update!");
                 solutionVM.Updated -= updated;
             }
             var expectedOutput = "Entities:\r\n" +
