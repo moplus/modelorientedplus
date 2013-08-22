@@ -12,7 +12,7 @@ if (LIBIsModelTable == true)
 	CurrentEntity = New()
 	CurrentEntity.SourceName = SqlTableName
 	CurrentEntity.EntityName = MDLEntityName
-//	CurrentEntity.DbSchema = Schema
+	CurrentEntity.GroupName = Schema
 	CurrentEntity.Tags = "DB"
 	
 	// set feature

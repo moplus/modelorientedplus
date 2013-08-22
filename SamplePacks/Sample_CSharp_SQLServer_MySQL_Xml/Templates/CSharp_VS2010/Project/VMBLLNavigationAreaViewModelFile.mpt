@@ -70,12 +70,14 @@ namespace %%><%%=Namespace%%><%%-
 			{
 			<%%-
 			NavigationItemViewModel %%><%%=FeatureName.CamelCase()%%><%%-Feature = new NavigationItemViewModel();
-			%%><%%=FeatureName.CamelCase()%%><%%-Feature.Name = "%%><%%=FeatureName%%><%%-";%%>
+			%%><%%=FeatureName.CamelCase()%%><%%-Feature.Name = "%%><%%=FeatureName%%><%%-";
+			%%><%%=FeatureName.CamelCase()%%><%%-Feature.DisplayName = "%%><%%=FeatureName.CapitalWordCase()%%><%%-";%%>
 				foreach (Entity where Tags.Contains("DB") == true)
 				{
 					<%%-
 			ManageItemViewModel %%><%%=BLLPluralEntityName.CamelCase()%%><%%- = new ManageItemViewModel();
 			%%><%%=BLLPluralEntityName.CamelCase()%%><%%-.Name = "Manage %%><%%=BLLPluralEntityName%%><%%-";
+			%%><%%=BLLPluralEntityName.CamelCase()%%><%%-.DisplayName = "Manage %%><%%=BLLPluralEntityName.CapitalWordCase()%%><%%-";
 			%%><%%=FeatureName.CamelCase()%%><%%-Feature.Items.Add(%%><%%=BLLPluralEntityName.CamelCase()%%><%%-);%%>
 				}
 			<%%-

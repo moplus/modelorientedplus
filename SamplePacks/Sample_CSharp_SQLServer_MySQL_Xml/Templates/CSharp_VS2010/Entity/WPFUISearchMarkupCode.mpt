@@ -94,7 +94,7 @@ if (CurrentMethod != null)
 				<ColumnDefinition Width="*"></ColumnDefinition>
 				<ColumnDefinition Width="10"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName%%><%%- Search" />%%>
+			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName.CapitalWordCase()%%><%%- Search" />%%>
 log("WPFUISearchMarkupCode", "RowIndex", 0)
 if (CurrentMethod != null)
 {
@@ -104,7 +104,7 @@ if (CurrentMethod != null)
 		if (ReferencedProperty.DataTypeCode != 12 /* Boolean */)
 		{
 			<%%-
-			<Label Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName%%><%%-:" />%%>
+			<Label Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-:" />%%>
 		}
 	}
 }
@@ -148,12 +148,12 @@ foreach (Entity in EntityAndBaseEntities)
 		if (DataTypeCode != 12 /* Boolean */)
 		{
 				<%%-
-					<DataGridTextColumn Header="%%><%%=BLLPropertyName%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />%%>
+					<DataGridTextColumn Header="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />%%>
 		}
 		else
 		{
 				<%%-
-					<DataGridCheckBoxColumn Header="%%><%%=BLLPropertyName%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />%%>
+					<DataGridCheckBoxColumn Header="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />%%>
 		}
 	}
 }

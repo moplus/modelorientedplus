@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>8/22/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class EntityViewModel : DialogEditWorkspaceViewModel
@@ -340,7 +340,7 @@ namespace MoPlus.ViewModel.Entities
 		{
 			get
 			{
-				return string.IsNullOrEmpty(EntityNameValidationMessage + EntityTypeCodeValidationMessage + IdentifierTypeCodeValidationMessage + SelectFeatureIDValidationMessage + BaseEntityIDValidationMessage + DescriptionValidationMessage);
+				return string.IsNullOrEmpty(EntityNameValidationMessage + EntityTypeCodeValidationMessage + IdentifierTypeCodeValidationMessage + SelectFeatureIDValidationMessage + BaseEntityIDValidationMessage + GroupNameValidationMessage + DescriptionValidationMessage);
 			}
 		}
  
@@ -403,6 +403,10 @@ namespace MoPlus.ViewModel.Entities
 			OnPropertyChanged("BaseEntityID");
 			OnPropertyChanged("BaseEntityIDCustomized");
 			OnPropertyChanged("BaseEntityIDValidationMessage");
+			
+			OnPropertyChanged("GroupName");
+			OnPropertyChanged("GroupNameCustomized");
+			OnPropertyChanged("GroupNameValidationMessage");
 			
 			OnPropertyChanged("Description");
 			OnPropertyChanged("DescriptionCustomized");
@@ -733,6 +737,64 @@ namespace MoPlus.ViewModel.Entities
 			get
 			{
 				return EditEntity.ValidateBaseEntityID();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the GroupNameLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string GroupNameLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_GroupNameProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets GroupName.</summary>
+		///--------------------------------------------------------------------------------
+		public string GroupName
+		{
+			get
+			{
+				return EditEntity.GroupName;
+			}
+			set
+			{
+				EditEntity.GroupName = value;
+				OnPropertyChanged("GroupName");
+				OnPropertyChanged("TabTitle");
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets GroupNameCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool GroupNameCustomized
+		{
+			get
+			{
+				if (Entity.ReverseInstance != null)
+				{
+					return GroupName.GetString() != Entity.ReverseInstance.GroupName.GetString();
+				}
+				else if (Entity.IsAutoUpdated == true)
+				{
+					return GroupName.GetString() != Entity.GroupName.GetString();
+				}
+				return GroupName != DefaultValue.String;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets GroupNameValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string GroupNameValidationMessage
+		{
+			get
+			{
+				return EditEntity.ValidateGroupName();
 			}
 		}
 
@@ -1159,7 +1221,7 @@ namespace MoPlus.ViewModel.Entities
 				Entity.IsAutoUpdated = false;
 			}
 			Entity.ForwardInstance = null;
-			if (EntityNameCustomized || EntityTypeCodeCustomized || IdentifierTypeCodeCustomized || SelectFeatureIDCustomized || BaseEntityIDCustomized || DescriptionCustomized || TagsCustomized)
+			if (EntityNameCustomized || EntityTypeCodeCustomized || IdentifierTypeCodeCustomized || SelectFeatureIDCustomized || BaseEntityIDCustomized || GroupNameCustomized || DescriptionCustomized || TagsCustomized)
 			{
 				Entity.ForwardInstance = new Entity();
 				Entity.ForwardInstance.EntityID = EditEntity.EntityID;
@@ -1183,6 +1245,10 @@ namespace MoPlus.ViewModel.Entities
 				if (BaseEntityIDCustomized)
 				{
 					Entity.ForwardInstance.BaseEntityID = EditEntity.BaseEntityID;
+				}
+				if (GroupNameCustomized)
+				{
+					Entity.ForwardInstance.GroupName = EditEntity.GroupName;
 				}
 				if (DescriptionCustomized)
 				{

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>8/22/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -597,6 +597,19 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected string _groupName = DefaultValue.String;
+		///--------------------------------------------------------------------------------
+		/// <summary>This read only property gets the GroupName.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual string GroupName
+		{
+			get
+			{
+				return _groupName;
+			}
+		}
+		
 		protected EnterpriseDataObjectList<BLL.Entities.IndexProperty> _indexPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Index.</summary>
@@ -658,6 +671,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 					_entityName = value.EntityName;
 					_entityTypeCode = value.EntityTypeCode;
 					_identifierTypeCode = value.IdentifierTypeCode;
+					_groupName = value.GroupName;
 					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
 					{
 						_isModified = true;

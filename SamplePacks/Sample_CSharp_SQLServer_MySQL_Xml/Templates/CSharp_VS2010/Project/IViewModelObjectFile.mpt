@@ -40,6 +40,11 @@ namespace %%><%%=Namespace%%><%%-
 		string Name { get; set; }
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the display name.</summary>
+		///--------------------------------------------------------------------------------
+		string DisplayName { get; set; }
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method gets a validation error for a property or other tag.</summary>
 		/// 
 		/// <param name="propertyName">The property to get the validation error for.</param>

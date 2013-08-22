@@ -807,6 +807,61 @@ namespace MoPlus.Data
 		}
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This method returns capital word case for the input name.</summary>
+		///
+		///	<param name="inputName">The input name.</param>
+		///--------------------------------------------------------------------------------
+		public static string CapitalWordCase(this string inputName)
+		{
+			// return modified name
+			StringBuilder capitalName = new StringBuilder();
+			bool changeToCap = true;
+			bool isCap = false;
+			bool isSpace = false;
+			for (int i = 0; i < inputName.Length; i++)
+			{
+				if (!((inputName[i] == '_' || Char.IsWhiteSpace(inputName[i]) == true) && isSpace == true))
+				{
+					if (inputName[i] == '_' || Char.IsWhiteSpace(inputName[i]) == true)
+					{
+						isSpace = true;
+					}
+					else
+					{
+						isSpace = false;
+					}
+					if (i > 0 && isCap == false && Char.IsUpper(inputName[i]))
+					{
+						capitalName.Append(" ");
+						isCap = true;
+					}
+					if (Char.IsUpper(inputName[i]) == false)
+					{
+						isCap = false;
+					}
+					if (changeToCap == true && isSpace == false)
+					{
+						capitalName.Append(inputName[i].ToString().ToUpper());
+						changeToCap = false;
+					}
+					else
+					{
+						if (isSpace == true)
+						{
+							capitalName.Append(" ");
+							changeToCap = true;
+						}
+						else
+						{
+							capitalName.Append(inputName[i]);
+						}
+					}
+				}
+			}
+			return capitalName.ToString().Trim().Replace("  ", " ");
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>Get a DateTime from the input object, else return the default value.</summary>
 		///
 		/// <param name="item">The item to get the value from.</param>

@@ -74,7 +74,7 @@ foreach (Entity in EntityAndBaseEntities)
 				<ColumnDefinition Width="*"></ColumnDefinition>
 				<ColumnDefinition Width="10"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
-			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName%%><%%- Details" />%%>
+			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName.CapitalWordCase()%%><%%- Details" />%%>
 log("WPFUIDetailMarkupCode", "RowIndex", 0)
 foreach (Entity in EntityAndBaseEntities)
 {
@@ -84,7 +84,7 @@ foreach (Entity in EntityAndBaseEntities)
 		if (DataTypeCode != 12 /* Boolean */)
 		{
 			<%%-
-			<Label Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName%%><%%-:" />%%>
+			<Label Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-:" />%%>
 		}
 	}
 }
@@ -102,7 +102,7 @@ foreach (Entity in EntityAndBaseEntities)
 		else
 		{
 			<%%-
-			<CheckBox Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Style="{StaticResource BasicCheckBox}" Content="%%><%%=BLLPropertyName%%><%%-" IsChecked="{Binding %%><%%=BLLPropertyName%%><%%-}" />%%>
+			<CheckBox Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Style="{StaticResource BasicCheckBox}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" IsChecked="{Binding %%><%%=BLLPropertyName%%><%%-}" />%%>
 		}
 	}
 }

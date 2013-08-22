@@ -411,6 +411,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 									| modelProperty + dot + LanguageTerms.StringRegexIsMatch + Lpar + parameter + Rpar
 									| modelProperty + dot + LanguageTerms.StringCamelCase + Lpar + Rpar
 									| modelProperty + dot + LanguageTerms.StringCapitalCase + Lpar + Rpar
+									| modelProperty + dot + LanguageTerms.StringCapitalWordCase + Lpar + Rpar
 									| modelProperty + dot + LanguageTerms.StringUnderscoreCase + Lpar + Rpar
 									| modelProperty + dot + LanguageTerms.StringToLower + Lpar + Rpar
 									| modelProperty + dot + LanguageTerms.StringToUpper + Lpar + Rpar

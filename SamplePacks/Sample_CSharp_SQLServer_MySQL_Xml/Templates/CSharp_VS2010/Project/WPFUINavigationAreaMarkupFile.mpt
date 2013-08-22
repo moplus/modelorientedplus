@@ -50,14 +50,14 @@ else
 			<!-- navigation items -->
 			<HierarchicalDataTemplate DataType="{x:Type VM:NavigationItemViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
 				<StackPanel Orientation="Horizontal">
-					<TextBlock Text="{Binding Name, Mode=OneWay}"  />
+					<TextBlock Text="{Binding DisplayName, Mode=OneWay}"  />
 				</StackPanel>
 			</HierarchicalDataTemplate>
 			<!-- manage items -->
 			<DataTemplate DataType="{x:Type VM:ManageItemViewModel}">
 				<StackPanel Orientation="Horizontal">
 					<TextBlock>
-						<Hyperlink Command="{Binding RequestCommand}"><Hyperlink.Inlines><Run Text="{Binding Name, Mode=OneWay}"/></Hyperlink.Inlines></Hyperlink>
+						<Hyperlink Command="{Binding RequestCommand}"><Hyperlink.Inlines><Run Text="{Binding DisplayName, Mode=OneWay}"/></Hyperlink.Inlines></Hyperlink>
 					</TextBlock>
 				</StackPanel>
 			</DataTemplate>

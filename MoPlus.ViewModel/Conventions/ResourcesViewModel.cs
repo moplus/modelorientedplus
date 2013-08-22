@@ -127,6 +127,10 @@ namespace MoPlus.ViewModel.Conventions
 			helpSub = new HelpViewModel(DisplayValues.Help_StartupResourcesHeader, DisplayValues.Help_StartupResourcesParagraph1, null, null, null, null, null, DisplayValues.Product);
 			help.Items.Add(helpSub);
 
+			// add working with templates subsection
+			helpSub = new HelpViewModel(DisplayValues.Help_StartupWorkingWithTemplatesHeader, DisplayValues.Help_StartupWorkingWithTemplatesParagraph1, null, null, null, null, null, DisplayValues.Product);
+			help.Items.Add(helpSub);
+
 			// add frequently asked questions subsection
 			helpSub = new HelpViewModel(DisplayValues.Help_StartupFAQHeader, DisplayValues.Help_StartupFAQParagraph1, null, null, null, null, null, DisplayValues.Product);
 			help.Items.Add(helpSub);
@@ -625,6 +629,10 @@ namespace MoPlus.ViewModel.Conventions
 
 			// add Language Reference functions StringCapitalCase sub subsection
 			helpSubSub = new HelpViewModel(LanguageTerms.StringCapitalCase, DisplayValues.Help_LanguageReferenceFunctionsStringCapitalCaseParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
+			// add Language Reference functions StringCapitalWordCase sub subsection
+			helpSubSub = new HelpViewModel(LanguageTerms.StringCapitalWordCase, DisplayValues.Help_LanguageReferenceFunctionsStringCapitalWordCaseParagraph1);
 			helpSub.Items.Add(helpSubSub);
 
 			// add Language Reference functions ColumnMethod sub subsection

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>8/22/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -81,6 +81,11 @@ namespace MoPlus.Interpreter.BLL.Entities
 				errors.Append("\r\n").Append(error);
 			}
 			error = GetValidationError("BaseEntityID");
+			if (!String.IsNullOrEmpty(error))
+			{
+				errors.Append("\r\n").Append(error);
+			}
+			error = GetValidationError("GroupName");
 			if (!String.IsNullOrEmpty(error))
 			{
 				errors.Append("\r\n").Append(error);
@@ -132,6 +137,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 				case "_baseEntityID":
 				case "BaseEntityID":
 					error = ValidateBaseEntityID();
+					break;
+				case "_groupName":
+				case "GroupName":
+					error = ValidateGroupName();
 					break;
 				case "_isAutoUpdated":
 				case "IsAutoUpdated":
@@ -201,6 +210,18 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public string ValidateBaseEntityID()
 		{
+			return null;
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method validates GroupName and returns an error message if not valid.</param>
+		///--------------------------------------------------------------------------------
+		public string ValidateGroupName()
+		{
+			if (!String.IsNullOrEmpty(GroupName) && !Regex.IsMatch(GroupName, Resources.DisplayValues.Regex_LooseName))
+			{
+				return String.Format(Resources.DisplayValues.Validation_LooseNameValue, "GroupName");
+			}
 			return null;
 		}
 		
@@ -573,6 +594,31 @@ namespace MoPlus.Interpreter.BLL.Entities
 					_baseEntityID = value;
 					_isModified = true;
 					base.OnPropertyChanged("BaseEntityID");
+				}
+			}
+		}
+		
+		protected string _groupName = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the GroupName.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(null)]
+		public virtual string GroupName
+		{
+			get
+			{
+				return _groupName;
+			}
+			set
+			{
+				if (_groupName != value)
+				{
+					_groupName = value;
+					_isModified = true;
+					base.OnPropertyChanged("GroupName");
 				}
 			}
 		}
@@ -1509,6 +1555,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 			if (IdentifierTypeCode.GetInt() != inputEntity.IdentifierTypeCode.GetInt()) return false;
 			if (FeatureID.GetGuid() != inputEntity.FeatureID.GetGuid()) return false;
 			if (BaseEntityID.GetGuid() != inputEntity.BaseEntityID.GetGuid()) return false;
+			if (GroupName.GetString() != inputEntity.GroupName.GetString()) return false;
 			if (IsAutoUpdated.GetBool() != inputEntity.IsAutoUpdated.GetBool()) return false;
 			if (Description.GetString() != inputEntity.Description.GetString()) return false;
 			
@@ -1533,6 +1580,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 			if (IdentifierTypeCode != DefaultValue.Int) return false;
 			if (FeatureID != inputEntity.FeatureID) return false;
 			if (BaseEntityID != inputEntity.BaseEntityID) return false;
+			if (!String.IsNullOrEmpty(inputEntity.GroupName)) return false;
 			if (IsAutoUpdated != inputEntity.IsAutoUpdated) return false;
 			if (!String.IsNullOrEmpty(inputEntity.Description)) return false;
 			
@@ -1555,6 +1603,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 			IdentifierTypeCode = inputEntity.IdentifierTypeCode;
 			FeatureID = inputEntity.FeatureID;
 			BaseEntityID = inputEntity.BaseEntityID;
+			GroupName = inputEntity.GroupName;
 			IsAutoUpdated = inputEntity.IsAutoUpdated;
 			Description = inputEntity.Description;
 			

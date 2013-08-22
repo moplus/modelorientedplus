@@ -45,7 +45,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		{
 			get
 			{
-				return "New %%><%%=BLLClassName%%><%%-";
+				return "New %%><%%=BLLClassName.CapitalWordCase()%%><%%-";
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		{
 			get
 			{
-				return "%%><%%=BLLClassName%%><%%-";
+				return "%%><%%=BLLClassName.CapitalWordCase()%%><%%-";
 			}
 		}
 
@@ -126,7 +126,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		{
 			get
 			{
-				return "%%><%%=BLLClassName%%><%%-" + " (" + Name + ")";
+				return "%%><%%=BLLClassName.CapitalWordCase()%%><%%-" + " (" + Name + ")";
 			}
 		}%%>
 	foreach (Entity in EntityAndBaseEntities)

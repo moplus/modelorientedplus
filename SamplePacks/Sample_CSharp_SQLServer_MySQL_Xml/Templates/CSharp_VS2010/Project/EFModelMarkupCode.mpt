@@ -31,7 +31,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == false)
 foreach (Entity in Solution where Tags.Contains("DB") == true)
 {
 <%%-
-          <EntitySet Name="%%><%%=SourceName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=SourceName%%><%%-" store:Type="Tables" Schema="dbo" />%%>
+          <EntitySet Name="%%><%%=SourceName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.Store.%%><%%=SourceName%%><%%-" store:Type="Tables" Schema="%%><%%=DBSchema%%><%%-" />%%>
 }
 foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Tags.Contains("DB") == true && ReferencedEntity.Tags.Contains("DB") == true)
 {
