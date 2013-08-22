@@ -6,25 +6,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		UnitTests.testsettings = UnitTests.testsettings
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfClient", "MoPlus.SolutionBuilder.WpfClient\MoPlus.SolutionBuilder.WpfClient_2012.csproj", "{571978FA-999A-41C7-B590-27EBEDD70F99}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfClient_2012", "MoPlus.SolutionBuilder.WpfClient\MoPlus.SolutionBuilder.WpfClient_2012.csproj", "{571978FA-999A-41C7-B590-27EBEDD70F99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.ViewModel", "MoPlus.ViewModel\MoPlus.ViewModel_2012.csproj", "{1A6C3352-9781-4722-B6C8-DEC5DB0FAF53}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.ViewModel_2012", "MoPlus.ViewModel\MoPlus.ViewModel_2012.csproj", "{1A6C3352-9781-4722-B6C8-DEC5DB0FAF53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Interpreter", "MoPlus.Interpreter\MoPlus.Interpreter_2012.csproj", "{E936645D-A430-499E-89CA-9D034D75B775}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Interpreter_2012", "MoPlus.Interpreter\MoPlus.Interpreter_2012.csproj", "{E936645D-A430-499E-89CA-9D034D75B775}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Common", "Library\MoPlus.Common\MoPlus.Common_2012.csproj", "{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Common_2012", "Library\MoPlus.Common\MoPlus.Common_2012.csproj", "{CD7B9562-7F6B-4C45-97F9-FDE6AE8628B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.IO", "Library\MoPlus.IO\MoPlus.IO_2012.csproj", "{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.IO_2012", "Library\MoPlus.IO\MoPlus.IO_2012.csproj", "{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Data", "Library\MoPlus.Data\MoPlus.Data_2012.csproj", "{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Data_2012", "Library\MoPlus.Data\MoPlus.Data_2012.csproj", "{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Net", "Library\MoPlus.Net\MoPlus.Net_2012.csproj", "{63BF2E2B-52AE-4156-A859-96C09F73775C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.Net_2012", "Library\MoPlus.Net\MoPlus.Net_2012.csproj", "{63BF2E2B-52AE-4156-A859-96C09F73775C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionUpdater.CommandUI", "MoPlus.SolutionUpdater.CommandUI\MoPlus.SolutionUpdater.CommandUI_2012.csproj", "{B7E936CB-1FD4-4A32-8DA4-BB897EDC9E61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionUpdater.CommandUI_2012", "MoPlus.SolutionUpdater.CommandUI\MoPlus.SolutionUpdater.CommandUI_2012.csproj", "{B7E936CB-1FD4-4A32-8DA4-BB897EDC9E61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.VSPackage", "MoPlus.SolutionBuilder.VSPackage\MoPlus.SolutionBuilder.VSPackage_2012.csproj", "{0EAD40F3-F1E3-4ABF-93DC-D2DCDE78E29E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.VSPackage_2012", "MoPlus.SolutionBuilder.VSPackage\MoPlus.SolutionBuilder.VSPackage_2012.csproj", "{0EAD40F3-F1E3-4ABF-93DC-D2DCDE78E29E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfUI", "MoPlus.SolutionBuilder.WpfUI\MoPlus.SolutionBuilder.WpfUI_2012.csproj", "{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfUI_2012", "MoPlus.SolutionBuilder.WpfUI\MoPlus.SolutionBuilder.WpfUI_2012.csproj", "{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{9EDCAEED-190F-480B-9C44-751912D86E0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +197,18 @@ Global
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x64.Build.0 = Release|Any CPU
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x86.ActiveCfg = Release|x86
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x86.Build.0 = Release|x86
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9EDCAEED-190F-480B-9C44-751912D86E0A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
