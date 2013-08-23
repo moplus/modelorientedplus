@@ -7,3 +7,5 @@ $tf/localversion.tf1
 $tf/localversion.tfb
 $tf/pendingchanges.tf1
 $tf/pendingchanges.tfb
+/MoPlus.Setup/Release/setup.exe
+/MoPlus.Setup/Release/MoPlus.Setup.msi
