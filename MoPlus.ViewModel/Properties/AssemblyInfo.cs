@@ -36,4 +36,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
-[assembly: InternalsVisibleTo("MoPlus.ViewModel.Tests, PublicKey=2936045f5e2ecfcf")]
+[assembly: InternalsVisibleTo("MoPlus.ViewModel.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010091ed251abd433439883de3702a4823841b3740f37079f893a27de57817cd05f047a86ee09579e8e46ede055190283246dc3d93cfa97ad28b695c77b6c222c342a44803c7cfc3b638c53c1feee7240b69f4ba27dda30a3010edad62f47efe8228d9cd712892f44cea20df5a26137fd348f17728937aa098f8dcf7783a56a19de1")]
