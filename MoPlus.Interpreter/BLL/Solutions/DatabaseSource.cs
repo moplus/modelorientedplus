@@ -11,10 +11,13 @@ You should have received a copy of the GNU General Public License along with thi
 </copyright>*/
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Text;
+using Microsoft.SqlServer.Management.Common;
 using MoPlus.Common;
 using MoPlus.Data;
 using BLL = MoPlus.Interpreter.BLL;
@@ -125,6 +128,10 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			return forwardItem;
 		}
 
+	    internal string SqlServerConnectionString;
+	    internal string SqlServerDatabaseFile;
+	    internal string SqlServerDatabaseLogFile;
+
 		///--------------------------------------------------------------------------------
 		/// <summary>This method loads a specification source with information from a
 		/// SQL database.</summary>
@@ -137,21 +144,31 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					case (int)BLL.Config.DatabaseTypeCode.SqlServer:
 						Database sqlDatabase = null;
-						Server sqlServer = new Server(SourceDbServerName);
-						sqlServer.SetDefaultInitFields(true);
-						if (!String.IsNullOrEmpty(PasswordClearText) && !String.IsNullOrEmpty(UserName))
-						{
-							// sql server authentication
-							sqlServer.ConnectionContext.Login = UserName;
-							sqlServer.ConnectionContext.Password = PasswordClearText;
-							sqlServer.ConnectionContext.LoginSecure = false;
-						}
-						else
-						{
-							// windows authentication
-							sqlServer.ConnectionContext.LoginSecure = true;
-						}
-						sqlServer.ConnectionContext.Connect();
+
+				        Server sqlServer;
+				        if (!String.IsNullOrWhiteSpace(SqlServerConnectionString))
+				        {
+				            var conn = new ServerConnection(new SqlConnection(SqlServerConnectionString));
+				            sqlServer = new Server(conn);
+				        }
+				        else
+				        {
+				            sqlServer = new Server(SourceDbServerName);
+				            sqlServer.SetDefaultInitFields(true);
+				            if (!String.IsNullOrEmpty(PasswordClearText) && !String.IsNullOrEmpty(UserName))
+				            {
+				                // sql server authentication
+				                sqlServer.ConnectionContext.Login = UserName;
+				                sqlServer.ConnectionContext.Password = PasswordClearText;
+				                sqlServer.ConnectionContext.LoginSecure = false;
+				            }
+				            else
+				            {
+				                // windows authentication
+				                sqlServer.ConnectionContext.LoginSecure = true;
+				            }
+				        }
+				        sqlServer.ConnectionContext.Connect();
 						if (sqlServer.ConnectionContext.IsOpen == false)
 						{
 							SpecDatabase = null;
@@ -159,18 +176,30 @@ namespace MoPlus.Interpreter.BLL.Solutions
 							Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
 							throw ex;
 						}
-						StringBuilder databases = new StringBuilder();
-						foreach (Database loopDb in sqlServer.Databases)
-						{
-							if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
-							databases.Append(loopDb.Name);
-							if (loopDb.Name.ToLower() == SourceDbName.ToLower())
-							{
-								sqlDatabase = loopDb;
-								break;
-							}
-						}
-						if (sqlDatabase == null)
+				        if (!String.IsNullOrWhiteSpace(SqlServerDatabaseFile) && !String.IsNullOrWhiteSpace(SqlServerDatabaseLogFile))
+				        {
+				            // attach the database instead of opening the database by name
+				            var stringColl = new StringCollection();
+				            stringColl.Add(SqlServerDatabaseFile);
+				            stringColl.Add(SqlServerDatabaseLogFile);
+
+				            SourceDbName = "db-" + Guid.NewGuid();
+    			            sqlServer.AttachDatabase(SourceDbName, stringColl);
+				        }
+
+				        StringBuilder databases = new StringBuilder();
+				        foreach (Database loopDb in sqlServer.Databases)
+				        {
+				            if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
+				            databases.Append(loopDb.Name);
+				            if (loopDb.Name.ToLower() == SourceDbName.ToLower())
+				            {
+				                sqlDatabase = loopDb;
+				                break;
+				            }
+				        }
+
+				        if (sqlDatabase == null)
 						{
 							SpecDatabase = null;
 							ApplicationException ex = new ApplicationException(String.Format(DisplayValues.Exception_SourceDbNotFound, SourceDbName, databases.ToString()));
@@ -220,12 +249,12 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{
 				bool reThrow = BusinessConfiguration.HandleException(ex);
-				Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
+				Solution.ShowIssue(ex.ToString());
 			}
 		}
 

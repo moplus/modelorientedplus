@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -31,7 +31,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +51,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +64,10 @@
     <ProjectReference Include="..\MoPlus.Interpreter\MoPlus.Interpreter.csproj">
       <Project>{E936645D-A430-499E-89CA-9D034D75B775}</Project>
       <Name>MoPlus.Interpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MoPlus.ViewModel.Tests\MoPlus.ViewModel.Tests.csproj">
+      <Project>{4256DAE7-E174-4B17-9638-6D80CFCEB115}</Project>
+      <Name>MoPlus.ViewModel.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\MoPlus.ViewModel\MoPlus.ViewModel.csproj">
       <Project>{1a6c3352-9781-4722-b6c8-dec5db0faf53}</Project>

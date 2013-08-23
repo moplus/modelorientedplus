@@ -1,27 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MoPlus.Interpreter.BLL.Config;
+using MoPlus.Interpreter.Events;
 using MoPlus.ViewModel.Entities;
-using MoPlus.ViewModel.Events;
 using MoPlus.ViewModel.Interpreter;
-using MoPlus.ViewModel.Messaging;
 using MoPlus.ViewModel.Solutions;
+using MoPlus.ViewModel.Tests.SamplePacks;
+using MoPlus.ViewModel.Tests.Staging;
 
-namespace MoPlus.ViewModel.Tests.Staging
+namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 {
-    [TestClass]
-    public class SimpleTest: BaseTest
+    public class SimpleLoadDatabaseTest: BaseTest
     {
-        /* This tests creates a simple solution containing 1 feature and 1 entity (forward-engineered). There's 1
-         * solution template, which iterates the entities and outputs a simple text file containing - featurename-entityname
+        /*
+         * This test creates a database, and loads that database into an Mo+ solution.
          */
+
+        private string mDatabaseFileName;
+        private string mDatabaseLogFileName;
         protected override void DoExecute(string playground)
         {
+            var dbName = "Northwind-" + Guid.NewGuid();
+            mDatabaseFileName = Path.Combine(playground, dbName + ".mdf");
+            mDatabaseLogFileName = Path.Combine(playground, dbName + "_log.ldf");
+
+            NorthwindUtility.Create(dbName, mDatabaseFileName, mDatabaseLogFileName);
+            var gettingStartedPath = Path.Combine(playground, "GettingStartedPack");
+            Directory.CreateDirectory(gettingStartedPath);
+
+            SamplePacksUtility.ExtractGettingStartedTo(gettingStartedPath);
+
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
 
@@ -48,6 +61,7 @@ namespace MoPlus.ViewModel.Tests.Staging
             solutionVM.UpdateCommand.Execute(null);
             solutionVM.SaveSolution();
             solutionVM.LoadSolution(solution, true);
+            solution.OutputRequested += SolutionOnOutputRequested;
             //solutionVM.Refresh(true, 3);
             if (solutionVM.CodeTemplatesFolder == null)
             {
@@ -57,7 +71,7 @@ namespace MoPlus.ViewModel.Tests.Staging
             var newSolTpl = new CodeTemplateViewModel();
             var solutionTemplate = solutionDesigner.SelectedItem as CodeTemplateViewModel ?? newSolTpl;
             Assert.AreNotSame(solutionTemplate, newSolTpl, "Couldn't find template!");
-        
+
             solutionTemplate.TemplateName = "SolutionFile";
             solutionTemplate.IsTopLevelTemplate = true;
             solutionTemplate.TemplateOutput = "<%%=Solution.SolutionDirectory%%><%%-\\%%><%%=Solution.OutputSolutionFileName%%>\r\n" +
@@ -73,38 +87,39 @@ namespace MoPlus.ViewModel.Tests.Staging
                                                "}%%>";
             solutionTemplate.Update();
 
-            solutionVM.FeaturesFolder.ProcessNewFeatureCommand();
+            solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
 
-            var newFeature = new FeatureViewModel();
-            var feature = solutionDesigner.SelectedItem as FeatureViewModel ?? newFeature;
-            Assert.AreNotSame(feature, newFeature, "Couldn't find feature!");
+            var newDBSource = new DatabaseSourceViewModel();
+            var dbSource = solutionDesigner.SelectedItem as DatabaseSourceViewModel ?? newDBSource;
+            Assert.AreNotSame(dbSource, newDBSource, "Couldn't find database source");
+            dbSource.DatabaseTypeCode = (int)DatabaseTypeCode.SqlServer;
+            dbSource.DatabaseSource.SqlServerConnectionString = @"server=(localdb)\v11.0;Integrated Security=true";
+            dbSource.DatabaseSource.SqlServerDatabaseFile = mDatabaseFileName;
+            dbSource.DatabaseSource.SqlServerDatabaseLogFile = mDatabaseLogFileName;
+            dbSource.DatabaseSource.TemplatePath = Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps");
+            Assert.IsTrue(File.Exists(dbSource.DatabaseSource.TemplatePath), "File MDLSqlModel.mps not found!");
+            dbSource.Order = 1;
 
-            feature.Solution = solution;
-            feature.FeatureName = "TestFeature";
-            feature.UpdateCommand.Execute(null);
-            solutionDesigner.ShowItemInTreeView(feature);
+            dbSource.Update();
+            Console.WriteLine("Call LoadSpecificationSource");
+            dbSource.DatabaseSource.LoadSpecificationSource();
 
-
-            feature.ProcessNewEntityCommand();
-
-            var newEntity = new EntityViewModel();
-            var entity = solutionDesigner.SelectedItem as EntityViewModel ?? newEntity;
-            Assert.AreNotSame(entity, newEntity, "Couldn't find entity!");
-
-            entity.EntityName = "TestEntity";
-            entity.EntityTypeCode = 3; // primary
-            entity.IdentifierTypeCode = 1; // generated
-            entity.Update();
-            entity.LoadEntity(entity.Entity);
-
-            entity.PropertiesFolder.ProcessNewPropertyCommand();
-
-            var newProperty = new PropertyViewModel();
-            var property = solutionDesigner.SelectedItem as PropertyViewModel ?? newProperty;
-            Assert.AreNotSame(property, newProperty, "Couldn't find Property!");
-        
             solutionVM.UpdateCommand.Execute(null);
             solutionVM.SaveSolution();
+            
+            using (var resetEvent = new AutoResetEvent(false))
+            {
+                var updated = new EventHandler((sender, args) =>
+                {
+                    Console.WriteLine("Solution built!");
+                    resetEvent.Set();
+                });
+                solutionVM.Updated += updated;
+                solutionVM.BuildSolution(true);
+                Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
+                solutionVM.Updated -= updated;
+            }
+
             using (var resetEvent = new AutoResetEvent(false))
             {
                 var updated = new EventHandler((sender, args) =>
@@ -121,6 +136,21 @@ namespace MoPlus.ViewModel.Tests.Staging
                                  " - TestFeature-TestEntity\r\n";
             var output = File.ReadAllText(Path.Combine(playground, "TestSolution.sln"));
             Assert.AreEqual(expectedOutput, output);
+        }
+
+        private void SolutionOnOutputRequested(object sender, StatusEventArgs args)
+        {
+            base.OutputChanged(new Events.StatusEventArgs
+                               {
+                                   AppendText = args.AppendText,
+                                   CompletedWork = args.CompletedWork,
+                                   IsException=args.IsException,
+                                   Progress=args.Progress,
+                                   ShowMessageBox=args.ShowMessageBox,
+                                   Text=args.Text,
+                                   Title=args.Title,
+                                   TotalWork = args.TotalWork
+                               });
         }
     }
 }
