@@ -79,7 +79,7 @@
   <ItemGroup>
     <Reference Include="AvalonDock, Version=2.0.1771.0, Culture=neutral, PublicKeyToken=96637cf0d3eefdfb, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\Third Party Dlls\AvalonDock_2_0_1746\AvalonDock.dll</HintPath>
+      <HintPath>..\Library\Third Party Dlls\AvalonDock_2_0_1746\Signed\AvalonDock.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=4.1.0.7916, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>

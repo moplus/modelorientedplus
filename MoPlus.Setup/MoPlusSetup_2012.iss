@@ -43,9 +43,9 @@ Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\*.*"; DestDir: "{ap
 Source: "..\MoPlus.SolutionBuilder.WpfUI\bin\Release\*.*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MoPlus.SolutionBuilder.WpfUI\Product.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; add items to GAC
-Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\AvalonDock.dll"; DestDir: "{app}"; StrongAssemblyName: "AvalonDock, Version=2.0.1746.0, Culture=neutral, PublicKeyToken=AD3D1BD6-0E64-4DF5-9596-C8805114DC6D, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
-Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\Irony.dll"; DestDir: "{app}"; StrongAssemblyName: "Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7A9A1929-3018-4279-97E8-88F40956DAA0, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
-Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; StrongAssemblyName: "ICSharpCode.AvalonEdit, Version=4.3.1.9429, Culture=neutral, PublicKeyToken=9600A30E-6597-4114-87C5-73714F4D9D5C, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
+;Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\AvalonDock.dll"; DestDir: "{app}"; StrongAssemblyName: "AvalonDock, Version=2.0.1746.0, Culture=neutral, PublicKeyToken=AD3D1BD6-0E64-4DF5-9596-C8805114DC6D, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
+;Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\Irony.dll"; DestDir: "{app}"; StrongAssemblyName: "Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7A9A1929-3018-4279-97E8-88F40956DAA0, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
+;Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; StrongAssemblyName: "ICSharpCode.AvalonEdit, Version=4.3.1.9429, Culture=neutral, PublicKeyToken=9600A30E-6597-4114-87C5-73714F4D9D5C, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Registry]
@@ -73,6 +73,15 @@ Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{b2a086f1-
 Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: none; Flags: uninsdeletekey
 Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
 Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionDesignerWindow
+; fake GAC
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v3.5\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v3.5\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.5.50709\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.5.50709\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
