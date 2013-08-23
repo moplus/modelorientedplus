@@ -76,6 +76,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		public const string StringLength = "Length";
 		public const string StringCamelCase = "CamelCase";
 		public const string StringCapitalCase = "CapitalCase";
+		public const string StringCapitalWordCase = "CapitalWordCase";
 		public const string StringUnderscoreCase = "UnderscoreCase";
 		public const string StringFilter = "Filter";
 		public const string StringFilterProtected = "FilterProtected";

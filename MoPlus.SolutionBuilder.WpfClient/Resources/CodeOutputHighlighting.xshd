@@ -36,6 +36,7 @@
 					<Word>UnderscoreCase</Word>
 					<Word>CamelCase</Word>
 					<Word>CapitalCase</Word>
+					<Word>CapitalWordCase</Word>
 					<Word>Find</Word>
 					<Word>FindAll</Word>
 					<Word>Substring</Word>
@@ -109,6 +110,7 @@
 					<Word>UnderscoreCase</Word>
 					<Word>CamelCase</Word>
 					<Word>CapitalCase</Word>
+					<Word>CapitalWordCase</Word>
 					<Word>Find</Word>
 					<Word>FindAll</Word>
 					<Word>Substring</Word>
@@ -225,6 +227,7 @@
 							<Word>UnderscoreCase</Word>
 							<Word>CamelCase</Word>
 							<Word>CapitalCase</Word>
+							<Word>CapitalWordCase</Word>
 							<Word>Find</Word>
 							<Word>FindAll</Word>
 							<Word>Substring</Word>

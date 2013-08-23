@@ -271,6 +271,13 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							propertyValue = propertyValue.CapitalCase();
 						}
 					}
+					else if (ModelPropertyName == LanguageTerms.StringCapitalWordCase)
+					{
+						if (!String.IsNullOrEmpty(propertyValue))
+						{
+							propertyValue = propertyValue.CapitalWordCase();
+						}
+					}
 					else if (ModelPropertyName == LanguageTerms.StringUnderscoreCase)
 					{
 						if (!String.IsNullOrEmpty(propertyValue))
@@ -879,6 +886,13 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 						if (propertyValue != null && propertyValue is String)
 						{
 							propertyValue = (propertyValue as String).CapitalCase();
+						}
+					}
+					else if (ModelPropertyName == LanguageTerms.StringCapitalWordCase)
+					{
+						if (propertyValue != null && propertyValue is String)
+						{
+							propertyValue = (propertyValue as String).CapitalWordCase();
 						}
 					}
 					else if (ModelPropertyName == LanguageTerms.StringUnderscoreCase)

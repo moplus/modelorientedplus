@@ -194,6 +194,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				{
 					output.Append((ModelProperty.GetPropertyStringValue(solutionContext, templateContext, modelContext, modelContext, interpreterType)).CapitalCase());
 				}
+				else if (MethodName == LanguageTerms.StringCapitalWordCase)
+				{
+					output.Append((ModelProperty.GetPropertyStringValue(solutionContext, templateContext, modelContext, modelContext, interpreterType)).CapitalWordCase());
+				}
 				else if (MethodName == LanguageTerms.StringUnderscoreCase)
 				{
 					output.Append((ModelProperty.GetPropertyStringValue(solutionContext, templateContext, modelContext, modelContext, interpreterType)).UnderscoreCase());

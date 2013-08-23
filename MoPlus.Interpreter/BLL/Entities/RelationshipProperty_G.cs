@@ -271,6 +271,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 				#region protected
 				if (String.IsNullOrEmpty(_defaultSourceName))
 				{
+					if (Property == null)
+					{
+						Property = Solution.PropertyList.Find(i => i.PropertyID == PropertyID);
+					}
 					_defaultSourceName = RelationshipName + "." + PropertyName;
 				}
 				#endregion protected

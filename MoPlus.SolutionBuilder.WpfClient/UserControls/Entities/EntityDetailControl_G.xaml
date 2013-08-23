@@ -5,7 +5,7 @@
  from being overwritten.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>7/2/2013</CreatedDate>
+ <CreatedDate>8/22/2013</CreatedDate>
  <Status>Generated</Status>
 -->
 <lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Entities.EntityDetailControl"
@@ -110,6 +110,20 @@
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
+			<Style x:Key="GroupNameInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding GroupNameCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding GroupNameValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 			<Style x:Key="DescriptionInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding DescriptionCustomized, Mode=OneWay}" Value="True">
@@ -187,6 +201,7 @@
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="*"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
@@ -206,10 +221,11 @@
 			<Label Grid.Row="4" Grid.Column="1" Style="{DynamicResource IdentifierTypeCodeInput}" Content="{Binding IdentifierTypeCodeLabel, Mode=OneWay}" />
 			<Label Grid.Row="5" Grid.Column="1" Style="{DynamicResource SelectFeatureIDInput}" Content="{Binding SelectFeatureIDLabel, Mode=OneWay}" />
 			<Label Grid.Row="6" Grid.Column="1" Style="{DynamicResource BaseEntityIDInput}" Content="{Binding BaseEntityIDLabel, Mode=OneWay}" />
-			<Label Grid.Row="7" Grid.Column="1" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
-			<Label Grid.Row="8" Grid.Column="1" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
-			<Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource SourceNameInput}" Content="{Binding SourceNameLabel, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
-			<Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource SpecSourceNameInput}" Content="{Binding SpecSourceNameLabel, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
+			<Label Grid.Row="7" Grid.Column="1" Style="{DynamicResource GroupNameInput}" Content="{Binding GroupNameLabel, Mode=OneWay}" />
+			<Label Grid.Row="8" Grid.Column="1" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
+			<Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
+			<Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource SourceNameInput}" Content="{Binding SourceNameLabel, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
+			<Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource SpecSourceNameInput}" Content="{Binding SpecSourceNameLabel, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
 			<Border Name="PlaceHolderBorder" Grid.Column="2" Margin="7"/>
 			<Label Grid.Row="1" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding EntityID, Mode=OneWay}" />
 			<TextBox Grid.Row="2" Grid.Column="2" ToolTip="{Binding EntityNameValidationMessage, Mode=OneWay}" Text="{Binding EntityName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}" Loaded="TextBox_Loaded"/>
@@ -217,12 +233,13 @@
 			<ComboBox Grid.Row="4" Grid.Column="2" ToolTip="{Binding IdentifierTypeCodeValidationMessage, Mode=OneWay}" ItemsSource="{Binding IdentifierTypeCodeItems}" DisplayMemberPath="DisplayName" SelectedValuePath="IdentifierTypeCode" SelectedValue="{Binding IdentifierTypeCode, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
 			<ComboBox Grid.Row="5" Grid.Column="2" ToolTip="{Binding SelectFeatureIDValidationMessage, Mode=OneWay}" ItemsSource="{Binding SelectFeatureIDItems}" DisplayMemberPath="DisplayName" SelectedValuePath="FeatureID" SelectedValue="{Binding SelectFeatureID, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
 			<ComboBox Grid.Row="6" Grid.Column="2" ToolTip="{Binding BaseEntityIDValidationMessage, Mode=OneWay}" ItemsSource="{Binding BaseEntityIDItems}" DisplayMemberPath="DisplayName" SelectedValuePath="EntityID" SelectedValue="{Binding BaseEntityID, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
-			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="7" Margin="7"/>
-			<TextBox Grid.Row="7" Grid.Column="2" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
-			<TextBox Grid.Row="8" Grid.Column="2" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
-			<Label Grid.Row="9" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SourceName, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
-			<Label Grid.Row="10" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SpecSourceName, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
-			<StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="2" Margin="5">
+			<TextBox Grid.Row="7" Grid.Column="2" ToolTip="{Binding GroupNameValidationMessage, Mode=OneWay}" Text="{Binding GroupName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
+			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="8" Margin="7"/>
+			<TextBox Grid.Row="8" Grid.Column="2" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<TextBox Grid.Row="9" Grid.Column="2" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
+			<Label Grid.Row="10" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SourceName, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
+			<Label Grid.Row="11" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SpecSourceName, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
+			<StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="2" Margin="5">
 				<Button Command="{Binding UpdateCommand}" Content="{Binding UpdateButtonLabel}"></Button>
 				<Button Command="{Binding ResetCommand}" Content="{Binding ResetButtonLabel}"></Button>
 				<Button Command="{Binding DefaultsCommand}" Content="{Binding DefaultsButtonLabel}"></Button>

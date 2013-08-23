@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>8/22/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -717,6 +717,19 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 			}
 		}
 		
+		protected string _groupName = DefaultValue.String;
+		///--------------------------------------------------------------------------------
+		/// <summary>This read only property gets the GroupName.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual string GroupName
+		{
+			get
+			{
+				return _groupName;
+			}
+		}
+		
 		protected BLL.Entities.Entity _entity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the Entity.</summary>
@@ -735,6 +748,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 					_entityName = value.EntityName;
 					_entityTypeCode = value.EntityTypeCode;
 					_identifierTypeCode = value.IdentifierTypeCode;
+					_groupName = value.GroupName;
 					if (_entity != null && _entity.PrimaryKeyValues != value.PrimaryKeyValues)
 					{
 						_isModified = true;

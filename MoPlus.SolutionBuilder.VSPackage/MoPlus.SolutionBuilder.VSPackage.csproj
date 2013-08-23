@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="Irony">
       <HintPath>..\Library\Third Party Dlls\Irony_2011_07_05\Irony.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">

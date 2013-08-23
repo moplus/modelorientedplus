@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>8/22/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -689,6 +689,19 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected string _referencedGroupName = DefaultValue.String;
+		///--------------------------------------------------------------------------------
+		/// <summary>This read only property gets the ReferencedGroupName.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual string ReferencedGroupName
+		{
+			get
+			{
+				return _referencedGroupName;
+			}
+		}
+		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -707,6 +720,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 					_referencedEntityName = value.EntityName;
 					_referencedEntityTypeCode = value.EntityTypeCode;
 					_referencedIdentifierTypeCode = value.IdentifierTypeCode;
+					_referencedGroupName = value.GroupName;
 					if (_referencedEntity != null && _referencedEntity.PrimaryKeyValues != value.PrimaryKeyValues)
 					{
 						_isModified = true;

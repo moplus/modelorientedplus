@@ -95,6 +95,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					_languageKeyTerms[LanguageTerms.SortTerm] = LanguageTerms.SortTerm;
 					_languageKeyTerms[LanguageTerms.StringCamelCase] = LanguageTerms.StringCamelCase;
 					_languageKeyTerms[LanguageTerms.StringCapitalCase] = LanguageTerms.StringCapitalCase;
+					_languageKeyTerms[LanguageTerms.StringCapitalWordCase] = LanguageTerms.StringCapitalWordCase;
 					_languageKeyTerms[LanguageTerms.StringContains] = LanguageTerms.StringContains;
 					_languageKeyTerms[LanguageTerms.StringEndsWith] = LanguageTerms.StringEndsWith;
 					_languageKeyTerms[LanguageTerms.StringFilter] = LanguageTerms.StringFilter;
@@ -401,6 +402,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.SortTerm);
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringCamelCase);
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringCapitalCase);
+					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringCapitalWordCase);
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringContains);
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringEndsWith);
 					_codeCompletionPropertiesAndMethods.Add(LanguageTerms.StringFilter);
@@ -557,6 +559,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.SortTerm);
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringCamelCase);
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringCapitalCase);
+					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringCapitalWordCase);
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringContains);
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringEndsWith);
 					_specCompletionPropertiesAndMethods.Add(LanguageTerms.StringFilter);

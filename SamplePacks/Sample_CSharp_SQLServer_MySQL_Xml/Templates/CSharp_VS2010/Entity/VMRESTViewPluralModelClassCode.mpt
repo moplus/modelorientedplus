@@ -303,7 +303,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		{
 			get
 			{
-				return "%%><%%=BLLPluralEntityName%%><%%-";
+				return "%%><%%=BLLPluralEntityName.CapitalWordCase()%%><%%-";
 			}
 		}
 
@@ -314,7 +314,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		{
 			get
 			{
-				return "%%><%%=BLLPluralEntityName%%><%%-";
+				return "%%><%%=BLLPluralEntityName.CapitalWordCase()%%><%%-";
 			}
 		}
 

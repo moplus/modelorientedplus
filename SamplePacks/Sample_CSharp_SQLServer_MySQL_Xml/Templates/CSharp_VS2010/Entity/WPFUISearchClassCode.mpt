@@ -76,7 +76,7 @@ namespace %%><%%=Project.Namespace%%><%%-.UserControls.%%><%%=FeatureName%%><%%-
 			{
 				%%><%%=VMBLLViewPluralModelClassName%%><%%- view = DataContext as %%><%%=VMBLLViewPluralModelClassName%%><%%-;
 				DataGridColumnHeader column = VisualItemHelper.FindParent<DataGridColumnHeader>(e.OriginalSource as DependencyObject);
-				if (column != null)
+				if (column != null && column.Column.Header != null)
 				{
 					if (view.SortColumn == column.Column.Header.ToString())
 					{

@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME DBSchema
+	CATEGORY DB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (GroupName == null)
+{
+	<%%-dbo%%>
+	return
+}
+<%%=GroupName%%>
+%%></CONTENT>

@@ -47,6 +47,11 @@ namespace %%><%%=Namespace%%><%%-
 		public virtual string Name { get; set; }
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the display name.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual string DisplayName { get; set; }
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method gets a validation error for a property or other tag.</summary>
 		/// 
 		/// <remarks>This should be overridden by view model classes performing any validation.</remarks>

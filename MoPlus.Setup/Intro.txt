@@ -1,0 +1,10 @@
+Mo+ Solution Builder is a model oriented programming language and IDE, used for building models and generating code and other documents in a model driven development process.
+
+This installer will install the following components:
+
+- MoPlusSolutionBuilder.exe - This is the Mo+ Solution Builder windows application (IDE) that provides all of the features for building models, generating code, editing, and debugging templates.
+
+- MoPlusSolutionUpdater.exe - This is a command line utility that can be used to automatically build models and generate code.  This utility can be used as part of a build process.
+
+- MoPlusSolutionBuilder.VSPackage.dll - This is a Visual Studio package, that provides all of the Mo+ Solution Builder within Microsoft Visual Studio.
+

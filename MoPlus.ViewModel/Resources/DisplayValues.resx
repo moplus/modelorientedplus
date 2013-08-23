@@ -2810,6 +2810,7 @@ An &lt;b&gt;Entity&lt;/b&gt; consists of the following properties:
 &lt;li&gt;&lt;b&gt;IsNullable (bool)&lt;/b&gt;: Flag, indicating if property can have null values.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;EntityTypeCode (int)&lt;/b&gt;: (or EntityTypeName) The type of the entity, based on input entity type enumeration values.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;IdentifierTypeCode (int)&lt;/b&gt;: (or IdentifierTypeName) The type of the entity identifier, based on input identifier type enumeration values.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;GroupName (string)&lt;/b&gt;: An alternate grouping for the entity, for example a database (schema) grouping.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the entity.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;BaseEntityID (Guid)&lt;/b&gt;: (or BaseEntity) The identifier of the entity this entity extends, if applicable.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;FeatureID (Guid)&lt;/b&gt;: (or Feature) The identifier of the parent feature.&lt;/li&gt;
@@ -5507,5 +5508,41 @@ For example, &lt;span style="color:teal"&gt;&lt;b&gt;this.EntityName&lt;/b&gt;&l
   <data name="Button_New" xml:space="preserve">
     <value>_New</value>
     <comment>For the new button.</comment>
+  </data>
+  <data name="Edit_GroupNameProperty" xml:space="preserve">
+    <value>Group Name</value>
+    <comment>For the group name.</comment>
+  </data>
+  <data name="Help_LanguageReferenceFunctionsStringCapitalWordCaseParagraph1" xml:space="preserve">
+    <value>&lt;b&gt;Syntax&lt;/b&gt;: string&lt;span style="color:blue"&gt;&lt;b&gt;.&lt;/b&gt;&lt;/span&gt;&lt;span style="color:teal"&gt;&lt;b&gt;CapitalWordCase&lt;/b&gt;&lt;/span&gt;&lt;span style="color:blue"&gt;&lt;b&gt;()&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;Where&lt;/b&gt;: &lt;i&gt;string&lt;/i&gt; is any model property (or specification property for spec templates) or template call that has a string value.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Availability&lt;/b&gt;: In all spec and code template areas.
+&lt;br&gt;&lt;br&gt;
+The &lt;i&gt;CapitalWordCase&lt;/i&gt; function is used to convert a string value to a set of capitalized words, essentially breaking intercap strings into separate capitalized words.  Underscores are converted into spaces and leading/trailing/extra underscores and spaces are removed.  For example, the result of &lt;span style="color:teal"&gt;&lt;b&gt;PropertyName&lt;/b&gt;&lt;/span&gt;&lt;span style="color:blue"&gt;&lt;b&gt;.&lt;/b&gt;&lt;/span&gt;&lt;span style="color:teal"&gt;&lt;b&gt;CapitalCase&lt;/b&gt;&lt;/span&gt;&lt;span style="color:blue"&gt;&lt;b&gt;()&lt;/b&gt;&lt;/span&gt; if the property name was &lt;i&gt;"customerName"&lt;/i&gt; would be &lt;i&gt;"Customer Name"&lt;/i&gt;.</value>
+    <comment>For help.</comment>
+  </data>
+  <data name="Help_StartupWorkingWithTemplatesHeader" xml:space="preserve">
+    <value>Working with Templates</value>
+    <comment>For help</comment>
+  </data>
+  <data name="Help_StartupWorkingWithTemplatesParagraph1" xml:space="preserve">
+    <value>Templates are powerful model oriented bits of code that can be used to create and maintain your models or code.  The easiest way to get started in working with templates is to download and use existing template libraries as a starting point for your own work (see the &lt;i&gt;Template Libraries and Other Resources&lt;/i&gt; section).
+&lt;br&gt;&lt;br&gt;
+To generate code, you choose which code template to use in your solution (and optionally for each project as well).  If your solution is not tied to a code template, when you generate code, a default text file will be created.
+&lt;br&gt;&lt;br&gt;
+To update your model from outside (database and xml) sources, you choose which spec template to use in your specification source.  If your database source is not tied to a spec template, your model will be loaded with some default information from your database.
+&lt;br&gt;&lt;br&gt;
+When you are creating new templates or modifying exising ones, you will want to know:
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;How to edit templates: &lt;/b&gt;You will want to look at the &lt;i&gt;User Interface Reference/Templates&lt;/i&gt; section in the help to grasp the basics of templates and template editing.  You will want to know about the syntax recognition, editing hot keys, and find/replace features (see &lt;i&gt;User Interface Reference/Templates/Editing Templates&lt;/i&gt; section in the help).&lt;/li&gt;
+
+&lt;li&gt;&lt;b&gt;How to debug templates: &lt;/b&gt;You will want to know about the rich facility to help you debug your templates (see &lt;i&gt;User Interface Reference/Templates/Debugging Templates&lt;/i&gt; section in the help).&lt;/li&gt;
+
+&lt;li&gt;&lt;b&gt;How templates work: &lt;/b&gt;To get a better grasp on how templates work, you will want to look at the &lt;i&gt;Mo+ Language Reference/Templates&lt;/i&gt; section in the help, in particular the workflow subsections that describe the overall process.&lt;/li&gt;
+
+&lt;li&gt;&lt;b&gt;How to call other templates: &lt;/b&gt;You will want to the many different ways you can call other templates and utilize other templates as reusable building blocks (see &lt;i&gt;Mo+ Language Reference/Templates/Calling Templates&lt;/i&gt; section in the help).&lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>For help</comment>
   </data>
 </root>
