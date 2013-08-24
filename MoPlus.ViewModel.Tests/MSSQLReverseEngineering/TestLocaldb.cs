@@ -29,7 +29,6 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             var p = Process.Start(psi);
             Assert.IsTrue(p.WaitForExit(BaseTest.EventWaitTimeout));
             var output = p.StandardOutput.ReadToEnd();
-            Assert.IsFalse(String.IsNullOrWhiteSpace(output), "No SQL LocalDB instances found!");
             Console.WriteLine(output);
             Assert.AreEqual(p.ExitCode, 0);
         }
