@@ -12,7 +12,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
     {
         public static void Create(string dbName, string filename, string logFileName)
         {
-            using (var conn = new SqlConnection(Path.Combine(@"Server=(localdb)\v11.0;Integrated Security=true")))
+            using (var conn = new SqlConnection(@"Data Source=(localdb)\v11.0;Integrated Security=true"))
             {
                 conn.Open();
 
