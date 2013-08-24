@@ -96,4 +96,9 @@ switch (DataType)
 	case "uniqueidentifier":
 		<%%=26%%>
 		break
+	case "smalldatetime":
+		<%%=29%%>
+		break
+	default:
+		trace("ERROR: DataType '" + DataType + "' not supported!")
 }%%></CONTENT>
