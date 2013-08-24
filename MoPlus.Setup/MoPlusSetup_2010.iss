@@ -24,7 +24,7 @@ DefaultGroupName={#MyAppName}
 LicenseFile=.\License.txt
 InfoBeforeFile=.\Intro.txt
 InfoAfterFile=.\Exit.txt
-OutputBaseFilename=MoPlusSetupWinAppVS2012
+OutputBaseFilename=MoPlusSetupWinAppVS2010
 SetupIconFile=Product.ico
 UninstallDisplayIcon={app}\Product.ico
 Compression=lzma
@@ -52,29 +52,29 @@ Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\AvalonDock.dll"; De
 
 [Registry]
 ; VS Package
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\InstalledProducts\Mo+ Solution Builder; ValueType: none; Flags: uninsdeletekey
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\InstalledProducts\Mo+ Solution Builder; ValueType: string; ValueName: Package; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\InstalledProducts\Mo+ Solution Builder; ValueType: dword; ValueName: UseInterface; ValueData: 1
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: none; Flags: uninsdeletekey
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage, MoPlus.SolutionBuilder.VSPackage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4d94ac959d59ec3
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: InprocServer32; ValueData: {sys}\MSCOREE.DLL
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: Class; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CodeBase; ValueData: {app}\MoPlus.SolutionBuilder.VSPackage.dll
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: dword; ValueName: ID; ValueData: $000003E9
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: MinEdition; ValueData: Standard
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductVersion; ValueData: 1.0
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductName; ValueData: Mo+ Solution Builder
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CompanyName; ValueData: Mo+
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\InstalledProducts\Mo+ Solution Builder; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\InstalledProducts\Mo+ Solution Builder; ValueType: string; ValueName: Package; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\InstalledProducts\Mo+ Solution Builder; ValueType: dword; ValueName: UseInterface; ValueData: 1
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage, MoPlus.SolutionBuilder.VSPackage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4d94ac959d59ec3
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: InprocServer32; ValueData: {sys}\MSCOREE.DLL
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: Class; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CodeBase; ValueData: {app}\MoPlus.SolutionBuilder.VSPackage.dll
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: dword; ValueName: ID; ValueData: $000003E9
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: MinEdition; ValueData: Standard
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductVersion; ValueData: 1.0
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductName; ValueData: Mo+ Solution Builder
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CompanyName; ValueData: Mo+
 ; menu
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\Menus; ValueType: string; ValueName: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueData: , Menus.ctmenu, 1
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\Menus; ValueType: string; ValueName: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueData: , Menus.ctmenu, 1
 ; Solution Builder tool window
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: none; Flags: uninsdeletekey
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionBuilderWindow
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionBuilderWindow
 ; Solution Designer tool window
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: none; Flags: uninsdeletekey
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
-Root: HKLM; SubKey: Software\Microsoft\VisualStudio\11.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionDesignerWindow
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\10.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionDesignerWindow
 ; fake GAC
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
@@ -82,8 +82,6 @@ Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v3.5\AssemblyFoldersEx\MoPl
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v3.5\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.0.30319\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
-Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.5.50709\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
-Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v4.5.50709\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -92,6 +90,6 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 
 [Run]
 ; Forces VS to merge the resource metadata that describes menus, toolbars, and command groups from all VSPackages available.
-Filename: {code:VSNET2012_PATH}\devenv.exe; Parameters: /setup; Flags: waituntilterminated
+;Filename: {code:VSNET2010_PATH}\devenv.exe; Parameters: /setup; Flags: waituntilterminated
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 

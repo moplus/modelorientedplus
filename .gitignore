@@ -9,6 +9,7 @@ $tf/pendingchanges.tf1
 $tf/pendingchanges.tfb
 /MoPlus.Setup/Release/setup.exe
 /MoPlus.Setup/Release/MoPlus.Setup.msi
-/MoPlus.Setup/Output/MoPlusSetup.exe
-/MoPlus.Setup/Output/MoPlusSetup_2012.exe
+/MoPlus.Setup/Output/MoPlusSetupWinAppOnly.exe
+/MoPlus.Setup/Output/MoPlusSetupWinAppVS2010.exe
+/MoPlus.Setup/Output/MoPlusSetupWinAppVS2012.exe
 /MoPlus.suo
