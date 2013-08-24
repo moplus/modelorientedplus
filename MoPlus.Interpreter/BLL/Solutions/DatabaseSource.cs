@@ -14,6 +14,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using System.IO;
 using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Text;
@@ -128,10 +129,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			return forwardItem;
 		}
 
-	    internal string SqlServerConnectionString;
-	    internal string SqlServerDatabaseFile;
-	    internal string SqlServerDatabaseLogFile;
-
 		///--------------------------------------------------------------------------------
 		/// <summary>This method loads a specification source with information from a
 		/// SQL database.</summary>
@@ -146,10 +143,11 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						Database sqlDatabase = null;
 
 				        Server sqlServer;
-				        if (!String.IsNullOrWhiteSpace(SqlServerConnectionString))
+				        if (SourceDbServerName.StartsWith("(localdb)", StringComparison.OrdinalIgnoreCase))
 				        {
-				            var conn = new ServerConnection(new SqlConnection(SqlServerConnectionString));
+				            var conn = new ServerConnection(new SqlConnection(String.Format("server={0};integrated security=true", SourceDbServerName)));
 				            sqlServer = new Server(conn);
+                            sqlServer.SetDefaultInitFields(true); 
 				        }
 				        else
 				        {
@@ -176,26 +174,52 @@ namespace MoPlus.Interpreter.BLL.Solutions
 							Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
 							throw ex;
 						}
-				        if (!String.IsNullOrWhiteSpace(SqlServerDatabaseFile) && !String.IsNullOrWhiteSpace(SqlServerDatabaseLogFile))
+                        StringBuilder databases = new StringBuilder();
+                            
+				        if (SourceDbName.Contains("\\"))
 				        {
-				            // attach the database instead of opening the database by name
-				            var stringColl = new StringCollection();
-				            stringColl.Add(SqlServerDatabaseFile);
-				            stringColl.Add(SqlServerDatabaseLogFile);
+                            var dbName = Path.GetFileNameWithoutExtension(SourceDbName);
+                            foreach (Database loopDb in sqlServer.Databases)
+                            {
+                                if (loopDb.Name.ToLower() == dbName.ToLower())
+                                {
+                                    sqlDatabase = loopDb;
+                                    break;
+                                }
+                            }
 
-				            SourceDbName = "db-" + Guid.NewGuid();
-    			            sqlServer.AttachDatabase(SourceDbName, stringColl);
-				        }
-
-				        StringBuilder databases = new StringBuilder();
-				        foreach (Database loopDb in sqlServer.Databases)
-				        {
-				            if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
-				            databases.Append(loopDb.Name);
-				            if (loopDb.Name.ToLower() == SourceDbName.ToLower())
+				            if (sqlDatabase == null)
 				            {
-				                sqlDatabase = loopDb;
-				                break;
+				                // attach the database instead of opening the database by name
+				                var stringColl = new StringCollection();
+				                stringColl.Add(SourceDbName);
+				                stringColl.Add(Path.Combine(Path.GetDirectoryName(SourceDbName), Path.GetFileNameWithoutExtension(SourceDbName) + "_log.ldf"));
+
+				                sqlServer.AttachDatabase(dbName, stringColl);
+
+				                foreach (Database loopDb in sqlServer.Databases)
+				                {
+				                    if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
+				                    databases.Append(loopDb.Name);
+				                    if (loopDb.Name.ToLower() == dbName.ToLower())
+				                    {
+				                        sqlDatabase = loopDb;
+				                        break;
+				                    }
+				                }
+				            }
+				        }
+				        else
+				        {
+				            foreach (Database loopDb in sqlServer.Databases)
+				            {
+				                if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
+				                databases.Append(loopDb.Name);
+				                if (loopDb.Name.ToLower() == SourceDbName.ToLower())
+				                {
+				                    sqlDatabase = loopDb;
+				                    break;
+				                }
 				            }
 				        }
 
@@ -244,6 +268,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						}
 						break;
 					default:
+                        throw new NotImplementedException("DatabaseTypeCode value " + DatabaseTypeCode + " not implemented!");
 						break;
 				}
 			}

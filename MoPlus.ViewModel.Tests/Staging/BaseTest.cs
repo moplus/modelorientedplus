@@ -40,14 +40,23 @@ namespace MoPlus.ViewModel.Tests.Staging
 
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_OutputChanged, new Action<StatusEventArgs>(OutputChanged));
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_StatusChanged, new Action<StatusEventArgs>(StatusChanged));
-            
+
             // execute the actual test.
             DoExecute(playground);
 
-            // cleanup after ourselves. We dont use a try..finaly, which would be cleaner 
-            // here, but that can hide exceptions caused by the test. Rather have the test 
-            // leave some garbage behind then:
-            Directory.Delete(playground, true);   
+            try
+            {
+
+                // cleanup after ourselves. We dont use a try..finaly, which would be cleaner 
+                // here, but that can hide exceptions caused by the test. Rather have the test 
+                // leave some garbage behind then:
+                Directory.Delete(playground, true);
+            }
+            catch
+            {
+                // for now, db connections aren't closed properly, which means we cannot delete the database yet. 
+                // this will happen next run (if playground is static)
+            }
         }
 
         protected abstract void DoExecute(string playground);

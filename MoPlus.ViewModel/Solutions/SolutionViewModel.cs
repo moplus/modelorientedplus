@@ -740,7 +740,7 @@ namespace MoPlus.ViewModel.Solutions
 						SolutionWorkParameters.Solution = new Solution();
 						SolutionWorkParameters.Solution.StatusChanged += new Solution.StatusEventHandler(Solution_StatusChanged);
 						SolutionWorkParameters.Solution.OutputRequested += new Solution.StatusEventHandler(Solution_OutputRequested);
-						_solutionWorkParameters.Solution.BreakpointReached += new Solution.DebugEventHandler(Solution_BreakpointReached);
+						SolutionWorkParameters.Solution.BreakpointReached += new Solution.DebugEventHandler(Solution_BreakpointReached);
 						SolutionWorkParameters.Solution.Load(SolutionPath);
 
 						// attach cached items to new solution
