@@ -70,7 +70,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                               solutionVM,
                                               solution,
                                               @"(localdb)\v11.0",
-                                              dbName,
+                                              mDatabaseFileName,
                                               Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps"));
             
             ViewModelHelper.BuildSolution(solutionVM, solution);
