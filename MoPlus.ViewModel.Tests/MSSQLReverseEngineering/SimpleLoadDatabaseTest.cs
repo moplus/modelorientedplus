@@ -15,6 +15,7 @@ using MoPlus.ViewModel.Tests.Staging;
 
 namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 {
+    [TestClass]
     public class SimpleLoadDatabaseTest: BaseTest
     {
         /*
