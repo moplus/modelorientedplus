@@ -12,11 +12,21 @@ namespace MoPlus.ViewModel.Tests.SamplePacks
     {
         public static void ExtractGettingStartedTo(string directory)
         {
+            ExtractPackTo("GettingStarted.zip", directory);
+        }
+
+        public static void ExtractSampleCSharpSQLServerXmlTo(string directory)
+        {
+            ExtractPackTo("Sample_CSharp_SQLServer_MySQL_Xml.zip", directory);
+        }
+
+        private static void ExtractPackTo(string pack, string directory)
+        {
             var tempSourceFile = Path.GetTempFileName();
             {
                 using (var f = new FileStream(tempSourceFile, FileMode.Create))
                 {
-                    using (var input = GetManifestStream("GettingStarted.zip"))
+                    using (var input = GetManifestStream(pack))
                     {
                         input.CopyTo(f);
                     }
@@ -26,7 +36,6 @@ namespace MoPlus.ViewModel.Tests.SamplePacks
             }
             File.Delete(tempSourceFile);
         }
-
 
         private static Stream GetManifestStream(string name)
         {
