@@ -43,7 +43,11 @@ namespace MoPlus.ViewModel.Tests.Staging
 
             // execute the actual test.
             DoExecute(playground);
-
+            if (EventWaitTimeout == -1)
+            {
+                // we're in debug mode, so don't remove anything
+                return;
+            }
             try
             {
 

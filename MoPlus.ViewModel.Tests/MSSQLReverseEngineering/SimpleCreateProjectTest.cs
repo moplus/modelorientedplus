@@ -43,6 +43,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
             // unpack sapmle pack to <Playground>\GettingStartedPack
             SamplePacksUtility.ExtractSampleCSharpSQLServerXmlTo(gettingStartedPath);
+            var templateBaseDir = Path.Combine(playground, "Pack", "Sample_CSharp_SQLServer_MySQL_Xml", "Templates", "CSharp_VS2010");
 
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
@@ -61,7 +62,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             solutionVM.ProductName = "TestProduct";
             solutionVM.ProductVersion = "0.1";
             solutionVM.SolutionPath = Path.Combine(playground, "TestSolution.xml");
-            solutionVM.TemplatePath = Path.Combine(playground, "NorthwindSolutionFile.mpt");
+            solutionVM.TemplatePath = Path.Combine(templateBaseDir, "SolutionFile.mpt");
             solutionVM.Update();
             var solution = solutionVM.Solution;
             if (solution == null)
@@ -74,38 +75,6 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             solution.OutputRequested += SolutionOnOutputRequested;
             
             #endregion create solution
-
-            #region create solution template
-            if (solutionVM.CodeTemplatesFolder == null)
-            {
-                throw new InvalidOperationException("Couldn't find CodeTemplatesFolder");
-            }
-
-            solutionVM.CodeTemplatesFolder.ProcessNewCodeTemplateCommand();
-            var newSolTpl = new CodeTemplateViewModel();
-            var solutionTemplate = solutionDesigner.SelectedItem as CodeTemplateViewModel ?? newSolTpl;
-            Assert.AreNotSame(solutionTemplate, newSolTpl, "Couldn't find template!");
-
-            solutionTemplate.TemplateName = "NorthwindSolutionFile";
-            solutionTemplate.IsTopLevelTemplate = true;
-            solutionTemplate.TemplateOutput = "<%%=Solution.SolutionDirectory%%><%%-\\%%><%%=Solution.OutputSolutionFileName%%>\r\n" +
-                                              "<%%:\r\n" +
-                                              "    update(Path)\r\n" +
-                                              "%%>";
-            solutionTemplate.TemplateContent = "<%%-Entities:\r\n" +
-                                               "%%><%%:\r\n" +
-                                               "foreach(Entity)\r\n" +
-                                               "{\r\n" +
-                                               "    <%%- - %%><%%=Feature.FeatureName%%><%%--%%><%%=Entity.EntityName%%><%%-\r\n" +
-                                               "%%>\r\n" +
-                                               "}%%>";
-            solutionTemplate.Update();
-            solutionVM.TemplatePath = Path.Combine(playground, solutionTemplate.TemplateName + ".mpt");
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            solutionVM.CodeTemplatesFolder.LoadTemplates(solutionVM.Solution);
-            
-            #endregion create solution template
 
             #region create spec source
             solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
@@ -130,10 +99,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             #endregion create spec source
 
             #region load model from database
-            //Console.WriteLine("Call LoadSpecificationSource");
-            //dbSource.DatabaseSource.LoadSpecificationSource();
-            //Assert.IsTrue(dbSource.DatabaseSource.SpecDatabase.SqlTableCount > 0, "No tables found in created database");
-
+            
             solutionVM.SaveSolution();
             solutionVM.LoadSolution(solution, true);
             using (var resetEvent = new AutoResetEvent(false))
@@ -151,6 +117,27 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             }
             #endregion load model from database
 
+            #region generate EF BLL project
+
+            solutionVM.ProjectsFolder.ProcessNewProjectCommand();
+            var newProject = new ProjectViewModel();
+            var project = solutionDesigner.SelectedItem as ProjectViewModel ?? newProject;
+            Assert.AreNotSame(project, newProject, "Couldn't find project");
+            project.Name = "EFBLL";
+            project.Namespace = "EFBLL";
+            project.TemplatePath = Path.Combine(templateBaseDir, "EntityFramework.mpt");
+            project.Tags = "BLL";
+            Assert.IsTrue(project.IsValid, "EFBLL project has errors!");
+            
+            project.Update();
+            
+            solutionVM.Update();
+            solutionVM.SaveSolution();
+            solutionVM.LoadSolution(solution, true);
+            solutionVM.ProjectsFolder.LoadProjects(solution);
+            
+            #endregion generate EF BLL project
+
             // generate project: 
             using (var resetEvent = new AutoResetEvent(false))
             {
@@ -164,7 +151,10 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                 Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
                 solutionVM.Updated -= updated;
             }
-            Assert.IsTrue(File.Exists(Path.Combine(playground, "TestSolution.sln")));
+            Assert.IsTrue(File.Exists(Path.Combine(playground, "TestSolution.sln")), "Solution file has not been created!");
+
+            MSBuildUtility.Execute(Path.Combine(playground, "TestSolution.sln"),
+                                   multiThreaded: true);
         }
 
         private void SolutionOnOutputRequested(object sender, StatusEventArgs args)

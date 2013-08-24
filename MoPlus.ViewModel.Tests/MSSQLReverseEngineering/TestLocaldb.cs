@@ -29,7 +29,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             var p = Process.Start(psi);
             Assert.IsTrue(p.WaitForExit(BaseTest.EventWaitTimeout));
             var output = p.StandardOutput.ReadToEnd();
-            Console.WriteLine(output);
+            Console.Write(output);
             Assert.AreEqual(p.ExitCode, 0);
         }
     }
