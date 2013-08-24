@@ -15,7 +15,14 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         [TestMethod]
         public void DoIt()
         {
-            var psi = new ProcessStartInfo("sqllocaldb.exe", "i");
+            var exe = "sqllocaldb.exe";
+            var arguments = "i";
+            Execute(exe, arguments);
+        }
+
+        public static void Execute(string exe, string arguments)
+        {
+            var psi = new ProcessStartInfo(exe, arguments);
             psi.RedirectStandardError = true;
             psi.RedirectStandardOutput = true;
             psi.UseShellExecute = false;

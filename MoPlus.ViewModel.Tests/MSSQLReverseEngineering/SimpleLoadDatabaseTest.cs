@@ -28,6 +28,9 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
         protected override void DoExecute(string playground)
         {
+            TestLocaldb.Execute("sqllocaldb.exe", "stop v11.0");
+            TestLocaldb.Execute("sqllocaldb.exe", "start v11.0");
+
             var dbName = "Northwind-" + Guid.NewGuid();
             mDatabaseFileName = Path.Combine(playground, dbName + ".mdf");
             mDatabaseLogFileName = Path.Combine(playground, dbName + "_log.ldf");
