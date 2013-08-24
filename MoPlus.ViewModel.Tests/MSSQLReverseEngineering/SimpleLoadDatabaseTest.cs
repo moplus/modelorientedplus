@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoPlus.Interpreter.BLL.Config;
+using MoPlus.Interpreter.BLL.Solutions;
 using MoPlus.Interpreter.Events;
 using MoPlus.ViewModel.Entities;
 using MoPlus.ViewModel.Interpreter;
@@ -46,35 +47,21 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
+            Solution solution;
+            var solutionVM = ViewModelHelper.NewSolution(builder,
+                                             solutionDesigner,
+                                             "TestSolution",
+                                             "TestNamespace",
+                                             "TestSolution.sln",
+                                             "TestCompany",
+                                             "TestProduct",
+                                             "0.1",
+                                             Path.Combine(playground, "TestSolution.xml"),
+                                             Path.Combine(playground, "NorthwindSolutionFile.mpt"),
+                                             out solution);
 
-            #region create solution
-            builder.ProcessNewCommand(builder.SolutionsFolder);
-            var solutionVM = solutionDesigner.SelectedItem as SolutionViewModel;
-            if (solutionVM == null)
-            {
-                throw new InvalidOperationException("Couldn't find SolutionViewModel");
-            }
-            solutionVM.SolutionName = "TestSolution";
-            solutionVM.Namespace = "TestNamespace";
-            solutionVM.OutputSolutionFileName = "TestSolution.sln";
-            solutionVM.CompanyName = "TestCompany";
-            solutionVM.ProductName = "TestProduct";
-            solutionVM.ProductVersion = "0.1";
-            solutionVM.SolutionPath = Path.Combine(playground, "TestSolution.xml");
-            solutionVM.TemplatePath = Path.Combine(playground, "NorthwindSolutionFile.mpt");
-            solutionVM.Update();
-            var solution = solutionVM.Solution;
-            if (solution == null)
-            {
-                throw new InvalidOperationException("Couldn't find Solution!");
-            }
-            solutionVM.UpdateCommand.Execute(null);
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            solution.OutputRequested += SolutionOnOutputRequested;
+            solutionVM.Solution.OutputRequested += SolutionOnOutputRequested;
             
-            #endregion create solution
-
             #region create solution template
             if (solutionVM.CodeTemplatesFolder == null)
             {
@@ -101,68 +88,23 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                "}%%>";
             solutionTemplate.Update();
             solutionVM.TemplatePath = Path.Combine(playground, solutionTemplate.TemplateName + ".mpt");
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
+            ViewModelHelper.SaveSolution(solutionVM, solution);
             solutionVM.CodeTemplatesFolder.LoadTemplates(solutionVM.Solution);
-            
+
             #endregion create solution template
 
-            #region create spec source
-            solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
+            ViewModelHelper.NewDatabaseSource(builder,
+                                              solutionDesigner,
+                                              solutionVM,
+                                              solution,
+                                              @"(localdb)\v11.0",
+                                              mDatabaseFileName,
+                                              Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps"));
 
-            var newDBSource = new DatabaseSourceViewModel();
-            var dbSource = solutionDesigner.SelectedItem as DatabaseSourceViewModel ?? newDBSource;
-            Assert.AreNotSame(dbSource, newDBSource, "Couldn't find database source");
-            dbSource.DatabaseTypeCode = (int)DatabaseTypeCode.SqlServer;
-            dbSource.SourceDbServerName = @"(localdb)\v11.0";
-            dbSource.SourceDbName = mDatabaseFileName;
-            //dbSource.SourceDbServerName = "nts1";
-            //dbSource.SourceDbName = "Hofstede&Essink";
-            dbSource.TemplatePath = Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps");
-            Assert.IsTrue(File.Exists(dbSource.TemplatePath), "File MDLSqlModel.mps not found!");
-            dbSource.Order = 1;
+            ViewModelHelper.BuildSolution(solutionVM, solution);
 
-            dbSource.Update();
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            solutionVM.SpecTemplatesFolder.LoadSpecTemplates(solution);
-            
-            #endregion create spec source
+            ViewModelHelper.UpdateOutputSolution(solutionVM);
 
-            #region load model from database
-            //Console.WriteLine("Call LoadSpecificationSource");
-            //dbSource.DatabaseSource.LoadSpecificationSource();
-            //Assert.IsTrue(dbSource.DatabaseSource.SpecDatabase.SqlTableCount > 0, "No tables found in created database");
-
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            using (var resetEvent = new AutoResetEvent(false))
-            {
-                var updated = new EventHandler((sender, args) =>
-                {
-                    Console.WriteLine("Solution built!");
-                    resetEvent.Set();
-                });
-                solutionVM.Updated += updated;
-                Console.WriteLine("Call BuildSolution");
-                solutionVM.BuildSolution(true);
-                Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
-            }
-            #endregion load model from database
-
-            using (var resetEvent = new AutoResetEvent(false))
-            {
-                var updated = new EventHandler((sender, args) =>
-                {
-                    Console.WriteLine("Solution updated!");
-                    resetEvent.Set();
-                });
-                solutionVM.Updated += updated;
-                solutionVM.UpdateOutputSolution();
-                Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
-            }
             var expectedOutput = "Entities:\r\n" +
                                  " - Domain-Category\r\n" +
                                  " - Domain-CustomerCustomerDemo\r\n" +

@@ -59,17 +59,20 @@ namespace MoPlus.Interpreter
 				if (tags != value)
 				{
 					TagList.Clear();
-					foreach (string item in value.Split(' '))
-					{
-						if (!String.IsNullOrWhiteSpace(item))
-						{
-							Tag tag = new Tag();
-							tag.TagID = Guid.NewGuid();
-							tag.TagName = item;
-							TagList.Add(tag);
-						}
-					}
-					_isModified = true;
+				    if (!String.IsNullOrWhiteSpace(value))
+				    {
+				        foreach (string item in value.Split(' '))
+				        {
+				            if (!String.IsNullOrWhiteSpace(item))
+				            {
+				                Tag tag = new Tag();
+				                tag.TagID = Guid.NewGuid();
+				                tag.TagName = item;
+				                TagList.Add(tag);
+				            }
+				        }
+				    }
+				    _isModified = true;
 					base.OnPropertyChanged("Tags");
 				}
 			}

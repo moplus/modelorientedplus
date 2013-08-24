@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoPlus.Interpreter.BLL.Config;
+using MoPlus.Interpreter.BLL.Interpreter;
+using MoPlus.Interpreter.BLL.Solutions;
 using MoPlus.Interpreter.Events;
 using MoPlus.ViewModel.Entities;
 using MoPlus.ViewModel.Interpreter;
@@ -48,109 +50,41 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
 
-            #region create solution
-            builder.ProcessNewCommand(builder.SolutionsFolder);
-            var solutionVM = solutionDesigner.SelectedItem as SolutionViewModel;
-            if (solutionVM == null)
-            {
-                throw new InvalidOperationException("Couldn't find SolutionViewModel");
-            }
-            solutionVM.SolutionName = "TestSolution";
-            solutionVM.Namespace = "TestNamespace";
-            solutionVM.OutputSolutionFileName = "TestSolution.sln";
-            solutionVM.CompanyName = "TestCompany";
-            solutionVM.ProductName = "TestProduct";
-            solutionVM.ProductVersion = "0.1";
-            solutionVM.SolutionPath = Path.Combine(playground, "TestSolution.xml");
-            solutionVM.TemplatePath = Path.Combine(templateBaseDir, "SolutionFile.mpt");
-            solutionVM.Update();
-            var solution = solutionVM.Solution;
-            if (solution == null)
-            {
-                throw new InvalidOperationException("Couldn't find Solution!");
-            }
-            solutionVM.UpdateCommand.Execute(null);
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
+            Solution solution;
+            var solutionVM = ViewModelHelper.NewSolution(builder,
+                                                         solutionDesigner,
+                                                         "TestSolution",
+                                                         "TestNamespace",
+                                                         "TestSolution.sln",
+                                                         "TestCompany",
+                                                         "TestProduct",
+                                                         "0.1",
+                                                         Path.Combine(playground, "TestSolution.xml"),
+                                                         Path.Combine(templateBaseDir, "SolutionFile.mpt"),
+                                                         out solution);
+            
             solution.OutputRequested += SolutionOnOutputRequested;
+
+            ViewModelHelper.NewDatabaseSource(builder,
+                                              solutionDesigner,
+                                              solutionVM,
+                                              solution,
+                                              @"(localdb)\v11.0",
+                                              dbName,
+                                              Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps"));
             
-            #endregion create solution
+            ViewModelHelper.BuildSolution(solutionVM, solution);
 
-            #region create spec source
-            solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
+            ViewModelHelper.CreateNewProject(solutionVM,
+                                             solutionDesigner,
+                                             solution,
+                                             "EFBLL",
+                                             "EFBLL",
+                                             Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
+                                             null);
 
-            var newDBSource = new DatabaseSourceViewModel();
-            var dbSource = solutionDesigner.SelectedItem as DatabaseSourceViewModel ?? newDBSource;
-            Assert.AreNotSame(dbSource, newDBSource, "Couldn't find database source");
-            dbSource.DatabaseTypeCode = (int)DatabaseTypeCode.SqlServer;
-            dbSource.SourceDbServerName = @"(localdb)\v11.0";
-            dbSource.SourceDbName = mDatabaseFileName;
-            //dbSource.SourceDbServerName = "nts1";
-            //dbSource.SourceDbName = "Hofstede&Essink";
-            dbSource.TemplatePath = Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps");
-            Assert.IsTrue(File.Exists(dbSource.TemplatePath), "File MDLSqlModel.mps not found!");
-            dbSource.Order = 1;
+            ViewModelHelper.UpdateOutputSolution(solutionVM);
 
-            dbSource.Update();
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            solutionVM.SpecTemplatesFolder.LoadSpecTemplates(solution);
-            
-            #endregion create spec source
-
-            #region load model from database
-            
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            using (var resetEvent = new AutoResetEvent(false))
-            {
-                var updated = new EventHandler((sender, args) =>
-                {
-                    Console.WriteLine("Solution built!");
-                    resetEvent.Set();
-                });
-                solutionVM.Updated += updated;
-                Console.WriteLine("Call BuildSolution");
-                solutionVM.BuildSolution(true);
-                Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
-            }
-            #endregion load model from database
-
-            #region generate EF BLL project
-
-            solutionVM.ProjectsFolder.ProcessNewProjectCommand();
-            var newProject = new ProjectViewModel();
-            var project = solutionDesigner.SelectedItem as ProjectViewModel ?? newProject;
-            Assert.AreNotSame(project, newProject, "Couldn't find project");
-            project.Name = "EFBLL";
-            project.Namespace = "EFBLL";
-            project.TemplatePath = Path.Combine(templateBaseDir, "EntityFramework.mpt");
-            project.Tags = "BLL";
-            Assert.IsTrue(project.IsValid, "EFBLL project has errors!");
-            
-            project.Update();
-            
-            solutionVM.Update();
-            solutionVM.SaveSolution();
-            solutionVM.LoadSolution(solution, true);
-            solutionVM.ProjectsFolder.LoadProjects(solution);
-            
-            #endregion generate EF BLL project
-
-            // generate project: 
-            using (var resetEvent = new AutoResetEvent(false))
-            {
-                var updated = new EventHandler((sender, args) =>
-                {
-                    Console.WriteLine("Solution updated!");
-                    resetEvent.Set();
-                });
-                solutionVM.Updated += updated;
-                solutionVM.UpdateOutputSolution();
-                Assert.IsTrue(resetEvent.WaitOne(EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
-            }
             Assert.IsTrue(File.Exists(Path.Combine(playground, "TestSolution.sln")), "Solution file has not been created!");
 
             MSBuildUtility.Execute(Path.Combine(playground, "TestSolution.sln"),

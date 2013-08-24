@@ -70,6 +70,7 @@
     <Compile Include="Staging\BaseTest.cs" />
     <Compile Include="MSSQLReverseEngineering\SimpleLoadDatabaseTest.cs" />
     <Compile Include="Staging\SimpleTest.cs" />
+    <Compile Include="ViewModelHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\MoPlus.Data\MoPlus.Data.csproj">
