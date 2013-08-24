@@ -61,6 +61,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="MSSQLReverseEngineering\SimpleCreateProjectTest.cs" />
     <Compile Include="MSSQLReverseEngineering\NorthwindUtility.cs" />
     <Compile Include="MSSQLReverseEngineering\TestLocaldb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
