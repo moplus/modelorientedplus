@@ -47,7 +47,6 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
-            Solution solution;
             var solutionVM = ViewModelHelper.NewSolution(builder,
                                              solutionDesigner,
                                              "TestSolution",
@@ -57,8 +56,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                              "TestProduct",
                                              "0.1",
                                              Path.Combine(playground, "TestSolution.xml"),
-                                             Path.Combine(playground, "NorthwindSolutionFile.mpt"),
-                                             out solution);
+                                             Path.Combine(playground, "NorthwindSolutionFile.mpt"));
 
             solutionVM.Solution.OutputRequested += SolutionOnOutputRequested;
             
@@ -88,7 +86,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                "}%%>";
             solutionTemplate.Update();
             solutionVM.TemplatePath = Path.Combine(playground, solutionTemplate.TemplateName + ".mpt");
-            ViewModelHelper.SaveSolution(solutionVM, solution);
+            ViewModelHelper.SaveSolution(solutionVM);
             solutionVM.CodeTemplatesFolder.LoadTemplates(solutionVM.Solution);
 
             #endregion create solution template
@@ -96,12 +94,11 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             ViewModelHelper.NewDatabaseSource(builder,
                                               solutionDesigner,
                                               solutionVM,
-                                              solution,
                                               @"(localdb)\v11.0",
                                               mDatabaseFileName,
                                               Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps"));
 
-            ViewModelHelper.BuildSolution(solutionVM, solution);
+            ViewModelHelper.BuildSolution(solutionVM);
 
             ViewModelHelper.UpdateOutputSolution(solutionVM);
 

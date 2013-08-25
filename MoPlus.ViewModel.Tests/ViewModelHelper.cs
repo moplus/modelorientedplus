@@ -18,14 +18,14 @@ namespace MoPlus.ViewModel.Tests
     /// </summary>
     public static class ViewModelHelper
     {
-        public static void SaveSolution(SolutionViewModel solutionVM, Solution solution)
+        public static void SaveSolution(SolutionViewModel solutionVM)
         {
             if (solutionVM == null)
             {
                 throw new ArgumentNullException("solutionVM");
             }
 
-            //var solution = solutionVM.Solution;
+            var solution = solutionVM.Solution;
             Assert.IsNotNull(solution, "Couldn't find Solution!");
 
             //solutionVM.UpdateCommand.Execute(null);
@@ -34,7 +34,7 @@ namespace MoPlus.ViewModel.Tests
         }
 
         public static SolutionViewModel NewSolution(BuilderViewModel builder, DesignerViewModel designer, string solutionName, string solutionNamespace, string outputFilename, string company, string product, string version, 
-            string solutionPath, string templatePath, out Solution solution)
+            string solutionPath, string templatePath)
         {
             builder.ProcessNewCommand(builder.SolutionsFolder);
             var solutionVM = designer.SelectedItem as SolutionViewModel;
@@ -49,12 +49,11 @@ namespace MoPlus.ViewModel.Tests
             solutionVM.SolutionPath = solutionPath;
             solutionVM.TemplatePath = templatePath;
             solutionVM.Update();
-            solution = solutionVM.Solution;
-            SaveSolution(solutionVM, solution);
+            SaveSolution(solutionVM);
             return solutionVM;
         }
 
-        public static void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, Solution solution, string serverName, string databaseName, string templatePath)
+        public static void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, string serverName, string databaseName, string templatePath)
         {
             solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
 
@@ -70,11 +69,11 @@ namespace MoPlus.ViewModel.Tests
 
             dbSource.Update();
             solutionVM.Update();
-            SaveSolution(solutionVM, solution);
-            solutionVM.SpecTemplatesFolder.LoadSpecTemplates(solution);
+            SaveSolution(solutionVM);
+            solutionVM.SpecTemplatesFolder.LoadSpecTemplates(solutionVM.Solution);
         }
 
-        public static void CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, Solution solution, string projectName, string projectNamespace, string templateFilename, string tags)
+        public static void CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags)
         {
             solutionVM.ProjectsFolder.ProcessNewProjectCommand();
             var newProject = new ProjectViewModel();
@@ -85,15 +84,17 @@ namespace MoPlus.ViewModel.Tests
             project.TemplatePath = templateFilename;
             project.Tags = tags;
             Assert.IsTrue(project.IsValid, "Project has errors!");
+            
             project.Update();
+            solutionVM.Update();
 
-            SaveSolution(solutionVM, solution);
-            solutionVM.ProjectsFolder.LoadProjects(solution);
+            SaveSolution(solutionVM);
+            solutionVM.ProjectsFolder.LoadProjects(solutionVM.Solution);
         }
 
-        public static void BuildSolution(SolutionViewModel solutionVM, Solution solution)
+        public static void BuildSolution(SolutionViewModel solutionVM)
         {
-            SaveSolution(solutionVM, solution);
+            SaveSolution(solutionVM);
             using (var resetEvent = new AutoResetEvent(false))
             {
                 var updated = new EventHandler((sender, args) =>

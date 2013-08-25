@@ -23,13 +23,16 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         public static void Execute(string exe, string arguments)
         {
             var psi = new ProcessStartInfo(exe, arguments);
-            psi.RedirectStandardError = true;
-            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = false;
+            psi.RedirectStandardOutput = false;
             psi.UseShellExecute = false;
             var p = Process.Start(psi);
+            p.OutputDataReceived += (sender, args) => Console.Write(args.Data);
+            p.ErrorDataReceived += (sender, args) =>
+                                   {
+                                       Console.Write(args.Data);
+                                   };
             Assert.IsTrue(p.WaitForExit(BaseTest.EventWaitTimeout));
-            var output = p.StandardOutput.ReadToEnd();
-            Console.Write(output);
             Assert.AreEqual(p.ExitCode, 0);
         }
     }

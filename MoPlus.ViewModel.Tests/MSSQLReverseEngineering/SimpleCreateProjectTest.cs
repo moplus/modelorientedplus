@@ -3,15 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MoPlus.Interpreter.BLL.Config;
-using MoPlus.Interpreter.BLL.Interpreter;
-using MoPlus.Interpreter.BLL.Solutions;
-using MoPlus.Interpreter.Events;
-using MoPlus.ViewModel.Entities;
-using MoPlus.ViewModel.Interpreter;
-using MoPlus.ViewModel.Solutions;
 using MoPlus.ViewModel.Tests.SamplePacks;
 using MoPlus.ViewModel.Tests.Staging;
 
@@ -50,7 +42,6 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
 
-            Solution solution;
             var solutionVM = ViewModelHelper.NewSolution(builder,
                                                          solutionDesigner,
                                                          "TestSolution",
@@ -60,50 +51,36 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                          "TestProduct",
                                                          "0.1",
                                                          Path.Combine(playground, "TestSolution.xml"),
-                                                         Path.Combine(templateBaseDir, "SolutionFile.mpt"),
-                                                         out solution);
-            
-            solution.OutputRequested += SolutionOnOutputRequested;
+                                                         Path.Combine(templateBaseDir, "SolutionFile.mpt"));
 
             ViewModelHelper.NewDatabaseSource(builder,
                                               solutionDesigner,
                                               solutionVM,
-                                              solution,
                                               @"(localdb)\v11.0",
                                               mDatabaseFileName,
                                               Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps"));
             
-            ViewModelHelper.BuildSolution(solutionVM, solution);
+            Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
 
+            ViewModelHelper.SaveSolution(solutionVM);
+            
             ViewModelHelper.CreateNewProject(solutionVM,
                                              solutionDesigner,
-                                             solution,
                                              "EFBLL",
                                              "EFBLL",
                                              Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
-                                             null);
+                                             "BLL");
+
+            Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
+            Assert.AreEqual(1, solutionVM.Solution.ProjectList.Count); 
 
             ViewModelHelper.UpdateOutputSolution(solutionVM);
-
+            
             Assert.IsTrue(File.Exists(Path.Combine(playground, "TestSolution.sln")), "Solution file has not been created!");
-
+            Console.WriteLine("Calling MSBuild now");
             MSBuildUtility.Execute(Path.Combine(playground, "TestSolution.sln"),
                                    multiThreaded: true);
-        }
-
-        private void SolutionOnOutputRequested(object sender, StatusEventArgs args)
-        {
-            base.OutputChanged(new Events.StatusEventArgs
-                               {
-                                   AppendText = args.AppendText,
-                                   CompletedWork = args.CompletedWork,
-                                   IsException=args.IsException,
-                                   Progress=args.Progress,
-                                   ShowMessageBox=args.ShowMessageBox,
-                                   Text=args.Text,
-                                   Title=args.Title,
-                                   TotalWork = args.TotalWork
-                               });
+            Console.WriteLine("TEst finished for now");
         }
     }
 }
