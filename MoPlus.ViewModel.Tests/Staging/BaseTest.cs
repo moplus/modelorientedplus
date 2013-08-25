@@ -40,6 +40,8 @@ namespace MoPlus.ViewModel.Tests.Staging
 
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_OutputChanged, new Action<StatusEventArgs>(OutputChanged));
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_StatusChanged, new Action<StatusEventArgs>(StatusChanged));
+            WorkspaceViewModel.mediator.MessageUnhandled += mediator_MessageUnhandled;
+
 
             // execute the actual test.
             DoExecute(playground);
@@ -61,6 +63,13 @@ namespace MoPlus.ViewModel.Tests.Staging
                 // for now, db connections aren't closed properly, which means we cannot delete the database yet. 
                 // this will happen next run (if playground is static)
             }
+        }
+
+        void mediator_MessageUnhandled(Type arg1, string arg2, object[] arg3)
+        {
+            Console.ForegroundColor=ConsoleColor.DarkYellow;
+            Console.WriteLine("Message unhandled: '{0}', type = '{1}'", arg2, arg1.FullName);
+            Console.ResetColor();
         }
 
         protected abstract void DoExecute(string playground);

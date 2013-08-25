@@ -69,11 +69,11 @@ namespace MoPlus.ViewModel.Tests
 
             dbSource.Update();
             solutionVM.Update();
-            SaveSolution(solutionVM);
             solutionVM.SpecTemplatesFolder.LoadSpecTemplates(solutionVM.Solution);
+            SaveSolution(solutionVM);
         }
 
-        public static void CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags)
+        public static ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags, params Guid[] referencedProjects)
         {
             solutionVM.ProjectsFolder.ProcessNewProjectCommand();
             var newProject = new ProjectViewModel();
@@ -83,13 +83,20 @@ namespace MoPlus.ViewModel.Tests
             project.Namespace = projectNamespace;
             project.TemplatePath = templateFilename;
             project.Tags = tags;
+
+            foreach (var referencedProject in referencedProjects)
+            {
+                project.ProjectReferenceList.Add(new ProjectReference(project.ProjectID, referencedProject));
+            }
+
             Assert.IsTrue(project.IsValid, "Project has errors!");
-            
+
             project.Update();
             solutionVM.Update();
 
             SaveSolution(solutionVM);
             solutionVM.ProjectsFolder.LoadProjects(solutionVM.Solution);
+            return project;
         }
 
         public static void BuildSolution(SolutionViewModel solutionVM)

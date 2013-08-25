@@ -62,17 +62,49 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
 
-            ViewModelHelper.SaveSolution(solutionVM);
-            
-            ViewModelHelper.CreateNewProject(solutionVM,
-                                             solutionDesigner,
-                                             "EFBLL",
-                                             "EFBLL",
-                                             Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
-                                             "BLL");
+            var efbllProj = ViewModelHelper.CreateNewProject(solutionVM,
+                                                             solutionDesigner,
+                                                             "EFBLL",
+                                                             "EFBLL",
+                                                             Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
+                                                             "BLL");
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
-            Assert.AreEqual(1, solutionVM.Solution.ProjectList.Count); 
+            Assert.AreEqual(1, solutionVM.Solution.ProjectList.Count);
+
+            var efdsProj = ViewModelHelper.CreateNewProject(solutionVM,
+                                                            solutionDesigner,
+                                                            "EFDataServices",
+                                                            "EFDataServices",
+                                                            Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
+                                                            "DS",
+                                                            efbllProj.ProjectID);
+
+            Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
+            Assert.AreEqual(2, solutionVM.Solution.ProjectList.Count);
+
+
+            var vmProj = ViewModelHelper.CreateNewProject(solutionVM,
+                                                          solutionDesigner,
+                                                          "ViewModels",
+                                                          "ViewModels",
+                                                          Path.Combine(templateBaseDir, "Project", "VMEFDS.mpt"),
+                                                          "VM", 
+                                                          efdsProj.ProjectID);
+
+            Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
+            Assert.AreEqual(3, solutionVM.Solution.ProjectList.Count);
+
+            var shellProj = ViewModelHelper.CreateNewProject(solutionVM,
+                                                          solutionDesigner,
+                                                          "Shell",
+                                                          "Shell",
+                                                          Path.Combine(templateBaseDir, "Project", "WPFUI.mpt"),
+                                                          null,
+                                                          vmProj.ProjectID);
+
+            Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
+            Assert.AreEqual(4, solutionVM.Solution.ProjectList.Count);
 
             ViewModelHelper.UpdateOutputSolution(solutionVM);
             
