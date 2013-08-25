@@ -10,7 +10,7 @@ using MoPlus.ViewModel.Tests.Staging;
 namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 {
     [TestClass]
-    public class SimpleCreateProjectVS2010Test: BaseTest
+    public class SimpleCreateProjectVS2012Test: BaseTest
     {
         /*
          * This test creates a database, and loads that database into an Mo+ solution.
@@ -21,7 +21,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         private string mTemplatesPath;
 
         [TestMethod]
-        public void DoSimpleCreateProjectVS2010Test()
+        public void DoSimpleCreateProjectVS2012Test()
         {
             Execute();
         }
@@ -43,7 +43,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
             // unpack sapmle pack to <Playground>\GettingStartedPack
             SamplePacksUtility.ExtractSampleCSharpSQLServerXmlTo(gettingStartedPath);
-            var templateBaseDir = Path.Combine(playground, "Pack", "Sample_CSharp_SQLServer_MySQL_Xml", "Templates", "CSharp_VS2010");
+            var templateBaseDir = Path.Combine(playground, "Pack", "Sample_CSharp_SQLServer_MySQL_Xml", "Templates", "CSharp_VS2012");
 
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();

@@ -62,15 +62,18 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MSBuildUtility.cs" />
+    <Compile Include="MSSQLReverseEngineering\SimpleCreateProjectVS2012Test.cs" />
     <Compile Include="MSSQLReverseEngineering\SimpleCreateProjectVS2010Test.cs" />
     <Compile Include="MSSQLReverseEngineering\NorthwindUtility.cs" />
     <Compile Include="MSSQLReverseEngineering\TestLocaldb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SamplePacks\SamplePacksUtility.cs" />
-    <Compile Include="Staging\BaseTest.cs" />
+    <Compile Include="BaseTest.cs" />
     <Compile Include="MSSQLReverseEngineering\SimpleLoadDatabaseTest.cs" />
     <Compile Include="Staging\SimpleTest.cs" />
-    <Compile Include="ViewModelHelper.cs" />
+    <Compile Include="BaseTest.ViewModelHelper.cs">
+      <DependentUpon>BaseTest.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library\MoPlus.Data\MoPlus.Data.csproj">

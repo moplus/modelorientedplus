@@ -53,16 +53,16 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
             var solutionDesigner = new DesignerViewModel();
             var builder = new BuilderViewModel();
-            var solutionVM = ViewModelHelper.NewSolution(builder,
-                                             solutionDesigner,
-                                             "TestSolution",
-                                             "TestNamespace",
-                                             "TestSolution.sln",
-                                             "TestCompany",
-                                             "TestProduct",
-                                             "0.1",
-                                             Path.Combine(playground, "TestSolution.xml"),
-                                             Path.Combine(playground, "NorthwindSolutionFile.mpt"));
+            var solutionVM = NewSolution(builder,
+                                         solutionDesigner,
+                                         "TestSolution",
+                                         "TestNamespace",
+                                         "TestSolution.sln",
+                                         "TestCompany",
+                                         "TestProduct",
+                                         "0.1",
+                                         Path.Combine(playground, "TestSolution.xml"),
+                                         Path.Combine(playground, Path.Combine(playground, "NorthwindSolutionFile.mpt")));
 
             solutionVM.Solution.OutputRequested += SolutionOnOutputRequested;
             
@@ -91,22 +91,22 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                "%%>\r\n" +
                                                "}%%>";
             solutionTemplate.Update();
-            solutionVM.TemplatePath = Path.Combine(playground, solutionTemplate.TemplateName + ".mpt");
-            ViewModelHelper.SaveSolution(solutionVM);
+            solutionVM.TemplatePath = Path.Combine(playground, Path.Combine(playground, "NorthwindSolutionFile.mpt"));
+            SaveSolution(solutionVM);
             solutionVM.CodeTemplatesFolder.LoadTemplates(solutionVM.Solution);
 
             #endregion create solution template
 
-            ViewModelHelper.NewDatabaseSource(builder,
-                                              solutionDesigner,
-                                              solutionVM,
-                                              @"(localdb)\v11.0",
-                                              mDatabaseFileName,
-                                              Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps"));
+            NewDatabaseSource(builder,
+                              solutionDesigner,
+                              solutionVM,
+                              @"(localdb)\v11.0",
+                              mDatabaseFileName,
+                              Path.Combine(gettingStartedPath, @"GettingStarted\Specifications\SQLServer\MDLSqlModel.mps"));
 
-            ViewModelHelper.BuildSolution(solutionVM);
+            BuildSolution(solutionVM);
 
-            ViewModelHelper.UpdateOutputSolution(solutionVM);
+            UpdateOutputSolution(solutionVM);
 
             var expectedOutput = "Entities:\r\n" +
                                  " - Domain-Category\r\n" +

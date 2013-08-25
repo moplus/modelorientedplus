@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,9 @@ using MoPlus.ViewModel.Interpreter;
 using MoPlus.ViewModel.Messaging;
 using MoPlus.ViewModel.Solutions;
 
-namespace MoPlus.ViewModel.Tests.Staging
+namespace MoPlus.ViewModel.Tests
 {
-    public abstract class BaseTest
+    public abstract partial class BaseTest
     {
         public static int EventWaitTimeout = 60000;
         
@@ -40,6 +41,7 @@ namespace MoPlus.ViewModel.Tests.Staging
 
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_OutputChanged, new Action<StatusEventArgs>(OutputChanged));
             WorkspaceViewModel.mediator.Register(MediatorMessages.Event_StatusChanged, new Action<StatusEventArgs>(StatusChanged));
+            WorkspaceViewModel.mediator.Register(MediatorMessages.Event_ProgressChanged, new Action<StatusEventArgs>(ProgressChanged));
             WorkspaceViewModel.mediator.MessageUnhandled += mediator_MessageUnhandled;
 
 
@@ -65,9 +67,13 @@ namespace MoPlus.ViewModel.Tests.Staging
             }
         }
 
+        private void ProgressChanged(StatusEventArgs obj)
+        {
+        }
+
         void mediator_MessageUnhandled(Type arg1, string arg2, object[] arg3)
         {
-            Console.ForegroundColor=ConsoleColor.DarkYellow;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Message unhandled: '{0}', type = '{1}'", arg2, arg1.FullName);
             Console.ResetColor();
         }
@@ -83,6 +89,14 @@ namespace MoPlus.ViewModel.Tests.Staging
         {
             if (statusEventArgs.IsException)
             {
+                if (mInAsync)
+                {
+                    if (String.IsNullOrWhiteSpace(mAsyncError))
+                    {
+                        // only show first error
+                        mAsyncError = statusEventArgs.Title + ": " + statusEventArgs.Text;
+                    }
+                }
                 throw new Exception(statusEventArgs.Title + ": " + statusEventArgs.Text);
             }
             Console.WriteLine("{0}: {1}", statusEventArgs.Title, statusEventArgs.Text);

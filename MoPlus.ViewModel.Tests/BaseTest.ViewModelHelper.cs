@@ -16,9 +16,9 @@ namespace MoPlus.ViewModel.Tests
     /// <summary>
     /// Helper class which makes it easier to make tests. Some methods do "magic" for making async methods sync, etc.
     /// </summary>
-    public static class ViewModelHelper
+    partial class BaseTest
     {
-        public static void SaveSolution(SolutionViewModel solutionVM)
+        public void SaveSolution(SolutionViewModel solutionVM)
         {
             if (solutionVM == null)
             {
@@ -33,7 +33,7 @@ namespace MoPlus.ViewModel.Tests
             solutionVM.LoadSolution(solution, true);
         }
 
-        public static SolutionViewModel NewSolution(BuilderViewModel builder, DesignerViewModel designer, string solutionName, string solutionNamespace, string outputFilename, string company, string product, string version, 
+        public SolutionViewModel NewSolution(BuilderViewModel builder, DesignerViewModel designer, string solutionName, string solutionNamespace, string outputFilename, string company, string product, string version, 
             string solutionPath, string templatePath)
         {
             builder.ProcessNewCommand(builder.SolutionsFolder);
@@ -53,7 +53,7 @@ namespace MoPlus.ViewModel.Tests
             return solutionVM;
         }
 
-        public static void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, string serverName, string databaseName, string templatePath)
+        public void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, string serverName, string databaseName, string templatePath)
         {
             solutionVM.SpecificationSourcesFolder.ProcessNewDatabaseSourceCommand();
 
@@ -73,7 +73,7 @@ namespace MoPlus.ViewModel.Tests
             SaveSolution(solutionVM);
         }
 
-        public static ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags, params Guid[] referencedProjects)
+        public ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags, params Guid[] referencedProjects)
         {
             solutionVM.ProjectsFolder.ProcessNewProjectCommand();
             var newProject = new ProjectViewModel();
@@ -99,39 +99,45 @@ namespace MoPlus.ViewModel.Tests
             return project;
         }
 
-        public static void BuildSolution(SolutionViewModel solutionVM)
+        public void BuildSolution(SolutionViewModel solutionVM)
         {
             SaveSolution(solutionVM);
-            using (var resetEvent = new AutoResetEvent(false))
-            {
-                var updated = new EventHandler((sender, args) =>
-                                               {
-                                                   Console.WriteLine("Solution built!");
-                                                   resetEvent.Set();
-                                               });
-                solutionVM.Updated += updated;
-                //Console.WriteLine("Call BuildSolution");
-                solutionVM.BuildSolution(true);
-                Assert.IsTrue(resetEvent.WaitOne(BaseTest.EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
-            }
+            DoAsync(solutionVM, () => solutionVM.BuildSolution(true));
             //SaveSolution(solutionVM);
         }
 
-        public static void UpdateOutputSolution(SolutionViewModel solutionVM)
+        private bool mInAsync;
+        private string mAsyncError;
+        private void DoAsync(SolutionViewModel solutionVM, Action action)
         {
-            using (var resetEvent = new AutoResetEvent(false))
+            Assert.IsFalse(mInAsync, "Trying to start second async method. Not possible!");
+            mInAsync = true;
+            try
             {
-                var updated = new EventHandler((sender, args) =>
-                                               {
-                                                   Console.WriteLine("Solution updated!");
-                                                   resetEvent.Set();
-                                               });
-                solutionVM.Updated += updated;
-                solutionVM.UpdateOutputSolution();
-                Assert.IsTrue(resetEvent.WaitOne(BaseTest.EventWaitTimeout), "Timeout waiting for solution update!");
-                solutionVM.Updated -= updated;
+                using (var resetEvent = new AutoResetEvent(false))
+                {
+                    var updated = new EventHandler((sender, args) => resetEvent.Set());
+                    solutionVM.Updated += updated;
+                    action();
+                    Assert.IsTrue(resetEvent.WaitOne(BaseTest.EventWaitTimeout), "Timeout waiting for async operation!");
+                    solutionVM.Updated -= updated;
+                }
             }
+            finally
+            {
+                mInAsync = false;
+            }
+            if (!String.IsNullOrWhiteSpace(mAsyncError))
+            {
+                var msg = mAsyncError;
+                mAsyncError = null;
+                throw new Exception("Error occurred during async operation: " + msg);
+            }
+        }
+
+        public void UpdateOutputSolution(SolutionViewModel solutionVM)
+        {
+            DoAsync(solutionVM, () => solutionVM.UpdateOutputSolution());
         }
     }
 }
