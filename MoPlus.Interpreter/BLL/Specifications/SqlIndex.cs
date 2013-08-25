@@ -116,7 +116,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{
@@ -181,7 +181,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{

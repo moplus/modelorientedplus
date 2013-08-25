@@ -92,7 +92,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (System.Exception ex)
 			{
@@ -205,7 +205,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (System.Exception ex)
 			{

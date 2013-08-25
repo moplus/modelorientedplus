@@ -109,7 +109,7 @@ namespace MoPlus.Net
 						Thread.Sleep(30);
 					}
 					else
-						throw ex;  // any serious error occurs
+						throw;  // any serious error occurs
 				}
 			} while (sent < size);
 		}
@@ -145,7 +145,7 @@ namespace MoPlus.Net
 						Thread.Sleep(30);
 					}
 					else
-						throw ex;  // any serious error occurs
+						throw;  // any serious error occurs
 				}
 			} while (received < size);
 		}

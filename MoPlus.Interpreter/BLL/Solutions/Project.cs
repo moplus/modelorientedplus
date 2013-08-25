@@ -157,7 +157,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{

@@ -257,7 +257,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 								SpecDatabase = null;
 								ApplicationException ex = new ApplicationException(String.Format(DisplayValues.Exception_MySQLConnection, SourceDbName, SourceDbServerName));
 								Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
-								throw ex;
+								throw;
 							}
 							// load the database information
 							SpecDatabase = new SqlDatabase();

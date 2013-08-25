@@ -2604,7 +2604,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (Exception ex)
 			{
@@ -3219,7 +3219,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			catch (Exception ex)
 			{
 				BusinessConfiguration.HandleException(ex);
-				throw ex;
+				throw;
 			}
 			finally
 			{
