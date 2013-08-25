@@ -91,10 +91,10 @@ namespace MoPlus.ViewModel.Messaging
 		/// <param name="parameter">The parameter to pass together with the message</param>
 		public void NotifyColleagues<T>(string message, T parameter)
 		{
-			var actions = invocationList.GetActions(message);
-
-			if (actions != null)
-				actions.ForEach(action => action.DynamicInvoke(parameter));
+		    DoNotifyColleagues<T>(message, new object[]
+		                                   {
+		                                       parameter
+		                                   });
 		}
 
 		/// <summary>
@@ -104,10 +104,32 @@ namespace MoPlus.ViewModel.Messaging
 		/// <param name="message">The message to broadcast</param>
 		public void NotifyColleagues<T>(string message)
 		{
-			var actions = invocationList.GetActions(message);
-
-			if (actions != null)
-				actions.ForEach(action => action.DynamicInvoke());
+		    DoNotifyColleagues<T>(message, null);
 		}
+
+	    private void DoNotifyColleagues<T>(string message, object[] arguments)
+	    {
+            var actions = invocationList.GetActions(message);
+
+	        bool handled = false;
+	        if (actions != null)
+	        {
+	            actions.ForEach(action =>
+	                            {
+	                                handled = true;
+	                                action.DynamicInvoke(arguments);
+	                            });
+	        }
+	        if (!handled)
+	        {
+	            var handler = MessageUnhandled;
+	            if (handler != null)
+	            {
+	                handler(typeof(T), message, arguments);
+	            }
+	        }
+	    }
+
+	    public event Action<Type, string, object[]> MessageUnhandled;
 	}
 }
