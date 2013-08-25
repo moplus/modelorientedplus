@@ -13,11 +13,12 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
     public class TestLocaldb
     {
         [TestMethod]
-        public void DoIt()
+        public void DoTestLocalDB()
         {
             var exe = "sqllocaldb.exe";
             var arguments = "i";
-            Execute(exe, arguments);
+            var res = DoExecute(exe, arguments);
+            Assert.AreEqual("v11.0", res.Trim());
         }
 
         public static void Execute(string exe, string arguments)
@@ -34,6 +35,23 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                    };
             Assert.IsTrue(p.WaitForExit(BaseTest.EventWaitTimeout));
             Assert.AreEqual(p.ExitCode, 0);
+        }
+
+        private static string DoExecute(string exe, string arguments)
+        {
+            var psi = new ProcessStartInfo(exe, arguments);
+            psi.RedirectStandardError = true;
+            psi.RedirectStandardOutput = true;
+            psi.UseShellExecute = false;
+            var p = Process.Start(psi);
+            var sb = new StringBuilder();
+            p.BeginErrorReadLine();
+            p.BeginOutputReadLine();
+            p.OutputDataReceived += (sender, args) => sb.Append(args.Data);
+            p.ErrorDataReceived += (sender, args) => sb.Append(args.Data);
+            Assert.IsTrue(p.WaitForExit(BaseTest.EventWaitTimeout));
+            Assert.AreEqual(p.ExitCode, 0);
+            return sb.ToString();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TestApp
         private void Execute()
         {
             BaseTest.EventWaitTimeout = -1;
-            var test = new SimpleCreateProjectTest();
+            var test = new SimpleCreateProjectVS2010Test();
             test.Execute(Playground);
         }
     }

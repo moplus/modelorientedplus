@@ -10,7 +10,7 @@ using MoPlus.ViewModel.Tests.Staging;
 namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 {
     [TestClass]
-    public class SimpleCreateProjectTest: BaseTest
+    public class SimpleCreateProjectVS2010Test: BaseTest
     {
         /*
          * This test creates a database, and loads that database into an Mo+ solution.
@@ -19,6 +19,12 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         private string mDatabaseFileName;
         private string mDatabaseLogFileName;
         private string mTemplatesPath;
+
+        [TestMethod]
+        public void DoSimpleCreateProjectVS2010Test()
+        {
+            Execute();
+        }
 
         protected override void DoExecute(string playground)
         {

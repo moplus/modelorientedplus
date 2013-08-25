@@ -17,6 +17,12 @@ namespace MoPlus.ViewModel.Tests.Staging
     [TestClass]
     public class SimpleTest: BaseTest
     {
+        [TestMethod]
+        public void DoSimpleTest()
+        {
+            Execute();
+        }
+
         /* This tests creates a simple solution containing 1 feature and 1 entity (forward-engineered). There's 1
          * solution template, which iterates the entities and outputs a simple text file containing - featurename-entityname
          */

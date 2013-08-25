@@ -27,6 +27,12 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         private string mDatabaseLogFileName;
         private string mTemplatesPath;
 
+        [TestMethod]
+        public void DoSimpleLoadDatabaseTest()
+        {
+            Execute();
+        }
+
         protected override void DoExecute(string playground)
         {
             TestLocaldb.Execute("sqllocaldb.exe", "stop v11.0");

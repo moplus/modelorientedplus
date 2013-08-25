@@ -17,8 +17,8 @@ namespace MoPlus.ViewModel.Tests.Staging
     public abstract class BaseTest
     {
         public static int EventWaitTimeout = 60000;
-        [TestMethod]
-        public void Execute()
+        
+        protected void Execute()
         {
             var tempPath = Path.GetTempPath();
             var playground = Path.Combine(tempPath, "MoPlus-TestRun-" + Guid.NewGuid().ToString());

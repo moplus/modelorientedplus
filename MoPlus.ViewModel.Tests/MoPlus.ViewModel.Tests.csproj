@@ -62,7 +62,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MSBuildUtility.cs" />
-    <Compile Include="MSSQLReverseEngineering\SimpleCreateProjectTest.cs" />
+    <Compile Include="MSSQLReverseEngineering\SimpleCreateProjectVS2010Test.cs" />
     <Compile Include="MSSQLReverseEngineering\NorthwindUtility.cs" />
     <Compile Include="MSSQLReverseEngineering\TestLocaldb.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
