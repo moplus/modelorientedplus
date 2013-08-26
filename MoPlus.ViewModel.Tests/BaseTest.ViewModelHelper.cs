@@ -85,8 +85,8 @@ namespace MoPlus.ViewModel.Tests
             Assert.AreNotSame(project, newProject, "Couldn't find project");
             project.Name = projectName;
             project.Namespace = projectNamespace;
- //           project.DbServerName = dbServerName;
- //           project.DbName = dbName;
+            project.DbServerName = dbServerName;
+            project.DbName = dbName;
             project.TemplatePath = templateFilename;
             project.Tags = tags;
 
