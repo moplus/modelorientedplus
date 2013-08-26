@@ -49,8 +49,12 @@ namespace MoPlus.ViewModel.Tests
             solutionVM.SolutionPath = solutionPath;
             solutionVM.TemplatePath = templatePath;
             solutionVM.Update();
-            SaveSolution(solutionVM);
-            return solutionVM;
+            // get the solution view model from the builder and return that instead of solutionVM
+            Assert.AreNotEqual(0, builder.SolutionsFolder.Solutions.Count, "Couldn't find SolutionViewModel from builder");
+            SolutionViewModel builderSolutionVM = builder.SolutionsFolder.Solutions[0];
+            builderSolutionVM.SolutionPath = solutionPath;
+            SaveSolution(builderSolutionVM);
+            return builderSolutionVM;
         }
 
         public static void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, string serverName, string databaseName, string templatePath)
@@ -73,7 +77,7 @@ namespace MoPlus.ViewModel.Tests
             SaveSolution(solutionVM);
         }
 
-        public static ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags, params Guid[] referencedProjects)
+        public static ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string dbServerName, string dbName, string templateFilename, string tags, params Guid[] referencedProjects)
         {
             solutionVM.ProjectsFolder.ProcessNewProjectCommand();
             var newProject = new ProjectViewModel();
@@ -81,12 +85,15 @@ namespace MoPlus.ViewModel.Tests
             Assert.AreNotSame(project, newProject, "Couldn't find project");
             project.Name = projectName;
             project.Namespace = projectNamespace;
+ //           project.DbServerName = dbServerName;
+ //           project.DbName = dbName;
             project.TemplatePath = templateFilename;
             project.Tags = tags;
 
             foreach (var referencedProject in referencedProjects)
             {
                 project.ProjectReferenceList.Add(new ProjectReference(project.ProjectID, referencedProject));
+                project.ProjectReferencesModified = true; // see TODO issue in ProjectViewModel in ProjectReference_PropertyChanged method (method should be eliminated if binding issue resolved)
             }
 
             Assert.IsTrue(project.IsValid, "Project has errors!");

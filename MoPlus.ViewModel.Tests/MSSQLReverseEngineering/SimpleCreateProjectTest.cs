@@ -66,6 +66,8 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                              solutionDesigner,
                                                              "EFBLL",
                                                              "EFBLL",
+                                                             @"(localdb)\v11.0",
+                                                             mDatabaseFileName,
                                                              Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
                                                              "BLL");
 
@@ -76,6 +78,8 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                             solutionDesigner,
                                                             "EFDataServices",
                                                             "EFDataServices",
+                                                            @"(localdb)\v11.0",
+                                                            mDatabaseFileName,
                                                             Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
                                                             "DS",
                                                             efbllProj.ProjectID);
@@ -88,6 +92,8 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                           solutionDesigner,
                                                           "ViewModels",
                                                           "ViewModels",
+                                                          null,
+                                                          null,
                                                           Path.Combine(templateBaseDir, "Project", "VMEFDS.mpt"),
                                                           "VM", 
                                                           efdsProj.ProjectID);
@@ -99,6 +105,8 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                           solutionDesigner,
                                                           "Shell",
                                                           "Shell",
+                                                          null,
+                                                          null,
                                                           Path.Combine(templateBaseDir, "Project", "WPFUI.mpt"),
                                                           null,
                                                           vmProj.ProjectID);
