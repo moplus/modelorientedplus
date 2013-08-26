@@ -25,7 +25,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             TestLocaldb.Execute("sqllocaldb.exe", "stop v11.0");
             TestLocaldb.Execute("sqllocaldb.exe", "start v11.0");
 
-            var dbName = "Northwind-" + Guid.NewGuid();
+            var dbName = "Northwind_" + DateTime.Now.Ticks.ToString(); // dbName gets translated into class names in current EF related templates +Guid.NewGuid();
             mDatabaseFileName = Path.Combine(playground, dbName + ".mdf");
             mDatabaseLogFileName = Path.Combine(playground, dbName + "_log.ldf");
             mTemplatesPath = Path.Combine(playground, "Templates");
@@ -67,7 +67,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                              "EFBLL",
                                                              "EFBLL",
                                                              @"(localdb)\v11.0",
-                                                             mDatabaseFileName,
+                                                             dbName,
                                                              Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
                                                              "BLL");
 
@@ -79,7 +79,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                                             "EFDataServices",
                                                             "EFDataServices",
                                                             @"(localdb)\v11.0",
-                                                            mDatabaseFileName,
+                                                            dbName,
                                                             Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
                                                             "DS",
                                                             efbllProj.ProjectID);
