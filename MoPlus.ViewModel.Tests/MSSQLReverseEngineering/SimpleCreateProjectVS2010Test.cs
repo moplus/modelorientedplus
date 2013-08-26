@@ -83,8 +83,9 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                             "EFDataServices",
                                             "EFDataServices",
                                             Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
-                                            "DS",
-                                            efbllProj.ProjectID);
+                                            "DS");
+
+            ReferenceProjects(solutionVM, efdsProj, efbllProj.ProjectID);
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
             Assert.AreEqual(2, solutionVM.Solution.ProjectList.Count);
@@ -95,8 +96,11 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                           "ViewModels",
                                           "ViewModels",
                                           Path.Combine(templateBaseDir, "Project", "VMEFDS.mpt"),
-                                          "VM",
-                                          efdsProj.ProjectID);
+                                          "VM");
+
+            ReferenceProjects(solutionVM, vmProj,
+                              efdsProj.ProjectID,
+                              efbllProj.ProjectID);
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
             Assert.AreEqual(3, solutionVM.Solution.ProjectList.Count);
@@ -106,8 +110,10 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
                                              "Shell",
                                              "Shell",
                                              Path.Combine(templateBaseDir, "Project", "WPFUI.mpt"),
-                                             null,
-                                             vmProj.ProjectID);
+                                             null);
+
+            ReferenceProjects(solutionVM, shellProj,
+                              vmProj.ProjectID);
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
             Assert.AreEqual(4, solutionVM.Solution.ProjectList.Count);

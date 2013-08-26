@@ -90,10 +90,15 @@ switch (DataType)
 	case "datetime":
 		<%%=24%%>
 		break
+	case "smalldatetime":
+		<%%=24%%>
+		break
 	case "timestamp":
 		<%%=25%%>
 		break
 	case "uniqueidentifier":
 		<%%=26%%>
 		break
+	default:
+		trace("SQL type '" + DataType + "' not implemented!")
 }%%></CONTENT>

@@ -1158,7 +1158,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			catch (System.Exception ex)
 			{
-				Solution.ShowIssue(ex.Message, DisplayValues.Exception_TemplateTitle, true);
+			    if (Solution != null)
+			    {
+			        Solution.ShowIssue(ex.Message, DisplayValues.Exception_TemplateTitle, true);
+			    }
+			    throw;
 			}
 		}
 		#endregion "Methods"
