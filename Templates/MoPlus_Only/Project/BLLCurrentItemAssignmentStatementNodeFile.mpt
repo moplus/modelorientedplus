@@ -134,7 +134,7 @@ foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
 			}
 			catch (ApplicationAbortException ex)
 			{
-				throw ex;
+				throw;
 			}
 			catch (System.Exception ex)
 			{
