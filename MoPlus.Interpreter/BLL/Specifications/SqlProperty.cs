@@ -55,7 +55,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				SqlType = sqlProperty.Type.ToString();
 				SqlValue = sqlProperty.Value.ToString();
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -82,7 +82,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				SqlType = propertyType;
 				SqlValue = propertyValue;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

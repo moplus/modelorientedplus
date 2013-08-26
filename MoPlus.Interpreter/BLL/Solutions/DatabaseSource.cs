@@ -269,10 +269,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						break;
 					default:
                         throw new NotImplementedException("DatabaseTypeCode value " + DatabaseTypeCode + " not implemented!");
-						break;
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

@@ -107,7 +107,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				//    ExecuteVisitor(new IncrementLineNumberVisitor());
 				//}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -188,7 +188,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				templateContext.PopCount = 0;
 				templateContext.IsTemplateUtilized = true;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

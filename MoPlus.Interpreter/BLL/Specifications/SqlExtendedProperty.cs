@@ -56,7 +56,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				Urn = sqlExtendedProperty.Urn;
 				State = sqlExtendedProperty.State.ToString();
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

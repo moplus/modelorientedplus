@@ -271,6 +271,10 @@ namespace MoPlus.Interpreter.BLL.Models
 				#region protected
 				if (_defaultSourceName == null)
 				{
+					if (ModelProperty == null)
+					{
+						ModelProperty = Solution.ModelPropertyList.Find(i => i.ModelPropertyID == ModelPropertyID);
+					}
 					if (ObjectInstance != null)
 					{
 						_defaultSourceName = ObjectInstance.DefaultSourceName + "." + ModelPropertyName + "." + SourceName;

@@ -108,7 +108,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				//    }
 				//}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -152,7 +152,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

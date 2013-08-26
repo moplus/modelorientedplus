@@ -64,7 +64,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -88,7 +88,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				TemplateProperty.InterpretContentAndOutput(solutionContext, templateContext, modelContext, modelContext);
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

@@ -54,7 +54,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				templateContext.OutputCodeBuilder.Clear();
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

@@ -2602,7 +2602,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					ValueList.Add(item);
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
