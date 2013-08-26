@@ -49,40 +49,44 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             var builder = new BuilderViewModel();
 
             var solutionVM = NewSolution(builder,
-                                         solutionDesigner,
-                                         "TestSolution",
-                                         "TestNamespace",
-                                         "TestSolution.sln",
-                                         "TestCompany",
-                                         "TestProduct",
-                                         "0.1",
-                                         Path.Combine(playground, "TestSolution.xml"),
-                                         Path.Combine(templateBaseDir, "SolutionFile.mpt"));
+                                                         solutionDesigner,
+                                                         "TestSolution",
+                                                         "TestNamespace",
+                                                         "TestSolution.sln",
+                                                         "TestCompany",
+                                                         "TestProduct",
+                                                         "0.1",
+                                                         Path.Combine(playground, "TestSolution.xml"),
+                                                         Path.Combine(templateBaseDir, "SolutionFile.mpt"));
 
             NewDatabaseSource(builder,
-                              solutionDesigner,
-                              solutionVM,
-                              @"(localdb)\v11.0",
-                              mDatabaseFileName,
-                              Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps"));
+                                              solutionDesigner,
+                                              solutionVM,
+                                              @"(localdb)\v11.0",
+                                              mDatabaseFileName,
+                                              Path.Combine(gettingStartedPath, @"Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps"));
             
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
 
             var efbllProj = CreateNewProject(solutionVM,
-                                             solutionDesigner,
-                                             "EFBLL",
-                                             "EFBLL",
-                                             Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
-                                             "BLL");
+                                                             solutionDesigner,
+                                                             "EFBLL",
+                                                             "EFBLL",
+                                                             @"(localdb)\v11.0",
+                                                             mDatabaseFileName,
+                                                             Path.Combine(templateBaseDir, "Project", "EntityFramework.mpt"),
+                                                             "BLL");
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
             Assert.AreEqual(1, solutionVM.Solution.ProjectList.Count);
 
             var efdsProj = CreateNewProject(solutionVM,
-                                            solutionDesigner,
-                                            "EFDataServices",
-                                            "EFDataServices",
-                                            Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
+                                                            solutionDesigner,
+                                                            "EFDataServices",
+                                                            "EFDataServices",
+                                                            @"(localdb)\v11.0",
+                                                            mDatabaseFileName,
+                                                            Path.Combine(templateBaseDir, "Project", "EFDataServices.mpt"),
                                             "DS");
 
             ReferenceProjects(solutionVM, efdsProj, efbllProj.ProjectID);
@@ -92,10 +96,12 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
 
 
             var vmProj = CreateNewProject(solutionVM,
-                                          solutionDesigner,
-                                          "ViewModels",
-                                          "ViewModels",
-                                          Path.Combine(templateBaseDir, "Project", "VMEFDS.mpt"),
+                                                          solutionDesigner,
+                                                          "ViewModels",
+                                                          "ViewModels",
+                                                          null,
+                                                          null,
+                                                          Path.Combine(templateBaseDir, "Project", "VMEFDS.mpt"),
                                           "VM");
 
             ReferenceProjects(solutionVM, vmProj,
@@ -106,14 +112,16 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
             Assert.AreEqual(3, solutionVM.Solution.ProjectList.Count);
 
             var shellProj = CreateNewProject(solutionVM,
-                                             solutionDesigner,
-                                             "Shell",
-                                             "Shell",
-                                             Path.Combine(templateBaseDir, "Project", "WPFUI.mpt"),
+                                                          solutionDesigner,
+                                                          "Shell",
+                                                          "Shell",
+                                                          null,
+                                                          null,
+                                                          Path.Combine(templateBaseDir, "Project", "WPFUI.mpt"),
                                              null);
 
             ReferenceProjects(solutionVM, shellProj,
-                              vmProj.ProjectID);
+                                                          vmProj.ProjectID);
 
             Assert.AreEqual(1, solutionVM.Solution.DatabaseSourceList.Count);
             Assert.AreEqual(4, solutionVM.Solution.ProjectList.Count);

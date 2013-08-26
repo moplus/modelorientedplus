@@ -18,7 +18,7 @@ namespace TestApp
 {
     public class Program
     {
-        private const string Playground = @"e:\OpenSource\MoPlusPlayground";
+        private const string Playground = @"c:\OpenSource\MoPlusPlayground";
         static void Main(string[] args)
         {
             new Program().Execute();

@@ -49,8 +49,12 @@ namespace MoPlus.ViewModel.Tests
             solutionVM.SolutionPath = solutionPath;
             solutionVM.TemplatePath = templatePath;
             solutionVM.Update();
-            SaveSolution(solutionVM);
-            return solutionVM;
+            // get the solution view model from the builder and return that instead of solutionVM
+            Assert.AreNotEqual(0, builder.SolutionsFolder.Solutions.Count, "Couldn't find SolutionViewModel from builder");
+            SolutionViewModel builderSolutionVM = builder.SolutionsFolder.Solutions[0];
+            builderSolutionVM.SolutionPath = solutionPath;
+            SaveSolution(builderSolutionVM);
+            return builderSolutionVM;
         }
 
         public void NewDatabaseSource(BuilderViewModel builder, DesignerViewModel designer, SolutionViewModel solutionVM, string serverName, string databaseName, string templatePath)
@@ -81,6 +85,8 @@ namespace MoPlus.ViewModel.Tests
             Assert.AreNotSame(project, newProject, "Couldn't find project");
             project.Name = projectName;
             project.Namespace = projectNamespace;
+ //           project.DbServerName = dbServerName;
+ //           project.DbName = dbName;
             project.TemplatePath = templateFilename;
             project.Tags = tags;
 
@@ -105,7 +111,7 @@ namespace MoPlus.ViewModel.Tests
         }
 
         public void BuildSolution(SolutionViewModel solutionVM)
-        {
+                                               {
             SaveSolution(solutionVM);
             DoAsync(solutionVM, () => solutionVM.BuildSolution(true));
             //SaveSolution(solutionVM);
@@ -118,15 +124,15 @@ namespace MoPlus.ViewModel.Tests
             Assert.IsFalse(mInAsync, "Trying to start second async method. Not possible!");
             mInAsync = true;
             try
+        {
+            using (var resetEvent = new AutoResetEvent(false))
             {
-                using (var resetEvent = new AutoResetEvent(false))
-                {
                     var updated = new EventHandler((sender, args) => resetEvent.Set());
-                    solutionVM.Updated += updated;
+                solutionVM.Updated += updated;
                     action();
                     Assert.IsTrue(resetEvent.WaitOne(BaseTest.EventWaitTimeout), "Timeout waiting for async operation!");
-                    solutionVM.Updated -= updated;
-                }
+                solutionVM.Updated -= updated;
+            }
             }
             finally
             {
