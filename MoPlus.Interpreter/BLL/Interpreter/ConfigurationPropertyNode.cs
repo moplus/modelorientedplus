@@ -90,7 +90,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -203,7 +203,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					output.Append((ModelProperty.GetPropertyStringValue(solutionContext, templateContext, modelContext, modelContext, interpreterType)).UnderscoreCase());
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

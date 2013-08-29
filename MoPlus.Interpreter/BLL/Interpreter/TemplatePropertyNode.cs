@@ -77,7 +77,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -147,7 +147,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Message_TemplateNotFoundError, TemplateName), interpreterType);
 				return "<" + TemplateName + ">";
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -221,7 +221,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				return String.Empty;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -325,7 +325,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Message_TemplateNotFoundError, TemplateName), interpreterType);
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -423,7 +423,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

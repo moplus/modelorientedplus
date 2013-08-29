@@ -62,7 +62,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					PropertyName = node.FindTokenAndGetText();
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

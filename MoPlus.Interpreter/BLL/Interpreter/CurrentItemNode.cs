@@ -64,7 +64,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					CurrentItemName = node.FindTokenAndGetText();
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

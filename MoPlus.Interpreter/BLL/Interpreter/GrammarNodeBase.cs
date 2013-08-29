@@ -84,7 +84,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				base.Init(context, treeNode);
 				LineNumber = treeNode.Span.Location.Line;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

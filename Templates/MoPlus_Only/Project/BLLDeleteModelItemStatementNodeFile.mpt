@@ -85,9 +85,9 @@ foreach (Entity in Solution where IsCurrentModelEntity == true sort EntityName)
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
-				throw ex;
+				throw;
 			}
 			catch (System.Exception ex)
 			{

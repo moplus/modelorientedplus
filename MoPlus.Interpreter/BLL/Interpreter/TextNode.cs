@@ -94,7 +94,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				output.Append(FormatTemplateText(solutionContext, Text));
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

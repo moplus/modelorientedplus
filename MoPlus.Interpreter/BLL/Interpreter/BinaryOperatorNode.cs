@@ -56,7 +56,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					Operator = node.FindTokenAndGetText();
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

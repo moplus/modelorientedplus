@@ -132,9 +132,9 @@ foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
 					AssignProperty(interpreterType, solutionContext, templateContext, modelContext);
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
-				throw ex;
+				throw;
 			}
 			catch (System.Exception ex)
 			{

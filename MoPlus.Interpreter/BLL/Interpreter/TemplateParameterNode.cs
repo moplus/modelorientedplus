@@ -66,7 +66,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

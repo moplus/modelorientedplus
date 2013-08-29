@@ -769,7 +769,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					AssignProperty(interpreterType, solutionContext, templateContext, modelContext);
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

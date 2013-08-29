@@ -79,7 +79,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					}
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -103,7 +103,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				solutionContext.PutStringLoggedValue(Parameter1.GetStringValue(solutionContext, templateContext, modelContext, interpreterType), Parameter2.GetStringValue(solutionContext, templateContext, modelContext, interpreterType), Parameter3.GetStringValue(solutionContext, templateContext, modelContext, interpreterType));
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

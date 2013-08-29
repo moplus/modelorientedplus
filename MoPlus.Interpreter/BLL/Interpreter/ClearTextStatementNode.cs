@@ -63,7 +63,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				output.Clear();
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

@@ -116,7 +116,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					return true;
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -142,7 +142,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				return false;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -216,7 +216,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				return true;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -385,7 +385,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				ContentCode = ContentCodeBuilder.ToString() + MessageBuilder.ToString();
 				return ContentCode;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -513,7 +513,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				return true;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -573,7 +573,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				return OutputCode;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -636,7 +636,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				OutputCode = OutputCodeBuilder.ToString() + MessageBuilder.ToString();
 				return OutputCode;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}

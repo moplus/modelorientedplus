@@ -59,7 +59,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 						VariableName = node.FindTokenAndGetText();
 				}
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
@@ -91,7 +91,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				}
 				templateContext.Parameters[VariableName] = String.Empty;
 			}
-			catch (ApplicationAbortException ex)
+			catch (ApplicationAbortException)
 			{
 				throw;
 			}
