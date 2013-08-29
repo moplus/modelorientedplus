@@ -17,6 +17,9 @@ CurrentProperty.PropertyName = MDLPropertyName
 CurrentProperty.SourceName = SqlColumnName
 CurrentProperty.IsNullable = Nullable
 CurrentProperty.Length = MaximumLength
+if (CurrentProperty.Length < 0) {
+	CurrentProperty.Length = 0
+}
 CurrentProperty.Precision = NumericPrecision
 CurrentProperty.Scale = NumericScale
 CurrentProperty.InitialValue = Default

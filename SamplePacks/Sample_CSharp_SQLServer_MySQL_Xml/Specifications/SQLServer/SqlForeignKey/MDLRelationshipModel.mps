@@ -18,7 +18,7 @@ CurrentRelationship.ItemsMin = 0
 CurrentRelationship.ItemsMax = -1
 
 // set basic properties
-CurrentRelationship.RelationshipName = MDLRelationshipName
+CurrentRelationship.RelationshipName = MDLRelationshipName.Replace(".", "__DOT__")
 CurrentRelationship.IsNullable = false
 var foundEntity = false
 var isUniqueIndex

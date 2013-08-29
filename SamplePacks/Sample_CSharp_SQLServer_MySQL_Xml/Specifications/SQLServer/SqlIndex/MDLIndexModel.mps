@@ -13,7 +13,7 @@ CurrentIndex.EntityID = CurrentEntity.EntityID
 CurrentIndex.Tags = "DB"
 
 // set basic properties
-CurrentIndex.IndexName = MDLIndexName
+CurrentIndex.IndexName = MDLIndexName.Replace(".", "__DOT__")
 CurrentIndex.IsUniqueIndex = IsUnique
 CurrentIndex.IsPrimaryKeyIndex = IsClustered // assuming clustered index is primary key here...
 

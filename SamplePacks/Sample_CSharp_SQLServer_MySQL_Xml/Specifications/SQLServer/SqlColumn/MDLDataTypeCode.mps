@@ -99,6 +99,9 @@ switch (DataType)
 	case "uniqueidentifier":
 		<%%=26%%>
 		break
+	case "varbinary":
+		<%%=37%%>
+		break
 	default:
 		trace("SQL type '" + DataType + "' not implemented!")
 }%%></CONTENT>

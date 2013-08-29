@@ -99,6 +99,9 @@ switch (DataType)
 	case "smalldatetime":
 		<%%=29%%>
 		break
+	case "varbinary":
+		<%%=37%%>
+		break
 	default:
 		trace("ERROR: DataType '" + DataType + "' not supported!")
 }%%></CONTENT>
