@@ -77,7 +77,7 @@ namespace MoPlus.ViewModel.Tests
             SaveSolution(solutionVM);
         }
 
-        public ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string templateFilename, string tags)
+        public ProjectViewModel CreateNewProject(SolutionViewModel solutionVM, DesignerViewModel solutionDesigner, string projectName, string projectNamespace, string dbServerName, string dbName, string templateFilename, string tags)
         {
             solutionVM.ProjectsFolder.ProcessNewProjectCommand();
             var newProject = new ProjectViewModel();
