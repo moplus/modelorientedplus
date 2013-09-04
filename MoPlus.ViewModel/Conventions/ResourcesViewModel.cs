@@ -535,6 +535,10 @@ namespace MoPlus.ViewModel.Conventions
 			helpSubSub = new HelpViewModel(LanguageTerms.ClearTerm, DisplayValues.Help_LanguageReferenceStatementsClearTermParagraph1);
 			helpSub.Items.Add(helpSubSub);
 
+			// add Language Reference statements ContinueTerm sub subsection
+			helpSubSub = new HelpViewModel(LanguageTerms.ContinueTerm, DisplayValues.Help_LanguageReferenceStatementsContinueTermParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
 			// add Language Reference statements DeleteTerm sub subsection
 			helpSubSub = new HelpViewModel(LanguageTerms.DeleteTerm, DisplayValues.Help_LanguageReferenceStatementsDeleteTermParagraph1);
 			helpSub.Items.Add(helpSubSub);

@@ -80,6 +80,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					statements.Add(childNode.AstNode as BreakStatementNode);
 					childNodes.Add(childNode.AstNode as BreakStatementNode);
 				}
+				else if (childNode.AstNode is ContinueStatementNode)
+				{
+					statements.Add(childNode.AstNode as ContinueStatementNode);
+					childNodes.Add(childNode.AstNode as ContinueStatementNode);
+				}
 				else if (childNode.AstNode is ClearTextStatementNode)
 				{
 					statements.Add(childNode.AstNode as ClearTextStatementNode);

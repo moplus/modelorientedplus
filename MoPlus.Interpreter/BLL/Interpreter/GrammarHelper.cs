@@ -46,6 +46,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					_languageKeyTerms[LanguageTerms.AddTerm] = LanguageTerms.AddTerm;
 					_languageKeyTerms[LanguageTerms.AscTerm] = LanguageTerms.AscTerm;
 					_languageKeyTerms[LanguageTerms.BreakTerm] = LanguageTerms.BreakTerm;
+					_languageKeyTerms[LanguageTerms.ContinueTerm] = LanguageTerms.ContinueTerm;
 					_languageKeyTerms[LanguageTerms.CaseTerm] = LanguageTerms.CaseTerm;
 					_languageKeyTerms[LanguageTerms.ClearTerm] = LanguageTerms.ClearTerm;
 					_languageKeyTerms[LanguageTerms.CloseTag] = LanguageTerms.CloseTag;

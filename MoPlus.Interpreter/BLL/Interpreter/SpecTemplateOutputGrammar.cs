@@ -83,7 +83,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 
 			// delimiters and punctuation
 			this.Delimiters = "{}[](),:;+-*/%&|^!~<>=";
-			this.MarkPunctuation("=", ";", ",", "(", ")", "{", "}", ".", LanguageTerms.ProgressTerm, LanguageTerms.TraceTerm, LanguageTerms.DebugTerm, LanguageTerms.WhileTerm, LanguageTerms.VarTerm, LanguageTerms.ParamTerm, LanguageTerms.IfTerm, LanguageTerms.ElseTerm, LanguageTerms.WithTerm, LanguageTerms.ForeachTerm, LanguageTerms.BreakTerm, LanguageTerms.ClearTerm, LanguageTerms.ReturnTerm, LanguageTerms.SwitchTerm, LanguageTerms.CaseTerm, LanguageTerms.DefaultTerm, LanguageTerms.WhereTerm, LanguageTerms.InTerm, LanguageTerms.LimitTerm, LanguageTerms.SortTerm, LanguageTerms.FromTerm, LanguageTerms.TextOpenTag, LanguageTerms.EvalOpenTag, LanguageTerms.OutputOpenTag, LanguageTerms.PropOpenTag, LanguageTerms.CloseTag);
+			this.MarkPunctuation("=", ";", ",", "(", ")", "{", "}", ".", LanguageTerms.ProgressTerm, LanguageTerms.TraceTerm, LanguageTerms.DebugTerm, LanguageTerms.WhileTerm, LanguageTerms.VarTerm, LanguageTerms.ParamTerm, LanguageTerms.IfTerm, LanguageTerms.ElseTerm, LanguageTerms.WithTerm, LanguageTerms.ForeachTerm, LanguageTerms.BreakTerm, LanguageTerms.ContinueTerm, LanguageTerms.ClearTerm, LanguageTerms.ReturnTerm, LanguageTerms.SwitchTerm, LanguageTerms.CaseTerm, LanguageTerms.DefaultTerm, LanguageTerms.WhereTerm, LanguageTerms.InTerm, LanguageTerms.LimitTerm, LanguageTerms.SortTerm, LanguageTerms.FromTerm, LanguageTerms.TextOpenTag, LanguageTerms.EvalOpenTag, LanguageTerms.OutputOpenTag, LanguageTerms.PropOpenTag, LanguageTerms.CloseTag);
 
 			// whitespace and line terminators
 			this.LineTerminators = "\r\n\u2085\u2028\u2029";
@@ -113,6 +113,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			var breakStatement = new NonTerminal("breakStatement", typeof(BreakStatementNode));
 			var clearStatement = new NonTerminal("clearStatement", typeof(ClearTextStatementNode));
 			var returnStatement = new NonTerminal("returnStatement", typeof(ReturnStatementNode));
+			var continueStatement = new NonTerminal("continueStatement", typeof(ContinueStatementNode));
 			var currentItemAssignmentStatement = new NonTerminal("currentItemAssignmentStatement", typeof(CurrentItemAssignmentStatementNode));
 			var templatePropertyAssignmentStatement = new NonTerminal("templatePropertyAssignmentStatement", typeof(TemplatePropertyAssignmentStatementNode));
 			var debugStatement = new NonTerminal("debugStatement", typeof(DebugStatementNode));
@@ -186,6 +187,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							| whileStatement
 							| withStatement
 							| breakStatement
+							| continueStatement
 							| clearStatement
 							| returnStatement
 							| currentItemAssignmentStatement
@@ -217,6 +219,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 
 			// break and return statements, etc.
 			breakStatement.Rule = ToTerm(LanguageTerms.BreakTerm);
+			continueStatement.Rule = ToTerm(LanguageTerms.ContinueTerm);
 			clearStatement.Rule = ToTerm(LanguageTerms.ClearTerm);
 			returnStatement.Rule = ToTerm(LanguageTerms.ReturnTerm);
 			popContext.Rule = dot + dot + slash;

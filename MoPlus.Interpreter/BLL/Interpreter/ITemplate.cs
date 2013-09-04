@@ -151,6 +151,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		bool IsBreaking { get; set; }
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the IsContinuing.</summary>
+		///--------------------------------------------------------------------------------
+		bool IsContinuing { get; set; }
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets IsWatchTemplate.</summary>
 		///--------------------------------------------------------------------------------
 		bool IsWatchTemplate { get; set; }

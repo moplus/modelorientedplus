@@ -95,6 +95,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		public const string IfTerm = "if";
 		public const string ElseTerm = "else";
 		public const string BreakTerm = "break";
+		public const string ContinueTerm = "continue";
 		public const string ClearTerm = "clear";
 		public const string ReturnTerm = "return";
 		public const string SwitchTerm = "switch";

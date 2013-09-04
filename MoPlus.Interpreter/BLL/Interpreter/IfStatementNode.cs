@@ -127,6 +127,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							templateContext.IsBreaking = true;
 							break;
 						}
+						if (node is ContinueStatementNode)
+						{
+							templateContext.IsContinuing = true;
+						}
 						if (node is ReturnStatementNode)
 						{
 							templateContext.IsReturning = true;
@@ -155,6 +159,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 									templateContext.IsBreaking = true;
 									break;
 								}
+								if (elseIfNode is ContinueStatementNode)
+								{
+									templateContext.IsContinuing = true;
+								}
 								if (elseIfNode is ReturnStatementNode)
 								{
 									templateContext.IsReturning = true;
@@ -180,6 +188,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 						{
 							templateContext.IsBreaking = true;
 							break;
+						}
+						if (node is ContinueStatementNode)
+						{
+							templateContext.IsContinuing = true;
 						}
 						if (node is ReturnStatementNode)
 						{

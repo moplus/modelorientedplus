@@ -112,6 +112,7 @@
     <Compile Include="BLL\Events\DebugEventArgs.cs" />
     <Compile Include="BLL\Interpreter\AddModelItemStatementNode_G.cs" />
     <Compile Include="BLL\Interpreter\AssignablePropertyCode_G.cs" />
+    <Compile Include="BLL\Interpreter\ContinueStatementNode.cs" />
     <Compile Include="BLL\Interpreter\ThisContextNode.cs" />
     <Compile Include="BLL\Interpreter\CurrentItemAssignmentStatementNode_G.cs" />
     <Compile Include="BLL\Interpreter\CurrentItemNode_G.cs" />

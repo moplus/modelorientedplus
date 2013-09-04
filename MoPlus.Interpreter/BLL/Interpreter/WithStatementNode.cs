@@ -121,6 +121,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							templateContext.IsBreaking = true;
 							break;
 						}
+						if (node is ContinueStatementNode)
+						{
+							templateContext.IsContinuing = true;
+						}
 						if (node is ReturnStatementNode)
 						{
 							templateContext.IsReturning = true;

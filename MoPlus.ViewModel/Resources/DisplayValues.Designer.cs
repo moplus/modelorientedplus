@@ -4760,6 +4760,19 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;b&gt;Syntax&lt;/b&gt;: &lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;continue&lt;/b&gt;&lt;/span&gt;
+        ///&lt;br&gt;&lt;br&gt;
+        ///&lt;b&gt;Availability&lt;/b&gt;: In all code and spec template areas.
+        ///&lt;br&gt;&lt;br&gt;
+        ///The &lt;i&gt;continue&lt;/i&gt; statement is used to skip past the remaining set of statements within iterations such as &lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;foreach&lt;/b&gt;&lt;/span&gt;, &lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;while&lt;/b&gt;&lt;/span&gt;, and &lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;forfiles&lt;/b&gt;&lt;/span&gt;.  The &lt;i&gt;continue&lt;/i&gt; statement can appear within a &lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;with&lt;/b&gt;&lt;/span&gt; or &lt;span style=&quot;co [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string Help_LanguageReferenceStatementsContinueTermParagraph1 {
+            get {
+                return ResourceManager.GetString("Help_LanguageReferenceStatementsContinueTermParagraph1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;b&gt;Syntax&lt;/b&gt;: &lt;span style=&quot;color:magenta&quot;&gt;&lt;b&gt;delete&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;(&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;color:teal&quot;&gt;&lt;b&gt;&lt;/b&gt;&lt;/span&gt;filePath&lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;)&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
         ///&lt;b&gt;Syntax&lt;/b&gt;: &lt;span style=&quot;color:magenta&quot;&gt;&lt;b&gt;delete&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;(&lt;/b&gt;&lt;/span&gt;&lt;span style=&quot;color:teal&quot;&gt;&lt;b&gt;Current&lt;/b&gt;&lt;/span&gt;xxx&lt;span style=&quot;color:blue&quot;&gt;&lt;b&gt;)&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
         ///&lt;b&gt;Where&lt;/b&gt;:  (for code templates) &lt;i&gt;filePath&lt;/i&gt; is a valid &lt;span style=&quot;color:teal&quot;&gt;&lt;b&gt;property&lt;/b&gt;&lt;/span&gt;, &lt;span  [rest of string was truncated]&quot;;.

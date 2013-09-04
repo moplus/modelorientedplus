@@ -1,0 +1,51 @@
+<CONFIG>
+	NAME ContinueTest
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var i = 0
+foreach (Entity)
+{
+	// should do nothing
+	continue
+	<%%-
+	Uh oh, statement after continue was executed!%%>
+}
+foreach (Entity)
+{
+	i = i + 1
+	if (i > 2 && i < 6)
+	{
+	<%%-
+	Continuing Entity: %%><%%=EntityName%%>
+		continue
+	}
+	<%%-
+	Entity: %%><%%=EntityName%%>
+}
+i = 0
+while (i < 10)
+{
+	i = i + 1
+	// should do nothing
+	continue
+	<%%-
+	Uh oh, statement after continue was executed!%%>
+}
+i = 0
+while (i < 10)
+{
+	i = i + 1
+	if (i > 2 && i < 6)
+	{
+	<%%-
+	Continuing i: %%><%%=i%%>
+		continue
+	}
+	<%%-
+	i: %%><%%=i%%>
+}
+%%></CONTENT>

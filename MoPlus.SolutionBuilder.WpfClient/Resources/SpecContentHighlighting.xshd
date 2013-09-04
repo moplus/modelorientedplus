@@ -166,6 +166,7 @@
 					<Word>case</Word>
 					<Word>default</Word>
 					<Word>break</Word>
+					<Word>continue</Word>
 					<Word>clear</Word>
 					<Word>return</Word>
 					<Word>var</Word>

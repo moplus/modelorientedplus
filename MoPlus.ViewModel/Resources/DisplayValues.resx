@@ -5545,4 +5545,23 @@ When you are creating new templates or modifying exising ones, you will want to 
 &lt;/ul&gt;</value>
     <comment>For help</comment>
   </data>
+  <data name="Help_LanguageReferenceStatementsContinueTermParagraph1" xml:space="preserve">
+    <value>&lt;b&gt;Syntax&lt;/b&gt;: &lt;span style="color:blue"&gt;&lt;b&gt;continue&lt;/b&gt;&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Availability&lt;/b&gt;: In all code and spec template areas.
+&lt;br&gt;&lt;br&gt;
+The &lt;i&gt;continue&lt;/i&gt; statement is used to skip past the remaining set of statements within iterations such as &lt;span style="color:blue"&gt;&lt;b&gt;foreach&lt;/b&gt;&lt;/span&gt;, &lt;span style="color:blue"&gt;&lt;b&gt;while&lt;/b&gt;&lt;/span&gt;, and &lt;span style="color:blue"&gt;&lt;b&gt;forfiles&lt;/b&gt;&lt;/span&gt;.  The &lt;i&gt;continue&lt;/i&gt; statement can appear within a &lt;span style="color:blue"&gt;&lt;b&gt;with&lt;/b&gt;&lt;/span&gt; or &lt;span style="color:blue"&gt;&lt;b&gt;if&lt;/b&gt;&lt;/span&gt; statement block, where its primary function is to skip past statements in the parent iteration.  For example:
+&lt;br&gt;&lt;br&gt;
+&lt;span style="color:blue"&gt;&lt;b&gt;foreach (&lt;/b&gt;&lt;/span&gt;&lt;span style="color:teal"&gt;&lt;b&gt;Entity&lt;/b&gt;&lt;/span&gt;&lt;span style="color:blue"&gt;&lt;b&gt;)&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&lt;span style="color:blue"&gt;&lt;b&gt;{&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:blue"&gt;&lt;b&gt;if (&lt;/b&gt;&lt;/span&gt;&lt;span style="color:brown"&gt;&lt;b&gt;SomeCondition&lt;/b&gt;&lt;/span&gt;&lt;span style="color:blue"&gt;&lt;b&gt; == true)&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:blue"&gt;&lt;b&gt;{&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:blue"&gt;&lt;b&gt;continue&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:blue"&gt;&lt;b&gt;}&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:blue"&gt;&lt;b&gt;SomeStatements&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
+&lt;span style="color:blue"&gt;&lt;b&gt;}&lt;/b&gt;&lt;/span&gt;
+&lt;br&gt;&lt;br&gt;
+will skip &lt;i&gt;SomeStatements&lt;/i&gt; if &lt;i&gt;SomeCondition&lt;/i&gt; is met.</value>
+    <comment>For help.</comment>
+  </data>
 </root>

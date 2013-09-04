@@ -93,9 +93,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				templateContext.IsBreaking = false;
 				while (Expression.EvaluateExpression(solutionContext, templateContext, modelContext, interpreterType) == true)
 				{
+					templateContext.IsContinuing = false;
 					foreach (IStatementNode node in Statements)
 					{
 						if (node.HandleDebug(interpreterType, solutionContext, templateContext, modelContext) == false) return;
+						if (templateContext.IsContinuing == true)
+						{
+							break;
+						}
 						if (templateContext.IsBreaking == true || templateContext.IsReturning == true)
 						{
 							templateContext.IsBreaking = false;
@@ -104,6 +109,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 						if (node is BreakStatementNode)
 						{
 							templateContext.IsBreaking = true;
+							break;
+						}
+						if (node is ContinueStatementNode)
+						{
 							break;
 						}
 						if (node is ReturnStatementNode)

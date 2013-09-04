@@ -384,6 +384,12 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		public bool IsBreaking { get; set; }
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the IsContinuing.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public bool IsContinuing { get; set; }
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets/sets the IsReturning.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
