@@ -1,0 +1,106 @@
+<CONFIG>
+	NAME BLLAddModelItemStatementNodeFile
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Irony.Parsing;
+using Irony.Interpreter.Ast;
+using %%><%%=Namespace%%><%%-.Resources;
+using System.IO;
+using MoPlus.IO;%%>
+foreach (Feature)
+{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-.BLL.Interpreter
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class implements necessary members for interpretation of add model item statements.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class AddModelItemStatementNode : NonLeafGrammarNode, IStatementNode
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>Interpret this node to produce code, output, or model data..</summary>
+		/// 
+		/// <param name="interpreterType">The type of interpretation to perform.</param>
+		/// <param name="solutionContext">The associated solution.</param>
+		/// <param name="templateContext">The associated template.</param>
+		/// <param name="modelContext">The associated model context.</param>
+		///--------------------------------------------------------------------------------
+		public void InterpretNode(InterpreterTypeCode interpreterType, Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext)
+		{
+			try
+			{
+				if (CurrentItem != null)
+				{%%>
+foreach (Entity in Solution where IsCurrentModelEntity == true sort EntityName)
+{
+<%%-
+					%%>
+	if (ItemIndex > 0)
+	{
+		<%%-else %%>
+	}
+<%%-if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.Current%%><%%=BLLClassName%%><%%-))
+					{
+						if (solutionContext.Current%%><%%=BLLClassName%%><%%- != null)
+						{
+							%%><%%=BLLClassName%%><%%-.AddCurrentItemToSolution(solutionContext, templateContext, LineNumber);
+							if (solutionContext.IsSampleMode == true)
+							{
+								templateContext.MessageBuilder.Append("\r\n+ %%><%%=BLLClassName%%><%%-: ").Append(solutionContext.Current%%><%%=BLLClassName%%><%%-.InnerXmlData);
+							}
+						}
+					}%%>
+}
+<%%-
+					#region protected
+					#endregion protected
+					else
+					{
+						LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Exception_CouldNotAddItem, CurrentItem.CurrentItemName), interpreterType);
+					}
+				}
+			}
+			catch (ApplicationAbortException)
+			{
+				throw;
+			}
+			catch (System.Exception ex)
+			{
+				LogException(solutionContext, templateContext, modelContext, ex, interpreterType);
+			}
+		}
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLAddModelItemStatementNodeFilePath) == null || File(BLLAddModelItemStatementNodeFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update(BLLAddModelItemStatementNodeFilePath)
+}
+%%></OUTPUT>

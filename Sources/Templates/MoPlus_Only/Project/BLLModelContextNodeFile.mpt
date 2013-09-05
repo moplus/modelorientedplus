@@ -1,0 +1,179 @@
+<CONFIG>
+	NAME BLLModelContextNodeFile
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Irony.Parsing;
+using Irony.Interpreter.Ast;
+using MoPlus.Data;
+using System.Collections;
+using %%><%%=Namespace%%><%%-.Resources;%%>
+foreach (Feature)
+{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-.BLL.Interpreter
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class implements necessary members for interpretation of model context nodes.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class ModelContextNode : NonLeafGrammarNode
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the model context associated with this node.</summary>
+		/// 
+		/// <param name="solutionContext">The associated solution.</param>
+		/// <param name="templateContext">The associated template.</param>
+		/// <param name="modelContext">The associated model context.</param>
+		/// <param name="isValidContext">Output flag, signifying whether context returned is a valid one.</param>
+		///--------------------------------------------------------------------------------
+		public IDomainEnterpriseObject GetModelContext(Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext, out bool isValidContext)
+		{
+			IDomainEnterpriseObject nodeContext = modelContext;
+			IDomainEnterpriseObject currentContext = modelContext;
+			ModelContextNode leafModelContext = ModelContext;
+			isValidContext = false;
+			if (ThisContext != null)
+			{
+				templateContext.PopCount = templateContext.ModelContextStack.Count - 1;
+			}
+			else if (PopContext != null)
+			{
+				// go through pop context nodes directly here
+				ModelContextNode contextNode = this;
+				while (contextNode != null)
+				{
+					if (contextNode.PopContext != null)
+					{
+						leafModelContext = contextNode.ModelContext;
+						templateContext.PopCount++;
+					}
+					contextNode = contextNode.ModelContext;
+				}
+			}
+			if (templateContext.PopCount > 0)
+			{
+				// pop context executes first
+				nodeContext = templateContext.GetModelContext(templateContext.PopCount);
+				templateContext.PopCount = 0;
+			}
+			if (leafModelContext != null)
+			{
+				// model context nodes execute next (then, nodes are evaluated)
+				nodeContext = leafModelContext.GetModelContext(solutionContext, templateContext, nodeContext, out isValidContext);
+			}%%>
+foreach (Entity in Solution where IsSolutionModelEntity == true sort EntityName)
+{
+<%%-
+			%%>
+	if (ItemIndex > 0)
+	{
+		<%%-else %%>
+	}
+<%%-if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.%%><%%=BLLClassName%%><%%-))
+			{
+				nodeContext = %%><%%=BLLClassName%%><%%-.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}%%>
+}
+foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
+{
+<%%-
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.%%><%%=BLLClassName%%><%%-))
+			{
+				nodeContext = %%><%%=BLLClassName%%><%%-.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}%%>
+}
+<%%-
+			#region protected
+			#endregion protected
+			else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
+			{
+				return ObjectInstance.GetModelContext(solutionContext, ModelContextName, nodeContext, out isValidContext);
+			}
+			if (nodeContext == null && isValidContext == false)
+			{
+				LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Exception_InvalidModelContext, ModelContextName, modelContext.Name, modelContext.GetType().Name), InterpreterTypeCode.None);
+			}
+			return nodeContext;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the collection context associated with this node.</summary>
+		/// 
+		/// <param name="solutionContext">The associated solution.</param>
+		/// <param name="templateContext">The associated template.</param>
+		/// <param name="modelContext">The associated model context.</param>
+		///--------------------------------------------------------------------------------
+		public IEnterpriseEnumerable GetCollection(Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext)
+		{
+			IDomainEnterpriseObject nodeContext = modelContext;
+			bool isValidContext;
+			if (ModelContext != null)
+			{
+				nodeContext = ModelContext.GetModelContext(solutionContext, templateContext, modelContext, out isValidContext);
+			}%%>
+foreach (Entity in Solution where IsSolutionModelEntity == true sort EntityName)
+{
+<%%-
+			%%>
+	if (ItemIndex > 0)
+	{
+		<%%-else %%>
+	}
+<%%-if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.%%><%%=BLLClassName%%><%%-))
+			{
+				return %%><%%=BLLClassName%%><%%-.GetCollectionContext(solutionContext, nodeContext);
+			}%%>
+}
+foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
+{
+<%%-
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.%%><%%=BLLClassName%%><%%-))
+			{
+				return %%><%%=BLLClassName%%><%%-.GetCollectionContext(solutionContext, nodeContext);
+			}%%>
+}
+<%%-
+			#region protected
+			#endregion protected
+			else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
+			{
+				return ObjectInstance.GetCollectionContext(solutionContext, ModelContextName, nodeContext);
+			}
+			LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Exception_InvalidModelContext, ModelContextName, modelContext.GetType().Name), InterpreterTypeCode.None);
+			return null;
+		}
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLModelContextNodeFilePath) == null || File(BLLModelContextNodeFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update(BLLModelContextNodeFilePath)
+}
+%%></OUTPUT>

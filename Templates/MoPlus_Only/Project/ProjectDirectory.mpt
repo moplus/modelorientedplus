@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME ProjectDirectory
-	CATEGORY LIB
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Namespace%%></CONTENT>

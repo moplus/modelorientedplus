@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLCurrentItemAssignmentStatementNodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\CurrentItemAssignmentStatementNode_G.cs%%></CONTENT>

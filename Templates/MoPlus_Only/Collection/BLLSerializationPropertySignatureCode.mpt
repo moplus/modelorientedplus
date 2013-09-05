@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME BLLSerializationPropertySignatureCode
-	CATEGORY BLL
-	NODE Collection
-</CONFIG>
-<CONTENT>
-<%%-public virtual %%><%%=BLLDataType%%><%%- _S_%%><%%=BLLPropertyName%%></CONTENT>

@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLCurrentItemTypeCodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\CurrentItemTypeCode_G.cs%%></CONTENT>

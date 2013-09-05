@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME VMBLLExtendedViewModelClassFileName
-	CATEGORY VMBLL
-	NODE Entity
-</CONFIG>
-<CONTENT>
-<%%=VMBLLViewModelClassName%%><%%-_Ext.cs%%></CONTENT>

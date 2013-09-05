@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectOutput Name="MoPlus.SolutionUpdater.CommandUI" ProjectDirVar="$(var.MoPlus.SolutionUpdater.CommandUI.ProjectDir)" TargetDirVar="$(var.MoPlus.SolutionUpdater.CommandUI.TargetDir)" SharedFileId="_B420343A_3470_4928_933C_017EF134E97B">
+  <Binaries>
+    <DiskId>1</DiskId>
+    <Compressed>yes</Compressed>
+    <Hidden>no</Hidden>
+    <KeyPath>yes</KeyPath>
+    <ReadOnly>no</ReadOnly>
+    <System>no</System>
+    <Vital>yes</Vital>
+    <Permanent>no</Permanent>
+    <SharedDllRefCount>no</SharedDllRefCount>
+    <Transitive>no</Transitive>
+  </Binaries>
+</ProjectOutput>

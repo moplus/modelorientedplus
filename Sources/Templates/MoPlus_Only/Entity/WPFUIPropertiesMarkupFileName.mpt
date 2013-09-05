@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIPropertiesMarkupFileName
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=WPFUIPropertiesClassName%%><%%-_G.xaml%%></CONTENT>

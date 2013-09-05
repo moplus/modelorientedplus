@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME HasUIChildCollection
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// returns whether the enity has a collection in the UI whose parent is this entity
+//
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Collection where Tags.Contains("Secondary") == false)
+	{
+		with (ReferencedEntity)
+		{
+			if (Tags.Contains("IgnoreUI") == false && Tags.Contains("IgnoreView") == false)
+			{
+				foreach (EntityReference where Tags.Contains("Parent") == true)
+				{
+					if (ReferencedEntity.BLLClassName == ../../../BLLClassName)
+					{
+						<%%-true%%>
+						return
+					}
+				}
+			}
+		}
+	}
+}
+<%%-false%%>
+%%></CONTENT>

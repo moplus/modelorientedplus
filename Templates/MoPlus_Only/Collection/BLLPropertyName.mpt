@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLPropertyName
-	CATEGORY BLL
-	NODE Collection
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=CollectionName%%></CONTENT>

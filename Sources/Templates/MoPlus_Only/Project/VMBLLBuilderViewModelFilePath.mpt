@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLBuilderViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\BuilderViewModel_G.cs%%></CONTENT>

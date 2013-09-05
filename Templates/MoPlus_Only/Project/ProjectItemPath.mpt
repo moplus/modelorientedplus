@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME ProjectItemPath
-	CATEGORY LIB
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Namespace%%><%%-\%%><%%=ProjectFileName%%></CONTENT>

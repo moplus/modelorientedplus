@@ -1,0 +1,201 @@
+<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file outside of protected areas to prevent changes
+ from being overwritten.
+
+ <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
+ <CreatedDate>8/22/2013</CreatedDate>
+ <Status>Generated</Status>
+-->
+<lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Entities.EntityPropertiesControl"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:VM="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
+                     xmlns:EntitiesVM="clr-namespace:MoPlus.ViewModel.Entities;assembly=MoPlus.ViewModel"
+                     xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+                     xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
+                     mc:Ignorable="d" 
+                     d:DesignHeight="300" d:DesignWidth="300">
+ 	<lib:EditControl.CommandBindings>
+	</lib:EditControl.CommandBindings>
+	<lib:EditControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<Style x:Key="EntityIDInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding EntityIDCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding EntityIDValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="EntityNameInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding EntityNameCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding EntityNameValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="EntityTypeCodeInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding EntityTypeCodeCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding EntityTypeCodeValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="IdentifierTypeCodeInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding IdentifierTypeCodeCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding IdentifierTypeCodeValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="SelectFeatureIDInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding SelectFeatureIDCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding SelectFeatureIDValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="BaseEntityIDInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding BaseEntityIDCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding BaseEntityIDValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="GroupNameInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding GroupNameCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding GroupNameValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="DescriptionInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding DescriptionCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding DescriptionValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="TagsInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding TagsCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding TagsValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<VM:LabelHelper x:Key="labels" />
+		</ResourceDictionary>
+	</lib:EditControl.Resources>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}">
+		<Grid DataContextChanged="Grid_DataContextChanged"
+			  MinWidth="400" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}}"
+			  RenderTransformOrigin="0.5,0.5">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Margin="1" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="{Binding Title, Mode=OneWay}" />
+			<Label  Margin="1" Grid.Row="1" Grid.Column="0" Style="{DynamicResource EntityIDInput}" Content="{Binding EntityIDLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="2" Grid.Column="0" Style="{DynamicResource EntityNameInput}" Content="{Binding EntityNameLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="3" Grid.Column="0" Style="{DynamicResource EntityTypeCodeInput}" Content="{Binding EntityTypeCodeLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="4" Grid.Column="0" Style="{DynamicResource IdentifierTypeCodeInput}" Content="{Binding IdentifierTypeCodeLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="5" Grid.Column="0" Style="{DynamicResource SelectFeatureIDInput}" Content="{Binding SelectFeatureIDLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="6" Grid.Column="0" Style="{DynamicResource BaseEntityIDInput}" Content="{Binding BaseEntityIDLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="7" Grid.Column="0" Style="{DynamicResource GroupNameInput}" Content="{Binding GroupNameLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="8" Grid.Column="0" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="9" Grid.Column="0" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
+			<Border Name="PlaceHolderBorder" Grid.Column="1" Margin="1"/>
+			<Label Margin="1" Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelValue}" Content="{Binding EntityID, Mode=OneWay}" />
+			<TextBox Margin="0" Grid.Row="2" Grid.Column="1" ToolTip="{Binding EntityNameValidationMessage, Mode=OneWay}" Text="{Binding EntityName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}" Loaded="TextBox_Loaded"/>
+			<ComboBox Margin="0" Grid.Row="3" Grid.Column="1" ToolTip="{Binding EntityTypeCodeValidationMessage, Mode=OneWay}" ItemsSource="{Binding EntityTypeCodeItems}" DisplayMemberPath="DisplayName" SelectedValuePath="EntityTypeCode" SelectedValue="{Binding EntityTypeCode, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+			<ComboBox Margin="0" Grid.Row="4" Grid.Column="1" ToolTip="{Binding IdentifierTypeCodeValidationMessage, Mode=OneWay}" ItemsSource="{Binding IdentifierTypeCodeItems}" DisplayMemberPath="DisplayName" SelectedValuePath="IdentifierTypeCode" SelectedValue="{Binding IdentifierTypeCode, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+			<ComboBox Margin="0" Grid.Row="5" Grid.Column="1" ToolTip="{Binding SelectFeatureIDValidationMessage, Mode=OneWay}" ItemsSource="{Binding SelectFeatureIDItems}" DisplayMemberPath="DisplayName" SelectedValuePath="FeatureID" SelectedValue="{Binding SelectFeatureID, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+			<ComboBox Margin="0" Grid.Row="6" Grid.Column="1" ToolTip="{Binding BaseEntityIDValidationMessage, Mode=OneWay}" ItemsSource="{Binding BaseEntityIDItems}" DisplayMemberPath="DisplayName" SelectedValuePath="EntityID" SelectedValue="{Binding BaseEntityID, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+			<TextBox Margin="0" Grid.Row="7" Grid.Column="1" ToolTip="{Binding GroupNameValidationMessage, Mode=OneWay}" Text="{Binding GroupName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
+			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="8" Margin="7"/>
+			<TextBox Margin="0" Grid.Row="8" Grid.Column="1" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<TextBox Margin="0" Grid.Row="9" Grid.Column="1" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
+		</Grid>
+	</ScrollViewer>
+</lib:EditControl>

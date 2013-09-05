@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME VMBLLExtendedEventArgsClassFileName
+	CATEGORY VMBLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=VMBLLEventArgsClassName%%><%%-_Ext.cs%%></CONTENT>

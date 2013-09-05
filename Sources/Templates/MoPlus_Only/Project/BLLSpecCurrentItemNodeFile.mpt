@@ -1,0 +1,110 @@
+<CONFIG>
+	NAME BLLSpecCurrentItemNodeFile
+	CATEGORY BLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Irony.Parsing;
+using Irony.Interpreter.Ast;
+using MoPlus.Data;
+using System.Collections;%%>
+foreach (Feature)
+{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+}
+<%%-
+
+namespace %%><%%=Namespace%%><%%-.BLL.Interpreter
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class implements necessary members for interpretation of spec current item nodes.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class SpecCurrentItemNode : LeafGrammarNode
+	{
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the model context associated with this node.</summary>
+		/// 
+		/// <param name="solutionContext">The associated solution.</param>
+		/// <param name="templateContext">The associated template.</param>
+		/// <param name="modelContext">The associated model context.</param>
+		///--------------------------------------------------------------------------------
+		public IDomainEnterpriseObject GetModelContext(Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext)
+		{%%>
+foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
+{
+<%%-
+			%%>
+	if (ItemIndex > 0)
+	{
+		<%%-else %%>
+	}
+<%%-if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.Current%%><%%=BLLClassName%%><%%-))
+			{
+				modelContext = solutionContext.Current%%><%%=BLLClassName%%><%%-;
+			}%%>
+}
+<%%-
+			#region protected
+			#endregion protected
+			return modelContext;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method gets the collection context associated with this node.</summary>
+		/// 
+		/// <param name="solutionContext">The associated solution.</param>
+		/// <param name="templateContext">The associated template.</param>
+		/// <param name="modelContext">The associated model context.</param>
+		///--------------------------------------------------------------------------------
+		public IEnterpriseEnumerable GetCollection(Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext)
+		{
+			IDomainEnterpriseObject nodeContext = modelContext;%%>
+foreach (Entity in Solution where IsSpecModelEntity == true sort EntityName)
+{
+<%%-
+			%%>
+	if (ItemIndex > 0)
+	{
+		<%%-else %%>
+	}
+<%%-if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.Current%%><%%=BLLClassName%%><%%-))
+			{
+				return %%><%%=BLLClassName%%><%%-.GetCollectionContext(solutionContext, nodeContext);
+			}%%>
+}
+<%%-
+			#region protected
+			#endregion protected
+			return null;
+		}
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(BLLSpecCurrentItemNodeFilePath) == null || File(BLLSpecCurrentItemNodeFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected())
+{
+	update(BLLSpecCurrentItemNodeFilePath)
+}
+%%></OUTPUT>

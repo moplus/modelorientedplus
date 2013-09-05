@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME VMBLLEventArgsClassFilePath
-	CATEGORY VMBLL
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\Events\%%><%%=Feature.FeatureName%%><%%-\%%><%%=VMBLLEventArgsClassFileName%%></CONTENT>

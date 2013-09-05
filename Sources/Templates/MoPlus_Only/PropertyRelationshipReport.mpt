@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME PropertyRelationshipReport
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in Solution)
+{
+	foreach (EntityReference)
+	{
+	<%%-
+	Property info: %%><%%=../EntityName%%><%%-.%%><%%=PropertyName%%><%%-, relationship ID: %%><%%=PropertyRelationship.RelationshipID%%>
+	}
+}%%></CONTENT>

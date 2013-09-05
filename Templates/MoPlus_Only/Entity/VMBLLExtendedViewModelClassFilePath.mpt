@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME VMBLLExtendedViewModelClassFilePath
-	CATEGORY VMBLL
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\Exts\%%><%%=Feature.FeatureName%%><%%-\%%><%%=VMBLLExtendedViewModelClassFileName%%></CONTENT>

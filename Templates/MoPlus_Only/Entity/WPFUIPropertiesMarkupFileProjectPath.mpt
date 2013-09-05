@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIPropertiesMarkupFileProjectPath
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%-UserControls\%%><%%=FeatureName%%><%%-\%%><%%=WPFUIPropertiesMarkupFileName%%></CONTENT>

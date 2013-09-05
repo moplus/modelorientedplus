@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLAddModelItemStatementNodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\AddModelItemStatementNode_G.cs%%></CONTENT>

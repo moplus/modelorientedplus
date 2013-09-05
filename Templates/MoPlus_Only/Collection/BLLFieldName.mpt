@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLFieldName
-	CATEGORY BLL
-	NODE Collection
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=CollectionName.UnderscoreCase()%%></CONTENT>

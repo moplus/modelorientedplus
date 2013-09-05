@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME BLLExtRelativePath
-	CATEGORY BLL
-	NODE Entity
-</CONFIG>
-<CONTENT>
-<%%-\Assembly_Exts\BLL\%%><%%=Feature.FeatureName%%><%%-\%%></CONTENT>

@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME BLLPropertyCommentsCode
+	CATEGORY BLL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>This read only property gets the %%><%%=BLLPropertyName%%><%%-.</summary>
+///--------------------------------------------------------------------------------%%></CONTENT>

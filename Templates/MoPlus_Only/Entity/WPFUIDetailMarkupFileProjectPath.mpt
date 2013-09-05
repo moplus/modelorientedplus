@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIDetailMarkupFileProjectPath
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%-UserControls\%%><%%=FeatureName%%><%%-\%%><%%=WPFUIDetailMarkupFileName%%></CONTENT>

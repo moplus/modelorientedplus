@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLExtendedClassFileName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%><%%-_Ext.cs%%></CONTENT>

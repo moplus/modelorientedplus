@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIDetailClassName
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=BLLClassName%%><%%-DetailControl%%></CONTENT>

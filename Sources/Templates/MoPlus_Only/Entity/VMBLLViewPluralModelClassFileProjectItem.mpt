@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME VMBLLViewPluralModelClassFileProjectItem
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=VMBLLViewPluralModelClassFileProjectPath%%><%%-" />
+    %%></CONTENT>

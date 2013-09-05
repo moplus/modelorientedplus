@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLDeleteModelItemStatementNodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\DeleteModelItemStatementNode_G.cs%%></CONTENT>

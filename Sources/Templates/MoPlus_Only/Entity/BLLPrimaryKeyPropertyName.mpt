@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME BLLPrimaryKeyPropertyName
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true limit 1)
+{
+	Text = BLLPropertyName
+	return
+}
+%%></CONTENT>

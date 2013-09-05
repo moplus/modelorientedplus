@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIDetailClassFileProjectPath
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%-UserControls\%%><%%=FeatureName%%><%%-\%%><%%=WPFUIDetailClassFileName%%></CONTENT>

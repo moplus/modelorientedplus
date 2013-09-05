@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIPropertiesClassName
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=BLLClassName%%><%%-PropertiesControl%%></CONTENT>

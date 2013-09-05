@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME BLLReferenceKeyPropertyName
+	CATEGORY BLL
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (PropertyRelationship limit 1)
+{
+	with (Relationship)
+	{
+		foreach (RelationshipProperty)
+		{
+			with (Property from ../../../Entity.Find(Property.PropertyID))
+			{
+				<%%=BLLPropertyName%%>
+				return
+			}
+		}
+	}
+}
+%%></CONTENT>

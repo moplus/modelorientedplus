@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME LibraryDirectory
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.LibraryDirectory%%></CONTENT>

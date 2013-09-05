@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME BLLBaseClassName
+	CATEGORY BLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+//
+// this template returns a string for the base class name
+//
+<%%:
+	if (BaseEntity != null)
+	{
+		with (BaseEntity)
+		{
+			<%%=FeatureName%%><%%-.%%><%%=BLLClassName%%>
+		}
+	}
+	else
+	{
+		<%%-BusinessObjectBase%%>
+	}
+%%></CONTENT>

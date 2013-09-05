@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME ProjectFileName
-	CATEGORY LIB
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Namespace%%><%%-.csproj%%></CONTENT>

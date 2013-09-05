@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME BLLGlobalCopyrightCode
+	CATEGORY BLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/%%></CONTENT>

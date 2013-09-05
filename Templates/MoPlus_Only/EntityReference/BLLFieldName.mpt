@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLFieldName
-	CATEGORY BLL
-	NODE EntityReference
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=EntityReferenceName.UnderscoreCase()%%></CONTENT>

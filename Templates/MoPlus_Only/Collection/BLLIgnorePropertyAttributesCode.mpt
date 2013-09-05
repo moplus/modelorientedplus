@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLIgnorePropertyAttributesCode
-	CATEGORY BLL
-	NODE Collection
-</CONFIG>
-<CONTENT>
-<%%-
-[XmlIgnore]%%></CONTENT>

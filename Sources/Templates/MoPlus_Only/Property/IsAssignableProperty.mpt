@@ -1,0 +1,35 @@
+<CONFIG>
+	NAME IsAssignableProperty
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsAuditProperty == true)
+{
+	<%%-false%%>
+	return
+}
+if (FeatureName == "Specifications" || FeatureName == "Diagrams" || FeatureName == "Config")
+{
+	<%%-false%%>
+	return
+}
+if (Entity.Tags.Contains("IgnoreModel") == true)
+{
+	<%%-false%%>
+	return
+}
+if (Entity.Tags.Contains("Source") == true)
+{
+	<%%-false%%>
+	return
+}
+if (PropertyName == "IsAutoUpdated")
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

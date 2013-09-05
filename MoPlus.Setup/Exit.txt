@@ -1,5 +1,0 @@
-Thank you very much for installing Mo+ and the Mo+ Solution Builder for model driven development.
-
-To learn more about Mo+ and the Mo+ Solution Builder, there are a number of tutorials in the documentation section (https://moplus.codeplex.com/documentation). The lower numbered tutorials cover simpler topics, while higher numbered ones delve deeper into features and capabilities.
-
-Also, there is on board help within Mo+ Solution Builder that provides a detailed how to and reference.

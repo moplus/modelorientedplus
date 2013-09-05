@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME BLLSerializationPropertyBodyCode
+	CATEGORY BLL
+	NODE PropertyReference
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-
+{%%><%%=TAB 1%%><%%-
+	get
+	{%%><%%=TAB 1%%><%%-
+		return %%><%%=BLLFieldName%%><%%-;%%><%%=TAB -1%%><%%-
+	}
+	set
+	{%%><%%=TAB 1%%><%%-
+		%%><%%=BLLFieldName%%><%%- = value;%%><%%=TAB -1%%><%%-
+	}%%><%%=TAB -1%%><%%-
+}%%></CONTENT>

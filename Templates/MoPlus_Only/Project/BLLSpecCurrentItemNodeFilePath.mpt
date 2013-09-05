@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLSpecCurrentItemNodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\SpecCurrentItemNode_G.cs%%></CONTENT>

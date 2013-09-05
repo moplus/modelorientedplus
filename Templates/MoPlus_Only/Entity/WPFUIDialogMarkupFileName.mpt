@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIDialogMarkupFileName
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=WPFUIDialogClassName%%><%%-_G.xaml%%></CONTENT>

@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIPropertiesDiagramClassName
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=BLLPluralEntityName%%><%%-DiagramControl%%></CONTENT>

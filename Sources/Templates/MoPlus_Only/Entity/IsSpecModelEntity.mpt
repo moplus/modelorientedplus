@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsSpecModelEntity
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (FeatureName == "Specifications")
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

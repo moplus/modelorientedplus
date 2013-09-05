@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--<ProjectType>BLL</ProjectType>-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1A6C3352-9781-4722-B6C8-DEC5DB0FAF53}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MoPlus.ViewModel</RootNamespace>
+    <AssemblyName>MoPlus.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MoPlus.ViewModel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\MoPlus.ViewModel.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\MoPlus.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=4.1.0.7916, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Third Party Dlls\AvalonEdit_4.3.1_Binaries\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ca48ace7223ead47, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Library\Third Party Dlls\Irony_2011_07_05\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuilderViewModel_G.cs" />
+    <Compile Include="CommandViewModel.cs" />
+    <Compile Include="BuilderViewModel.cs" />
+    <Compile Include="Conventions\MenuViewModel.cs" />
+    <Compile Include="Conventions\HelpViewModel.cs" />
+    <Compile Include="Conventions\ResourcesViewModel.cs" />
+    <Compile Include="CustomCommands.cs" />
+    <Compile Include="DesignerViewModel_G.cs" />
+    <Compile Include="DiagramEntityWorkspaceViewModel.cs" />
+    <Compile Include="DiagramRelationshipWorkspaceViewModel.cs" />
+    <Compile Include="Diagrams\DiagramEntityViewModel.cs" />
+    <Compile Include="Diagrams\DiagramRelationshipViewModel.cs" />
+    <Compile Include="Diagrams\DiagramsViewModel.cs" />
+    <Compile Include="Diagrams\DiagramViewModel.cs" />
+    <Compile Include="DiagramWorkspaceViewModel.cs" />
+    <Compile Include="Entities\CollectionViewModel.cs" />
+    <Compile Include="Entities\EntityReferenceViewModel.cs" />
+    <Compile Include="Entities\EntityViewModel.cs" />
+    <Compile Include="Entities\IndexPropertyViewModel.cs" />
+    <Compile Include="Entities\MethodRelationshipViewModel.cs" />
+    <Compile Include="Entities\MethodViewModel.cs" />
+    <Compile Include="Entities\ParameterViewModel.cs" />
+    <Compile Include="Entities\PropertyReferencesViewModel.cs" />
+    <Compile Include="Entities\PropertyReferenceViewModel.cs" />
+    <Compile Include="Entities\PropertyRelationshipViewModel.cs" />
+    <Compile Include="Entities\PropertyViewModel.cs" />
+    <Compile Include="Entities\RelationshipPropertyViewModel.cs" />
+    <Compile Include="Entities\RelationshipViewModel.cs" />
+    <Compile Include="Entities\StateTransitionViewModel.cs" />
+    <Compile Include="Events\HelpEventArgs.cs" />
+    <Compile Include="Events\Diagrams\DiagramEventArgs.cs" />
+    <Compile Include="Events\Diagrams\DiagramEventArgs_G.cs" />
+    <Compile Include="Diagrams\DiagramsViewModel_G.cs" />
+    <Compile Include="Diagrams\DiagramViewModel_G.cs" />
+    <Compile Include="Events\Diagrams\DiagramEntityEventArgs_G.cs" />
+    <Compile Include="Diagrams\DiagramEntityViewModel_G.cs" />
+    <Compile Include="Events\Entities\CollectionEventArgs_G.cs" />
+    <Compile Include="Entities\CollectionsViewModel_G.cs" />
+    <Compile Include="Entities\CollectionViewModel_G.cs" />
+    <Compile Include="Events\Entities\EntityEventArgs.cs" />
+    <Compile Include="Events\Entities\EntityEventArgs_G.cs" />
+    <Compile Include="Entities\EntityViewModel_G.cs" />
+    <Compile Include="Events\Entities\EntityReferenceEventArgs_G.cs" />
+    <Compile Include="Entities\EntityReferencesViewModel_G.cs" />
+    <Compile Include="Entities\EntityReferenceViewModel_G.cs" />
+    <Compile Include="Events\Entities\IndexEventArgs_G.cs" />
+    <Compile Include="Entities\IndexesViewModel_G.cs" />
+    <Compile Include="Entities\IndexViewModel_G.cs" />
+    <Compile Include="Events\Entities\IndexPropertyEventArgs_G.cs" />
+    <Compile Include="Entities\IndexPropertyViewModel_G.cs" />
+    <Compile Include="Events\Entities\MethodEventArgs_G.cs" />
+    <Compile Include="Entities\MethodsViewModel_G.cs" />
+    <Compile Include="Entities\MethodViewModel_G.cs" />
+    <Compile Include="Events\Entities\ParameterEventArgs_G.cs" />
+    <Compile Include="Entities\ParameterViewModel_G.cs" />
+    <Compile Include="Events\Entities\PropertyEventArgs_G.cs" />
+    <Compile Include="Entities\PropertiesViewModel_G.cs" />
+    <Compile Include="Entities\PropertyViewModel_G.cs" />
+    <Compile Include="Events\Entities\PropertyReferenceEventArgs_G.cs" />
+    <Compile Include="Entities\PropertyReferencesViewModel_G.cs" />
+    <Compile Include="Entities\PropertyReferenceViewModel_G.cs" />
+    <Compile Include="Events\Entities\RelationshipEventArgs_G.cs" />
+    <Compile Include="Entities\RelationshipsViewModel_G.cs" />
+    <Compile Include="Entities\RelationshipViewModel_G.cs" />
+    <Compile Include="Events\Entities\RelationshipPropertyEventArgs_G.cs" />
+    <Compile Include="Entities\RelationshipPropertyViewModel_G.cs" />
+    <Compile Include="Events\Entities\StateEventArgs_G.cs" />
+    <Compile Include="Entities\StateViewModel_G.cs" />
+    <Compile Include="Events\Entities\StateModelEventArgs_G.cs" />
+    <Compile Include="Entities\StateModelsViewModel_G.cs" />
+    <Compile Include="Entities\StateModelViewModel_G.cs" />
+    <Compile Include="Events\Entities\StateTransitionEventArgs_G.cs" />
+    <Compile Include="Entities\StateTransitionViewModel_G.cs" />
+    <Compile Include="Events\Interpreter\CodeTemplateEventArgs.cs" />
+    <Compile Include="Events\Interpreter\CodeTemplateEventArgs_G.cs" />
+    <Compile Include="Events\Interpreter\SpecTemplateEventArgs.cs" />
+    <Compile Include="Events\SolutionModelEventArgs.cs" />
+    <Compile Include="Events\Solutions\SolutionDebugEventArgs.cs" />
+    <Compile Include="Events\Solutions\SolutionEditEventArgs.cs" />
+    <Compile Include="Events\Solutions\SolutionEventArgs.cs" />
+    <Compile Include="Events\StatusEventArgs.cs" />
+    <Compile Include="Events\WorkspaceEventArgs.cs" />
+    <Compile Include="Interpreter\CodeTemplateResultsViewModel.cs" />
+    <Compile Include="Interpreter\CodeTemplatesViewModel.cs" />
+    <Compile Include="Interpreter\CodeTemplatesViewModel_G.cs" />
+    <Compile Include="Interpreter\CodeTemplateViewModel.cs" />
+    <Compile Include="Interpreter\CodeTemplateViewModel_G.cs" />
+    <Compile Include="Events\Interpreter\SpecTemplateEventArgs_G.cs" />
+    <Compile Include="Interpreter\SpecTemplateResultsViewModel.cs" />
+    <Compile Include="Interpreter\SpecTemplatesViewModel.cs" />
+    <Compile Include="Interpreter\SpecTemplatesViewModel_G.cs" />
+    <Compile Include="Interpreter\SpecTemplateViewModel.cs" />
+    <Compile Include="Interpreter\SpecTemplateViewModel_G.cs" />
+    <Compile Include="Events\Models\EnumerationEventArgs_G.cs" />
+    <Compile Include="Messaging\Mediator.cs" />
+    <Compile Include="Messaging\MediatorMessageSinkAttribute.cs" />
+    <Compile Include="Messaging\MediatorMessages_G.cs" />
+    <Compile Include="Messaging\MessageToActionsMap.cs" />
+    <Compile Include="Messaging\WeakAction.cs" />
+    <Compile Include="Models\PropertyCollectionItemViewModel.cs" />
+    <Compile Include="Models\PropertyItemViewModel.cs" />
+    <Compile Include="Models\EnumerationsViewModel_G.cs" />
+    <Compile Include="Models\EnumerationViewModel_G.cs" />
+    <Compile Include="Events\Models\ModelEventArgs_G.cs" />
+    <Compile Include="Models\ModelObjectViewModel.cs" />
+    <Compile Include="Models\ModelPropertyViewModel.cs" />
+    <Compile Include="Models\ModelsViewModel_G.cs" />
+    <Compile Include="Models\ModelViewModel_G.cs" />
+    <Compile Include="Events\Models\ModelObjectEventArgs_G.cs" />
+    <Compile Include="Models\ModelObjectsViewModel_G.cs" />
+    <Compile Include="Models\ModelObjectViewModel_G.cs" />
+    <Compile Include="Events\Models\ModelPropertyEventArgs_G.cs" />
+    <Compile Include="Models\ModelPropertyViewModel_G.cs" />
+    <Compile Include="Events\Models\ValueEventArgs_G.cs" />
+    <Compile Include="Models\ObjectInstanceViewModel.cs" />
+    <Compile Include="Models\PropertyInstanceViewModel.cs" />
+    <Compile Include="Models\ValueViewModel_G.cs" />
+    <Compile Include="Events\Solutions\AuditPropertyEventArgs_G.cs" />
+    <Compile Include="Resources\DisplayValues.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisplayValues.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Solutions\AuditPropertiesViewModel_G.cs" />
+    <Compile Include="Solutions\AuditPropertyViewModel.cs" />
+    <Compile Include="Solutions\AuditPropertyViewModel_G.cs" />
+    <Compile Include="Events\Solutions\DatabaseSourceEventArgs_G.cs" />
+    <Compile Include="Solutions\DatabaseSourceViewModel.cs" />
+    <Compile Include="Solutions\FeaturesViewModel.cs" />
+    <Compile Include="Solutions\TagManagementViewModel.cs" />
+    <Compile Include="Solutions\DatabaseSourcesViewModel_G.cs" />
+    <Compile Include="Solutions\DatabaseSourceViewModel_G.cs" />
+    <Compile Include="Events\Solutions\FeatureEventArgs_G.cs" />
+    <Compile Include="Solutions\FeaturesViewModel_G.cs" />
+    <Compile Include="Solutions\FeatureViewModel.cs" />
+    <Compile Include="Solutions\FeatureViewModel_G.cs" />
+    <Compile Include="Events\Solutions\ProjectEventArgs_G.cs" />
+    <Compile Include="Solutions\ProjectReferenceViewModel.cs" />
+    <Compile Include="Solutions\ProjectsViewModel.cs" />
+    <Compile Include="Solutions\ProjectsViewModel_G.cs" />
+    <Compile Include="Solutions\ProjectViewModel.cs" />
+    <Compile Include="Solutions\ProjectViewModel_G.cs" />
+    <Compile Include="Events\Solutions\SolutionEventArgs_G.cs" />
+    <Compile Include="Solutions\SolutionsViewModel.cs" />
+    <Compile Include="Solutions\SolutionsViewModel_G.cs" />
+    <Compile Include="Solutions\SolutionViewModel.cs" />
+    <Compile Include="Solutions\SolutionViewModel_G.cs" />
+    <Compile Include="Events\Solutions\XmlSourceEventArgs_G.cs" />
+    <Compile Include="Solutions\SpecificationSourcesViewModel.cs" />
+    <Compile Include="Solutions\XmlSourcesViewModel_G.cs" />
+    <Compile Include="Solutions\XmlSourceViewModel_G.cs" />
+    <Compile Include="Events\Workflows\StageEventArgs_G.cs" />
+    <Compile Include="Workflows\StageTransitionViewModel.cs" />
+    <Compile Include="Workflows\StageViewModel_Ext.cs" />
+    <Compile Include="Workflows\StageViewModel_G.cs" />
+    <Compile Include="Events\Workflows\StageTransitionEventArgs_G.cs" />
+    <Compile Include="Workflows\StageTransitionsViewModel_G.cs" />
+    <Compile Include="Workflows\StageTransitionViewModel_G.cs" />
+    <Compile Include="Events\Workflows\StepEventArgs_G.cs" />
+    <Compile Include="Workflows\StepsViewModel_G.cs" />
+    <Compile Include="Workflows\StepTransitionViewModel.cs" />
+    <Compile Include="Workflows\StepViewModel_G.cs" />
+    <Compile Include="Events\Workflows\StepTransitionEventArgs_G.cs" />
+    <Compile Include="Workflows\StepTransitionViewModel_G.cs" />
+    <Compile Include="Events\Workflows\WorkflowEventArgs_G.cs" />
+    <Compile Include="Workflows\WorkflowsViewModel_G.cs" />
+    <Compile Include="Workflows\WorkflowViewModel_G.cs" />
+    <Compile Include="Events\Entities\MethodRelationshipEventArgs_G.cs" />
+    <Compile Include="Entities\MethodRelationshipViewModel_G.cs" />
+    <Compile Include="Events\Entities\PropertyRelationshipEventArgs_G.cs" />
+    <Compile Include="Entities\PropertyRelationshipViewModel_G.cs" />
+    <Compile Include="Models\ModelPropertiesViewModel_G.cs" />
+    <Compile Include="Events\Models\ObjectInstanceEventArgs_G.cs" />
+    <Compile Include="Models\ObjectInstancesViewModel_G.cs" />
+    <Compile Include="Models\ObjectInstanceViewModel_G.cs" />
+    <Compile Include="Events\Models\PropertyInstanceEventArgs_G.cs" />
+    <Compile Include="Models\PropertyInstanceViewModel_G.cs" />
+    <Compile Include="DialogEditWorkspaceViewModel.cs" />
+    <Compile Include="DialogViewModel.cs" />
+    <Compile Include="EditWorkspaceViewModel.cs" />
+    <Compile Include="IDiagramEntityWorkspaceViewModel.cs" />
+    <Compile Include="IDiagramRelationshipWorkspaceViewModel.cs" />
+    <Compile Include="IDiagramWorkspaceViewModel.cs" />
+    <Compile Include="IDialogEditWorkspaceViewModel.cs" />
+    <Compile Include="IEditWorkspaceViewModel.cs" />
+    <Compile Include="IWorkspaceViewModel.cs" />
+    <Compile Include="LabelHelper.cs" />
+    <Compile Include="ManageItemViewModel.cs" />
+    <Compile Include="OutputViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="StatusViewModel.cs" />
+    <Compile Include="WorkspaceViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MoPlus.Interpreter\MoPlus.Interpreter_2012.csproj">
+      <Project>{E936645D-A430-499E-89CA-9D034D75B775}</Project>
+      <Name>MoPlus.Interpreter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\MoPlus.Data\MoPlus.Data_2012.csproj">
+      <Project>{E8B22DE1-96A9-4F7B-BE8B-FC2EC3A4A7BA}</Project>
+      <Name>MoPlus.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library\MoPlus.IO\MoPlus.IO_2012.csproj">
+      <Project>{EC8B0D66-9DA3-4014-9FB6-821A9D9FB0BA}</Project>
+      <Name>MoPlus.IO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DisplayValues.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DisplayValues.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\MoPlus.snk">
+      <Link>MoPlus.snk</Link>
+    </None>
+    <None Include="Resources\MoPlusWorkflow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SolutionBuilderTreeView.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Product.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusModel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CreateModel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LoadModel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CreateCode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusUI.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusSolutionDesignerWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusEditItem.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusDiagram.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MoPlusDebugWindow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ModelContext.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TemplateCalls.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ModelElements.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SpecificationElements.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

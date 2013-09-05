@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME VMBLLEventArgsClassName
-	CATEGORY VMBLL
-	NODE Entity
-</CONFIG>
-<CONTENT>
-<%%=BLLClassName%%><%%-EventArgs%%></CONTENT>

@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME BLLPluralEntityName
-	CATEGORY BLL
-	NODE Entity
-</CONFIG>
-<CONTENT>
-<%%=LIBPluralEntityName%%></CONTENT>

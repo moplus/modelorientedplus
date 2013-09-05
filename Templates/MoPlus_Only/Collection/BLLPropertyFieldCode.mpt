@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLPropertyFieldCode
-	CATEGORY BLL
-	NODE Collection
-</CONFIG>
-<CONTENT>
-<%%-
-protected %%><%%=BLLDataType%%><%%- %%><%%=BLLFieldName%%><%%- = %%><%%=BLLDefaultValue%%><%%-;%%></CONTENT>

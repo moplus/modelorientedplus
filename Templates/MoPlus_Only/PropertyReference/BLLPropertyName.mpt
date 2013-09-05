@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLPropertyName
-	CATEGORY BLL
-	NODE PropertyReference
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=PropertyReferenceName%%></CONTENT>

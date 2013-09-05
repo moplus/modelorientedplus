@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUISolutionDesignerControlCodeFilePath
-	CATEGORY WPFUI
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\UserControls\SolutionDesignerControl_G.xaml.cs%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLEventArgsClassFileName
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VMBLLEventArgsClassName%%><%%-_G.cs%%></CONTENT>

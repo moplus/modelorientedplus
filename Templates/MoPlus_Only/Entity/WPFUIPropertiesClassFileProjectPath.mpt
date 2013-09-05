@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIPropertiesClassFileProjectPath
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%-UserControls\%%><%%=FeatureName%%><%%-\%%><%%=WPFUIPropertiesClassFileName%%></CONTENT>

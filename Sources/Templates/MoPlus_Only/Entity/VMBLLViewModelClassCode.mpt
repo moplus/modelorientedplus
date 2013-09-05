@@ -1,0 +1,2388 @@
+<CONFIG>
+	NAME VMBLLViewModelClassCode
+	CATEGORY VMBLL
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.ComponentModel;
+using MoPlus.Data;%%>
+CurrentEntity = Entity
+var propertyString
+var rootEntityID = CurrentEntity.EntityID
+var parentFound
+var collectionFound
+var collectionClassName
+var pasteClassName
+var pasteForeignKeyPropertyName
+var collectionName
+var collectionPropertyName
+var isFirstItem
+var propertyPrefix
+var hasItem
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+			foreach (Feature)
+			{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+			foreach (Feature)
+			{
+<%%-
+using %%><%%=../Namespace%%><%%-.BLL.%%><%%=FeatureName%%><%%-;%%>
+			}
+		}
+	}
+}
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Messaging;
+using %%><%%=Project.Namespace%%><%%-.Resources;
+using %%><%%=Project.Namespace%%><%%-.Events;%%>
+foreach (Feature)
+{
+	foreach (Entity where EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && FeatureName != "Specifications" limit 1)
+	{
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Events.%%><%%=FeatureName%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-;%%>
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides views for %%><%%=BLLClassName%%><%%- instances.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize this file outside of protected areas,
+	/// change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class %%><%%=VMBLLViewModelClassName%%><%%- : %%>
+	if (EntityName == "Diagram")
+	{
+		<%%-DiagramWorkspaceViewModel%%>
+	}
+	else if (EntityName == "DiagramEntity")
+	{
+		<%%-DiagramEntityWorkspaceViewModel%%>
+	}
+	else
+	{
+		<%%-DialogEditWorkspaceViewModel%%>
+	}
+	<%%-
+	{
+		#region "Menus"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_New%%><%%=BLLClassName%%><%%-;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabeNewl%%><%%=BLLClassName%%><%%-ToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabel%%><%%=BLLClassName%%><%%-ToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_New%%><%%=BLLClassName%%><%%-ToolTip;
+			}
+		}%%>
+		
+		foreach (Collection where VMBLLIsValidCollection == true)
+		{
+			with (ReferencedEntity)
+			{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_New%%><%%=BLLClassName%%><%%-;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNew%%><%%=BLLClassName%%><%%-ToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNew%%><%%=BLLClassName%%><%%-ToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_New%%><%%=BLLClassName%%><%%-ToolTip;
+			}
+		}%%>
+			}
+		}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelEdit.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelEdit
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_Edit;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelEditToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelEditToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_EditToolTip;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelDelete.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelDelete
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_Delete;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelDeleteToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelDeleteToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_DeleteToolTip;
+			}
+		}
+
+		#endregion "Menus"
+
+		#region "Editing Support"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEdited.</summary>
+		///--------------------------------------------------------------------------------
+		public override bool IsEdited
+		{
+			get
+			{
+				if (Edit%%><%%=BLLClassName%%><%%-.IsModified == true)
+				{
+					return true;
+				}
+				if (ItemsToAdd.Count > 0)
+				{
+					return true;
+				}
+				if (ItemsToDelete.Count > 0)
+				{
+					return true;
+				}
+				foreach (IEditWorkspaceViewModel item in Items)
+				{
+					if (item.IsEdited == true)
+					{
+						return true;
+					}
+				}%%>
+				if (Tags.Contains("CustomUpdate") == true)
+				{
+				<%%-
+
+				#region protected
+				#endregion protected
+				%%>
+				}
+				<%%-
+				return false;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets IsEditItemValid.</summary>
+		///--------------------------------------------------------------------------------
+		public override bool IsEditItemValid
+		{
+			get
+			{
+				return string.IsNullOrEmpty(%%>
+				isFirstItem = true
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where IsUIEditableProperty == true && Tags.Contains("NoValidation") == false)
+					{
+						if (Tags.Contains("SelectParent") == true)
+						{
+							propertyPrefix = "Select"
+						}
+						else
+						{
+							propertyPrefix = ""
+						}
+						if (isFirstItem == true)
+						{
+							isFirstItem = false
+						}
+						else
+						{
+							<%%- + %%>
+						}
+						<%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-ValidationMessage%%>
+					}
+				}
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where Tags.Contains("CustomUI") == true)
+					{
+							if (isFirstItem == true)
+						{
+							isFirstItem = false
+						}
+						else
+						{
+							<%%- + %%>
+						}
+						<%%=BLLPropertyName%%><%%-ValidationMessage%%>
+					}
+				}
+				<%%-);
+			}
+		}
+ 
+		private %%><%%=BLLClassName%%><%%- _edit%%><%%=BLLClassName%%><%%- = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Edit%%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%- Edit%%><%%=BLLClassName%%><%%-
+		{
+			get
+			{
+				if (_edit%%><%%=BLLClassName%%><%%- == null)
+				{
+					_edit%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();
+					_edit%%><%%=BLLClassName%%><%%-.PropertyChanged += new PropertyChangedEventHandler(Edit%%><%%=BLLClassName%%><%%-_PropertyChanged);
+					Items.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Children_CollectionChanged);
+					if (%%><%%=BLLClassName%%><%%- != null)
+					{
+						_edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName%%><%%-, null, false);%%>
+						if (Tags.Contains("CustomEditProperties") == true)
+						{
+						<%%-
+						#region protected
+						#endregion protected%%>
+						}
+						if (BLLClassName != "Solution")
+						{
+						<%%-
+						_edit%%><%%=BLLClassName%%><%%-.Solution = %%><%%=BLLClassName%%><%%-.Solution;%%>
+						}
+						foreach (Entity in EntityAndBaseEntities)
+						{
+							foreach (EntityReference where BLLPropertyName != "Solution")
+							{
+					<%%-
+						_edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;%%>
+								}
+						}
+			/*	foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where Tags.Contains("CustomUI") == true)
+					{
+						<%%-
+						_edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = new EnterpriseDataObjectList<%%><%%=CollectionEntity.BLLClassName%%><%%->(%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-, null);%%>
+					}
+				}*/
+					<%%-
+					}
+					_edit%%><%%=BLLClassName%%><%%-.ResetModified(false);%%>
+				if (PropertyHasTag(tagName = "SelectionChanged") == true)
+				{
+				<%%-
+				
+					#region protected
+					#endregion protected
+%%>
+				}
+				<%%-
+				}
+				return _edit%%><%%=BLLClassName%%><%%-;
+			}
+			set
+			{
+				_edit%%><%%=BLLClassName%%><%%- = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets view model property changes upon property change of
+		/// the edit entity.</summary>
+		///--------------------------------------------------------------------------------
+		void Edit%%><%%=BLLClassName%%><%%-_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		{
+			OnPropertyChanged("Edit%%><%%=BLLClassName%%><%%-");
+			OnPropertyChanged("TabTitle");%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where IsUIEditableProperty == true)
+					{
+						if (Tags.Contains("SelectParent") == true)
+						{
+							propertyPrefix = "Select"
+						}
+						else
+						{
+							propertyPrefix = ""
+						}
+			<%%-
+			
+			OnPropertyChanged("%%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-");
+			OnPropertyChanged("%%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Customized");%%>
+						if (Tags.Contains("NoValidation") == false)
+						{
+			<%%-
+			OnPropertyChanged("%%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-ValidationMessage");%%>
+						}
+					}
+				}
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where Tags.Contains("CustomUI") == true)
+					{
+			<%%-
+			
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-Customized");
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-ValidationMessage");%%>
+					}
+				}
+			<%%-
+
+			OnPropertyChanged("Tags");
+			OnPropertyChanged("TagsCustomized");
+			OnPropertyChanged("TagsValidationMessage");
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets Title.</summary>
+		///--------------------------------------------------------------------------------
+		public string Title
+		{
+			get
+			{
+				return DisplayValues.Edit_%%><%%=BLLClassName%%><%%-Header;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TabTitle.</summary>
+		///--------------------------------------------------------------------------------
+		public override string TabTitle
+		{
+			get
+			{
+				return DisplayValues.Edit_%%><%%=BLLClassName%%><%%-Header + " (" + EditName + ")";
+			}
+		}%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the %%><%%=BLLPropertyName%%><%%-Label.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=BLLPropertyName%%><%%-Label
+		{
+			get
+			{
+				return DisplayValues.Edit_%%><%%=BLLPropertyName%%><%%-Property + DisplayValues.Edit_LabelColon;
+			}
+		}%%>
+	}
+
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Collection where Tags.Contains("CustomUI") == true)
+		{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the %%><%%=BLLPropertyName%%><%%-Label.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=BLLPropertyName%%><%%-Label
+		{
+			get
+			{
+				return DisplayValues.Edit_%%><%%=BLLPropertyName%%>
+				/*if (IsForeignKeyMember == true)
+				{
+					<%%-Selection%%>
+				}
+				else
+				{*/
+					<%%-Property%%>
+				/*}
+				switch (DataTypeCode)
+				{
+					case 12: // boolean
+						break
+					default:*/
+						<%%- + DisplayValues.Edit_LabelColon%%>
+			//	}
+				<%%-;
+			}
+		}
+
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets %%><%%=BLLPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public EnterpriseDataObjectList<%%><%%=ReferencedEntity.BLLClassName%%><%%-> %%><%%=BLLPropertyName%%><%%-
+		{
+			get
+			{
+				return Edit%%><%%=../../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;
+			}
+			set
+			{
+				Edit%%><%%=../../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = value;
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets %%><%%=BLLPropertyName%%><%%-Customized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool %%><%%=BLLPropertyName%%><%%-Customized
+		{
+			get
+			{
+				#region protected
+				#endregion protected
+			
+				return false;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets %%><%%=BLLPropertyName%%><%%-ValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=BLLPropertyName%%><%%-ValidationMessage
+		{
+			get
+			{
+				#region protected
+				#endregion protected
+			
+				return null;
+			}
+		}%%>
+		}
+	}
+	
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where IsUIEditableProperty == true)
+		{
+			if (Tags.Contains("SelectParent") == true)
+			{
+				propertyPrefix = "Select"
+			}
+			else
+			{
+				propertyPrefix = ""
+			}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Label.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Label
+		{
+			get
+			{
+				return DisplayValues.Edit_%%><%%=BLLPropertyName%%>
+				if (IsForeignKeyMember == true)
+				{
+					<%%-Selection%%>
+				}
+				else
+				{
+					<%%-Property%%>
+				}
+				switch (DataTypeCode)
+				{
+					case 12: // boolean
+						break
+					default:
+						<%%- + DisplayValues.Edit_LabelColon%%>
+				}
+				<%%-;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=CSharpDataType%%><%%- %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-
+		{
+			get
+			{
+				return Edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+				if (Tags.Contains("Password") == true)
+				{
+					<%%-ClearText%%>
+				}
+				<%%-;
+			}
+			set
+			{
+				Edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%>
+				if (Tags.Contains("Password") == true)
+				{
+					<%%-ClearText%%>
+				}
+				<%%- = value;
+				OnPropertyChanged("%%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-");
+				OnPropertyChanged("TabTitle");%%>
+			if (Tags.Contains("SelectionChanged") == true)
+			{
+			<%%-
+			
+				#region protected
+				#endregion protected
+%%>
+			}
+				<%%-
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Customized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Customized
+		{
+			get
+			{
+				if (%%><%%=../../BLLClassName%%><%%-.ReverseInstance != null)
+				{
+					return %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%=GetDataHelperNonNullableGetMethod%%><%%- != %%><%%=../../BLLClassName%%><%%-.ReverseInstance.%%><%%=BLLPropertyName%%><%%=GetDataHelperNonNullableGetMethod%%><%%-;
+				}
+				else if (%%><%%=../../BLLClassName%%><%%-.IsAutoUpdated == true)
+				{
+					return %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%=GetDataHelperNonNullableGetMethod%%><%%- != %%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%=GetDataHelperNonNullableGetMethod%%><%%-;
+				}
+				return %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%- != %%><%%=BLLDefaultValue%%><%%-;
+			}
+		}%%>
+			if (Tags.Contains("NoValidation") == false)
+			{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-ValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string %%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-ValidationMessage
+		{
+			get
+			{
+				return Edit%%><%%=../../BLLClassName%%><%%-.Validate%%><%%=BLLPropertyName%%><%%-();
+			}
+		}%%>
+			}
+		}
+	}
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SourceNameLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string SourceNameLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_SourceNameProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the SourceName.</summary>
+		///--------------------------------------------------------------------------------
+		public override string SourceName
+		{
+			get
+			{
+				return Edit%%><%%=BLLClassName%%><%%-.SourceName;
+			}
+			set
+			{
+				Edit%%><%%=BLLClassName%%><%%-.SourceName = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SourceNameCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool SourceNameCustomized
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SourceNameVisibility.</summary>
+		///--------------------------------------------------------------------------------
+		public string SourceNameVisibility
+		{
+			get
+			{
+				if (String.IsNullOrEmpty(SourceName))
+				{
+					return "Collapsed";
+				}
+				return "Visible";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SourceNameValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string SourceNameValidationMessage
+		{
+			get
+			{
+				return String.Empty;
+			}
+		}
+		
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SpecSourceNameLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string SpecSourceNameLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_SpecSourceNameProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the SpecSourceName.</summary>
+		///--------------------------------------------------------------------------------
+		public override string SpecSourceName
+		{
+			get
+			{
+				return Edit%%><%%=BLLClassName%%><%%-.SpecSourceName;
+			}
+			set
+			{
+				Edit%%><%%=BLLClassName%%><%%-.SpecSourceName = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SpecSourceNameCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool SpecSourceNameCustomized
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SpecSourceNameVisibility.</summary>
+		///--------------------------------------------------------------------------------
+		public string SpecSourceNameVisibility
+		{
+			get
+			{
+				if (String.IsNullOrEmpty(SpecSourceName))
+				{
+					return "Collapsed";
+				}
+				return "Visible";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SpecSourceNameValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string SpecSourceNameValidationMessage
+		{
+			get
+			{
+				return String.Empty;
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TagsLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string TagsLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_TagsProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets the Tags.</summary>
+		///--------------------------------------------------------------------------------
+		public override string Tags
+		{
+			get
+			{
+				return Edit%%><%%=BLLClassName%%><%%-.Tags;
+			}
+			set
+			{
+				Edit%%><%%=BLLClassName%%><%%-.Tags = value;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TagsCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool TagsCustomized
+		{
+			get
+			{
+				if (%%><%%=BLLClassName%%><%%-.ReverseInstance != null)
+				{
+					return Tags != %%><%%=BLLClassName%%><%%-.ReverseInstance.Tags;
+				}
+				else if (%%><%%=BLLClassName%%><%%-.IsAutoUpdated == true)
+				{
+					return Tags != %%><%%=BLLClassName%%><%%-.Tags;
+				}
+				return Tags != DefaultValue.String;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets TagsValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string TagsValidationMessage
+		{
+			get
+			{
+				return Edit%%><%%=BLLClassName%%><%%-.ValidateTags();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets EditName.</summary>
+		///--------------------------------------------------------------------------------
+		public string EditName
+		{
+			get
+			{%%>
+			if (Tags.Contains("CustomEditName") == true)
+			{
+			<%%-
+				#region protected
+				#endregion protected%%>
+			}
+			else
+			{
+			<%%-
+				return Edit%%><%%=BLLClassName%%><%%-.Name;%%>
+			}
+			<%%-
+			}
+			set
+			{
+				Edit%%><%%=BLLClassName%%><%%-.Name = value;
+			}
+		}
+		
+		#endregion "Editing Support"
+
+		#region "Command Processing"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnReset()
+		{%%>
+		if (Tags.Contains("CustomUpdate") == true)
+		{
+			<%%-
+			#region protected
+			#endregion protected%%>
+		}
+		else
+		{
+		<%%-
+			Edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName%%><%%-, null, false);%%>
+			if (HasCustomUIProperty == true || PropertyHasTag(tagName = "SelectionChanged") == true || Tags.Contains("Template") == true)
+			{
+			<%%-
+			ResetItems();
+			
+			#region protected
+			#endregion protected
+%%>
+			}
+			<%%-
+			Edit%%><%%=BLLClassName%%><%%-.ResetModified(false);%%>
+		}<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method resets the data.</summary>
+		///--------------------------------------------------------------------------------
+		public override void Reset()
+		{
+			OnReset();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets the default values.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnSetDefaults()
+		{
+			if (%%><%%=BLLClassName%%><%%-.ReverseInstance != null)
+			{
+				Edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName%%><%%-.ReverseInstance, null, false);
+			}
+			else if (%%><%%=BLLClassName%%><%%-.IsAutoUpdated == true)
+			{
+				Edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName%%><%%-, null, false);
+			}
+			else
+			{
+				%%><%%=BLLClassName%%><%%- new%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();
+				new%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Edit%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-;
+				Edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(new%%><%%=BLLClassName%%><%%-, null, false);
+			}
+			Edit%%><%%=BLLClassName%%><%%-.ResetModified(true);%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+				{
+					with (ReferencedEntity)
+					{
+			<%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in Items.OfType<%%><%%=VMBLLViewModelClassName%%><%%->())
+			{
+				item.Defaults();
+			}%%>
+					}
+				}
+			}
+			<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets the default values.</summary>
+		///--------------------------------------------------------------------------------
+		public void Defaults()
+		{
+			OnSetDefaults();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the new %%><%%=BLLClassName%%><%%- command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessNew%%><%%=BLLClassName%%><%%-Command()
+		{
+			%%><%%=BLLClassName%%><%%-EventArgs message = new %%><%%=BLLClassName%%><%%-EventArgs();
+			message.%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Guid.NewGuid();%%>
+			if (BLLParentClassName != null)
+			{
+			<%%-
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=BLLParentForeignKeyPropertyName%%><%%-;%%>
+			if (BLLParentClassName != "Solution")
+			{
+				//
+				// assign the parent EntityReference property based on the corresponding Property with the same relationship as that reference
+				//
+			<%%-
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- = Solution.%%><%%=BLLParentClassName%%><%%-List.FindByID((Guid)%%><%%=BLLParentForeignKeyPropertyName%%><%%-);%%>
+				if (HasOrderProperty == true)
+				{
+			<%%-
+			if (message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- != null)
+			{
+				message.%%><%%=BLLClassName%%><%%-.Order = message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%-.%%><%%=BLLClassName%%><%%-List.Count + 1;
+			}%%>
+				}
+			}
+			<%%-
+			message.%%><%%=BLLClassName%%><%%-.Solution = Solution;
+			message.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=BLLParentForeignKeyPropertyName%%><%%-;
+			message.Solution = Solution;%%>
+			}
+			<%%-
+			message.WorkspaceID = WorkspaceID;%%>
+			if (Tags.Contains("CustomDesigner") == true  || Tags.Contains("Template") == true)
+			{
+			<%%-
+			
+			#region protected
+			#endregion protected
+			%%>
+			}
+			<%%-
+			Mediator.NotifyColleagues<%%><%%=BLLClassName%%><%%-EventArgs>(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit item command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessEdit%%><%%=BLLClassName%%><%%-Command()
+		{
+			%%><%%=BLLClassName%%><%%-EventArgs message = new %%><%%=BLLClassName%%><%%-EventArgs();
+			message.%%><%%=BLLClassName%%><%%- = %%><%%=BLLClassName%%><%%-;%%>
+			if (BLLParentClassName != null)
+			{
+			<%%-
+			message.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=BLLParentForeignKeyPropertyName%%><%%-;
+			message.Solution = Solution;%%>
+			}
+			<%%-
+			message.WorkspaceID = WorkspaceID;%%>
+			if (Tags.Contains("CustomDesigner") == true)
+			{
+			<%%-
+			
+			#region protected
+			#endregion protected
+			%%>
+			}
+			<%%-
+			Mediator.NotifyColleagues<%%><%%=BLLClassName%%><%%-EventArgs>(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, message);
+		}%%>
+		if (BLLViewCollectionCount < 2)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+				{
+					if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+					{
+						collectionPropertyName = ""
+						foreach (PropertyRelationship limit 1)
+						{
+							with (Relationship)
+							{
+								foreach (RelationshipProperty limit 1)
+								{
+									collectionPropertyName = BLLPropertyName
+								}
+							}
+						}
+						with (ReferencedEntity)
+						{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds to %%><%%=BLLClassName%%><%%- adds.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddNew%%><%%=BLLClassName%%><%%-()
+		{
+			%%><%%=VMBLLViewModelClassName%%><%%- item = new %%><%%=VMBLLViewModelClassName%%><%%-();
+			item.%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();
+			item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Guid.NewGuid();
+			item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- = Edit%%><%%=../../../BLLClassName%%><%%-;
+			item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = Edit%%><%%=../../../BLLClassName%%><%%-.%%><%%=../../../BLLPrimaryKeyPropertyName%%><%%-;
+			item.%%><%%=BLLClassName%%><%%-.Solution = Solution;%%>
+			if (HasOrderProperty == true)
+			{
+			<%%-
+			item.%%><%%=BLLClassName%%><%%-.Order = %%><%%=this.BLLClassName%%><%%-.%%><%%=BLLClassName%%><%%-List.Count + 1;%%>
+			}
+			<%%-
+			item.Solution = Solution;
+			
+			#region protected
+			#endregion protected
+			
+			ItemsToAdd.Add(item);
+			Items.Add(item);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the new %%><%%=BLLClassName%%><%%- command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessNew%%><%%=BLLClassName%%><%%-Command()
+		{
+			%%><%%=BLLClassName%%><%%-EventArgs message = new %%><%%=BLLClassName%%><%%-EventArgs();
+			message.%%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Guid.NewGuid();
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- = %%><%%=this.BLLClassName%%><%%-;
+			message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=this.BLLClassName%%><%%-.%%><%%=this.BLLPrimaryKeyPropertyName%%><%%-;
+			message.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=this.BLLClassName%%><%%-.%%><%%=this.BLLPrimaryKeyPropertyName%%><%%-;%%>
+				if (HasOrderProperty == true)
+				{
+			<%%-
+			if (message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- != null)
+			{
+				message.%%><%%=BLLClassName%%><%%-.Order = message.%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%-.%%><%%=BLLClassName%%><%%-List.Count + 1;
+			}%%>
+				}
+			<%%-
+			message.%%><%%=BLLClassName%%><%%-.Solution = Solution;
+			message.Solution = Solution;
+			message.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<%%><%%=BLLClassName%%><%%-EventArgs>(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Requested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method applies %%><%%=BLLClassName%%><%%- updates.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessEdit%%><%%=BLLClassName%%><%%-Performed(%%><%%=BLLClassName%%><%%-EventArgs data)
+		{
+			if (data != null && data.%%><%%=BLLClassName%%><%%- != null)
+			{
+				UpdateEdit%%><%%=BLLClassName%%><%%-(data.%%><%%=BLLClassName%%><%%-);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates an item of %%><%%=BLLClassName%%><%%-.</summary>
+		/// 
+		/// <param name="%%><%%=BLLClassName.CamelCase()%%><%%-">The %%><%%=BLLClassName%%><%%- to update.</param>
+		///--------------------------------------------------------------------------------
+		public void UpdateEdit%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%-)
+		{
+			bool isItemMatch = false;
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				if (item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == %%><%%=BLLClassName.CamelCase()%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-)
+				{
+					isItemMatch = true;
+					item.%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName.CamelCase()%%><%%-, null, false);%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (EntityReference where Tags.Contains("Parent") == false && ReferencedEntity.EntityTypeCode == 3 /* Primary */)
+					{
+				<%%-
+					if (!item.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLReferenceKeyPropertyName%%><%%-.IsNullOrEmpty())
+					{
+						item.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = Solution.%%><%%=ReferencedEntity.BLLClassName%%><%%-List.FindByID((Guid)item.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLReferenceKeyPropertyName%%><%%-);
+					}%%>
+					}
+				}
+				if (BLLClassName == "Solution")
+				{
+					<%%-
+					
+					#region protected
+					#endregion protected
+					%%>
+				}
+					<%%-
+					item.OnUpdated(item, null);
+					item.ShowInTreeView();
+					break;
+				}
+			}
+			if (isItemMatch == false)
+			{
+				// add new %%><%%=BLLClassName%%><%%-
+				%%><%%=BLLClassName.CamelCase()%%><%%-.%%><%%=BLLParentReferencePropertyName%%><%%- = %%><%%=../../../BLLClassName%%><%%-;
+				%%><%%=VMBLLViewModelClassName%%><%%- newItem = new %%><%%=VMBLLViewModelClassName%%><%%-(%%><%%=BLLClassName.CamelCase()%%><%%-, Solution);%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (EntityReference where Tags.Contains("Parent") == false && ReferencedEntity.EntityTypeCode == 3 /* Primary */)
+					{
+				<%%-
+				if (!newItem.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLReferenceKeyPropertyName%%><%%-.IsNullOrEmpty())
+				{
+					newItem.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = Solution.%%><%%=ReferencedEntity.BLLClassName%%><%%-List.FindByID((Guid)newItem.%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLReferenceKeyPropertyName%%><%%-);
+				}%%>
+					}
+				}
+				<%%-
+				newItem.Updated += new EventHandler(Children_Updated);
+				%%><%%=BLLPluralEntityName%%><%%-.Add(newItem);
+				%%><%%=../../../BLLClassName%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Add(%%><%%=BLLClassName.CamelCase()%%><%%-);%%>
+				if (BLLClassName != "Solution")
+				{
+				<%%-
+				Solution.%%><%%=BLLClassName%%><%%-List.Add(newItem.%%><%%=BLLClassName%%><%%-);%%>
+				}
+				if (BLLClassName == "Solution")
+				{
+				<%%-
+					
+				#region protected
+				#endregion protected
+				%%>
+				}
+				<%%-
+				Items.Add(newItem);
+				OnUpdated(this, null);
+				newItem.ShowInTreeView();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds to %%><%%=BLLClassName%%><%%- deletes.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToDeleted%%><%%=BLLPluralEntityName%%><%%-(%%><%%=VMBLLViewModelClassName%%><%%- item)
+		{%%>
+			if (CurrentEntity.Tags.Contains("CustomItems") == true)
+			{
+			<%%-
+			#region protected
+			#endregion protected
+			%%>
+			}
+			<%%-
+			ItemsToDelete.Add(item);
+			Items.Remove(item);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method applies %%><%%=BLLClassName%%><%%- deletes.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessDelete%%><%%=BLLClassName%%><%%-Performed(%%><%%=BLLClassName%%><%%-EventArgs data)
+		{
+			if (data != null && data.%%><%%=BLLClassName%%><%%- != null)
+			{
+				Delete%%><%%=BLLClassName%%><%%-(data.%%><%%=BLLClassName%%><%%-);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes an instance of %%><%%=BLLClassName%%><%%-.</summary>
+		/// 
+		/// <param name="%%><%%=BLLClassName.CamelCase()%%><%%-">The %%><%%=BLLClassName%%><%%- to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void Delete%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%-)
+		{
+			bool isItemMatch = false;
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-.ToList<%%><%%=VMBLLViewModelClassName%%><%%->())
+			{
+				if (item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%- == %%><%%=BLLClassName.CamelCase()%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-)
+				{
+					// remove item from tabs, if present
+					WorkspaceEventArgs message = new WorkspaceEventArgs();
+					message.ItemID = item.%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-;
+					Mediator.NotifyColleagues<WorkspaceEventArgs>(MediatorMessages.Command_CloseItemRequested, message);
+
+					// delete %%><%%=BLLClassName%%><%%-
+					isItemMatch = true;
+					%%><%%=BLLPluralEntityName%%><%%-.Remove(item);
+					%%><%%=../../../BLLClassName%%><%%-.%%><%%=BLLParentCollectionName%%><%%-.Remove(item.%%><%%=BLLClassName%%><%%-);%%>
+					if (BLLParentClassName != "Solution")
+					{
+					<%%-
+					Solution.%%><%%=BLLClassName%%><%%-List.Remove(item.%%><%%=BLLClassName%%><%%-);%%>
+					}
+					<%%-
+					Items.Remove(item);
+					%%><%%=../../../BLLClassName%%><%%-.ResetModified(true);
+					OnUpdated(this, null);
+					break;
+				}
+			}
+			if (isItemMatch == false)
+			{
+				ShowIssue(DisplayValues.Issue_DeleteItemNotFound);
+			}
+		}%%>
+						}
+					}
+				}
+			}
+		}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method initiates editing a new item.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnNew()
+		{
+			ProcessNew%%><%%=BLLClassName%%><%%-Command();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnUpdate()
+		{%%>
+		if (Tags.Contains("CustomUpdate") == true || Tags.Contains("Template") == true)
+		{
+			<%%-
+			#region protected
+			#endregion protected%%>
+		}
+		else
+		{
+			if (PropertyHasTag(tagName = "SelectParent") == true)
+			{
+			<%%-
+			#region protected
+			#endregion protected
+%%>
+			}
+			<%%-
+			// set up reverse engineering instance if not present
+			if (%%><%%=BLLClassName%%><%%-.ReverseInstance == null && %%><%%=BLLClassName%%><%%-.IsAutoUpdated == true)
+			{
+				%%><%%=BLLClassName%%><%%-.ReverseInstance = new %%><%%=BLLClassName%%><%%-();
+				%%><%%=BLLClassName%%><%%-.ReverseInstance.TransformDataFromObject(%%><%%=BLLClassName%%><%%-, null, false);
+
+				// perform the update of Edit%%><%%=BLLClassName%%><%%- back to %%><%%=BLLClassName%%><%%-
+				%%><%%=BLLClassName%%><%%-.TransformDataFromObject(Edit%%><%%=BLLClassName%%><%%-, null, false);
+				%%><%%=BLLClassName%%><%%-.IsAutoUpdated = false;
+			}
+			else if (%%><%%=BLLClassName%%><%%-.ReverseInstance != null)
+			{
+				Edit%%><%%=BLLClassName%%><%%-.ResetModified(%%><%%=BLLClassName%%><%%-.ReverseInstance.IsModified);
+				if (Edit%%><%%=BLLClassName%%><%%-.Equals(%%><%%=BLLClassName%%><%%-.ReverseInstance))
+				{
+					// perform the update of Edit%%><%%=BLLClassName%%><%%- back to %%><%%=BLLClassName%%><%%-
+					%%><%%=BLLClassName%%><%%-.TransformDataFromObject(Edit%%><%%=BLLClassName%%><%%-, null, false);
+					%%><%%=BLLClassName%%><%%-.IsAutoUpdated = true;
+				}
+				else
+				{
+					// perform the update of Edit%%><%%=BLLClassName%%><%%- back to %%><%%=BLLClassName%%><%%-
+					%%><%%=BLLClassName%%><%%-.TransformDataFromObject(Edit%%><%%=BLLClassName%%><%%-, null, false);
+					%%><%%=BLLClassName%%><%%-.IsAutoUpdated = false;
+				}
+			}
+			else
+			{
+				// perform the update of Edit%%><%%=BLLClassName%%><%%- back to %%><%%=BLLClassName%%><%%-
+				%%><%%=BLLClassName%%><%%-.TransformDataFromObject(Edit%%><%%=BLLClassName%%><%%-, null, false);
+				%%><%%=BLLClassName%%><%%-.IsAutoUpdated = false;
+			}
+			%%><%%=BLLClassName%%><%%-.ForwardInstance = null;
+			if (%%>
+				isFirstItem = true
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where IsUIEditableProperty == true)
+					{
+						if (Tags.Contains("SelectParent") == true)
+						{
+							propertyPrefix = "Select"
+						}
+						else
+						{
+							propertyPrefix = ""
+						}
+						if (isFirstItem == true)
+						{
+							isFirstItem = false
+						}
+						else
+						{
+							<%%- || %%>
+						}
+						<%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Customized%%>
+					}
+				}
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where Tags.Contains("CustomUI") == true)
+					{
+						if (isFirstItem == true)
+						{
+							isFirstItem = false
+						}
+						else
+						{
+							<%%- || %%>
+						}
+						<%%=BLLPropertyName%%><%%-Customized%%>
+					}
+				}
+			<%%- || TagsCustomized)
+			{
+				%%><%%=BLLClassName%%><%%-.ForwardInstance = new %%><%%=BLLClassName%%><%%-();
+				%%><%%=BLLClassName%%><%%-.ForwardInstance.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Edit%%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-;
+				%%><%%=BLLClassName%%><%%-.SpecSourceName = %%><%%=BLLClassName%%><%%-.DefaultSourceName;%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where IsUIEditableProperty == true)
+					{
+						if (Tags.Contains("SelectParent") == true)
+						{
+							propertyPrefix = "Select"
+						}
+						else
+						{
+							propertyPrefix = ""
+						}
+				<%%-
+				if (%%><%%=propertyPrefix%%><%%=BLLPropertyName%%><%%-Customized)
+				{
+					%%><%%=../../BLLClassName%%><%%-.ForwardInstance.%%><%%=BLLPropertyName%%><%%- = Edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-;
+				}%%>
+					}
+				}
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where Tags.Contains("CustomUI") == true)
+					{
+				<%%-
+				if (%%><%%=BLLPropertyName%%><%%-Customized)
+				{
+					#region protected
+					#endregion protected
+					// %%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = new EnterpriseDataObjectList<%%><%%=ReferencedEntity.BLLClassName%%><%%->(Edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-, null);
+					// %%><%%=../../BLLClassName%%><%%-.ForwardInstance.%%><%%=BLLPropertyName%%><%%- = new EnterpriseDataObjectList<%%><%%=ReferencedEntity.BLLClassName%%><%%->(Edit%%><%%=../../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%-, null);
+				}%%>
+					}
+				}
+				<%%-
+				if (TagsCustomized)
+				{
+					%%><%%=BLLClassName%%><%%-.ForwardInstance.Tags = Edit%%><%%=BLLClassName%%><%%-.Tags;
+				}
+			}
+			Edit%%><%%=BLLClassName%%><%%-.ResetModified(false);
+			OnUpdated(this, null);
+
+			// send update back to solution builder
+			SendEdit%%><%%=BLLClassName%%><%%-Performed();%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				hasItem = false
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{
+								hasItem = true
+			<%%-
+
+			// send update for any updated %%><%%=BLLPluralEntityName%%><%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				if (item.IsEdited == true)
+				{
+					item.Update();
+				}
+			}
+			// send update for any new %%><%%=BLLPluralEntityName%%><%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in ItemsToAdd.OfType<%%><%%=VMBLLViewModelClassName%%><%%->())
+			{
+				item.Update();
+				%%><%%=BLLPluralEntityName%%><%%-.Add(item);
+			}
+
+			// send delete for any deleted %%><%%=BLLPluralEntityName%%><%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in ItemsToDelete.OfType<%%><%%=VMBLLViewModelClassName%%><%%->())
+			{
+				item.Delete();
+				%%><%%=BLLPluralEntityName%%><%%-.Remove(item);
+			}
+
+			// reset modified for %%><%%=BLLPluralEntityName%%><%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				item.ResetModified(false);
+			}%%>
+							}
+						}
+					}
+				}
+				if (hasItem == true)
+				{
+			<%%-
+			ItemsToAdd.Clear();
+			ItemsToDelete.Clear();%%>
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where  VMBLLIsValidCollection == true && Tags.Contains("Source") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{
+			<%%-
+
+			// send update for any updated %%><%%=BLLPluralEntityName%%><%%-
+			if (%%><%%=BLLPluralEntityName%%><%%-Folder != null && %%><%%=BLLPluralEntityName%%><%%-Folder.IsEdited == true)
+			{
+				%%><%%=BLLPluralEntityName%%><%%-Folder.Update();
+			}%%>
+							}
+						}
+					}
+				}
+			}
+		}
+		if (Tags.Contains("ExtraUpdate") == true)
+		{
+			<%%-
+			
+			#region protected
+			#endregion protected%%>
+		}
+			<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates the view model data and sends update command back
+		/// to the solution builder.</summary>
+		///--------------------------------------------------------------------------------
+		public void Update()
+		{
+			OnUpdate();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends the edit item performed message to have the
+		/// update applied.</summary>
+		///--------------------------------------------------------------------------------
+		public void SendEdit%%><%%=BLLClassName%%><%%-Performed()
+		{
+			%%><%%=BLLClassName%%><%%-EventArgs message = new %%><%%=BLLClassName%%><%%-EventArgs();%%>
+			if (Tags.Contains("CustomUpdate") == true || PropertyHasTag(tagName = "SelectParent") == true)
+			{
+			<%%-
+
+			#region protected
+			#endregion protected
+%%>
+			}
+			<%%-
+			message.%%><%%=BLLClassName%%><%%- = %%><%%=BLLClassName%%><%%-;%%>
+			if (BLLParentClassName != null)
+			{
+			<%%-
+			message.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=BLLParentForeignKeyPropertyName%%><%%-;
+			message.Solution = Solution;%%>
+			}
+			<%%-
+			message.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<%%><%%=BLLClassName%%><%%-EventArgs>(MediatorMessages.Command_Edit%%><%%=BLLClassName%%><%%-Performed, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the delete %%><%%=BLLClassName%%><%%- command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessDelete%%><%%=BLLClassName%%><%%-Command()
+		{
+			%%><%%=BLLClassName%%><%%-EventArgs message = new %%><%%=BLLClassName%%><%%-EventArgs();
+			message.%%><%%=BLLClassName%%><%%- = %%><%%=BLLClassName%%><%%-;%%>
+			if (BLLParentClassName != null)
+			{
+			<%%-
+			message.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = %%><%%=BLLParentForeignKeyPropertyName%%><%%-;
+			message.Solution = Solution;%%>
+			}
+			<%%-
+			message.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<%%><%%=BLLClassName%%><%%-EventArgs>(MediatorMessages.Command_Delete%%><%%=BLLClassName%%><%%-Requested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes a delete of the item.</summary>
+		///--------------------------------------------------------------------------------
+		public void Delete()
+		{
+			ProcessDelete%%><%%=BLLClassName%%><%%-Command();
+		}
+
+		#endregion "Command Processing"
+
+		#region "Properties"%%>
+		if (BLLViewCollectionCount < 2)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+				{
+					if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+					{
+						with (ReferencedEntity)
+						{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets %%><%%=BLLClassName%%><%%- lists.</summary>
+		///--------------------------------------------------------------------------------
+		public EnterpriseDataObjectList<%%><%%=VMBLLViewModelClassName%%><%%-> %%><%%=BLLPluralEntityName%%><%%- { get; set; }%%>
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Collection where  VMBLLIsValidCollection == true)
+				{
+					if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+					{
+						with (ReferencedEntity)
+						{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets %%><%%=BLLClassName%%><%%- lists.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLViewPluralModelClassName%%><%%- %%><%%=BLLPluralEntityName%%><%%-Folder { get; set; }%%>
+						}
+					}
+				}
+			}
+		}
+		if (BLLClassName !="Solution")
+		{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the %%><%%=BLLClassName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets %%><%%=BLLPrimaryKeyPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public Guid %%><%%=BLLPrimaryKeyPropertyName%%><%%-
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-;
+			}
+		}%%>
+		}
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Name.</summary>
+		///--------------------------------------------------------------------------------
+		public override string Name
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.Name;
+			}
+			set
+			{
+				%%><%%=BLLClassName%%><%%-.Name = value;
+			}
+		}%%>
+		if (BLLHasOrderProperty == true)
+		{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets ItemOrder.</summary>
+		///--------------------------------------------------------------------------------
+		public int ItemOrder
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.Order;
+			}
+		}%%>
+		}
+		if (BLLParentClassName != null && BLLParentClassName != "Solution")
+		{
+		<%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets %%><%%=BLLParentForeignKeyPropertyName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		public Guid %%><%%=BLLParentForeignKeyPropertyName%%><%%-
+		{
+			get
+			{
+				return %%><%%=BLLClassName%%><%%-.%%><%%=BLLParentForeignKeyPropertyName%%><%%-;
+			}
+			set
+			{
+				%%><%%=BLLClassName%%><%%-.%%><%%=BLLParentForeignKeyPropertyName%%><%%- = value;
+			}
+		}%%>
+		}
+		<%%-
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method loads an item of %%><%%=BLLClassName%%><%%- into the view model.</summary>
+		/// 
+		/// <param name="%%><%%=BLLClassName.CamelCase()%%><%%-">The %%><%%=BLLClassName%%><%%- to load.</param>
+		/// <param name="loadChildren">Flag indicating whether to perform a deeper load.</param>
+		///--------------------------------------------------------------------------------
+		public void Load%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%-, bool loadChildren = true)
+		{
+			// attach the %%><%%=BLLClassName%%><%%-
+			%%><%%=BLLClassName%%><%%- = %%><%%=BLLClassName.CamelCase()%%><%%-;
+			ItemID = %%><%%=BLLClassName%%><%%-.%%><%%=BLLPrimaryKeyPropertyName%%><%%-;
+			Items.Clear();%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{
+			<%%-
+			
+			// initialize %%><%%=BLLPluralEntityName%%><%%-
+			if (%%><%%=BLLPluralEntityName%%><%%- == null)
+			{
+				%%><%%=BLLPluralEntityName%%><%%- = new EnterpriseDataObjectList<%%><%%=VMBLLViewModelClassName%%><%%->();
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			<%%-
+			if (loadChildren == true)
+			{%%>
+			isFirstItem = true
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{
+								if (isFirstItem == true)
+								{
+									isFirstItem = false
+								}
+								else
+								{
+								<%%-
+								%%>
+								}
+				<%%-
+				// attach %%><%%=BLLPluralEntityName%%><%%-
+				foreach (%%><%%=BLLClassName%%><%%- item in %%><%%=../../../BLLClassName.CamelCase()%%><%%-.%%><%%=BLLParentCollectionName%%><%%-)
+				{
+					%%><%%=VMBLLViewModelClassName%%><%%- itemView = new %%><%%=VMBLLViewModelClassName%%><%%-(item%%>
+					if (../../../BLLClassName != "Solution")
+					{
+						<%%-, Solution%%>
+					}
+					<%%-);
+					itemView.Updated += new EventHandler(Children_Updated);
+					%%><%%=BLLPluralEntityName%%><%%-.Add(itemView);
+					Items.Add(itemView);
+				}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true sort Order)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{
+								if (isFirstItem == true)
+								{
+									isFirstItem = false
+								}
+								else
+								{
+								<%%-
+								%%>
+								}
+				<%%-
+				// attach %%><%%=BLLPluralEntityName%%><%%-
+				if (%%><%%=BLLPluralEntityName%%><%%-Folder == null)
+				{
+					%%><%%=BLLPluralEntityName%%><%%-Folder = new %%><%%=VMBLLViewPluralModelClassName%%><%%-(%%><%%=../../../BLLClassName.CamelCase()%%>
+								if (../../../BLLClassName != "Solution")
+								{
+									<%%-, Solution%%>
+								}
+								else if (Tags.Contains("Template") == true)
+								{
+									<%%-, ModelContextTypeCode.Solution.ToString()%%>
+								}
+					<%%-);
+					%%><%%=BLLPluralEntityName%%><%%-Folder.Updated += new EventHandler(Children_Updated);
+					Items.Add(%%><%%=BLLPluralEntityName%%><%%-Folder);
+				}%%>
+							}
+						}
+					}
+				}
+			}
+			<%%-
+				#region protected
+				#endregion protected
+				
+				Refresh(false);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method refreshes the view model.</summary>
+		/// 
+		/// <param name="refreshChildren">Flag indicating whether children should be refreshed.</param>
+		///--------------------------------------------------------------------------------
+		public void Refresh(bool refreshChildren, int refreshLevel = 0)
+		{%%>
+		if (Tags.Contains("Template") == true)
+		{
+			<%%-
+			#region protected
+			#endregion protected%%>
+		}
+		else
+		{
+		<%%-
+			if (refreshChildren == true || refreshLevel > 0)
+			{%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+				foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+				{
+					item.Refresh(refreshChildren, refreshLevel - 1);
+				}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+				%%><%%=BLLPluralEntityName%%><%%-Folder.Refresh(refreshChildren, refreshLevel - 1);%%>
+							}
+						}
+					}
+				}
+			}
+			<%%-
+			}
+			
+			#region protected
+			#endregion protected
+			
+			HasErrors = !%%><%%=BLLClassName%%><%%-.IsValid;
+			HasCustomizations = %%><%%=BLLClassName%%><%%-.IsAutoUpdated == false || %%><%%=BLLClassName%%><%%-.IsEmptyMetadata(%%><%%=BLLClassName%%><%%-.ForwardInstance) == false || ChildrenHaveAnyCustomizations();
+			if (HasCustomizations == false && %%><%%=BLLClassName%%><%%-.ReverseInstance != null)
+			{
+				// remove customizations if solely due to child customizations no longer present
+				%%><%%=BLLClassName%%><%%-.IsAutoUpdated = true;
+				%%><%%=BLLClassName%%><%%-.SpecSourceName = %%><%%=BLLClassName%%><%%-.ReverseInstance.SpecSourceName;
+				%%><%%=BLLClassName%%><%%-.ResetModified(%%><%%=BLLClassName%%><%%-.ReverseInstance.IsModified);
+				%%><%%=BLLClassName%%><%%-.ResetLoaded(%%><%%=BLLClassName%%><%%-.ReverseInstance.IsLoaded);
+				if (!%%><%%=BLLClassName%%><%%-.IsIdenticalMetadata(%%><%%=BLLClassName%%><%%-.ReverseInstance))
+				{
+					HasCustomizations = true;
+					%%><%%=BLLClassName%%><%%-.IsAutoUpdated = false;
+				}
+			}
+			if (HasCustomizations == false)
+			{
+				// clear customizations
+				%%><%%=BLLClassName%%><%%-.ForwardInstance = null;
+				%%><%%=BLLClassName%%><%%-.ReverseInstance = null;
+				%%><%%=BLLClassName%%><%%-.IsAutoUpdated = true;
+			}%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				if (item.HasErrors == true)
+				{
+					HasErrors = true;
+				}
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+			if (%%><%%=BLLPluralEntityName%%><%%-Folder.HasErrors == true)
+			{
+				HasErrors = true;
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+								if (BLLHasOrderProperty == true)
+								{
+			<%%-
+			Items.Sort("ItemOrder", SortDirection.Ascending);%%>
+								}
+								else
+								{
+			<%%-
+			Items.Sort("Name", SortDirection.Ascending);%%>
+								}
+							}
+						}
+					}
+				}
+			}
+			<%%-
+			OnPropertyChanged("Items");
+			OnPropertyChanged("HasCustomizations");
+			OnPropertyChanged("HasErrors");%%>
+		}
+		<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method disposes of resources in the view model.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnDispose()
+		{%%>
+			if (Tags.Contains("CustomEvents") == true || Tags.Contains("CustomDispose") == true)
+			{
+			<%%-
+			#region protected
+			#endregion protected
+			%%>
+			}
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+		<%%-
+			if (%%><%%=BLLPluralEntityName%%><%%- != null)
+			{
+				for (int i = %%><%%=BLLPluralEntityName%%><%%-.Count - 1; i >= 0; i--)
+				{
+					%%><%%=BLLPluralEntityName%%><%%-[i].Updated -= Children_Updated;
+					%%><%%=BLLPluralEntityName%%><%%-[i].Dispose();
+					%%><%%=BLLPluralEntityName%%><%%-.Remove(%%><%%=BLLPluralEntityName%%><%%-[i]);
+				}
+				%%><%%=BLLPluralEntityName%%><%%- = null;
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+		<%%-
+			if (%%><%%=BLLPluralEntityName%%><%%-Folder != null)
+			{
+				%%><%%=BLLPluralEntityName%%><%%-Folder.Updated -= Children_Updated;
+				%%><%%=BLLPluralEntityName%%><%%-Folder.Dispose();
+				%%><%%=BLLPluralEntityName%%><%%-Folder = null;
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			<%%-
+			if (_edit%%><%%=BLLClassName%%><%%- != null)
+			{
+				Items.CollectionChanged -= Children_CollectionChanged;
+				Edit%%><%%=BLLClassName%%><%%-.PropertyChanged -= Edit%%><%%=BLLClassName%%><%%-_PropertyChanged;
+				Edit%%><%%=BLLClassName%%><%%- = null;
+			}
+			%%><%%=BLLClassName%%><%%- = null;
+			base.OnDispose();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method returns whether or not the method or its children have any customizations.</summary>
+		///--------------------------------------------------------------------------------
+		public bool ChildrenHaveAnyCustomizations()
+		{%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- item in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				if (item.HasCustomizations == true)
+				{
+					return true;
+				}
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true)
+					{
+						if (ReferencedEntity.BLLParentClassName == ../BLLClassName)
+						{
+							with (ReferencedEntity)
+							{			
+			<%%-
+			if (%%><%%=BLLPluralEntityName%%><%%-Folder != null && %%><%%=BLLPluralEntityName%%><%%-Folder.HasCustomizations == true)
+			{
+				return true;
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			<%%-
+			return false;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method manages the update of this view when children are updated.</summary>
+		/// 
+		/// <param name="sender">The sender of the updated event.</param>
+		/// <param name="e">The event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void Children_Updated(object sender, EventArgs e)
+		{
+			Refresh(false, 1);
+			OnUpdated(this, e);
+		}
+	
+		///--------------------------------------------------------------------------------
+		/// <summary>This method manages when changes occur to child collections.</summary>
+		/// 
+		/// <param name="sender">The sender of the updated event.</param>
+		/// <param name="e">The event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void Children_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{%%>
+		if (HasChildCollection == true)
+		{
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+		<%%-
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");
+			OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-Customized");%%>
+					}
+				}
+			}
+		}
+		<%%-
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method returns the parent view model corresponding to
+		/// the input message.</summary>
+		///
+		/// <param name="data">The message data to find parent for.</param>
+		///--------------------------------------------------------------------------------
+		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
+		{%%>
+		parentFound = false
+		if (HasChildCollection == true)
+		{
+		<%%-
+			EditWorkspaceViewModel parentModel = null;%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false)
+					{
+						with (ReferencedEntity)
+						{
+							if (BLLParentClassName == ../../BLLClassName)
+							{
+								parentFound = true
+			<%%-
+			if (data is %%><%%=BLLClassName%%><%%-EventArgs && (data as %%><%%=BLLClassName%%><%%-EventArgs).%%><%%=BLLParentForeignKeyPropertyName%%><%%- == %%><%%=../../../BLLClassName%%><%%-.%%><%%=../../../BLLPrimaryKeyPropertyName%%><%%-)
+			{
+				return this;
+			}
+			foreach (%%><%%=VMBLLViewModelClassName%%><%%- model in %%><%%=BLLPluralEntityName%%><%%-)
+			{
+				parentModel = model.FindParentViewModel(data);
+				if (parentModel != null)
+				{
+					return parentModel;
+				}
+			}%%>
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where VMBLLIsValidCollection == true)
+					{
+						with (ReferencedEntity)
+						{
+							if (BLLParentClassName == ../../BLLClassName)
+							{
+								parentFound = true
+			<%%-
+			parentModel = %%><%%=BLLPluralEntityName%%><%%-Folder.FindParentViewModel(data);
+			if (parentModel != null)
+			{
+				return parentModel;
+			}%%>
+							}
+						}
+					}
+				}
+			}
+		}
+		if (parentFound == false)
+		{
+		<%%-
+			#region protected
+			#endregion protected
+		%%>
+		}
+		<%%-
+			return null;
+		}%%>
+			if (BLLViewCollectionCount < 2)
+			{
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Collection where ReferencedEntity.EntityTypeCode == 3 /* Primary */ && Tags.Contains("Secondary") == false && ReferencedEntity.Tags.Contains("IgnoreView") == false)
+					{
+						if (ReferencedEntity.BLLParentClassName == CurrentEntity.BLLClassName)
+						{
+							collectionName = BLLPropertyName
+							with (ReferencedEntity)
+							{
+								if (Tags.Contains("CustomPaste") == false)
+								{
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is used to copy/paste a new item.</summary>
+		///
+		/// <param name="copyItem">The item to copy/paste.</param>
+		/// <param name="savePaste">Flag to determine whether to save the results of the paste.</param>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLViewModelClassName%%><%%- Paste%%><%%=BLLClassName%%><%%-(%%><%%=VMBLLViewModelClassName%%><%%- copyItem, bool savePaste = true)
+		{
+			%%><%%=BLLClassName%%><%%- newItem = new %%><%%=BLLClassName%%><%%-();
+			newItem.ReverseInstance = new %%><%%=BLLClassName%%><%%-();
+			newItem.TransformDataFromObject(copyItem.%%><%%=BLLClassName%%><%%-, null, false);
+			newItem.%%><%%=BLLPrimaryKeyPropertyName%%><%%- = Guid.NewGuid();
+			newItem.IsAutoUpdated = false;%%>
+			pasteClassName = BLLClassName
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (EntityReference where Tags.Contains("Parent") == false && ReferencedEntity.EntityTypeCode == 3 /* Primary */)
+				{
+					with (Entity)
+					{
+						pasteForeignKeyPropertyName = BLLPropertyNameForEntityReference(entityReferenceID = ../PropertyID)
+					}
+					with (Entity from Solution.Find(rootEntityID))
+					{
+						CurrentEntity = Entity
+					}
+					parentFound = true
+					collectionFound = false
+					propertyString = CurrentEntity.BLLClassName
+					collectionClassName = ReferencedEntity.BLLClassName
+					while (parentFound == true && collectionFound == false)
+					{
+						with (CurrentEntity)
+						{
+							if (BLLClassName == "Solution")
+							{
+								collectionFound = true
+								propertyString = "Solution." + collectionClassName + "List"
+							}
+							else
+							{
+								foreach (Entity in EntityAndBaseEntities)
+								{
+									foreach (Collection where VMBLLIsValidCollection == true)
+									{
+										if (ReferencedEntity.BLLClassName == collectionClassName)
+										{
+											propertyString = propertyString + "." + BLLPropertyName
+											collectionFound = true
+											break
+										}		
+									}
+								}
+							}
+							if (collectionFound == false)
+							{
+								if (LIBParentEntityID != null)
+								{
+									propertyString = propertyString + "." + BLLParentReferencePropertyName
+									with (Entity from Solution.Find(LIBParentEntityID))
+									{
+										CurrentEntity = Entity
+									}
+								}
+								else
+								{
+									parentFound = false
+								}
+							}
+						}
+					}
+					with (Entity from Solution.Find(rootEntityID))
+					{
+						CurrentEntity = Entity
+					}
+			<%%-
+
+			// try to find %%><%%=ReferencedEntity.BLLClassName%%><%%- by existing id first, second by old id, finally by name
+			newItem.%%><%%=BLLPropertyName%%><%%- = %%><%%=propertyString%%><%%-.FindByID((Guid)copyItem.%%><%%=pasteClassName%%><%%-.%%><%%=pasteForeignKeyPropertyName%%><%%-);
+			if (newItem.%%><%%=BLLPropertyName%%><%%- == null && Solution.PasteNewGuids[copyItem.%%><%%=pasteClassName%%><%%-.%%><%%=pasteForeignKeyPropertyName%%><%%-.ToString()] is Guid)
+			{
+				newItem.%%><%%=BLLPropertyName%%><%%- = %%><%%=propertyString%%><%%-.FindByID((Guid)Solution.PasteNewGuids[copyItem.%%><%%=pasteClassName%%><%%-.%%><%%=pasteForeignKeyPropertyName%%><%%-.ToString()]);
+			}
+			if (newItem.%%><%%=BLLPropertyName%%><%%- == null)
+			{
+				newItem.%%><%%=BLLPropertyName%%><%%- = %%><%%=propertyString%%><%%-.Find("Name", copyItem.%%><%%=pasteClassName%%><%%-.Name);
+			}
+			if (newItem.%%><%%=BLLPropertyName%%><%%- == null)
+			{
+				newItem.Old%%><%%=pasteForeignKeyPropertyName%%><%%- = newItem.%%><%%=pasteForeignKeyPropertyName%%><%%-;
+				newItem.%%><%%=pasteForeignKeyPropertyName%%><%%- = Guid.Empty;
+			}%%>
+				}
+			}
+			<%%-
+			newItem.%%><%%=BLLParentReferencePropertyName%%><%%- = %%><%%=CurrentEntity.BLLClassName%%><%%-;
+			newItem.Solution = Solution;
+			%%><%%=VMBLLViewModelClassName%%><%%- newView = new %%><%%=VMBLLViewModelClassName%%><%%-(newItem, Solution);
+			newView.ResetModified(true);
+			Add%%><%%=BLLClassName%%><%%-(newView);
+			if (savePaste == true)
+			{
+				Solution.%%><%%=BLLClassName%%><%%-List.Add(newItem);
+				%%><%%=CurrentEntity.BLLClassName%%><%%-.%%><%%=collectionName%%><%%-.Add(newItem);
+				newView.OnUpdated(this, null);
+				Solution.ResetModified(true);
+			}
+			return newView;
+		}%%>
+							}
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds an instance of %%><%%=BLLClassName%%><%%- to the view model.</summary>
+		/// 
+		/// <param name="itemView">The %%><%%=BLLClassName%%><%%- to add.</param>
+		///--------------------------------------------------------------------------------
+		public void Add%%><%%=BLLClassName%%><%%-(%%><%%=VMBLLViewModelClassName%%><%%- itemView)
+		{
+			itemView.Updated += new EventHandler(Children_Updated);
+			%%><%%=BLLPluralEntityName%%><%%-.Add(itemView);
+			Add(itemView);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes an instance of %%><%%=BLLClassName%%><%%- from the view model.</summary>
+		/// 
+		/// <param name="itemView">The %%><%%=BLLClassName%%><%%- to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void Delete%%><%%=BLLClassName%%><%%-(%%><%%=VMBLLViewModelClassName%%><%%- itemView)
+		{
+			itemView.Updated -= Children_Updated;
+			%%><%%=BLLPluralEntityName%%><%%-.Remove(itemView);
+			Delete(itemView);
+		}%%>
+						}
+					}
+				}
+			}
+		}
+		<%%-
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor (for reflection, etc.).</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLViewModelClassName%%><%%-()
+		{
+			WorkspaceID = Guid.NewGuid();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Create the instance with the designer view and other data.</summary>
+		/// %%>
+		if (BLLClassName != "Solution")
+		{
+		<%%-
+		/// <param name="%%><%%=BLLClassName.CamelCase()%%><%%-">The %%><%%=BLLClassName%%><%%- to load.</param>%%>
+		}<%%-
+		/// <param name="solution">The associated solution.</param>
+		/// <param name="loadChildren">Flag indicating if child information should be loaded.</param>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VMBLLViewModelClassName%%><%%-(%%>
+		if (BLLClassName != "Solution")
+		{
+		<%%=BLLClassName%%><%%- %%><%%=BLLClassName.CamelCase()%%><%%-, %%>
+		}
+		<%%-Solution solution, bool loadChildren = true)
+		{
+			WorkspaceID = Guid.NewGuid();
+			Solution = solution;
+			Load%%><%%=BLLClassName%%><%%-(%%><%%=BLLClassName.CamelCase()%%><%%-, loadChildren);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLViewModelClassFilePath) == null || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewModelClassFilePath).FilterIgnored().FilterProtected() != Text.FilterIgnored().FilterProtected()))
+{
+	update(VMBLLViewModelClassFilePath)
+}
+%%></OUTPUT>

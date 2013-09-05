@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME WPFUIPropertiesDiagramClassFileProjectPath
-	CATEGORY WPFUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%-UserControls\Diagrams\%%><%%=WPFUIPropertiesDiagramClassFileName%%></CONTENT>

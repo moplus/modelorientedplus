@@ -1,7 +1,0 @@
-<CONFIG>
-	NAME BLLDefaultValue
-	CATEGORY BLL
-	NODE Collection
-</CONFIG>
-<CONTENT>
-<%%-null%%></CONTENT>

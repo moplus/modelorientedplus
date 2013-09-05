@@ -1,0 +1,316 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="Content Highlighting" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment" foreground="DarkGreen" />
+	<Color name="Phrase" foreground="DarkOrange" />
+	<Color name="Evaluation" foreground="Brown" />
+	<Color name="EvaluationRecognized" foreground="Blue" />
+	<Color name="ContentProperty" foreground="Brown" />
+	<Color name="ContentPropertyRecognized" foreground="Teal" />
+	<Color name="DebugStatement" foreground="Red" />
+	<Color name="OutputProperty" foreground="Magenta" />
+	<Color name="OutputStatement" foreground="Magenta" />
+	<Color name="Symbol" fontWeight="bold" foreground="Gray" background="Yellow" />
+	<Color name="Literal" foreground="SlateBlue" />
+	<Color name="Method" foreground="Chocolate" />
+	<Color name="Property" foreground="Teal" />
+
+	<!-- Content ruleset. -->
+	<RuleSet>
+		<Span color="Comment" begin="//" />
+		<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+		<Span color="ContentProperty" multiline="true">
+			<Begin color="Symbol">&lt;%%=</Begin>
+			<End color="Symbol">%%></End>
+			<RuleSet>
+				<Keywords color="ContentPropertyRecognized">
+					<Word>this</Word>
+					<Word>ItemIndex</Word>
+					<Word>Text</Word>
+					<Word>Path</Word>
+					<Word>IsRelatedToProperty</Word>
+					<Word>EntityAndBaseEntities</Word>
+					<Word>BaseAndEntityEntities</Word>
+					<Word>PathRelationships</Word>
+					<Word>ExtendingEntities</Word>
+					<Word>Record</Word>
+					<Word>UnderscoreCase</Word>
+					<Word>CamelCase</Word>
+					<Word>CapitalCase</Word>
+					<Word>CapitalWordCase</Word>
+					<Word>Find</Word>
+					<Word>FindAll</Word>
+					<Word>Substring</Word>
+					<Word>Replace</Word>
+					<Word>ToLower</Word>
+					<Word>ToUpper</Word>
+					<Word>StartsWith</Word>
+					<Word>EndsWith</Word>
+					<Word>IndexOf</Word>
+					<Word>Contains</Word>
+					<Word>Length</Word>
+					<Word>Column</Word>
+					<Word>Filter</Word>
+					<Word>FilterProtected</Word>
+					<Word>FilterIgnored</Word>
+					<Word>File</Word>
+					<Word>FileExists</Word>
+					<Word>Trim</Word>
+					<Word>TrimStart</Word>
+					<Word>TrimEnd</Word>
+					<Word>RegexIsMatch</Word>
+					<Word>RegexReplace</Word>
+					<Word>LogValue</Word>
+					<Word>HasPropertyNamed</Word>
+					<Word>New</Word>
+					<Word>ItemFile</Word>
+					<Word>ItemPath</Word>
+					<Word>.</Word>
+					<Word>+</Word>
+					<Word>-</Word>
+					<Word>*</Word>
+					<Word>/</Word>
+				</Keywords>
+				<Keywords color="Method">
+					<Word>TAB</Word>
+					<Word>TABSTRING</Word>
+					<Word>USEPROTECTEDAREAS</Word>
+					<Word>PROTECTEDAREASTART</Word>
+					<Word>PROTECTEDAREAEND</Word>
+					<Word>USEIGNOREDAREAS</Word>
+					<Word>IGNOREDAREASTART</Word>
+					<Word>IGNOREDAREAEND</Word>
+					<Word>USETABS</Word>
+					<Word>NOW</Word>
+					<Word>USER</Word>
+				</Keywords>
+			</RuleSet>
+		</Span>
+		<Span color="OutputProperty" multiline="true">
+			<Begin color="Symbol">&lt;%%></Begin>
+			<End color="Symbol">%%></End>
+		</Span>
+		<Span color="Phrase" multiline="true">
+			<Begin color="Symbol">&lt;%%-</Begin>
+			<End color="Symbol">%%></End>
+		</Span>
+		<Span color="Evaluation" multiline="true" >
+			<Begin color="Symbol">&lt;%%:</Begin>
+			<End color="Symbol">%%></End>
+			<RuleSet>
+				<Keywords color="Property">
+					<Word>this</Word>
+					<Word>ItemIndex</Word>
+					<Word>Text</Word>
+					<Word>Path</Word>
+					<Word>IsRelatedToProperty</Word>
+					<Word>EntityAndBaseEntities</Word>
+					<Word>BaseAndEntityEntities</Word>
+					<Word>PathRelationships</Word>
+					<Word>ExtendingEntities</Word>
+					<Word>Record</Word>
+					<Word>UnderscoreCase</Word>
+					<Word>CamelCase</Word>
+					<Word>CapitalCase</Word>
+					<Word>CapitalWordCase</Word>
+					<Word>Find</Word>
+					<Word>FindAll</Word>
+					<Word>Substring</Word>
+					<Word>Replace</Word>
+					<Word>ToLower</Word>
+					<Word>ToUpper</Word>
+					<Word>StartsWith</Word>
+					<Word>EndsWith</Word>
+					<Word>IndexOf</Word>
+					<Word>Contains</Word>
+					<Word>Length</Word>
+					<Word>Column</Word>
+					<Word>Filter</Word>
+					<Word>FilterProtected</Word>
+					<Word>FilterIgnored</Word>
+					<Word>File</Word>
+					<Word>FileExists</Word>
+					<Word>Trim</Word>
+					<Word>TrimStart</Word>
+					<Word>TrimEnd</Word>
+					<Word>RegexIsMatch</Word>
+					<Word>RegexReplace</Word>
+					<Word>LogValue</Word>
+					<Word>HasPropertyNamed</Word>
+					<Word>New</Word>
+					<Word>ItemFile</Word>
+					<Word>ItemPath</Word>
+					<Word>.</Word>
+					<Word>+</Word>
+					<Word>-</Word>
+					<Word>*</Word>
+					<Word>/</Word>
+				</Keywords>
+				<Keywords color="Method">
+					<Word>TAB</Word>
+					<Word>TABSTRING</Word>
+					<Word>USEPROTECTEDAREAS</Word>
+					<Word>PROTECTEDAREASTART</Word>
+					<Word>PROTECTEDAREAEND</Word>
+					<Word>USEIGNOREDAREAS</Word>
+					<Word>IGNOREDAREASTART</Word>
+					<Word>IGNOREDAREAEND</Word>
+					<Word>USETABS</Word>
+					<Word>NOW</Word>
+					<Word>USER</Word>
+				</Keywords>
+				<Keywords color="DebugStatement">
+					<Word>trace</Word>
+				</Keywords>
+				<Keywords color="OutputStatement">
+					<Word>add</Word>
+					<Word>delete</Word>
+				</Keywords>
+				<Keywords color="EvaluationRecognized">
+					<Word>if</Word>
+					<Word>foreach</Word>
+					<Word>while</Word>
+					<Word>in</Word>
+					<Word>where</Word>
+					<Word>limit</Word>
+					<Word>sort</Word>
+					<Word>asc</Word>
+					<Word>desc</Word>
+					<Word>with</Word>
+					<Word>from</Word>
+					<Word>else</Word>
+					<Word>switch</Word>
+					<Word>case</Word>
+					<Word>default</Word>
+					<Word>break</Word>
+					<Word>continue</Word>
+					<Word>clear</Word>
+					<Word>return</Word>
+					<Word>var</Word>
+					<Word>param</Word>
+					<Word>log</Word>
+					<Word>update</Word>
+					<Word>delete</Word>
+					<Word>remove</Word>
+					<Word>insert</Word>
+					<Word>forfiles</Word>
+					<Word>progress</Word>
+					<Word>.</Word>
+					<Word>+</Word>
+					<Word>-</Word>
+					<Word>*</Word>
+					<Word>/</Word>
+					<Word>,</Word>
+					<Word>:</Word>
+					<Word>(</Word>
+					<Word>)</Word>
+					<Word>{</Word>
+					<Word>}</Word>
+					<Word>=</Word>
+					<Word>!</Word>
+					<Word>|</Word>
+					<Word>&amp;</Word>
+					<Word>&gt;</Word>
+					<Word>&lt;</Word>
+				</Keywords>
+				<Span color="Comment" begin="//" />
+				<Span color="Comment" multiline="true" begin="/\*" end="\*/" />
+				<Span color="ContentProperty" multiline="true">
+					<Begin color="Symbol">&lt;%%=</Begin>
+					<End color="Symbol">%%></End>
+					<RuleSet>
+						<Keywords color="ContentPropertyRecognized">
+							<Word>this</Word>
+							<Word>ItemIndex</Word>
+							<Word>Text</Word>
+							<Word>Path</Word>
+							<Word>IsRelatedToProperty</Word>
+							<Word>EntityAndBaseEntities</Word>
+							<Word>BaseAndEntityEntities</Word>
+							<Word>PathRelationships</Word>
+							<Word>ExtendingEntities</Word>
+							<Word>Record</Word>
+							<Word>UnderscoreCase</Word>
+							<Word>CamelCase</Word>
+							<Word>CapitalCase</Word>
+							<Word>CapitalWordCase</Word>
+							<Word>Find</Word>
+							<Word>FindAll</Word>
+							<Word>Substring</Word>
+							<Word>Replace</Word>
+							<Word>ToLower</Word>
+							<Word>ToUpper</Word>
+							<Word>StartsWith</Word>
+							<Word>EndsWith</Word>
+							<Word>IndexOf</Word>
+							<Word>Contains</Word>
+							<Word>Length</Word>
+							<Word>Column</Word>
+							<Word>Filter</Word>
+							<Word>FilterProtected</Word>
+							<Word>FilterIgnored</Word>
+							<Word>File</Word>
+							<Word>FileExists</Word>
+							<Word>Trim</Word>
+							<Word>TrimStart</Word>
+							<Word>TrimEnd</Word>
+							<Word>RegexIsMatch</Word>
+							<Word>RegexReplace</Word>
+							<Word>LogValue</Word>
+							<Word>HasPropertyNamed</Word>
+							<Word>New</Word>
+							<Word>ItemFile</Word>
+							<Word>ItemPath</Word>
+							<Word>.</Word>
+							<Word>+</Word>
+							<Word>-</Word>
+							<Word>*</Word>
+							<Word>/</Word>
+						</Keywords>
+						<Keywords color="Method">
+							<Word>TAB</Word>
+							<Word>TABSTRING</Word>
+							<Word>USEPROTECTEDAREAS</Word>
+							<Word>PROTECTEDAREASTART</Word>
+							<Word>PROTECTEDAREAEND</Word>
+							<Word>USEIGNOREDAREAS</Word>
+							<Word>IGNOREDAREASTART</Word>
+							<Word>IGNOREDAREAEND</Word>
+							<Word>USETABS</Word>
+							<Word>NOW</Word>
+							<Word>USER</Word>
+						</Keywords>
+					</RuleSet>
+				</Span>
+				<Span color="OutputProperty" multiline="true">
+					<Begin color="Symbol">&lt;%%></Begin>
+					<End color="Symbol">%%></End>
+				</Span>
+				<Span color="Phrase" multiline="true">
+					<Begin color="Symbol">&lt;%%-</Begin>
+					<End color="Symbol">%%></End>
+				</Span>
+				<Keywords color="Literal">
+					<Word>true</Word>
+					<Word>false</Word>
+					<Word>null</Word>
+				</Keywords>
+				<Span color="Literal">
+					<Begin>"</Begin>
+					<End>"</End>
+					<RuleSet>
+						<!-- nested span for escape sequences -->
+						<Span begin="\\" end="." />
+					</RuleSet>
+				</Span>
+				<Rule color="Literal">
+					\b0[xX][0-9a-fA-F]+  # hex number
+					|    \b
+					(    \d+(\.[0-9]+)?   #number with optional floating point
+					|    \.[0-9]+         #or just starting with floating point
+					)
+					([eE][+-]?[0-9]+)? # optional exponent
+				</Rule>
+			</RuleSet>
+		</Span>
+	</RuleSet>
+</SyntaxDefinition>

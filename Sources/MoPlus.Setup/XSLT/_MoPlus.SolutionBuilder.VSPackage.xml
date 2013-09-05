@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectOutput Name="MoPlus.SolutionBuilder.VSPackage" ProjectDirVar="$(var.MoPlus.SolutionBuilder.VSPackage.ProjectDir)" TargetDirVar="$(var.MoPlus.SolutionBuilder.VSPackage.TargetDir)" SharedFileId="_851E3F7E_7188_417A_9FDC_74DF77486CE6">
+  <Binaries>
+    <DiskId>1</DiskId>
+    <Compressed>yes</Compressed>
+    <Hidden>no</Hidden>
+    <KeyPath>yes</KeyPath>
+    <ReadOnly>no</ReadOnly>
+    <System>no</System>
+    <Vital>yes</Vital>
+    <Permanent>no</Permanent>
+    <SharedDllRefCount>no</SharedDllRefCount>
+    <Transitive>no</Transitive>
+  </Binaries>
+</ProjectOutput>

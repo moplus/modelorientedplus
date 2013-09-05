@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME BLLParameterName
+	CATEGORY BLL
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%=BLLPropertyName.CamelCase()%%></CONTENT>

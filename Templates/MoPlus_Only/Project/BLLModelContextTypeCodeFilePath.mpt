@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME BLLModelContextTypeCodeFilePath
-	CATEGORY BLL
-	NODE Project
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=ProjectDirectory%%><%%-\BLL\Interpreter\ModelContextTypeCode_G.cs%%></CONTENT>
