@@ -65,7 +65,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					{
 						if (!String.IsNullOrEmpty(Solution.TemplatePath))
 						{
-							return Directory.GetParent(Solution.TemplatePath).FullName + "\\" + NodeName + "\\" + TemplateName + ".mpt";
+							return Directory.GetParent(Solution.TemplateAbsolutePath).FullName + "\\" + NodeName + "\\" + TemplateName + ".mpt";
 						}
 						else if (!String.IsNullOrEmpty(SuggestedDirectory))
 						{
@@ -76,7 +76,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					{
 						if (!String.IsNullOrEmpty(Solution.TemplatePath))
 						{
-							return Directory.GetParent(Solution.TemplatePath).FullName + "\\" + TemplateName + ".mpt";
+							return Directory.GetParent(Solution.TemplateAbsolutePath).FullName + "\\" + TemplateName + ".mpt";
 						}
 						else if (!String.IsNullOrEmpty(SuggestedDirectory))
 						{

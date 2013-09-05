@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/18/2013</CreatedDate>
+	/// <CreatedDate>9/4/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -356,6 +356,11 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				errors.Append("\r\n").Append(error);
 			}
+			error = GetValidationError("UseRelativePaths");
+			if (!String.IsNullOrEmpty(error))
+			{
+				errors.Append("\r\n").Append(error);
+			}
 			error = GetValidationError("IsAutoUpdated");
 			if (!String.IsNullOrEmpty(error))
 			{
@@ -416,6 +421,10 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				case "_templatePath":
 				case "TemplatePath":
 					error = ValidateTemplatePath();
+					break;
+				case "_useRelativePaths":
+				case "UseRelativePaths":
+					error = ValidateUseRelativePaths();
 					break;
 				case "_isAutoUpdated":
 				case "IsAutoUpdated":
@@ -497,6 +506,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				return String.Format(Resources.DisplayValues.Validation_PathValue, "TemplatePath");
 			}
+			return null;
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method validates UseRelativePaths and returns an error message if not valid.</param>
+		///--------------------------------------------------------------------------------
+		public string ValidateUseRelativePaths()
+		{
 			return null;
 		}
 		
@@ -870,9 +887,54 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				if (_templatePath != value)
 				{
-					_templatePath = value;
+					#region protected
+					if (UseRelativePaths == true && !String.IsNullOrEmpty(SolutionDirectory) && System.IO.File.Exists(value) == true)
+					{
+						try
+						{
+							System.Uri uri1 = new Uri(value);
+							System.Uri uri2 = new Uri(SolutionDirectory + "\\");
+
+							Uri relativeUri = uri2.MakeRelativeUri(uri1);
+							_templatePath = relativeUri.ToString().Replace("/", "\\");
+						}
+						catch
+						{
+							_templatePath = value;
+						}
+					}
+					else
+					{
+						_templatePath = value;
+					}
 					_isModified = true;
+					#endregion protected
 					base.OnPropertyChanged("TemplatePath");
+				}
+			}
+		}
+		
+		protected bool _useRelativePaths = DefaultValue.Bool;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the UseRelativePaths.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(DefaultValue.Bool)]
+		public virtual bool UseRelativePaths
+		{
+			get
+			{
+				return _useRelativePaths;
+			}
+			set
+			{
+				if (_useRelativePaths != value)
+				{
+					_useRelativePaths = value;
+					_isModified = true;
+					base.OnPropertyChanged("UseRelativePaths");
 				}
 			}
 		}
@@ -1807,6 +1869,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			if (ProductName.GetString() != inputSolution.ProductName.GetString()) return false;
 			if (ProductVersion.GetString() != inputSolution.ProductVersion.GetString()) return false;
 			if (TemplatePath.GetString() != inputSolution.TemplatePath.GetString()) return false;
+			if (UseRelativePaths.GetBool() != inputSolution.UseRelativePaths.GetBool()) return false;
 			if (IsAutoUpdated.GetBool() != inputSolution.IsAutoUpdated.GetBool()) return false;
 			if (Copyright.GetString() != inputSolution.Copyright.GetString()) return false;
 			if (Description.GetString() != inputSolution.Description.GetString()) return false;
@@ -1834,6 +1897,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			if (!String.IsNullOrEmpty(inputSolution.ProductName)) return false;
 			if (!String.IsNullOrEmpty(inputSolution.ProductVersion)) return false;
 			if (!String.IsNullOrEmpty(inputSolution.TemplatePath)) return false;
+			if (UseRelativePaths != inputSolution.UseRelativePaths) return false;
 			if (IsAutoUpdated != inputSolution.IsAutoUpdated) return false;
 			if (!String.IsNullOrEmpty(inputSolution.Copyright)) return false;
 			if (!String.IsNullOrEmpty(inputSolution.Description)) return false;
@@ -1859,6 +1923,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			ProductName = inputSolution.ProductName;
 			ProductVersion = inputSolution.ProductVersion;
 			TemplatePath = inputSolution.TemplatePath;
+			UseRelativePaths = inputSolution.UseRelativePaths;
 			IsAutoUpdated = inputSolution.IsAutoUpdated;
 			Copyright = inputSolution.Copyright;
 			Description = inputSolution.Description;
@@ -2315,6 +2380,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		public override void Load(string inputFilePath)
 		{
 			base.Load(inputFilePath);
+			SolutionDirectory = System.IO.Directory.GetParent(inputFilePath).FullName;
 			ResetLoaded(true);
 			ResetModified(false);
 		}
@@ -2327,6 +2393,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		public override void Save(string inputFilePath)
 		{
 			base.Save(inputFilePath);
+			SolutionDirectory = System.IO.Directory.GetParent(inputFilePath).FullName;
 			ResetLoaded(true);
 			ResetModified(false);
 		}

@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/18/2013</CreatedDate>
+	/// <CreatedDate>9/4/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionViewModel : DialogEditWorkspaceViewModel
@@ -450,7 +450,7 @@ namespace MoPlus.ViewModel.Solutions
 		{
 			get
 			{
-				return string.IsNullOrEmpty(SolutionNameValidationMessage + NamespaceValidationMessage + OutputSolutionFileNameValidationMessage + CompanyNameValidationMessage + ProductNameValidationMessage + ProductVersionValidationMessage + TemplatePathValidationMessage + CopyrightValidationMessage + DescriptionValidationMessage);
+				return string.IsNullOrEmpty(SolutionNameValidationMessage + NamespaceValidationMessage + OutputSolutionFileNameValidationMessage + CompanyNameValidationMessage + ProductNameValidationMessage + ProductVersionValidationMessage + TemplatePathValidationMessage + UseRelativePathsValidationMessage + CopyrightValidationMessage + DescriptionValidationMessage);
 			}
 		}
  
@@ -517,6 +517,10 @@ namespace MoPlus.ViewModel.Solutions
 			OnPropertyChanged("TemplatePath");
 			OnPropertyChanged("TemplatePathCustomized");
 			OnPropertyChanged("TemplatePathValidationMessage");
+			
+			OnPropertyChanged("UseRelativePaths");
+			OnPropertyChanged("UseRelativePathsCustomized");
+			OnPropertyChanged("UseRelativePathsValidationMessage");
 			
 			OnPropertyChanged("Copyright");
 			OnPropertyChanged("CopyrightCustomized");
@@ -967,6 +971,64 @@ namespace MoPlus.ViewModel.Solutions
 			get
 			{
 				return EditSolution.ValidateTemplatePath();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the UseRelativePathsLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string UseRelativePathsLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_UseRelativePathsProperty;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets UseRelativePaths.</summary>
+		///--------------------------------------------------------------------------------
+		public bool UseRelativePaths
+		{
+			get
+			{
+				return EditSolution.UseRelativePaths;
+			}
+			set
+			{
+				EditSolution.UseRelativePaths = value;
+				OnPropertyChanged("UseRelativePaths");
+				OnPropertyChanged("TabTitle");
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets UseRelativePathsCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool UseRelativePathsCustomized
+		{
+			get
+			{
+				if (Solution.ReverseInstance != null)
+				{
+					return UseRelativePaths.GetBool() != Solution.ReverseInstance.UseRelativePaths.GetBool();
+				}
+				else if (Solution.IsAutoUpdated == true)
+				{
+					return UseRelativePaths.GetBool() != Solution.UseRelativePaths.GetBool();
+				}
+				return UseRelativePaths != DefaultValue.Bool;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets UseRelativePathsValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string UseRelativePathsValidationMessage
+		{
+			get
+			{
+				return EditSolution.ValidateUseRelativePaths();
 			}
 		}
 
@@ -1460,7 +1522,7 @@ namespace MoPlus.ViewModel.Solutions
 				Solution.IsAutoUpdated = false;
 			}
 			Solution.ForwardInstance = null;
-			if (SolutionNameCustomized || NamespaceCustomized || OutputSolutionFileNameCustomized || CompanyNameCustomized || ProductNameCustomized || ProductVersionCustomized || TemplatePathCustomized || CopyrightCustomized || DescriptionCustomized || TagsCustomized)
+			if (SolutionNameCustomized || NamespaceCustomized || OutputSolutionFileNameCustomized || CompanyNameCustomized || ProductNameCustomized || ProductVersionCustomized || TemplatePathCustomized || UseRelativePathsCustomized || CopyrightCustomized || DescriptionCustomized || TagsCustomized)
 			{
 				Solution.ForwardInstance = new Solution();
 				Solution.ForwardInstance.SolutionID = EditSolution.SolutionID;
@@ -1492,6 +1554,10 @@ namespace MoPlus.ViewModel.Solutions
 				if (TemplatePathCustomized)
 				{
 					Solution.ForwardInstance.TemplatePath = EditSolution.TemplatePath;
+				}
+				if (UseRelativePathsCustomized)
+				{
+					Solution.ForwardInstance.UseRelativePaths = EditSolution.UseRelativePaths;
 				}
 				if (CopyrightCustomized)
 				{

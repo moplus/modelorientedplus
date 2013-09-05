@@ -994,7 +994,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						bool foundSource = false;
 						foreach (DatabaseSource source in view.Solution.DatabaseSourceList)
 						{
-							if (source.TemplatePath == view.SpecTemplate.FilePath)
+							if (source.TemplateAbsolutePath == view.SpecTemplate.FilePath)
 							{
 								BusinessConfiguration.CurrentSpecificationSource = source;
 								foundSource = true;
@@ -1005,7 +1005,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						{
 							foreach (XmlSource source in view.Solution.XmlSourceList)
 							{
-								if (source.TemplatePath == view.SpecTemplate.FilePath)
+								if (source.TemplateAbsolutePath == view.SpecTemplate.FilePath)
 								{
 									BusinessConfiguration.CurrentSpecificationSource = source;
 									foundSource = true;
@@ -1069,7 +1069,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						bool foundSource = false;
 						foreach (DatabaseSource source in view.Solution.DatabaseSourceList)
 						{
-							if (source.TemplatePath == view.SpecTemplate.FilePath)
+							if (source.TemplateAbsolutePath == view.SpecTemplate.FilePath)
 							{
 								BusinessConfiguration.CurrentSpecificationSource = source;
 								foundSource = true;
@@ -1080,7 +1080,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						{
 							foreach (XmlSource source in view.Solution.XmlSourceList)
 							{
-								if (source.TemplatePath == view.SpecTemplate.FilePath)
+								if (source.TemplateAbsolutePath == view.SpecTemplate.FilePath)
 								{
 									BusinessConfiguration.CurrentSpecificationSource = source;
 									foundSource = true;

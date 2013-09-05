@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>9/4/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -554,8 +554,28 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				if (_templatePath != value)
 				{
-					_templatePath = value;
+					#region protected
+					if (Solution != null && Solution.UseRelativePaths == true && !String.IsNullOrEmpty(Solution.SolutionDirectory) && System.IO.File.Exists(value) == true)
+					{
+						try
+						{
+							System.Uri uri1 = new Uri(value);
+							System.Uri uri2 = new Uri(Solution.SolutionDirectory + "\\");
+
+							Uri relativeUri = uri2.MakeRelativeUri(uri1);
+							_templatePath = relativeUri.ToString().Replace("/", "\\");
+						}
+						catch
+						{
+							_templatePath = value;
+						}
+					}
+					else
+					{
+						_templatePath = value;
+					}
 					_isModified = true;
+					#endregion protected
 					base.OnPropertyChanged("TemplatePath");
 				}
 			}

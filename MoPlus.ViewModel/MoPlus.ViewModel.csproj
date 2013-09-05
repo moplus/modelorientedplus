@@ -308,6 +308,7 @@
     <EmbeddedResource Include="Resources\DisplayValues.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DisplayValues.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -696,7 +696,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 												{
 													template = new CodeTemplate();
 												}
-												template.FilePath = (propertyModelContext as Project).TemplatePath;
+												template.FilePath = (propertyModelContext as Project).TemplateAbsolutePath;
 												template.LoadTemplateFileData(false);
 												string templateName = template.TemplateName;
 												string code = String.Empty;
@@ -1260,7 +1260,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 												{
 													template = new CodeTemplate();
 												}
-												template.FilePath = (propertyModelContext as Project).TemplatePath;
+												template.FilePath = (propertyModelContext as Project).TemplateAbsolutePath;
 												template.LoadTemplateFileData(false);
 												string templateName = template.TemplateName;
 												string code = String.Empty;

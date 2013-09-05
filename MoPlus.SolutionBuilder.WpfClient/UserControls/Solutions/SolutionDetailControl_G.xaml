@@ -5,7 +5,7 @@
  from being overwritten.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>8/7/2013</CreatedDate>
+ <CreatedDate>9/4/2013</CreatedDate>
  <Status>Generated</Status>
 -->
 <lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Solutions.SolutionDetailControl"
@@ -139,6 +139,20 @@
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
+			<Style x:Key="UseRelativePathsInput" BasedOn="{StaticResource BasicCheckBox}" TargetType="{x:Type CheckBox}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding UseRelativePathsCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding UseRelativePathsValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 			<Style x:Key="CopyrightInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding CopyrightCustomized, Mode=OneWay}" Value="True">
@@ -232,6 +246,7 @@
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="*"></RowDefinition>
 				<RowDefinition Height="*"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
@@ -254,11 +269,11 @@
 			<Label Grid.Row="6" Grid.Column="1" Style="{DynamicResource ProductNameInput}" Content="{Binding ProductNameLabel, Mode=OneWay}" />
 			<Label Grid.Row="7" Grid.Column="1" Style="{DynamicResource ProductVersionInput}" Content="{Binding ProductVersionLabel, Mode=OneWay}" />
 			<Label Grid.Row="8" Grid.Column="1" Style="{DynamicResource TemplatePathInput}" Content="{Binding TemplatePathLabel, Mode=OneWay}" />
-			<Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource CopyrightInput}" Content="{Binding CopyrightLabel, Mode=OneWay}" />
-			<Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
-			<Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
-			<Label Grid.Row="12" Grid.Column="1" Style="{DynamicResource SourceNameInput}" Content="{Binding SourceNameLabel, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
-			<Label Grid.Row="13" Grid.Column="1" Style="{DynamicResource SpecSourceNameInput}" Content="{Binding SpecSourceNameLabel, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
+			<Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource CopyrightInput}" Content="{Binding CopyrightLabel, Mode=OneWay}" />
+			<Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
+			<Label Grid.Row="12" Grid.Column="1" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
+			<Label Grid.Row="13" Grid.Column="1" Style="{DynamicResource SourceNameInput}" Content="{Binding SourceNameLabel, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
+			<Label Grid.Row="14" Grid.Column="1" Style="{DynamicResource SpecSourceNameInput}" Content="{Binding SpecSourceNameLabel, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
 			<Border Name="PlaceHolderBorder" Grid.Column="2" Margin="7"/>
 			<Label Grid.Row="1" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SolutionID, Mode=OneWay}" />
 			<TextBox Grid.Row="2" Grid.Column="2" ToolTip="{Binding SolutionNameValidationMessage, Mode=OneWay}" Text="{Binding SolutionName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}" Loaded="TextBox_Loaded"/>
@@ -276,14 +291,15 @@
 				<TextBox Grid.Column="0" ToolTip="{Binding TemplatePathValidationMessage, Mode=OneWay}" Text="{Binding TemplatePath, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="512" Validation.ErrorTemplate="{x:Null}"/>
 				<Button Grid.Column="1" Command="Open" Content="{Binding SelectButtonLabel}"></Button>
 			</Grid>
-			<Border Name="CopyrightPlaceHolderBorder" Grid.Row="9" Margin="7"/>
-			<TextBox Grid.Row="9" Grid.Column="2" ToolTip="{Binding CopyrightValidationMessage, Mode=OneWay}" Text="{Binding Copyright, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=CopyrightPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
-			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="10" Margin="7"/>
-			<TextBox Grid.Row="10" Grid.Column="2" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
-			<TextBox Grid.Row="11" Grid.Column="2" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
-			<Label Grid.Row="12" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SourceName, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
-			<Label Grid.Row="13" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SpecSourceName, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
-			<StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="2" Margin="5">
+			<CheckBox Grid.Row="9" Grid.Column="2" Style="{DynamicResource UseRelativePathsInput}" Content="{Binding UseRelativePathsLabel, Mode=OneWay}" IsChecked="{Binding UseRelativePaths}" />
+			<Border Name="CopyrightPlaceHolderBorder" Grid.Row="10" Margin="7"/>
+			<TextBox Grid.Row="10" Grid.Column="2" ToolTip="{Binding CopyrightValidationMessage, Mode=OneWay}" Text="{Binding Copyright, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=CopyrightPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="11" Margin="7"/>
+			<TextBox Grid.Row="11" Grid.Column="2" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<TextBox Grid.Row="12" Grid.Column="2" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
+			<Label Grid.Row="13" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SourceName, Mode=OneWay}" Visibility="{Binding SourceNameVisibility}" />
+			<Label Grid.Row="14" Grid.Column="2" Style="{StaticResource LabelValue}" Content="{Binding SpecSourceName, Mode=OneWay}" Visibility="{Binding SpecSourceNameVisibility}" />
+			<StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="2" Margin="5">
 				<Button Command="{Binding UpdateCommand}" Content="{Binding UpdateButtonLabel}"></Button>
 				<Button Command="{Binding ResetCommand}" Content="{Binding ResetButtonLabel}"></Button>
 				<Button Command="{Binding DefaultsCommand}" Content="{Binding DefaultsButtonLabel}"></Button>

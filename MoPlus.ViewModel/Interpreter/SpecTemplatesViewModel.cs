@@ -464,16 +464,18 @@ namespace MoPlus.ViewModel.Interpreter
 			Items.Clear();
 			foreach (DatabaseSource source in Solution.DatabaseSourceList)
 			{
-				if (!String.IsNullOrEmpty(source.TemplatePath) && !String.IsNullOrEmpty(Directory.GetParent(source.TemplatePath).FullName))
+				source.Solution = Solution;
+				if (!String.IsNullOrEmpty(source.TemplatePath) && !String.IsNullOrEmpty(Directory.GetParent(source.TemplateAbsolutePath).FullName))
 				{
-					directories[Directory.GetParent(source.TemplatePath).FullName] = Directory.GetParent(source.TemplatePath).FullName;
+					directories[Directory.GetParent(source.TemplateAbsolutePath).FullName] = Directory.GetParent(source.TemplateAbsolutePath).FullName;
 				}
 			}
 			foreach (XmlSource source in Solution.XmlSourceList)
 			{
-				if (!String.IsNullOrEmpty(source.TemplatePath) && !String.IsNullOrEmpty(Directory.GetParent(source.TemplatePath).FullName))
+				source.Solution = Solution;
+				if (!String.IsNullOrEmpty(source.TemplatePath) && !String.IsNullOrEmpty(Directory.GetParent(source.TemplateAbsolutePath).FullName))
 				{
-					directories[Directory.GetParent(source.TemplatePath).FullName] = Directory.GetParent(source.TemplatePath).FullName;
+					directories[Directory.GetParent(source.TemplateAbsolutePath).FullName] = Directory.GetParent(source.TemplateAbsolutePath).FullName;
 				}
 			}
 			for (int i = 0; i < directories.Count; i++)

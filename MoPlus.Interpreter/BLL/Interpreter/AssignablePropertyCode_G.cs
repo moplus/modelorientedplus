@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/22/2013</CreatedDate>
+	/// <CreatedDate>9/4/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum AssignablePropertyCode
@@ -246,14 +246,16 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		ToStateID = 104,
 		/// <summary>For ToStepID assignable property.</summary>
 		ToStepID = 105,
+		/// <summary>For UseRelativePaths assignable property.</summary>
+		UseRelativePaths = 106,
 		/// <summary>For ValueID assignable property.</summary>
-		ValueID = 106,
+		ValueID = 107,
 		/// <summary>For ValueName assignable property.</summary>
-		ValueName = 107,
+		ValueName = 108,
 		/// <summary>For WorkflowID assignable property.</summary>
-		WorkflowID = 108,
+		WorkflowID = 109,
 		/// <summary>For WorkflowName assignable property.</summary>
-		WorkflowName = 109,
+		WorkflowName = 110,
 
 		#region protected
 		/// <summary>For SourceName assignable property.</summary>

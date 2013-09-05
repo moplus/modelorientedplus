@@ -21,6 +21,7 @@ using BLL = MoPlus.Interpreter.BLL;
 using MoPlus.Interpreter.BLL.Specifications;
 using MoPlus.Interpreter.Resources;
 using Microsoft.SqlServer.Management.Smo;
+using System.IO;
 
 namespace MoPlus.Interpreter.BLL.Solutions
 {
@@ -40,6 +41,32 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		#endregion "Constants"
 		
 		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the primary source db.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public string TemplateAbsolutePath
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(TemplatePath))
+				{
+					if (File.Exists(TemplatePath))
+					{
+						return TemplatePath;
+					}
+					if (Solution != null && !String.IsNullOrEmpty(Solution.SolutionDirectory))
+					{
+						Uri uri = new Uri(Path.Combine(Solution.SolutionDirectory, TemplatePath));
+						string path = Path.GetFullPath(uri.AbsolutePath).ToString();
+						return path;
+					}
+					return TemplatePath;
+				}
+				return null;
+			}
+		}
+
 		private EnterpriseDataObjectList<Project> _projectReferences = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the ProjectReferences.</summary>

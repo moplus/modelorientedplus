@@ -722,7 +722,12 @@ public static void DeleteCurrentItemFromSolution(Solution solutionContext)
 ///--------------------------------------------------------------------------------
 public override void Load(string inputFilePath)
 {%%><%%=TAB 1%%><%%-
-	base.Load(inputFilePath);
+	base.Load(inputFilePath);%%>
+	if (BLLClassName == "Solution")
+	{
+	<%%-
+	SolutionDirectory = System.IO.Directory.GetParent(inputFilePath).FullName;%%>
+	}<%%-
 	ResetLoaded(true);
 	ResetModified(false);%%><%%=TAB -1%%><%%-
 }
@@ -736,7 +741,12 @@ public override void Save(string inputFilePath)
 {%%>
 <%%=TAB 1%%>
 <%%-
-	base.Save(inputFilePath);
+	base.Save(inputFilePath);%%>
+	if (BLLClassName == "Solution")
+	{
+	<%%-
+	SolutionDirectory = System.IO.Directory.GetParent(inputFilePath).FullName;%%>
+	}<%%-
 	ResetLoaded(true);
 	ResetModified(false);%%>
 <%%=TAB -1%%>

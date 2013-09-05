@@ -16,12 +16,22 @@
 	set
 	{%%><%%=TAB 1%%><%%-
 		if (%%><%%=BLLFieldName%%><%%- != value)
-		{%%><%%=TAB 1%%><%%-
-			%%><%%=BLLFieldName%%><%%- = value;%%>
-			if (Tags.Contains("IgnoreModified") == false && BLLPropertyName != "IsAutoUpdated")
+		{%%><%%=TAB 1%%>
+			if (Tags.Contains("CustomBLLSet") == true)
 			{
 			<%%-
+			#region protected
+			#endregion protected%%>
+			}
+			else
+			{
+			<%%-
+			%%><%%=BLLFieldName%%><%%- = value;%%>
+				if (Tags.Contains("IgnoreModified") == false && BLLPropertyName != "IsAutoUpdated")
+				{
+			<%%-
 			_isModified = true;%%>
+				}
 			}
 			<%%-
 			base.OnPropertyChanged("%%><%%=BLLPropertyName%%><%%-");%%><%%=TAB -1%%><%%-

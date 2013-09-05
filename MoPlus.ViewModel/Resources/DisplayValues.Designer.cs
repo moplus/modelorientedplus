@@ -3510,6 +3510,15 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use Relative Paths (useful only after solution is saved to a location).
+        /// </summary>
+        internal static string Edit_UseRelativePathsProperty {
+            get {
+                return ResourceManager.GetString("Edit_UseRelativePathsProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Name.
         /// </summary>
         internal static string Edit_UserNameProperty {

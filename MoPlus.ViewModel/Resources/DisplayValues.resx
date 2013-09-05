@@ -5564,4 +5564,8 @@ The &lt;i&gt;continue&lt;/i&gt; statement is used to skip past the remaining set
 will skip &lt;i&gt;SomeStatements&lt;/i&gt; if &lt;i&gt;SomeCondition&lt;/i&gt; is met.</value>
     <comment>For help.</comment>
   </data>
+  <data name="Edit_UseRelativePathsProperty" xml:space="preserve">
+    <value>Use Relative Paths (useful only after solution is saved to a location)</value>
+    <comment>For indicating if template paths for solution should be relative.</comment>
+  </data>
 </root>

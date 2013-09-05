@@ -234,6 +234,7 @@
     <Compile Include="BLL\Solutions\DatabaseSource.cs" />
     <Compile Include="BLL\Solutions\Project.cs" />
     <Compile Include="BLL\Solutions\Solution.cs" />
+    <Compile Include="BLL\Solutions\SpecificationSource.cs" />
     <Compile Include="BLL\Solutions\Tag.cs" />
     <Compile Include="BLL\Solutions\XmlSource.cs" />
     <Compile Include="BLL\Specifications\SqlColumn.cs" />

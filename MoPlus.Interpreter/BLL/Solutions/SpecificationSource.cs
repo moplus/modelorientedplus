@@ -18,6 +18,7 @@ using System.Text;
 using MoPlus.Common;
 using MoPlus.Data;
 using BLL = MoPlus.Interpreter.BLL;
+using System.IO;
 
 namespace MoPlus.Interpreter.BLL.Solutions
 {
@@ -29,7 +30,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
 	/// <CreatedDate>9/4/2013</CreatedDate>
-	/// <Status>Generated</Status>
+	/// <Status>Customized</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SpecificationSource : BusinessObjectBase
 	{
@@ -37,6 +38,32 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		#endregion "Constants"
 		
 		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the primary source db.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public string TemplateAbsolutePath
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(TemplatePath))
+				{
+					if (File.Exists(TemplatePath))
+					{
+						return TemplatePath;
+					}
+					if (Solution != null && !String.IsNullOrEmpty(Solution.SolutionDirectory))
+					{
+						Uri uri = new Uri(Path.Combine(Solution.SolutionDirectory, TemplatePath));
+						string path = Path.GetFullPath(uri.AbsolutePath).ToString();
+						return path;
+					}
+					return TemplatePath;
+				}
+				return null;
+			}
+		}
+
 		#endregion "Fields and Properties"
 		
 		#region "Methods"

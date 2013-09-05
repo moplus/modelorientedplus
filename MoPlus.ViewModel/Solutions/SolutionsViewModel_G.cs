@@ -248,7 +248,7 @@ namespace MoPlus.ViewModel.Solutions
 							#region protected
 							if (!String.IsNullOrEmpty(item.Solution.TemplatePath))
 							{
-								if (String.IsNullOrEmpty(item.OriginalTemplatePath) || System.IO.Directory.GetParent(item.OriginalTemplatePath).FullName != System.IO.Directory.GetParent(item.Solution.TemplatePath).FullName)
+								if (item.CodeTemplatesFolder.Items.Count == 0 || String.IsNullOrEmpty(item.OriginalTemplatePath) || System.IO.Directory.GetParent(item.OriginalTemplatePath).FullName != System.IO.Directory.GetParent(item.Solution.TemplateAbsolutePath).FullName)
 								{
 									item.CodeTemplatesFolder.LoadTemplateDirectories();
 									item.OriginalTemplatePath = item.Solution.TemplatePath;
@@ -269,7 +269,7 @@ namespace MoPlus.ViewModel.Solutions
 						Solutions.Add(newItem);
 							
 						#region protected
-						if (String.IsNullOrEmpty(newItem.OriginalTemplatePath) || System.IO.Directory.GetParent(newItem.OriginalTemplatePath).FullName != System.IO.Directory.GetParent(newItem.Solution.TemplatePath).FullName)
+						if (String.IsNullOrEmpty(newItem.OriginalTemplatePath) || System.IO.Directory.GetParent(newItem.OriginalTemplatePath).FullName != System.IO.Directory.GetParent(newItem.Solution.TemplateAbsolutePath).FullName)
 						{
 							newItem.CodeTemplatesFolder.LoadTemplateDirectories();
 							newItem.OriginalTemplatePath = newItem.Solution.TemplatePath;

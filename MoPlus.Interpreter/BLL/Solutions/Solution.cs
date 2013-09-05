@@ -52,6 +52,31 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		
 		#region "Fields and Properties"
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the primary source db.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public string TemplateAbsolutePath
+		{
+			get
+			{
+				if (!String.IsNullOrEmpty(TemplatePath))
+				{
+					if (File.Exists(TemplatePath))
+					{
+						return TemplatePath;
+					}
+					if (!String.IsNullOrEmpty(SolutionDirectory))
+					{		
+						Uri uri = new Uri(Path.Combine(SolutionDirectory, TemplatePath));
+						string path = Path.GetFullPath(uri.AbsolutePath).ToString();  
+						return path;
+					}
+				}
+				return null;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the EntityCount.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
@@ -1599,7 +1624,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				// load templates
 				if (!String.IsNullOrEmpty(source.TemplatePath))
 				{
-					LoadSpecTemplateDirectory(Directory.GetParent(source.TemplatePath).FullName, Directory.GetParent(source.TemplatePath).FullName);
+					LoadSpecTemplateDirectory(Directory.GetParent(source.TemplateAbsolutePath).FullName, Directory.GetParent(source.TemplateAbsolutePath).FullName);
 				}
 			}
 			foreach (XmlSource source in XmlSourceList)
@@ -1607,7 +1632,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				// load templates
 				if (!String.IsNullOrEmpty(source.TemplatePath))
 				{
-					LoadSpecTemplateDirectory(Directory.GetParent(source.TemplatePath).FullName, Directory.GetParent(source.TemplatePath).FullName);
+					LoadSpecTemplateDirectory(Directory.GetParent(source.TemplateAbsolutePath).FullName, Directory.GetParent(source.TemplateAbsolutePath).FullName);
 				}
 			}
 		}
@@ -1647,7 +1672,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			if (!String.IsNullOrEmpty(TemplatePath))
 			{
 				CodeTemplates.Clear();
-				LoadCodeTemplateDirectory(Directory.GetParent(TemplatePath).FullName);
+				LoadCodeTemplateDirectory(Directory.GetParent(TemplateAbsolutePath).FullName);
 			}
 		}
 
@@ -2722,7 +2747,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						else
 						{
 							SpecTemplate template = new SpecTemplate();
-							template.FilePath = source.TemplatePath;
+							template.FilePath = source.TemplateAbsolutePath;
 							template.LoadTemplateFileData(false);
 							string templateName = template.TemplateName;
 							string code = String.Empty;
@@ -3191,7 +3216,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				else
 				{
 					CodeTemplate template2 = new CodeTemplate();
-					template2.FilePath = TemplatePath;
+					template2.FilePath = TemplateAbsolutePath;
 					template2.LoadTemplateFileData(false);
 					string templateName = template2.TemplateName;
 					string code = String.Empty;

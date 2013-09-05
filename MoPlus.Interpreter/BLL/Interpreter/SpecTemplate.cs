@@ -163,14 +163,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		{
 			foreach (DatabaseSource source in Solution.DatabaseSourceList)
 			{
-				if (source.TemplatePath == FilePath)
+				if (source.TemplateAbsolutePath == FilePath)
 				{
 					return source;
 				}
 			}
 			foreach (XmlSource source in Solution.XmlSourceList)
 			{
-				if (source.TemplatePath == FilePath)
+				if (source.TemplateAbsolutePath == FilePath)
 				{
 					return source;
 				}

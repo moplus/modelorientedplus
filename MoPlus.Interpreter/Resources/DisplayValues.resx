@@ -220,7 +220,7 @@
     <comment>For validating filenames.</comment>
   </data>
   <data name="Regex_FilePath" xml:space="preserve">
-    <value>^[a-zA-Z0-9_][a-zA-Z0-9 :\\._]*[a-zA-Z0-9_]$</value>
+    <value>^[a-zA-Z0-9_.][a-zA-Z0-9 :\\._]*[a-zA-Z0-9_]$</value>
     <comment>For validating filenames.</comment>
   </data>
   <data name="Regex_LooseName" xml:space="preserve">

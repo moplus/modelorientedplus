@@ -364,10 +364,10 @@ namespace MoPlus.ViewModel.Interpreter
 			Items.Clear();
 
 			// load templates
-			if (!String.IsNullOrEmpty(Solution.TemplatePath))
+			if (!String.IsNullOrEmpty(Solution.TemplateAbsolutePath))
 			{
 				Solution.CodeTemplates.Clear();
-				LoadTemplateDirectory(Directory.GetParent(Solution.TemplatePath).FullName, false);
+				LoadTemplateDirectory(Directory.GetParent(Solution.TemplateAbsolutePath).FullName, false);
 			}
 			SortTemplateDirectories();
 			Refresh(true);

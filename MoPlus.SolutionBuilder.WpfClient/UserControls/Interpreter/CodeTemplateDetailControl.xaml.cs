@@ -1018,7 +1018,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						bool foundProject = false;
 						foreach (Project assembly in view.Solution.ProjectList)
 						{
-							if (assembly.TemplatePath == view.CodeTemplate.FilePath)
+							if (assembly.TemplateAbsolutePath == view.CodeTemplate.FilePath)
 							{
 								BusinessConfiguration.CurrentProject = assembly;
 								foundProject = true;
@@ -1079,7 +1079,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 						bool foundProject = false;
 						foreach (Project assembly in view.Solution.ProjectList)
 						{
-							if (assembly.TemplatePath == view.CodeTemplate.FilePath)
+							if (assembly.TemplateAbsolutePath == view.CodeTemplate.FilePath)
 							{
 								BusinessConfiguration.CurrentProject = assembly;
 								foundProject = true;
