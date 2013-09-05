@@ -312,7 +312,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 					if (%%><%%=BLLClassName%%><%%- != null)
 					{
 						_edit%%><%%=BLLClassName%%><%%-.TransformDataFromObject(%%><%%=BLLClassName%%><%%-, null, false);%%>
-						if (Tags.Contains("CustomEditProperties") == true)
+						if (Tags.Contains("CustomEditVM") == true)
 						{
 						<%%-
 						#region protected

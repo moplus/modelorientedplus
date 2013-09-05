@@ -701,7 +701,13 @@ foreach (Entity in EntityAndBaseEntities)
 					}
 					else if (BLLPropertyName.EndsWith("Path") == true)
 					{
-						if (Tags.Contains("ComboBox") == true)
+						if (Tags.Contains("CustomComboBox") == true)
+						{
+			<%%-
+			<!-- region protected -->
+			<!-- endregion protected -->%%>
+						}
+						else if (Tags.Contains("ComboBox") == true)
 						{
 			<%%-
 			<ComboBox Grid.Row="%%><%%=rowIndex%%><%%-" Grid.Column="2" ToolTip="{Binding %%><%%=BLLPropertyName%%><%%-ValidationMessage, Mode=OneWay}" ItemsSource="{Binding %%><%%=BLLPropertyName%%><%%-Items}" DisplayMemberPath="DisplayName" SelectedValuePath="ItemValue" SelectedValue="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />%%>

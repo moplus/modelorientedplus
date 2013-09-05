@@ -234,7 +234,9 @@
 			<TextBox Grid.Row="3" Grid.Column="2" ToolTip="{Binding NamespaceValidationMessage, Mode=OneWay}" Text="{Binding Namespace, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
 			<TextBox Grid.Row="4" Grid.Column="2" ToolTip="{Binding DbServerNameValidationMessage, Mode=OneWay}" Text="{Binding DbServerName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
 			<TextBox Grid.Row="5" Grid.Column="2" ToolTip="{Binding DbNameValidationMessage, Mode=OneWay}" Text="{Binding DbName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
+			<!-- region protected -->
 			<ComboBox Grid.Row="6" Grid.Column="2" ToolTip="{Binding TemplatePathValidationMessage, Mode=OneWay}" ItemsSource="{Binding TemplatePathItems}" DisplayMemberPath="DisplayName" SelectedValuePath="ItemValue" SelectedValue="{Binding TemplateAbsolutePath, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
+			<!-- endregion protected -->
 			<!-- region protected -->
 			<ListBox Grid.Row="7" Grid.Column="2" ToolTip="{Binding ProjectReferenceListValidationMessage, Mode=OneWay}" ItemsSource="{Binding ProjectReferenceListItems}" DisplayMemberPath="ReferencedProjectName" SelectedValuePath="ReferencedProjectID" SelectionMode="Multiple" Validation.ErrorTemplate="{x:Null}" >
 				<ListBox.ItemContainerStyle>
