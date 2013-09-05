@@ -123,6 +123,23 @@ namespace MoPlus.ViewModel.Solutions
 			}
 		}
 
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets TemplateAbsolutePath.</summary>
+		///--------------------------------------------------------------------------------
+		public string TemplateAbsolutePath
+		{
+			get
+			{
+				return EditProject.TemplateAbsolutePath;
+			}
+			set
+			{
+				EditProject.TemplateAbsolutePath = value;
+				OnPropertyChanged("TemplatePath");
+				OnPropertyChanged("TabTitle");
+			}
+		}
+
 		#endregion "Properties"
 
 		#region "Methods"

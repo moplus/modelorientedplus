@@ -65,6 +65,15 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 				return null;
 			}
+			set
+			{
+				if (_templatePath != value)
+				{
+					_templatePath = value;
+					_isModified = true;
+					base.OnPropertyChanged("TemplatePath");
+				}
+			}
 		}
 
 		private EnterpriseDataObjectList<Project> _projectReferences = null;
