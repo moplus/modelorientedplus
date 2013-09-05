@@ -3058,6 +3058,7 @@ A &lt;b&gt;Project&lt;/b&gt; consists of the following properties:
 &lt;li&gt;&lt;b&gt;Namespace (string)&lt;/b&gt;: The namespace of the project, if applicable for a software project.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;DbServerName (string)&lt;/b&gt;: The name of the database server to connect to, if applicable.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;DbName (string)&lt;/b&gt;: The name of the database to connect to, if applicable.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;TemplatePath (string)&lt;/b&gt;: The absolute or relative path to the template for generating code for the project (and it's components).&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the project.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;SolutionID (Guid)&lt;/b&gt;: (or Method) The identifier of the parent solution.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;ProjectReferenceCount (int)&lt;/b&gt;: Read only number of project references in project.&lt;/li&gt;
@@ -3193,6 +3194,8 @@ A &lt;b&gt;Solution&lt;/b&gt; consists of the following properties:
 &lt;li&gt;&lt;b&gt;CompanyName (string)&lt;/b&gt;: The name of the company as it relates to the solution, if applicable.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;ProductName (string)&lt;/b&gt;: The name of the product as it relates to the solution, if applicable.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;ProductVersion (string)&lt;/b&gt;: The version of the product as it relates to the solution, if applicable.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;TemplatePath (string)&lt;/b&gt;: The absolute or relative path to the template for generating code for the solution (and it's components).&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;UseRelativePaths (bool)&lt;/b&gt;: Flag, indicating if template paths for the solution (and projects) should be relative.  If you are using relative paths, set this value to true, save the solution, then choose your solution and project level templates.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the solution.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;EntityCount (int)&lt;/b&gt;: Read only number of entities in the solution.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;ProjectCount (int)&lt;/b&gt;: Read only number of projects in the solution.&lt;/li&gt;
