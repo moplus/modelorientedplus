@@ -457,7 +457,7 @@ namespace MoPlus.Interpreter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ^[a-zA-Z0-9_][a-zA-Z0-9&amp; _-]*[a-zA-Z0-9&amp;_-]$.
+        ///   Looks up a localized string similar to ^[a-zA-Z0-9_][a-zA-Z0-9&amp; _\\:.-]*[a-zA-Z0-9&amp;_-]$.
         /// </summary>
         internal static string Regex_DbName {
             get {
@@ -511,7 +511,7 @@ namespace MoPlus.Interpreter.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ^[a-zA-Z0-9_-][a-zA-Z0-9\\_-]*$.
+        ///   Looks up a localized string similar to ^[a-zA-Z0-9_(-][a-zA-Z0-9\\_().-]*$.
         /// </summary>
         internal static string Regex_PathName {
             get {

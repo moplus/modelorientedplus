@@ -699,7 +699,7 @@
     <value>No output could be produced for {0} since none is specified for this template.</value>
   </data>
   <data name="Regex_PathName" xml:space="preserve">
-    <value>^[a-zA-Z0-9_-][a-zA-Z0-9\\_-]*$</value>
+    <value>^[a-zA-Z0-9_(-][a-zA-Z0-9\\_().-]*$</value>
     <comment>For validating names.</comment>
   </data>
   <data name="Validation_PathNameValue" xml:space="preserve">
@@ -715,7 +715,7 @@
     <value>Could not connect to SQLServer {0}.</value>
   </data>
   <data name="Regex_DbName" xml:space="preserve">
-    <value>^[a-zA-Z0-9_][a-zA-Z0-9&amp; _-]*[a-zA-Z0-9&amp;_-]$</value>
+    <value>^[a-zA-Z0-9_][a-zA-Z0-9&amp; _\\:.-]*[a-zA-Z0-9&amp;_-]$</value>
     <comment>For validating database names.</comment>
   </data>
   <data name="Validation_DbNameValue" xml:space="preserve">
