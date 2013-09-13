@@ -15,21 +15,30 @@
     [EdmEntityTypeAttribute(NamespaceName="%%><%%=Project.DbName%%><%%-Model", Name="%%><%%=BLLClassName%%><%%-")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class %%><%%=BLLClassName%%><%%- : EntityObject
+    public partial class %%><%%=BLLClassName%%><%%- : %%>
+    if (BaseEntity != null)
+    {
+ 	   <%%=BaseEntity.BLLClassName%%>
+    }
+    else
+    {
+ 	   <%%-EntityObject%%>
+    }
+    <%%-
     {
         #region Factory Method
     
         /// <summary>
         /// Create a new %%><%%=BLLClassName%%><%%- object.
         /// </summary>%%>
-        foreach (Property)
+        foreach (Property where IsEFStorageModelProperty == true)
         {
         <%%-
         /// <param name="%%><%%=BLLParameterName%%><%%-">Initial value of the %%><%%=BLLPropertyName%%><%%- property.</param>%%>
         }
         <%%-
         public static %%><%%=BLLClassName%%><%%- Create%%><%%=BLLClassName%%><%%-(%%>
-        foreach (Property)
+        foreach (Property where IsEFStorageModelProperty == true)
         {
         	if (ItemIndex > 0)
         	{
@@ -40,7 +49,7 @@
         <%%-)
         {
             %%><%%=BLLClassName%%><%%- %%><%%=BLLClassName%%><%%- = new %%><%%=BLLClassName%%><%%-();%%>
-            foreach (Property)
+            foreach (Property where IsEFStorageModelProperty == true)
             {
             <%%-
             %%><%%=../BLLClassName%%><%%-.%%><%%=BLLPropertyName%%><%%- = %%><%%=BLLParameterName%%><%%-;%%>
@@ -52,7 +61,7 @@
         #endregion
         
         #region Primitive Properties%%>
-        foreach (Property)
+        foreach (Property where IsEFConceptualModelProperty == true)
         {
         <%%-
     
@@ -103,7 +112,7 @@
         #endregion
     
         #region Navigation Properties%%>
-        with (BaseEntity)
+        /*with (BaseEntity)
         {
         	CurrentRelationship = null
         	foreach (Relationship in ../Entity)
@@ -242,7 +251,7 @@
             }
         }%%>
         	}
-        }
+        }*/
         foreach (EntityReference)
         {
         	CurrentRelationship = null

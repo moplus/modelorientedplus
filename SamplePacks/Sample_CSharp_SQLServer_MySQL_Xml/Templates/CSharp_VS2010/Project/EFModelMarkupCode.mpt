@@ -59,7 +59,7 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
            }
             <%%-
           </Key>%%>
-          foreach (Property where Tags.Contains("DB") == true)
+          foreach (Property where IsEFStorageModelProperty == true)
           {
           <%%-
           <Property Name="%%><%%=SourceName%%><%%-" Type="%%><%%=DBBaseDataType%%><%%-"%%>
@@ -160,7 +160,7 @@ foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Ta
     <edmx:ConceptualModels>
       <Schema Namespace="%%><%%=Project.DbName%%><%%-Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="%%><%%=DSModelClassName%%><%%-" annotation:LazyLoadingEnabled="true">%%>
-foreach (Entity in Solution where Tags.Contains("DB") == true)
+foreach (Entity in Solution where Tags.Contains("DB") == true && BaseEntity == null)
 {
 	<%%-
           <EntitySet Name="%%><%%=BLLPluralEntityName%%><%%-" EntityType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-" />%%>
@@ -170,9 +170,33 @@ foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Ta
 	<%%-
           <AssociationSet Name="%%><%%=RelationshipName%%><%%-" Association="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-">%%>
           	<%%-
-            <End Role="%%><%%=EFSinkRoleName%%><%%-" EntitySet="%%><%%=ReferencedEntity.BLLPluralEntityName%%><%%-" />%%>
+            <End Role="%%><%%=EFSinkRoleName%%><%%-" EntitySet="%%>
+            with (ReferencedEntity)
+            {
+           	if (BaseEntity != null)
+       	{
+            	<%%=BaseEntity.BLLPluralEntityName%%>
+              }
+              else
+              {
+            	<%%=BLLPluralEntityName%%>
+              }
+            }
+            <%%-" />%%>
 	      <%%-
-            <End Role="%%><%%=EFSourceRoleName%%><%%-" EntitySet="%%><%%=Entity.BLLPluralEntityName%%><%%-" />%%>
+            <End Role="%%><%%=EFSourceRoleName%%><%%-" EntitySet="%%>
+           with (Entity)
+           {
+           	if (BaseEntity != null)
+       	{
+            	<%%=BaseEntity.BLLPluralEntityName%%>
+              }
+              else
+              {
+            	<%%=BLLPluralEntityName%%>
+              }
+            }
+            <%%-" />%%>
            <%%-
           </AssociationSet>%%>
 }
@@ -181,16 +205,25 @@ foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Ta
 foreach (Entity in Solution where Tags.Contains("DB") == true)
 {
 <%%-
-        <EntityType Name="%%><%%=BLLClassName%%><%%-">
+        <EntityType Name="%%><%%=BLLClassName%%><%%-"%%>
+        if (BaseEntity != null)
+        {
+        <%%- BaseType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BaseEntity.BLLClassName%%><%%-"%%>
+        }
+        <%%->%%>
+        if (BaseEntity == null)
+        {
+        <%%-
           <Key>%%>
-          foreach (Property where Tags.Contains("DB") == true && IsPrimaryKeyMember == true)
-          {
+	          foreach (Property where Tags.Contains("DB") == true && IsPrimaryKeyMember == true)
+	          {
           	<%%-
             <PropertyRef Name="%%><%%=BLLPropertyName%%><%%-" />%%>
-           }
+          	 }
             <%%-
           </Key>%%>
-          foreach (Property where Tags.Contains("DB") == true)
+          }
+          foreach (Property where IsEFConceptualModelProperty == true)
           {
           <%%-
           <Property Name="%%><%%=BLLPropertyName%%><%%-" Type="%%><%%=CSharpBaseDataType.Replace("Byte[]", "Binary")%%><%%-"%%>
@@ -244,8 +277,8 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
         	{
         		with (CurrentRelationship)
         		{
-          	<%%-
-          <NavigationProperty Name="%%><%%=ReferencedEntity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=Entity.BLLClassName%%><%%-" ToRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" />%%>
+//     	<%%-
+//          <NavigationProperty Name="%%><%%=ReferencedEntity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=Entity.BLLClassName%%><%%-" ToRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" />%%>
         		}
         	}
         }
@@ -280,8 +313,8 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
         	{
         		with (CurrentRelationship)
         		{
-          	<%%-
-          <NavigationProperty Name="%%><%%=Entity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" ToRole="%%><%%=Entity.BLLClassName%%><%%-" />%%>
+//          	<%%-
+//          <NavigationProperty Name="%%><%%=Entity.BLLClassName%%><%%-" Relationship="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" FromRole="%%><%%=ReferencedEntity.BLLClassName%%><%%-" ToRole="%%><%%=Entity.BLLClassName%%><%%-" />%%>
         		}
         	}
         }
@@ -410,17 +443,45 @@ foreach (Relationship in Solution where Tags.Contains("DB") == true && Entity.Ta
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="%%><%%=Project.DbName%%><%%-ModelStoreContainer" CdmEntityContainer="%%><%%=DSModelClassName%%><%%-">%%>
-foreach (Entity in Solution where Tags.Contains("DB") == true)
+foreach (Entity in Solution where Tags.Contains("DB") == true && BaseEntity == null)
 {
 	<%%-
-          <EntitySetMapping Name="%%><%%=BLLPluralEntityName%%><%%-"><EntityTypeMapping TypeName="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-"><MappingFragment StoreEntitySet="%%><%%=SourceName%%><%%-">%%>
-	foreach (Property where Tags.Contains("DB") == true)
+          <EntitySetMapping Name="%%><%%=BLLPluralEntityName%%><%%-">
+            <EntityTypeMapping TypeName="%%>
+            if (HasExtendingEntities == true)
+            {
+            	<%%-IsTypeOf(%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-)%%>
+            }
+            else
+            {
+            	<%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%>
+            }
+            <%%-">
+              <MappingFragment StoreEntitySet="%%><%%=SourceName%%><%%-">%%>
+	foreach (Property where IsEFConceptualModelProperty == true)
 	{
           <%%-
-            <ScalarProperty Name="%%><%%=BLLPropertyName%%><%%-" ColumnName="%%><%%=SourceName%%><%%-" />%%>
+                <ScalarProperty Name="%%><%%=BLLPropertyName%%><%%-" ColumnName="%%><%%=SourceName%%><%%-" />%%>
 	}
             <%%-
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>%%>
+              </MappingFragment>
+            </EntityTypeMapping>%%>
+        foreach (Entity in ExtendingEntities)
+        {
+ 	<%%-
+            <EntityTypeMapping TypeName="IsTypeOf(%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-)">
+              <MappingFragment StoreEntitySet="%%><%%=SourceName%%><%%-">%%>
+	foreach (Property where IsEFStorageModelProperty == true)
+	{
+          <%%-
+                <ScalarProperty Name="%%><%%=BLLPropertyName%%><%%-" ColumnName="%%><%%=SourceName%%><%%-" />%%>
+	}
+            <%%-
+              </MappingFragment>
+            </EntityTypeMapping>%%>
+       }
+        <%%-
+          </EntitySetMapping>%%>
 }
         <%%-
         </EntityContainerMapping>
@@ -462,11 +523,25 @@ foreach (Entity in Solution where Tags.Contains("DB") == true)
 }
 foreach (Relationship in Solution where Tags.Contains("DB") == true)
 {
+	with (Entity)
+	{
+		if (BaseEntity == null)
+		{
 	<%%-
-        <AssociationConnector Association="%%><%%=Project.DbName%%><%%-Model.%%><%%=RelationshipName%%><%%-" ManuallyRouted="false">
+        <AssociationConnector Association="%%><%%=../Project.DbName%%><%%-Model.%%><%%=../RelationshipName%%><%%-" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="12.5" />
           <ConnectorPoint PointX="5.5" PointY="15.25" />
         </AssociationConnector>%%>
+        	}
+        }
+}
+foreach (Entity in Solution where BaseEntity != null)
+{
+<%%-
+        <InheritanceConnector EntityType="%%><%%=Project.DbName%%><%%-Model.%%><%%=BLLClassName%%><%%-" >
+          <ConnectorPoint PointX="4.5" PointY="12.5" />
+          <ConnectorPoint PointX="5.5" PointY="15.25" />
+        </InheritanceConnector>%%>
 }
       <%%-
       </Diagram>

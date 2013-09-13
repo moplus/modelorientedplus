@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME HasExtendingEntities
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in ExtendingEntities)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>%%></CONTENT>
