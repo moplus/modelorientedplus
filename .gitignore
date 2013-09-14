@@ -13,6 +13,8 @@ $tf/pendingchanges.tfb
 /MoPlus.Setup/Output/MoPlusSetupWinAppOnly.exe
 /MoPlus.Setup/Output/MoPlusSetupWinAppVS2010.exe
 /MoPlus.Setup/Output/MoPlusSetupWinAppVS2012.exe
+/MoPlus.Setup/Debug/setup.exe
+/MoPlus.Setup/Debug/MoPlus.Setup.msi
 /MoPlus.suo
 TestResults/
 x86/
