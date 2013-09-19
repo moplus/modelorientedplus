@@ -1324,11 +1324,13 @@ namespace MoPlus.Data
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>Get a list of alphanumeric words the input object.</summary>
+		/// <summary>Get a list of words from the input object.</summary>
+		/// 
+		/// <remarks>Alphanumeric and underscores are allowed as part of each word.</remarks>
 		///
 		/// <param name="item">The item to get the strings from from.</param>
 		///--------------------------------------------------------------------------------
-		public static List<string> GetAlphanumericWords(this object item)
+		public static List<string> GetWords(this object item)
 		{
 			if (item == null || item.ToString().Trim() == String.Empty)
 			{
@@ -1339,7 +1341,7 @@ namespace MoPlus.Data
 			StringBuilder word = new StringBuilder();
 			for (int i = 0; i < text.Length; i++)
 			{
-				if (char.IsLetterOrDigit(text[i]))
+				if (char.IsLetterOrDigit(text[i]) || text[i] == '_')
 				{
 					word.Append(text[i]);
 				}

@@ -1080,7 +1080,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				else
 				{
 					ConfigurationType getMode = ConfigurationType.None;
-					foreach (string word in templateText.Substring(configBeginIndex + 8, configEndIndex - configBeginIndex - 8).GetAlphanumericWords())
+					foreach (string word in templateText.Substring(configBeginIndex + 8, configEndIndex - configBeginIndex - 8).GetWords())
 					{
 						switch (getMode)
 						{
