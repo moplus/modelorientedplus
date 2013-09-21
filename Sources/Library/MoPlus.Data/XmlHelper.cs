@@ -47,39 +47,43 @@ namespace MoPlus.Data
 		{
 			// set up output stream
 			StringBuilder outputXml = new StringBuilder();
-			XmlWriter writer = XmlTextWriter.Create(outputXml);
+		    var writerSettings = new XmlWriterSettings();
+		    writerSettings.Indent = true;
+		    using (XmlWriter writer = XmlTextWriter.Create(outputXml))
+		    {
 
-			// serialize
-			//NameObjectCollection propertyTypes = new NameObjectCollection();
-			//foreach (PropertyInfo loopInfo in inputObject.GetType().GetProperties())
-			//{
-			//    if (loopInfo.PropertyType.IsClass == true)
-			//    {
-			//        bool skipProperty = false;
-			//        foreach (object loopAttribute in loopInfo.GetCustomAttributes(true))
-			//        {
-			//            if (loopAttribute is XmlIgnoreAttribute)
-			//            {
-			//                skipProperty = true;
-			//                break;
-			//            }
-			//        }
-			//        if (skipProperty == false)
-			//        {
-			//            propertyTypes[loopInfo.PropertyType.FullName] = loopInfo.PropertyType;
-			//        }
-			//    }
-			//}
-			//Type[] extraTypes = new Type[propertyTypes.Count];
-			//for (int i = 0; i < propertyTypes.Count; i++)
-			//{
-			//    extraTypes[i] = (Type)propertyTypes[i];
-			//}
-			//XmlSerializer serializer = new XmlSerializer(inputObject.GetType(), extraTypes);
-			XmlSerializer serializer = new XmlSerializer(inputObject.GetType());
-			serializer.Serialize(writer, inputObject);
-
-			return outputXml.ToString();
+		        // serialize
+		        //NameObjectCollection propertyTypes = new NameObjectCollection();
+		        //foreach (PropertyInfo loopInfo in inputObject.GetType().GetProperties())
+		        //{
+		        //    if (loopInfo.PropertyType.IsClass == true)
+		        //    {
+		        //        bool skipProperty = false;
+		        //        foreach (object loopAttribute in loopInfo.GetCustomAttributes(true))
+		        //        {
+		        //            if (loopAttribute is XmlIgnoreAttribute)
+		        //            {
+		        //                skipProperty = true;
+		        //                break;
+		        //            }
+		        //        }
+		        //        if (skipProperty == false)
+		        //        {
+		        //            propertyTypes[loopInfo.PropertyType.FullName] = loopInfo.PropertyType;
+		        //        }
+		        //    }
+		        //}
+		        //Type[] extraTypes = new Type[propertyTypes.Count];
+		        //for (int i = 0; i < propertyTypes.Count; i++)
+		        //{
+		        //    extraTypes[i] = (Type)propertyTypes[i];
+		        //}
+		        //XmlSerializer serializer = new XmlSerializer(inputObject.GetType(), extraTypes);
+		        XmlSerializer serializer = new XmlSerializer(inputObject.GetType());
+		        serializer.Serialize(writer, inputObject);
+                writer.Flush();
+		        return outputXml.ToString();
+		    }
 		}
 
 		///--------------------------------------------------------------------------------
