@@ -49,7 +49,7 @@ namespace MoPlus.Data
 			StringBuilder outputXml = new StringBuilder();
 		    var writerSettings = new XmlWriterSettings();
 		    writerSettings.Indent = true;
-		    using (XmlWriter writer = XmlTextWriter.Create(outputXml))
+		    using (XmlWriter writer = XmlTextWriter.Create(outputXml, writerSettings))
 		    {
 
 		        // serialize
