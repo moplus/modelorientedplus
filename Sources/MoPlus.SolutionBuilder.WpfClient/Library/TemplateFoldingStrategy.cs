@@ -62,12 +62,15 @@ namespace MoPlus.SolutionBuilder.WpfClient.Library
 				}
 				else if (c == '}' && startOffsets.Count == 0 && startEvalOffsets.Count > 0)
 				{
-					int startOffset = startBraceOffsets.Pop();
-					// don't fold if opening and closing brace are on the same line
-					//if (startOffset < lastNewLineOffset)
-					//{
-						newFoldings.Add(new NewFolding(startOffset, i + 1));
-					//}
+                    if (startBraceOffsets.Count > 0)
+                    {
+                        int startOffset = startBraceOffsets.Pop();
+                        // don't fold if opening and closing brace are on the same line
+                        //if (startOffset < lastNewLineOffset)
+                        //{
+                        newFoldings.Add(new NewFolding(startOffset, i + 1));
+                        //}
+                    }
 				}
 				else if (openTagTest == LanguageTerms.EvalOpenTag)
 				{
