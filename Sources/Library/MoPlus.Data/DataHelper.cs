@@ -12,6 +12,7 @@ You should have received a copy of the GNU General Public License along with thi
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Reflection;
 
@@ -94,14 +95,21 @@ namespace MoPlus.Data
 		///--------------------------------------------------------------------------------
 		public static bool SetPropertyValue(this object item, string propertyName, object propertyValue)
 		{
-			if (item != null && item.GetPropertyInfo(propertyName) != null)
-			{
-				object value = null;
-				value = GetValueFromSystemType(propertyValue, item.GetPropertySystemType(propertyName).ToString(), false);
-				item.GetPropertyInfo(propertyName).SetValue(item, value, null);
-				return true;
-			}
-			return false;
+		    try
+		    {
+		        if (item != null && item.GetPropertyInfo(propertyName) != null)
+		        {
+		            object value = null;
+		            value = GetValueFromSystemType(propertyValue, item.GetPropertySystemType(propertyName).ToString(), false);
+		            item.GetPropertyInfo(propertyName).SetValue(item, value, null);
+		            return true;
+		        }
+		    }
+		    catch (Exception E)
+		    {
+                throw new Exception(String.Format("Error setting property '{0}'!", propertyName), E);
+		    }
+		    return false;
 		}
 
 		///--------------------------------------------------------------------------------
