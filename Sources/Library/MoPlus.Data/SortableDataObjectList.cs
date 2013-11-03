@@ -376,7 +376,7 @@ namespace MoPlus.Data
 			{
 				return (Items as List<T>).FindAll(predicate);
 			}
-			return null;
+		    return new List<T>();
 		}
 
 		///--------------------------------------------------------------------------------

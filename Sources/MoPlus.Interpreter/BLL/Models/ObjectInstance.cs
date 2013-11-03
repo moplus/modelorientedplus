@@ -73,7 +73,7 @@ namespace MoPlus.Interpreter.BLL.Models
 						sb.Append(".");
 					}
 				}
-				if (ModelObject != null && PropertyInstanceList != null)
+				if (ModelObject != null && PropertyInstanceList != null && ModelObject.ModelPropertyList !=null)
 				{
 					bool isFirstItem = true;
 					foreach (ModelProperty property in ModelObject.ModelPropertyList.FindAll(p => p.IsDisplayProperty == true))
