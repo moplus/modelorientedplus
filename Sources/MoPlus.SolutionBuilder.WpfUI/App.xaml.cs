@@ -23,5 +23,24 @@ namespace MoPlus.SolutionBuilder.WpfUI
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Raises the <see cref="E:System.Windows.Application.Startup"/> event.
+        /// </summary>
+        /// <param name="e">A <see cref="T:System.Windows.StartupEventArgs"/> that contains the event data.</param>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            if (!e.Handled)
+            {
+                MessageBox.Show(e.Exception.ToString());
+                e.Handled = true;
+            }
+        }
     }
 }
