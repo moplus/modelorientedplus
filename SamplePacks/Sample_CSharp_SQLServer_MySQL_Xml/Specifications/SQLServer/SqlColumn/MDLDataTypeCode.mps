@@ -90,6 +90,9 @@ switch (DataType)
 	case "datetime":
 		<%%=24%%>
 		break
+	case "datetime2":
+		<%%=24%%>
+		break
 	case "smalldatetime":
 		<%%=24%%>
 		break
