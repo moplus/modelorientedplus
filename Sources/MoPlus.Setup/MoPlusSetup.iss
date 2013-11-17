@@ -43,6 +43,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 Source: "..\MoPlus.SolutionUpdater.CommandUI\bin\Release\*.*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MoPlus.SolutionBuilder.WpfUI\bin\Release\*.*"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\MoPlus.SolutionBuilder.WpfUI\Product.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Library\Third Party Dlls\*.dll"; DestDir: "{app}"; Flags: ignoreversion
 ; add items to GAC
 Source: "..\Library\Third Party Dlls\AvalonDock_2_0_1746\AvalonDock.dll"; DestDir: "{app}"; StrongAssemblyName: "AvalonDock, Version=2.0.1746.0, Culture=neutral, PublicKeyToken=AD3D1BD6-0E64-4DF5-9596-C8805114DC6D, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
 ;Source: "..\MoPlus.SolutionBuilder.VSPackage\bin\x86\Release\Irony.dll"; DestDir: "{app}"; StrongAssemblyName: "Irony, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7A9A1929-3018-4279-97E8-88F40956DAA0, ProcessorArchitecture=MSIL"; Flags: "gacinstall sharedfile uninsnosharedfileprompt"
