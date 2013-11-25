@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>11/25/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -180,9 +180,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public string ValidateSourceDbServerName()
 		{
-			if (!Regex.IsMatch(SourceDbServerName, Resources.DisplayValues.Regex_PathName))
+			if (String.IsNullOrEmpty(SourceDbServerName))
 			{
-				return String.Format(Resources.DisplayValues.Validation_PathNameValue, "SourceDbServerName");
+				return String.Format(Resources.DisplayValues.Validation_SourceDbServerName, "SourceDbServerName");
 			}
 			return null;
 		}
@@ -192,9 +192,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public string ValidateSourceDbName()
 		{
-			if (!Regex.IsMatch(SourceDbName, Resources.DisplayValues.Regex_DbName))
+			if (String.IsNullOrEmpty(SourceDbName))
 			{
-				return String.Format(Resources.DisplayValues.Validation_DbNameValue, "SourceDbName");
+				return String.Format(Resources.DisplayValues.Validation_SourceDbName, "SourceDbName");
 			}
 			return null;
 		}

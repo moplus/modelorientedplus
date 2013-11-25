@@ -531,10 +531,10 @@
     <value>A solution namespace must be provided, using only alphanumeric characters, underscores, optionally separated by periods.</value>
   </data>
   <data name="Validation_SourceDbName" xml:space="preserve">
-    <value>A database server name must be alphanumeric, underscores, dashes, dots, and can be space delimited.</value>
+    <value>Please provide a name for the database.</value>
   </data>
   <data name="Validation_SourceDbServerName" xml:space="preserve">
-    <value>A database name must be alphanumeric, underscores, dashes, dots, and can be space delimited.</value>
+    <value>Please provide a name for the database server.</value>
   </data>
   <data name="Validation_SourceFileName" xml:space="preserve">
     <value>An XML file name must be alphanumeric, underscores, dashes, dots, and can be space delimited.</value>
