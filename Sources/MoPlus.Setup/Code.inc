@@ -8,6 +8,7 @@ var
   __NET_FRAMEWORK_64BIT_INSTALLED,
   __VSNET2010,
   __VSNET2012,
+  __VSNET2013,
   __PathsInitialized: Boolean;
   __FRAMEWORK_INSTALL_ROOT,
   __FRAMEWORK64_INSTALL_ROOT,
@@ -23,6 +24,10 @@ var
   __VSNET2012_BASE_PATH,
 	__CSharpExpress2012ProjectTemplatePath,
 	__VBExpress2012ProjectTemplatePath: string;
+  __VSNET2013_PATH,
+  __VSNET2013_BASE_PATH,
+	__CSharpExpress2013ProjectTemplatePath,
+	__VBExpress2013ProjectTemplatePath: string;
   
 procedure InitializePaths;
 var __VisualStudioLocation : string;
@@ -60,10 +65,16 @@ begin
   __VSNET2010 := __VSNET2010_PATH <> '';
   if __VSNET2010 then
     __VSNET2010_BASE_PATH := ExpandFilename(AddBackslash(__VSNET2010_PATH)+'..\..');
+
   __VSNET2012_PATH := ExpandConstant('{reg:HKLM\Software\Microsoft\VisualStudio\11.0,InstallDir|}');
-  __VSNET2012 := __VSNET2010_PATH <> '';
+  __VSNET2012 := __VSNET2012_PATH <> '';
   if __VSNET2012 then
     __VSNET2012_BASE_PATH := ExpandFilename(AddBackslash(__VSNET2012_PATH)+'..\..');
+
+  __VSNET2013_PATH := ExpandConstant('{reg:HKLM\Software\Microsoft\VisualStudio\12.0,InstallDir|}');
+  __VSNET2013 := __VSNET2013_PATH <> '';
+  if __VSNET2013 then
+    __VSNET2013_BASE_PATH := ExpandFilename(AddBackslash(__VSNET2013_PATH)+'..\..');
  
   if RegQueryStringValue(HKCU, 'Software\Microsoft\VCSExpress\10.0', 'UserProjectTemplatesLocation', __CSharpExpress2010ProjectTemplatePath) then
   begin
@@ -95,6 +106,22 @@ begin
     else
     begin
       __CSharpExpress2012ProjectTemplatePath := ExpandConstant('{userdocs}\Visual Studio 2012\Templates\ProjectTemplates');
+    end;
+  end;
+  if RegQueryStringValue(HKCU, 'Software\Microsoft\VCSExpress\12.0', 'UserProjectTemplatesLocation', __CSharpExpress2013ProjectTemplatePath) then
+  begin
+    StringChangeEx(__CSharpExpress2013ProjectTemplatePath, '%USERPROFILE%',  GetEnv('USERPROFILE'), False);
+  end
+  else
+  begin
+    if RegQueryStringValue(HKCU, 'Software\Microsoft\VCSExpress\12.0', 'VisualStudioLocation', __VisualStudioLocation) then
+    begin
+      StringChangeEx(__VisualStudioLocation, '%USERPROFILE%',  GetEnv('USERPROFILE'), False);
+	  __CSharpExpress2013ProjectTemplatePath := __VisualStudioLocation + '\Templates\ProjectTemplates';
+    end
+    else
+    begin
+      __CSharpExpress2013ProjectTemplatePath := ExpandConstant('{userdocs}\Visual Studio 2013\Templates\ProjectTemplates');
     end;
   end;
 
@@ -130,6 +157,22 @@ begin
       __VBExpress2012ProjectTemplatePath := ExpandConstant('{userdocs}\Visual Studio 2012\Templates\ProjectTemplates');
     end;
   end;
+  if RegQueryStringValue(HKCU, 'Software\Microsoft\VBExpress\12.0', 'UserProjectTemplatesLocation', __VBExpress2013ProjectTemplatePath) then
+  begin
+    StringChangeEx(__VBExpress2013ProjectTemplatePath, '%USERPROFILE%',  GetEnv('USERPROFILE'), False);
+  end
+  else
+  begin
+    if RegQueryStringValue(HKCU, 'Software\Microsoft\VCSExpress\12.0', 'VisualStudioLocation', __VisualStudioLocation) then
+    begin
+      StringChangeEx(__VisualStudioLocation, '%USERPROFILE%',  GetEnv('USERPROFILE'), False);
+	  __VBExpress2013ProjectTemplatePath := __VisualStudioLocation + '\Templates\ProjectTemplates';
+    end
+    else
+    begin
+      __VBExpress2013ProjectTemplatePath := ExpandConstant('{userdocs}\Visual Studio 2013\Templates\ProjectTemplates');
+    end;
+  end;
 end;
 
 procedure DeInitializePaths;
@@ -147,6 +190,11 @@ begin
   InitializePaths;
   Result := __VSNET2012;
 end;
+function VSNET2013: Boolean;
+begin
+  InitializePaths;
+  Result := __VSNET2013;
+end;
 
 function VSNET2010UP: Boolean;
 begin
@@ -155,6 +203,10 @@ end;
 function VSNET2012UP: Boolean;
 begin
   Result := VSNET2012;
+end;
+function VSNET2013UP: Boolean;
+begin
+  Result := VSNET2013;
 end;
 
 function VSNET2010_PATH(dummy: string): string;
@@ -166,6 +218,11 @@ function VSNET2012_PATH(dummy: string): string;
 begin
   InitializePaths;
   Result := __VSNET2012_PATH;
+end;
+function VSNET2013_PATH(dummy: string): string;
+begin
+  InitializePaths;
+  Result := __VSNET2013_PATH;
 end;
 
 function FRAMEWORK_INSTALL_ROOT(dummy: string): string;
