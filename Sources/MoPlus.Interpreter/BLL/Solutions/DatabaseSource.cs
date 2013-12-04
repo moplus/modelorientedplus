@@ -156,9 +156,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				            if (!String.IsNullOrEmpty(PasswordClearText) && !String.IsNullOrEmpty(UserName))
 				            {
 				                // sql server authentication
-				                sqlServer.ConnectionContext.Login = UserName;
+								sqlServer.ConnectionContext.LoginSecure = false;
+								sqlServer.ConnectionContext.Login = UserName;
 				                sqlServer.ConnectionContext.Password = PasswordClearText;
-				                sqlServer.ConnectionContext.LoginSecure = false;
 				            }
 				            else
 				            {

@@ -39,7 +39,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 	{
 		#region "Constants"
 		#endregion "Constants"
-		
+
 		#region "Fields and Properties"
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the PropertyCount.</summary>
@@ -126,7 +126,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		}
 
 		#endregion "Fields and Properties"
-		
+
 		#region "Methods"
 		///--------------------------------------------------------------------------------
 		/// <summary>This loads information from a SQL table.</summary>
@@ -142,7 +142,14 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				DbID = sqlTable.ID;
 				Owner = sqlTable.Owner;
 				Schema = sqlTable.Schema;
-				FileGroup = sqlTable.FileGroup;
+				try
+				{
+					FileGroup = sqlTable.FileGroup;
+				}
+				catch
+				{
+					// TODO: have specific Azure db load or identify Azure case
+				}
 				CreateDate = sqlTable.CreateDate;
 				DateLastModified = sqlTable.DateLastModified;
 				Urn = sqlTable.Urn;
@@ -165,15 +172,22 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					}
 				}
 
-				// load information for each extended property
-				foreach (ExtendedProperty loopProperty in sqlTable.ExtendedProperties)
+				try
 				{
-					if (DebugHelper.DebugAction == DebugAction.Stop) return;
-					SqlExtendedProperty property = new SqlExtendedProperty();
-					property.SqlExtendedPropertyID = Guid.NewGuid();
-					property.SqlTable = this;
-					property.LoadExtendedProperty(loopProperty);
-					SqlExtendedPropertyList.Add(property);
+					// load information for each extended property
+					foreach (ExtendedProperty loopProperty in sqlTable.ExtendedProperties)
+					{
+						if (DebugHelper.DebugAction == DebugAction.Stop) return;
+						SqlExtendedProperty property = new SqlExtendedProperty();
+						property.SqlExtendedPropertyID = Guid.NewGuid();
+						property.SqlTable = this;
+						property.LoadExtendedProperty(loopProperty);
+						SqlExtendedPropertyList.Add(property);
+					}
+				}
+				catch
+				{
+					// TODO: have specific Azure db load or identify Azure case
 				}
 
 				// load information for each column
@@ -213,10 +227,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				throw;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				bool reThrow = BusinessConfiguration.HandleException(ex);
-				if (reThrow) throw;
+				throw;
 			}
 		}
 
@@ -316,15 +329,14 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				throw;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				bool reThrow = BusinessConfiguration.HandleException(ex);
-				if (reThrow) throw;
+				throw;
 			}
 		}
 
 		#endregion "Methods"
-		
+
 		#region "Constructors"
 		#endregion "Constructors"
 	}

@@ -81,10 +81,17 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				SqlDatabaseName = sqlDatabase.Name;
 				DbID = sqlDatabase.ID;
 				Owner = sqlDatabase.Owner;
-				PrimaryFilePath = sqlDatabase.PrimaryFilePath;
+				try
+				{
+					PrimaryFilePath = sqlDatabase.PrimaryFilePath;
+					DefaultFileGroup = sqlDatabase.DefaultFileGroup;
+					DefaultFullTextCatalog = sqlDatabase.DefaultFullTextCatalog;
+				}
+				catch
+				{
+					// TODO: have specific Azure db load or identify Azure case
+				}
 				DefaultSchema = sqlDatabase.DefaultSchema;
-				DefaultFileGroup = sqlDatabase.DefaultFileGroup;
-				DefaultFullTextCatalog = sqlDatabase.DefaultFullTextCatalog;
 				CreateDate = sqlDatabase.CreateDate;
 				Status = sqlDatabase.Status.ToString();
 				UserName = sqlDatabase.UserName;
@@ -104,15 +111,22 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					}
 				}
 
-				// load information for each extended property
-				foreach (ExtendedProperty loopProperty in sqlDatabase.ExtendedProperties)
+				try
 				{
-					if (DebugHelper.DebugAction == DebugAction.Stop) return;
-					SqlExtendedProperty property = new SqlExtendedProperty();
-					property.SqlExtendedPropertyID = Guid.NewGuid();
-					property.SqlDatabase = this;
-					property.LoadExtendedProperty(loopProperty);
-					SqlExtendedPropertyList.Add(property);
+					// load information for each extended property
+					foreach (ExtendedProperty loopProperty in sqlDatabase.ExtendedProperties)
+					{
+						if (DebugHelper.DebugAction == DebugAction.Stop) return;
+						SqlExtendedProperty property = new SqlExtendedProperty();
+						property.SqlExtendedPropertyID = Guid.NewGuid();
+						property.SqlDatabase = this;
+						property.LoadExtendedProperty(loopProperty);
+						SqlExtendedPropertyList.Add(property);
+					}
+				}
+				catch
+				{
+					// TODO: have specific Azure db load or identify Azure case
 				}
 
 				// load information for each table
@@ -130,13 +144,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				throw;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				bool reThrow = BusinessConfiguration.HandleException(ex);
-			    if (reThrow)
-			    {
-			        throw;
-			    }
+				throw;
 			}
 		}
 

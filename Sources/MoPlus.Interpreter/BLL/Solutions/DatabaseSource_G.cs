@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>11/25/2013</CreatedDate>
+	/// <CreatedDate>12/3/2013</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -216,10 +216,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		public string ValidateUserName()
 		{
-			if (!String.IsNullOrEmpty(UserName) && !Regex.IsMatch(UserName, Resources.DisplayValues.Regex_LooseName))
-			{
-				return String.Format(Resources.DisplayValues.Validation_LooseNameValue, "UserName");
-			}
 			return null;
 		}
 		

@@ -1211,17 +1211,17 @@ The following Entity level tags are utilized in this solution:
   <DatabaseSourceList>
     <DatabaseSource>
       <Tags />
-      <SpecSourceName>INCODE-1</SpecSourceName>
+      <SpecSourceName>eyedgy7z9q.database.windows.net,1433</SpecSourceName>
       <SpecificationSourceID>30339a08-14a7-4de8-98be-f8b5efdda7e0</SpecificationSourceID>
       <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
       <TemplatePath>..\SamplePacks\Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps</TemplatePath>
       <Order>1</Order>
       <Description />
-      <SourceDbServerName>INCODE-1</SourceDbServerName>
+      <SourceDbServerName>eyedgy7z9q.database.windows.net,1433</SourceDbServerName>
       <SourceDbName>InCode_ModelPlus</SourceDbName>
       <DatabaseTypeCode>1</DatabaseTypeCode>
-      <UserName />
-      <Password />
+      <UserName>moplus_developer@eyedgy7z9q</UserName>
+      <Password>EAAAABvHO9Bp/A7D8oAGtjVHVZpWwzIZqXEfYA7qlI8IFJt6</Password>
     </DatabaseSource>
   </DatabaseSourceList>
   <ProjectList>
@@ -2997,9 +2997,9 @@ The following Entity level tags are utilized in this solution:
               <Tags>ValidateDB </Tags>
               <SpecSourceName>Solutions.DatabaseSource.SourceDbServerName</SpecSourceName>
               <PropertyID>e05627ae-e0f7-457b-b071-1266db5b07c3</PropertyID>
-              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
-              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <EntityID>1099b111-b478-4914-80b8-4604d11c6d35</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />
@@ -3024,7 +3024,7 @@ The following Entity level tags are utilized in this solution:
               <IdentityIncrement xsi:nil="true" />
             </Property>
             <Property>
-              <Tags>DB CondensedUI1 </Tags>
+              <Tags>DB CondensedUI1 AnyChars </Tags>
               <SpecSourceName>Solutions.DatabaseSource.UserName</SpecSourceName>
               <PropertyID>6f418d5b-23c9-499c-93cd-9c02eb29a3ee</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
