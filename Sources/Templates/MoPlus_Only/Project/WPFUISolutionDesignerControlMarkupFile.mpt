@@ -65,6 +65,8 @@ foreach (Feature where Tags.Contains("DB") == true)
 }
 %%>
                     <%%-
+                    xmlns:Library="clr-namespace:%%><%%=Namespace%%><%%-.Library"
+                    xmlns:Interaction="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
                     xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
                     xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
@@ -86,6 +88,9 @@ foreach (Feature where Tags.Contains("DB") == true)
 			<!-- help -->
 			<DataTemplate DataType="{x:Type cvm:HelpViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<ucon:HelpControl />
 				</Grid>
 			</DataTemplate>%%>
@@ -95,7 +100,10 @@ foreach (Entity in Solution where Tags.Contains("DB") == true && EntityTypeCode 
 	<%%-
 			<!-- %%><%%=BLLClassName%%><%%- -->
 			<DataTemplate DataType="{x:Type %%><%%=FeatureName%%><%%-VM:%%><%%=VMBLLViewModelClassName%%><%%-}">
-				<Grid>%%>
+				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>%%>
 	if (Tags.Contains("CustomDesigner") == true)
 	{
 					<%%-

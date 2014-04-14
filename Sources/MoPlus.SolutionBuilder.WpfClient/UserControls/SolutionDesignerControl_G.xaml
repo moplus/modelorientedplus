@@ -4,7 +4,7 @@
  customized this file to prevent changes from being overwritten.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>7/2/2013</CreatedDate>
+ <CreatedDate>4/12/2014</CreatedDate>
  <Status>Generated</Status>
 -->
 <UserControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.SolutionDesignerControl"
@@ -27,6 +27,8 @@
                     xmlns:Models="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Models"
                     xmlns:Solutions="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Solutions"
                     xmlns:Workflows="clr-namespace:MoPlus.SolutionBuilder.WpfClient.UserControls.Workflows"
+                    xmlns:Library="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
+                    xmlns:Interaction="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                     xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
                     xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
                     xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
@@ -48,36 +50,54 @@
 			<!-- help -->
 			<DataTemplate DataType="{x:Type cvm:HelpViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<ucon:HelpControl />
 				</Grid>
 			</DataTemplate>
 			<!-- AuditProperty -->
 			<DataTemplate DataType="{x:Type SolutionsVM:AuditPropertyViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:AuditPropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- CodeTemplate -->
 			<DataTemplate DataType="{x:Type InterpreterVM:CodeTemplateViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Interpreter:CodeTemplateDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Collection -->
 			<DataTemplate DataType="{x:Type EntitiesVM:CollectionViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:CollectionDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- DatabaseSource -->
 			<DataTemplate DataType="{x:Type SolutionsVM:DatabaseSourceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:DatabaseSourceDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Diagram -->
 			<DataTemplate DataType="{x:Type DiagramsVM:DiagramViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<!-- region protected -->
 					<Grid>
 						<Diagrams:DiagramControl/>
@@ -88,180 +108,270 @@
 			<!-- Entity -->
 			<DataTemplate DataType="{x:Type EntitiesVM:EntityViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:EntityDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- EntityReference -->
 			<DataTemplate DataType="{x:Type EntitiesVM:EntityReferenceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:EntityReferenceDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Enumeration -->
 			<DataTemplate DataType="{x:Type ModelsVM:EnumerationViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:EnumerationDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Feature -->
 			<DataTemplate DataType="{x:Type SolutionsVM:FeatureViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:FeatureDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Index -->
 			<DataTemplate DataType="{x:Type EntitiesVM:IndexViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:IndexDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- IndexProperty -->
 			<DataTemplate DataType="{x:Type EntitiesVM:IndexPropertyViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:IndexPropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Method -->
 			<DataTemplate DataType="{x:Type EntitiesVM:MethodViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:MethodDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Model -->
 			<DataTemplate DataType="{x:Type ModelsVM:ModelViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:ModelDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- ModelObject -->
 			<DataTemplate DataType="{x:Type ModelsVM:ModelObjectViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:ModelObjectDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- ModelProperty -->
 			<DataTemplate DataType="{x:Type ModelsVM:ModelPropertyViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:ModelPropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- ObjectInstance -->
 			<DataTemplate DataType="{x:Type ModelsVM:ObjectInstanceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:ObjectInstanceDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Parameter -->
 			<DataTemplate DataType="{x:Type EntitiesVM:ParameterViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:ParameterDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Project -->
 			<DataTemplate DataType="{x:Type SolutionsVM:ProjectViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:ProjectDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Property -->
 			<DataTemplate DataType="{x:Type EntitiesVM:PropertyViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:PropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- PropertyInstance -->
 			<DataTemplate DataType="{x:Type ModelsVM:PropertyInstanceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:PropertyInstanceDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- PropertyReference -->
 			<DataTemplate DataType="{x:Type EntitiesVM:PropertyReferenceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:PropertyReferenceDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Relationship -->
 			<DataTemplate DataType="{x:Type EntitiesVM:RelationshipViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:RelationshipDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- RelationshipProperty -->
 			<DataTemplate DataType="{x:Type EntitiesVM:RelationshipPropertyViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:RelationshipPropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Solution -->
 			<DataTemplate DataType="{x:Type SolutionsVM:SolutionViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:SolutionDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- SpecTemplate -->
 			<DataTemplate DataType="{x:Type InterpreterVM:SpecTemplateViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Interpreter:SpecTemplateDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Stage -->
 			<DataTemplate DataType="{x:Type WorkflowsVM:StageViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Workflows:StageDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- StageTransition -->
 			<DataTemplate DataType="{x:Type WorkflowsVM:StageTransitionViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Workflows:StageTransitionDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- State -->
 			<DataTemplate DataType="{x:Type EntitiesVM:StateViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:StateDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- StateModel -->
 			<DataTemplate DataType="{x:Type EntitiesVM:StateModelViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:StateModelDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- StateTransition -->
 			<DataTemplate DataType="{x:Type EntitiesVM:StateTransitionViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Entities:StateTransitionDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Step -->
 			<DataTemplate DataType="{x:Type WorkflowsVM:StepViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Workflows:StepDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- StepTransition -->
 			<DataTemplate DataType="{x:Type WorkflowsVM:StepTransitionViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Workflows:StepTransitionDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Value -->
 			<DataTemplate DataType="{x:Type ModelsVM:ValueViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Models:ValueDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Workflow -->
 			<DataTemplate DataType="{x:Type WorkflowsVM:WorkflowViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Workflows:WorkflowDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- XmlSource -->
 			<DataTemplate DataType="{x:Type SolutionsVM:XmlSourceViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:XmlSourceDetailControl/>
 				</Grid>
 			</DataTemplate>
@@ -269,6 +379,9 @@
 			<!-- TagManagement -->
 			<DataTemplate DataType="{x:Type SolutionsVM:TagManagementViewModel}">
 				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
 					<Solutions:TagManagementControl/>
 				</Grid>
 			</DataTemplate>
