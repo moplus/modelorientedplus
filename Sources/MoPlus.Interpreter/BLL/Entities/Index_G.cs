@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>4/24/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -144,9 +144,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public string ValidateIndexName()
 		{
-			if (!Regex.IsMatch(IndexName, Resources.DisplayValues.Regex_Name))
+			if (!Regex.IsMatch(IndexName, Resources.DisplayValues.Regex_DbPropertyName))
 			{
-				return String.Format(Resources.DisplayValues.Validation_AlphanumericValue, "IndexName");
+				return String.Format(Resources.DisplayValues.Validation_DbPropertyNameValue, "IndexName");
 			}
 			return null;
 		}

@@ -2611,10 +2611,20 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				{
 					ModelObjectList.Add(item);
 				}
+				ObjectInstanceList = new EnterpriseDataObjectList<ObjectInstance>();
+				foreach (ObjectInstance item in ObjectInstancesToMerge)
+				{
+					ObjectInstanceList.Add(item);
+				}
 				ModelPropertyList = new EnterpriseDataObjectList<ModelProperty>();
 				foreach (ModelProperty item in ModelPropertiesToMerge)
 				{
 					ModelPropertyList.Add(item);
+				}
+				PropertyInstanceList = new EnterpriseDataObjectList<PropertyInstance>();
+				foreach (PropertyInstance item in PropertyInstancesToMerge)
+				{
+					PropertyInstanceList.Add(item);
 				}
 				EnumerationList = new EnterpriseDataObjectList<Enumeration>();
 				foreach (Enumeration item in EnumerationsToMerge)

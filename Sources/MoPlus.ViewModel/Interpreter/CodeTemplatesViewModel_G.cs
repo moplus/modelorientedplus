@@ -295,6 +295,10 @@ namespace MoPlus.ViewModel.Interpreter
 				{
 					// delete file
 					System.IO.File.Delete(template.CodeTemplate.FilePath);
+
+					// remove from solution
+					Solution.CodeTemplates.Remove(template.CodeTemplate.TemplateKey);
+					Solution.CodeTemplateList.Remove(template.CodeTemplate);
 				}
 				else
 				{

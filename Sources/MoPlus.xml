@@ -1168,6 +1168,16 @@
       <ItemID>e05627ae-e0f7-457b-b071-1266db5b07c3</ItemID>
       <ItemName>Solutions.DatabaseSource.SourceDbServerName</ItemName>
     </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>f77bfadf-ed1e-4065-9b0c-27b3eae32e35</ItemID>
+      <ItemName>Entities.Index.IndexName</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>b304eb4e-a07a-4053-aa79-926e15eb202f</ItemID>
+      <ItemName>Entities.Relationship.RelationshipName</ItemName>
+    </CollectionItem>
   </ReferencedModelIDs>
   <IsSampleMode>false</IsSampleMode>
   <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -1642,6 +1652,21 @@ The following Entity level tags are utilized in this solution:
           <Description />
           <PropertyList>
             <Property>
+              <Tags>DB DbProp </Tags>
+              <SpecSourceName>Entities.Index.IndexName</SpecSourceName>
+              <PropertyID>f77bfadf-ed1e-4065-9b0c-27b3eae32e35</PropertyID>
+              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <Description />
+              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <Length xsi:nil="true" />
+              <Precision xsi:nil="true" />
+              <Scale xsi:nil="true" />
+              <InitialValue />
+              <Identity xsi:nil="true" />
+              <IdentitySeed xsi:nil="true" />
+              <IdentityIncrement xsi:nil="true" />
+            </Property>
+            <Property>
               <Tags>DB CondensedUI1 </Tags>
               <SpecSourceName>Entities.Index.IsPrimaryKeyIndex</SpecSourceName>
               <PropertyID>1b9df4f2-5cca-4813-aa3e-769b2aa79665</PropertyID>
@@ -2091,6 +2116,21 @@ The following Entity level tags are utilized in this solution:
           <GroupName />
           <Description />
           <PropertyList>
+            <Property>
+              <Tags>DB DbProp </Tags>
+              <SpecSourceName>Entities.Relationship.RelationshipName</SpecSourceName>
+              <PropertyID>b304eb4e-a07a-4053-aa79-926e15eb202f</PropertyID>
+              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <Description />
+              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <Length xsi:nil="true" />
+              <Precision xsi:nil="true" />
+              <Scale xsi:nil="true" />
+              <InitialValue />
+              <Identity xsi:nil="true" />
+              <IdentitySeed xsi:nil="true" />
+              <IdentityIncrement xsi:nil="true" />
+            </Property>
             <Property>
               <Tags>DB CondensedUI1 </Tags>
               <SpecSourceName>Entities.Relationship.IsNullable</SpecSourceName>

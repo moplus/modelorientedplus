@@ -34,6 +34,7 @@ using System.Data;
 using System.Windows;
 using System.IO;
 using MoPlus.ViewModel;
+using System.Reflection;
 
 namespace MoPlus.SolutionBuilder.VSPackage
 {
@@ -376,7 +377,8 @@ namespace MoPlus.SolutionBuilder.VSPackage
             }
             catch (System.Exception ex)
             {
-                // put exception message in output pane
+				Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Error showing solution builder: {0}", ex.ToString()));
+				// put exception message in output pane
 				string message = ex.Message;
 				System.Exception exception = ex.InnerException;
 				while (exception != null)
@@ -414,7 +416,8 @@ namespace MoPlus.SolutionBuilder.VSPackage
             }
             catch (System.Exception ex)
             {
-                // put exception message in output pane
+				Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Error showing solution designer: {0}", ex.ToString()));
+				// put exception message in output pane
                 SolutionBuilderPane.OutputString(ex.Message);
             }
         }
@@ -716,6 +719,19 @@ namespace MoPlus.SolutionBuilder.VSPackage
 			return VSConstants.S_OK;
 		}
 
+		private Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			string path = Assembly.GetExecutingAssembly().Location;
+			path = Path.GetDirectoryName(path);
+
+			if (args.Name.ToLower().Contains("system.windows.interactivity"))
+			{
+				path = Path.Combine(path, "system.windows.interactivity.dll");
+				Assembly ret = Assembly.LoadFrom(path);
+				return ret;
+			}
+			return null;
+		}
 		///--------------------------------------------------------------------------------
         /// <summary>
         /// This method loads a localized string based on the specified resource.
@@ -824,7 +840,8 @@ namespace MoPlus.SolutionBuilder.VSPackage
         public MoPlusPackage()
         {
             Trace.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-        }
+			AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+		}
 
         #endregion "Constructors"
 

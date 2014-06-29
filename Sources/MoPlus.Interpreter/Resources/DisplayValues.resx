@@ -724,4 +724,11 @@
   <data name="TemplateNode_ContinueStatement" xml:space="preserve">
     <value>continue</value>
   </data>
+  <data name="Regex_DbPropertyName" xml:space="preserve">
+    <value>^[a-zA-Z_.-][a-zA-Z0-9_.-]*$</value>
+    <comment>For validating names.</comment>
+  </data>
+  <data name="Validation_DbPropertyNameValue" xml:space="preserve">
+    <value>The value for {0} must be alphanumeric, or underscores, or periods, and not start with a number.</value>
+  </data>
 </root>

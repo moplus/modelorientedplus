@@ -180,9 +180,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 		///--------------------------------------------------------------------------------
 		public string ValidateRelationshipName()
 		{
-			if (!Regex.IsMatch(RelationshipName, Resources.DisplayValues.Regex_Name))
+			if (!Regex.IsMatch(RelationshipName, Resources.DisplayValues.Regex_DbPropertyName))
 			{
-				return String.Format(Resources.DisplayValues.Validation_AlphanumericValue, "RelationshipName");
+				return String.Format(Resources.DisplayValues.Validation_DbPropertyNameValue, "RelationshipName");
 			}
 			return null;
 		}
