@@ -53,7 +53,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/12/2013</CreatedDate>
+	/// <CreatedDate>7/15/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelObjectsViewModel : EditWorkspaceViewModel
@@ -305,17 +305,7 @@ namespace MoPlus.ViewModel.Models
 									childMessage.ModelObjectID = item.ModelObject.ModelObjectID;
 									childMessage.Solution = Solution;
 									childMessage.WorkspaceID = child.WorkspaceID;
-									item.ModelPropertiesFolder.ProcessDeleteModelPropertyPerformed(childMessage);
-								}
-								if (item.Items[i] is ObjectInstanceViewModel)
-								{
-									ObjectInstanceViewModel child = item.Items[i] as ObjectInstanceViewModel;
-									ObjectInstanceEventArgs childMessage = new ObjectInstanceEventArgs();
-									childMessage.ObjectInstance = child.ObjectInstance;
-									childMessage.ModelObjectID = item.ModelObject.ModelObjectID;
-									childMessage.Solution = Solution;
-									childMessage.WorkspaceID = child.WorkspaceID;
-									item.ObjectInstancesFolder.ProcessDeleteObjectInstancePerformed(childMessage);
+									item.ProcessDeleteModelPropertyPerformed(childMessage);
 								}
 							}
 	
@@ -496,13 +486,9 @@ namespace MoPlus.ViewModel.Models
 			AddModelObject(newView);
 
 			// paste children
-			foreach (ModelPropertyViewModel childView in copyItem.ModelPropertiesFolder.ModelProperties)
+			foreach (ModelPropertyViewModel childView in copyItem.ModelProperties)
 			{
-				newView.ModelPropertiesFolder.PasteModelProperty(childView, savePaste);
-			}
-			foreach (ObjectInstanceViewModel childView in copyItem.ObjectInstancesFolder.ObjectInstances)
-			{
-				newView.ObjectInstancesFolder.PasteObjectInstance(childView, savePaste);
+				newView.PasteModelProperty(childView, savePaste);
 			}
 			if (savePaste == true)
 			{

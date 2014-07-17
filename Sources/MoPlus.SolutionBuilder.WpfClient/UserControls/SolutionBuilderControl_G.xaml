@@ -4,7 +4,7 @@
  customized this file to prevent changes from being overwritten, or use protected areas.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>7/2/2013</CreatedDate>
+ <CreatedDate>7/15/2014</CreatedDate>
  <Status>Generated</Status>
 -->
 <UserControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.SolutionBuilderControl"
@@ -542,6 +542,7 @@
 					<StackPanel.ContextMenu>
 						<ContextMenu>
 							<MenuItem Header="{Binding MenuLabelNewModelObject}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelNewModelProperty}" Command="vm:CustomCommands.NewChildItem"></MenuItem>
 							<MenuItem Header="{Binding MenuLabelEdit}" Command="vm:CustomCommands.Update"></MenuItem>
 							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
 						</ContextMenu>
@@ -550,23 +551,6 @@
 				<HierarchicalDataTemplate.Triggers>
 					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
 						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_ModelObjectOpen}, Mode=OneTime}"/>
-					</DataTrigger>
-				</HierarchicalDataTemplate.Triggers>
-			</HierarchicalDataTemplate>
-			<!-- ModelProperties -->
-			<HierarchicalDataTemplate DataType="{x:Type Models:ModelPropertiesViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
-				<StackPanel Orientation="Horizontal">
-					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_FolderClosed}" />
-					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
-					<StackPanel.ContextMenu>
-						<ContextMenu>
-							<MenuItem Header="{Binding MenuLabelNewModelProperty}" Command="New"></MenuItem>
-						</ContextMenu>
-					</StackPanel.ContextMenu>
-				</StackPanel>
-				<HierarchicalDataTemplate.Triggers>
-					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
-						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_FolderOpen}, Mode=OneTime}"/>
 					</DataTrigger>
 				</HierarchicalDataTemplate.Triggers>
 			</HierarchicalDataTemplate>
@@ -584,23 +568,6 @@
 					</StackPanel.ContextMenu>
 				</StackPanel>
 			</DataTemplate>
-			<!-- ObjectInstances -->
-			<HierarchicalDataTemplate DataType="{x:Type Models:ObjectInstancesViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
-				<StackPanel Orientation="Horizontal">
-					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_FolderClosed}" />
-					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
-					<StackPanel.ContextMenu>
-						<ContextMenu>
-							<MenuItem Header="{Binding MenuLabelNewObjectInstance}" Command="New"></MenuItem>
-						</ContextMenu>
-					</StackPanel.ContextMenu>
-				</StackPanel>
-				<HierarchicalDataTemplate.Triggers>
-					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
-						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_FolderOpen}, Mode=OneTime}"/>
-					</DataTrigger>
-				</HierarchicalDataTemplate.Triggers>
-			</HierarchicalDataTemplate>
 			<!-- ObjectInstance -->
 			<HierarchicalDataTemplate DataType="{x:Type Models:ObjectInstanceViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
 				<StackPanel Orientation="Horizontal">
@@ -1116,6 +1083,36 @@
 				</HierarchicalDataTemplate.Triggers>
 			</HierarchicalDataTemplate>
 			<!-- region protected -->
+			<!-- model data -->
+			<HierarchicalDataTemplate DataType="{x:Type Models:ModelDataViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_FolderClosed}" />
+					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
+				</StackPanel>
+				<HierarchicalDataTemplate.Triggers>
+					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
+						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_FolderOpen}, Mode=OneTime}"/>
+					</DataTrigger>
+				</HierarchicalDataTemplate.Triggers>
+			</HierarchicalDataTemplate>
+			<!-- model object data -->
+			<HierarchicalDataTemplate DataType="{x:Type Models:ModelObjectDataViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_FolderClosed}" />
+					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
+					<StackPanel.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewObjectInstance}" Command="New"></MenuItem>
+						</ContextMenu>
+					</StackPanel.ContextMenu>
+
+				</StackPanel>
+				<HierarchicalDataTemplate.Triggers>
+					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
+						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_FolderOpen}, Mode=OneTime}"/>
+					</DataTrigger>
+				</HierarchicalDataTemplate.Triggers>
+			</HierarchicalDataTemplate>
 			<!-- specification sources -->
 			<HierarchicalDataTemplate DataType="{x:Type Solutions:SpecificationSourcesViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
 				<StackPanel Orientation="Horizontal">

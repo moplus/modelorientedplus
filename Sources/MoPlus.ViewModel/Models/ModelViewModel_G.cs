@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/18/2013</CreatedDate>
+	/// <CreatedDate>7/16/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelViewModel : DialogEditWorkspaceViewModel
@@ -902,6 +902,13 @@ namespace MoPlus.ViewModel.Models
 					Items.Add(EnumerationsFolder);
 				}
 				#region protected
+				// attach ModelData
+				if (ModelDataFolder == null)
+				{
+					ModelDataFolder = new ModelDataViewModel(model, Solution);
+					ModelDataFolder.Updated += new EventHandler(Children_Updated);
+					Items.Add(ModelDataFolder);
+				}
 				#endregion protected
 				
 				Refresh(false);
@@ -1043,6 +1050,14 @@ namespace MoPlus.ViewModel.Models
 			{
 				return parentModel;
 			}
+			#region protected
+			parentModel = ModelDataFolder.FindParentViewModel(data);
+			if (parentModel != null)
+			{
+				return parentModel;
+			}
+			#endregion protected
+		
 			return null;
 		}
 		#endregion "Methods"

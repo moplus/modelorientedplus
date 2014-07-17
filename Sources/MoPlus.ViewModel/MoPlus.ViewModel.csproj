@@ -195,6 +195,9 @@
     <Compile Include="Messaging\MediatorMessages_G.cs" />
     <Compile Include="Messaging\MessageToActionsMap.cs" />
     <Compile Include="Messaging\WeakAction.cs" />
+    <Compile Include="Models\ModelViewModel.cs" />
+    <Compile Include="Models\ModelObjectDataViewModel.cs" />
+    <Compile Include="Models\ModelDataViewModel.cs" />
     <Compile Include="Models\PropertyCollectionItemViewModel.cs" />
     <Compile Include="Models\PropertyItemViewModel.cs" />
     <Compile Include="Models\EnumerationsViewModel_G.cs" />
@@ -267,9 +270,7 @@
     <Compile Include="Entities\MethodRelationshipViewModel_G.cs" />
     <Compile Include="Events\Entities\PropertyRelationshipEventArgs_G.cs" />
     <Compile Include="Entities\PropertyRelationshipViewModel_G.cs" />
-    <Compile Include="Models\ModelPropertiesViewModel_G.cs" />
     <Compile Include="Events\Models\ObjectInstanceEventArgs_G.cs" />
-    <Compile Include="Models\ObjectInstancesViewModel_G.cs" />
     <Compile Include="Models\ObjectInstanceViewModel_G.cs" />
     <Compile Include="Events\Models\PropertyInstanceEventArgs_G.cs" />
     <Compile Include="Models\PropertyInstanceViewModel_G.cs" />

@@ -357,7 +357,7 @@ namespace %%><%%=Namespace%%><%%-
 				SolutionsFolder.ProcessEditSolutionPerformed(data);
 			}
 		}%%>
-	foreach (Entity in Solution where Tags.Contains("DB") == true && EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && Tags.Contains("IgnoreUI") == false && Tags.Contains("Source") == false && FeatureName != "Specifications" && BLLClassName != "Solution")
+	foreach (Entity in Solution where Tags.Contains("DB") == true && Tags.Contains("CustomAddEdit") == false && EntityTypeCode == 3 /* Primary */ && Tags.Contains("IgnoreModel") == false && Tags.Contains("IgnoreUI") == false && Tags.Contains("Source") == false && FeatureName != "Specifications" && BLLClassName != "Solution")
 	{
 		<%%-
 

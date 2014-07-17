@@ -54,7 +54,7 @@ namespace MoPlus.ViewModel.Models
 			{
 				if (_modelPropertyItems == null)
 				{
-					_modelPropertyItems = new EnterpriseDataObjectList<ModelPropertyViewModel>(ModelPropertiesFolder.ModelProperties, false);
+					_modelPropertyItems = new EnterpriseDataObjectList<ModelPropertyViewModel>(ModelProperties, false);
 				}
 				return _modelPropertyItems;
 			}
@@ -80,33 +80,33 @@ namespace MoPlus.ViewModel.Models
 		#endregion "Properties"
 
 		#region "Methods"
-		///--------------------------------------------------------------------------------
-		/// <summary>This method adds to ModelProperty adds.</summary>
-		///--------------------------------------------------------------------------------
-		public void AddNewModelProperty()
-		{
-			ModelPropertyViewModel item = new ModelPropertyViewModel();
-			item.ModelProperty = new ModelProperty();
-			item.ModelProperty.ModelPropertyID = Guid.NewGuid();
-			item.ModelProperty.ModelObject = EditModelObject;
-			item.ModelProperty.ModelObjectID = EditModelObject.ModelObjectID;
-			item.ModelProperty.Solution = Solution;
-			item.Solution = Solution;
+		/////--------------------------------------------------------------------------------
+		///// <summary>This method adds to ModelProperty adds.</summary>
+		/////--------------------------------------------------------------------------------
+		//public void AddNewModelProperty()
+		//{
+		//    ModelPropertyViewModel item = new ModelPropertyViewModel();
+		//    item.ModelProperty = new ModelProperty();
+		//    item.ModelProperty.ModelPropertyID = Guid.NewGuid();
+		//    item.ModelProperty.ModelObject = EditModelObject;
+		//    item.ModelProperty.ModelObjectID = EditModelObject.ModelObjectID;
+		//    item.ModelProperty.Solution = Solution;
+		//    item.Solution = Solution;
 
-			ModelPropertiesFolder.ItemsToAdd.Add(item);
-			ModelPropertiesFolder.Items.Add(item);
-			ModelPropertyItems.Add(item);
-		}
+		//    ModelPropertiesFolder.ItemsToAdd.Add(item);
+		//    ModelPropertiesFolder.Items.Add(item);
+		//    ModelPropertyItems.Add(item);
+		//}
 
-		///--------------------------------------------------------------------------------
-		/// <summary>This method adds to ModelProperty deletes.</summary>
-		///--------------------------------------------------------------------------------
-		public void AddToDeletedModelProperties(ModelPropertyViewModel item)
-		{
-			ModelPropertiesFolder.ItemsToDelete.Add(item);
-			ModelPropertiesFolder.Items.Remove(item);
-			ModelPropertyItems.Remove(item);
-		}
+		/////--------------------------------------------------------------------------------
+		///// <summary>This method adds to ModelProperty deletes.</summary>
+		/////--------------------------------------------------------------------------------
+		//public void AddToDeletedModelProperties(ModelPropertyViewModel item)
+		//{
+		//    ModelPropertiesFolder.ItemsToDelete.Add(item);
+		//    ModelPropertiesFolder.Items.Remove(item);
+		//    ModelPropertyItems.Remove(item);
+		//}
 
 		#endregion "Methods"
 

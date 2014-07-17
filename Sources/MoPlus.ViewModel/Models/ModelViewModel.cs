@@ -17,20 +17,22 @@ using System.Windows.Input;
 using System.ComponentModel;
 using MoPlus.ViewModel.Messaging;
 using MoPlus.ViewModel.Events.Models;
+using MoPlus.Data;
+using MoPlus.Interpreter.BLL.Models;
 
 namespace MoPlus.ViewModel.Models
 {
 	///--------------------------------------------------------------------------------
 	/// <summary></summary>
 	///
-	/// This file is for adding customizations to the ObjectInstancesViewModel view
+	/// This file is for adding customizations to the ModelViewModel view
 	/// (change the Status below to something other than Generated).
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>4/9/2013</CreatedDate>
-	/// <Status>Generated</Status>
+	/// <CreatedDate>7/11/2014</CreatedDate>
+	/// <Status>Customized</Status>
 	///--------------------------------------------------------------------------------
-	public partial class ObjectInstancesViewModel : EditWorkspaceViewModel
+	public partial class ModelViewModel : DialogEditWorkspaceViewModel
 	{
 		#region "Menus"
 		#endregion "Menus"
@@ -42,6 +44,11 @@ namespace MoPlus.ViewModel.Models
 		#endregion "Command Processing"
 
 		#region "Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ModelData lists.</summary>
+		///--------------------------------------------------------------------------------
+		public ModelDataViewModel ModelDataFolder { get; set; }
+
 		#endregion "Properties"
 
 		#region "Methods"

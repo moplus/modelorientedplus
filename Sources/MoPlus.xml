@@ -1655,9 +1655,9 @@ The following Entity level tags are utilized in this solution:
               <Tags>DB DbProp </Tags>
               <SpecSourceName>Entities.Index.IndexName</SpecSourceName>
               <PropertyID>f77bfadf-ed1e-4065-9b0c-27b3eae32e35</PropertyID>
-              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
-              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <EntityID>a39b1942-ff4f-4c24-bdfc-d37e535fd73a</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />
@@ -2120,9 +2120,9 @@ The following Entity level tags are utilized in this solution:
               <Tags>DB DbProp </Tags>
               <SpecSourceName>Entities.Relationship.RelationshipName</SpecSourceName>
               <PropertyID>b304eb4e-a07a-4053-aa79-926e15eb202f</PropertyID>
-              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
-              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <EntityID>1ca2873a-5786-4851-aad3-f783df1fe8cd</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />
@@ -2633,10 +2633,10 @@ The following Entity level tags are utilized in this solution:
           </EntityReferenceList>
         </Entity>
         <Entity>
-          <Tags />
+          <Tags>DB CustomChildren </Tags>
           <SpecSourceName>Models.Model</SpecSourceName>
           <EntityID>3bc525f1-8c6a-4d13-99a0-bd6e271a592f</EntityID>
-          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
+          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -2705,7 +2705,7 @@ The following Entity level tags are utilized in this solution:
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags />
+              <Tags>DB Secondary </Tags>
               <SpecSourceName>Models.ModelObject.ObjectInstanceList</SpecSourceName>
               <PropertyID>cbe85828-a949-4c3f-90d0-7eac6cc50ad0</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -2846,10 +2846,10 @@ The following Entity level tags are utilized in this solution:
           </EntityReferenceList>
         </Entity>
         <Entity>
-          <Tags>DB CustomEditName </Tags>
+          <Tags>DB CustomEditName CustomAddEdit </Tags>
           <SpecSourceName>Models.ObjectInstance</SpecSourceName>
           <EntityID>b93efda4-2900-4e56-ac88-2e4d6832bccc</EntityID>
-          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
+          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />

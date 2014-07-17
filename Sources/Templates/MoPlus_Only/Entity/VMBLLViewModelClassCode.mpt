@@ -2174,7 +2174,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 				}
 			}
 		}
-		if (parentFound == false)
+		if (parentFound == false || Tags.Contains("CustomChildren") == true)
 		{
 		<%%-
 			#region protected

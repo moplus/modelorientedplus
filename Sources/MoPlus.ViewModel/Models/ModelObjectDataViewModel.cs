@@ -15,48 +15,27 @@ using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using System.ComponentModel;
+using MoPlus.ViewModel.Messaging;
+using MoPlus.ViewModel.Events.Models;
 using MoPlus.Data;
-using MoPlus.Interpreter;
-using MoPlus.Interpreter.BLL.Config;
-using MoPlus.Interpreter.BLL.Diagrams;
-using MoPlus.Interpreter.BLL.Entities;
-using MoPlus.Interpreter.BLL.Interpreter;
 using MoPlus.Interpreter.BLL.Models;
 using MoPlus.Interpreter.BLL.Solutions;
-using MoPlus.Interpreter.BLL.Specifications;
-using MoPlus.Interpreter.BLL.Workflows;
-using MoPlus.ViewModel.Messaging;
-using MoPlus.ViewModel.Resources;
 using MoPlus.ViewModel.Events;
-using MoPlus.ViewModel.Events.Diagrams;
-using MoPlus.ViewModel.Diagrams;
-using MoPlus.ViewModel.Events.Entities;
-using MoPlus.ViewModel.Entities;
-using MoPlus.ViewModel.Events.Interpreter;
-using MoPlus.ViewModel.Interpreter;
-using MoPlus.ViewModel.Events.Models;
-using MoPlus.ViewModel.Models;
-using MoPlus.ViewModel.Events.Solutions;
-using MoPlus.ViewModel.Solutions;
-using MoPlus.ViewModel.Events.Workflows;
-using MoPlus.ViewModel.Workflows;
+using MoPlus.ViewModel.Resources;
 
 namespace MoPlus.ViewModel.Models
 {
 	///--------------------------------------------------------------------------------
-	/// <summary>This class provides views for collections of
-	/// ObjectInstance instances.</summary>
+	/// <summary></summary>
 	///
-	/// This file is code generated and should not be modified by hand.
-	/// If you need to customize this file outside of protected areas,
-	/// change the Status value below to something other than
-	/// Generated to prevent changes from being overwritten.
+	/// This file is for adding customizations to the ModelObjectViewModel view
+	/// (change the Status below to something other than Generated).
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/12/2013</CreatedDate>
-	/// <Status>Generated</Status>
+	/// <CreatedDate>7/11/2014</CreatedDate>
+	/// <Status>Customized</Status>
 	///--------------------------------------------------------------------------------
-	public partial class ObjectInstancesViewModel : EditWorkspaceViewModel
+	public partial class ModelObjectDataViewModel : DialogEditWorkspaceViewModel
 	{
 		#region "Menus"
 		///--------------------------------------------------------------------------------
@@ -71,9 +50,9 @@ namespace MoPlus.ViewModel.Models
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewObjectInstanceToolTip.</summary>
+		/// <summary>This property gets MenuLabeNewlObjectInstanceToolTip.</summary>
 		///--------------------------------------------------------------------------------
-		public string MenuLabelNewObjectInstanceToolTip
+		public string MenuLabelObjectInstanceToolTip
 		{
 			get
 			{
@@ -81,153 +60,25 @@ namespace MoPlus.ViewModel.Models
 			}
 		}
 
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelDelete.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelDelete
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_Delete;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelDeleteToolTip.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelDeleteToolTip
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_DeleteToolTip;
-			}
-		}
-
 		#endregion "Menus"
 
 		#region "Editing Support"
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets IsEdited.</summary>
-		///--------------------------------------------------------------------------------
-		public override bool IsEdited
-		{
-			get
-			{
-				if (ItemsToAdd.Count > 0)
-				{
-					return true;
-				}
-				if (ItemsToDelete.Count > 0)
-				{
-					return true;
-				}
-				foreach (IEditWorkspaceViewModel item in Items)
-				{
-					if (item.IsEdited == true)
-					{
-						return true;
-					}
-				}
-				return false;
-			}
-		}
-
 		#endregion "Editing Support"
 
 		#region "Command Processing"
-		///--------------------------------------------------------------------------------
-		/// <summary>This method resets the data.</summary>
-		///--------------------------------------------------------------------------------
-		protected override void OnReset()
-		{
-			ResetItems();
-		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This method resets the data.</summary>
-		///--------------------------------------------------------------------------------
-		public override void Reset()
-		{
-			OnReset();
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method sets the default values.</summary>
-		///--------------------------------------------------------------------------------
-		protected override void OnSetDefaults()
-		{
-			foreach (ObjectInstanceViewModel item in Items.OfType<ObjectInstanceViewModel>())
-			{
-				item.Defaults();
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method sets the default values.</summary>
-		///--------------------------------------------------------------------------------
-		public void Defaults()
-		{
-			OnSetDefaults();
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method updates the view model data and sends update command back
-		/// to the solution builder.</summary>
-		///--------------------------------------------------------------------------------
-		protected override void OnUpdate()
-		{
-			// send update for any updated children
-			foreach (ObjectInstanceViewModel item in ObjectInstances)
-			{
-				if (item.IsEdited == true)
-				{
-					item.Update();
-				}
-			}
-			// send update for any new children
-			foreach (ObjectInstanceViewModel item in ItemsToAdd.OfType<ObjectInstanceViewModel>())
-			{
-				item.Update();
-				ObjectInstances.Add(item);
-			}
-			ItemsToAdd.Clear();
-
-			// send delete for any deleted children
-			foreach (ObjectInstanceViewModel item in ItemsToDelete.OfType<ObjectInstanceViewModel>())
-			{
-				item.Delete();
-				ObjectInstances.Remove(item);
-			}
-			ItemsToDelete.Clear();
-
-			// reset modified for children
-			foreach (ObjectInstanceViewModel item in ObjectInstances)
-			{
-				item.ResetModified(false);
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method updates the view model data and sends update command back
-		/// to the solution builder.</summary>
-		///--------------------------------------------------------------------------------
-		public void Update()
-		{
-			OnUpdate();
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method processes the new objectinstance command.</summary>
+		/// <summary>This method processes the new ObjectInstance command.</summary>
 		///--------------------------------------------------------------------------------
 		public void ProcessNewObjectInstanceCommand()
 		{
 			ObjectInstanceEventArgs message = new ObjectInstanceEventArgs();
 			message.ObjectInstance = new ObjectInstance();
 			message.ObjectInstance.ObjectInstanceID = Guid.NewGuid();
-			message.ObjectInstance.ModelObjectID = ModelObject.ModelObjectID;
-			message.ObjectInstance.ModelObject = ModelObject;
-			message.ModelObjectID = ModelObject.ModelObjectID;
+			message.ObjectInstance.ModelObjectID = ModelObjectID;
+			message.ObjectInstance.ModelObject = Solution.ModelObjectList.FindByID(ModelObjectID);
 			message.ObjectInstance.Solution = Solution;
+			message.ModelObjectID = ModelObjectID;
 			message.Solution = Solution;
 			message.WorkspaceID = WorkspaceID;
 			Mediator.NotifyColleagues<ObjectInstanceEventArgs>(MediatorMessages.Command_EditObjectInstanceRequested, message);
@@ -293,7 +144,7 @@ namespace MoPlus.ViewModel.Models
 							WorkspaceEventArgs message = new WorkspaceEventArgs();
 							message.ItemID = item.ObjectInstance.ObjectInstanceID;
 							Mediator.NotifyColleagues<WorkspaceEventArgs>(MediatorMessages.Command_CloseItemRequested, message);
-	
+
 							// delete children
 							for (int i = item.Items.Count - 1; i >= 0; i--)
 							{
@@ -308,7 +159,7 @@ namespace MoPlus.ViewModel.Models
 									item.ProcessDeletePropertyInstancePerformed(childMessage);
 								}
 							}
-	
+
 							// delete item
 							isItemMatch = true;
 							ObjectInstances.Remove(item);
@@ -341,37 +192,82 @@ namespace MoPlus.ViewModel.Models
 		public EnterpriseDataObjectList<ObjectInstanceViewModel> ObjectInstances { get; set; }
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Model.</summary>
+		///--------------------------------------------------------------------------------
+		public Model Model { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ObjectInstance.</summary>
+		///--------------------------------------------------------------------------------
+		public ObjectInstance ObjectInstance { get; set; }
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets ModelObject.</summary>
 		///--------------------------------------------------------------------------------
 		public ModelObject ModelObject { get; set; }
 
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets ModelObjectID.</summary>
+		///--------------------------------------------------------------------------------
+		public Guid ModelObjectID
+		{
+			get
+			{
+				if (ModelObject != null)
+				{
+					return ModelObject.ModelObjectID;
+				}
+				return Guid.Empty;
+			}
+		}
 		#endregion "Properties"
 
 		#region "Methods"
 		///--------------------------------------------------------------------------------
-		/// <summary>This method loads ObjectInstances into the view model.</summary>
-		///
-		/// <param name="modelObject">The modelObject to load.</param>
-		/// <param name="solution">The associated solution.</param>
+		/// <summary>This method loads an item of ModelObjectData into the view model.</summary>
+		/// 
+		/// <param name="model">The Model to load.</param>
+		/// <param name="modelObject">The ModelObject to load.</param>
+		/// <param name="objectInstance">The ObjectInstance to load.</param>
+		/// <param name="solution">The Solution to load.</param>
 		/// <param name="loadChildren">Flag indicating whether to perform a deeper load.</param>
 		///--------------------------------------------------------------------------------
-		public void LoadObjectInstances(ModelObject modelObject, Solution solution, bool loadChildren = true)
+		public void LoadModelObjectData(Model model, ModelObject modelObject, ObjectInstance objectInstance, Solution solution, bool loadChildren = true)
 		{
-			// attach the items
+			// attach the ModelObject
+			Model = model;
+			ModelObject = modelObject;
+			ObjectInstance = objectInstance;
+			Solution = solution;
+			ItemID = ModelObject.ModelID;
 			Items.Clear();
-			if (ObjectInstances == null)
-			{
-				ObjectInstances = new EnterpriseDataObjectList<ObjectInstanceViewModel>();
-			}
 			if (loadChildren == true)
 			{
-				foreach (ObjectInstance item in modelObject.ObjectInstanceList)
+
+				// attach ObjectInstances
+				if (ObjectInstances == null)
 				{
-					ObjectInstanceViewModel itemView = new ObjectInstanceViewModel(item, solution);
-					itemView.Updated += new EventHandler(Children_Updated);
-					ObjectInstances.Add(itemView);
-					Items.Add(itemView);
+					ObjectInstances = new EnterpriseDataObjectList<ObjectInstanceViewModel>();
+					foreach (ObjectInstance item in modelObject.ObjectInstanceList)
+					{
+						if (item.Solution == null)
+						{
+							// TODO: this is a hack
+							item.Solution = solution;
+						}
+						if (objectInstance == null || item.ParentObjectInstanceID == objectInstance.ObjectInstanceID)
+						{
+							ObjectInstanceViewModel itemView = new ObjectInstanceViewModel(item, solution);
+							itemView.Updated += new EventHandler(Children_Updated);
+							ObjectInstances.Add(itemView);
+							Items.Add(itemView);
+						}
+					}
 				}
+				#region protected
+				#endregion protected
+
+				Refresh(false);
 			}
 		}
 
@@ -388,7 +284,7 @@ namespace MoPlus.ViewModel.Models
 			{
 				foreach (ObjectInstanceViewModel item in ObjectInstances)
 				{
-					item.Refresh(refreshChildren, refreshLevel-1);
+					item.Refresh(refreshChildren, refreshLevel - 1);
 				}
 			}
 			foreach (ObjectInstanceViewModel item in ObjectInstances)
@@ -423,6 +319,7 @@ namespace MoPlus.ViewModel.Models
 				ObjectInstances.Clear();
 				ObjectInstances = null;
 			}
+			Model = null;
 			ModelObject = null;
 			base.OnDispose();
 		}
@@ -438,7 +335,7 @@ namespace MoPlus.ViewModel.Models
 			Refresh(false, 1);
 			OnUpdated(this, e);
 		}
-		
+
 		///--------------------------------------------------------------------------------
 		/// <summary>This method returns the parent view model corresponding to
 		/// the input message.</summary>
@@ -447,81 +344,30 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
 		{
-			if (data is ObjectInstanceEventArgs && (data as ObjectInstanceEventArgs).ModelObjectID == ModelObject.ModelObjectID)
+			if (data is ObjectInstanceEventArgs && ObjectInstance != null && (data as ObjectInstanceEventArgs).ObjectInstance.ParentObjectInstanceID == ObjectInstance.ObjectInstanceID)
+			{
+				return this;
+			}
+			if (data is ObjectInstanceEventArgs && ObjectInstance != null && (data as ObjectInstanceEventArgs).ObjectInstance.ParentObjectInstanceID == null && (data as ObjectInstanceEventArgs).ModelObjectID == ModelObjectID)
+			{
+				return this;
+			}
+			if (data is ObjectInstanceEventArgs && ObjectInstance == null && (data as ObjectInstanceEventArgs).ModelObjectID == ModelObjectID)
 			{
 				return this;
 			}
 			EditWorkspaceViewModel parentModel = null;
-			
-			foreach (ObjectInstanceViewModel model in ObjectInstances)
+
+			foreach (ObjectInstanceViewModel instance in ObjectInstances)
 			{
-				parentModel = model.FindParentViewModel(data);
+				parentModel = instance.FindParentViewModel(data);
 				if (parentModel != null)
 				{
 					return parentModel;
 				}
 			}
-			
+
 			return null;
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method is used to copy/paste a new item.</summary>
-		///
-		/// <param name="copyItem">The item to copy/paste.</param>
-		/// <param name="savePaste">Flag to determine whether to save the results of the paste.</param>
-		///--------------------------------------------------------------------------------
-		public ObjectInstanceViewModel PasteObjectInstance(ObjectInstanceViewModel copyItem, bool savePaste = true)
-		{
-			ObjectInstance newItem = new ObjectInstance();
-			newItem.ReverseInstance = new ObjectInstance();
-			newItem.TransformDataFromObject(copyItem.ObjectInstance, null, false);
-			newItem.ObjectInstanceID = Guid.NewGuid();
-			newItem.IsAutoUpdated = false;
-			
-			newItem.ModelObject = ModelObject;
-			newItem.Solution = Solution;
-			ObjectInstanceViewModel newView = new ObjectInstanceViewModel(newItem, Solution);
-			newView.ResetModified(true);
-			AddObjectInstance(newView);
-
-			// paste children
-			foreach (PropertyInstanceViewModel childView in copyItem.PropertyInstances)
-			{
-				newView.PastePropertyInstance(childView, savePaste);
-			}
-			if (savePaste == true)
-			{
-				Solution.ObjectInstanceList.Add(newItem);
-				ModelObject.ObjectInstanceList.Add(newItem);
-				newView.OnUpdated(this, null);
-				Solution.ResetModified(true);
-			}
-			return newView;
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method adds an instance of ObjectInstance to the view model.</summary>
-		/// 
-		/// <param name="itemView">The ObjectInstance to add.</param>
-		///--------------------------------------------------------------------------------
-		public void AddObjectInstance(ObjectInstanceViewModel itemView)
-		{
-			itemView.Updated += new EventHandler(Children_Updated);
-			ObjectInstances.Add(itemView);
-			Add(itemView);
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method deletes an instance of ObjectInstance from the view model.</summary>
-		/// 
-		/// <param name="itemView">The ObjectInstance to delete.</param>
-		///--------------------------------------------------------------------------------
-		public void DeleteObjectInstance(ObjectInstanceViewModel itemView)
-		{
-			itemView.Updated -= Children_Updated;
-			ObjectInstances.Remove(itemView);
-			Delete(itemView);
 		}
 
 		#endregion "Methods"
@@ -531,24 +377,26 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		/// <summary>The default constructor (for reflection, etc.).</summary>
 		///--------------------------------------------------------------------------------
-		public ObjectInstancesViewModel()
+		public ModelObjectDataViewModel()
 		{
-			Name = Resources.DisplayValues.NodeName_ObjectInstances;
+			Name = Resources.DisplayValues.NodeName_Instances;
 		}
 
 		///--------------------------------------------------------------------------------
 		/// <summary>Create the instance with the designer view and other data.</summary>
 		///
-		/// <param name="modelObject">The modelObject to load.</param>
+		/// <param name="model">The model to load.</param>
+		/// <param name="modelObject">The model object to load.</param>
+		/// <param name="objectInstance">The ObjectInstance to load.</param>
 		/// <param name="solution">The associated solution.</param>
 		/// <param name="loadChildren">Flag indicating whether to perform a deeper load.</param>
 		///--------------------------------------------------------------------------------
-		public ObjectInstancesViewModel(ModelObject modelObject, Solution solution, bool loadChildren = true)
+		public ModelObjectDataViewModel(Model model, ModelObject modelObject, ObjectInstance objectInstance, Solution solution, bool loadChildren = true)
 		{
-			Name = Resources.DisplayValues.NodeName_ObjectInstances;
+			Name = modelObject.ModelObjectName + " " + Resources.DisplayValues.NodeName_Instances;
 			Solution = solution;
 			ModelObject = modelObject;
-			LoadObjectInstances(modelObject, solution, loadChildren);
+			LoadModelObjectData(model, modelObject, objectInstance, solution, loadChildren);
 		}
 
 		#endregion "Constructors"

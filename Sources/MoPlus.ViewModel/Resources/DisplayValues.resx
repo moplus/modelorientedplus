@@ -5571,4 +5571,12 @@ will skip &lt;i&gt;SomeStatements&lt;/i&gt; if &lt;i&gt;SomeCondition&lt;/i&gt; 
     <value>Use Relative Paths (useful only after solution is saved to a location)</value>
     <comment>For indicating if template paths for solution should be relative.</comment>
   </data>
+  <data name="NodeName_ModelData" xml:space="preserve">
+    <value>Model Data</value>
+    <comment>For model data.</comment>
+  </data>
+  <data name="NodeName_Instances" xml:space="preserve">
+    <value>Instances</value>
+    <comment>For instances.</comment>
+  </data>
 </root>

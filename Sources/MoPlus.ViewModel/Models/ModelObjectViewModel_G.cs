@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/7/2013</CreatedDate>
+	/// <CreatedDate>7/15/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelObjectViewModel : DialogEditWorkspaceViewModel
@@ -99,28 +99,6 @@ namespace MoPlus.ViewModel.Models
 			get
 			{
 				return DisplayValues.ContextMenu_NewModelPropertyToolTip;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewObjectInstance.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewObjectInstance
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewObjectInstance;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewObjectInstanceToolTip.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewObjectInstanceToolTip
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewObjectInstanceToolTip;
 			}
 		}
 
@@ -790,10 +768,6 @@ namespace MoPlus.ViewModel.Models
 			{
 				item.Defaults();
 			}
-			foreach (ObjectInstanceViewModel item in Items.OfType<ObjectInstanceViewModel>())
-			{
-				item.Defaults();
-			}
 		}
 
 		///--------------------------------------------------------------------------------
@@ -832,6 +806,171 @@ namespace MoPlus.ViewModel.Models
 			message.Solution = Solution;
 			message.WorkspaceID = WorkspaceID;
 			Mediator.NotifyColleagues<ModelObjectEventArgs>(MediatorMessages.Command_EditModelObjectRequested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds to ModelProperty adds.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddNewModelProperty()
+		{
+			ModelPropertyViewModel item = new ModelPropertyViewModel();
+			item.ModelProperty = new ModelProperty();
+			item.ModelProperty.ModelPropertyID = Guid.NewGuid();
+			item.ModelProperty.ModelObject = EditModelObject;
+			item.ModelProperty.ModelObjectID = EditModelObject.ModelObjectID;
+			item.ModelProperty.Solution = Solution;
+			item.ModelProperty.Order = ModelObject.ModelPropertyList.Count + 1;
+			item.Solution = Solution;
+			
+			#region protected
+			#endregion protected
+			
+			ItemsToAdd.Add(item);
+			Items.Add(item);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the new ModelProperty command.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessNewModelPropertyCommand()
+		{
+			ModelPropertyEventArgs message = new ModelPropertyEventArgs();
+			message.ModelProperty = new ModelProperty();
+			message.ModelProperty.ModelPropertyID = Guid.NewGuid();
+			message.ModelProperty.ModelObject = ModelObject;
+			message.ModelProperty.ModelObjectID = ModelObject.ModelObjectID;
+			message.ModelObjectID = ModelObject.ModelObjectID;
+			if (message.ModelProperty.ModelObject != null)
+			{
+				message.ModelProperty.Order = message.ModelProperty.ModelObject.ModelPropertyList.Count + 1;
+			}
+			message.ModelProperty.Solution = Solution;
+			message.Solution = Solution;
+			message.WorkspaceID = WorkspaceID;
+			Mediator.NotifyColleagues<ModelPropertyEventArgs>(MediatorMessages.Command_EditModelPropertyRequested, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method applies ModelProperty updates.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessEditModelPropertyPerformed(ModelPropertyEventArgs data)
+		{
+			if (data != null && data.ModelProperty != null)
+			{
+				UpdateEditModelProperty(data.ModelProperty);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method updates an item of ModelProperty.</summary>
+		/// 
+		/// <param name="modelProperty">The ModelProperty to update.</param>
+		///--------------------------------------------------------------------------------
+		public void UpdateEditModelProperty(ModelProperty modelProperty)
+		{
+			bool isItemMatch = false;
+			foreach (ModelPropertyViewModel item in ModelProperties)
+			{
+				if (item.ModelProperty.ModelPropertyID == modelProperty.ModelPropertyID)
+				{
+					isItemMatch = true;
+					item.ModelProperty.TransformDataFromObject(modelProperty, null, false);
+					if (!item.ModelProperty.DefinedByEnumerationID.IsNullOrEmpty())
+					{
+						item.ModelProperty.DefinedByEnumeration = Solution.EnumerationList.FindByID((Guid)item.ModelProperty.DefinedByEnumerationID);
+					}
+					if (!item.ModelProperty.DefinedByModelObjectID.IsNullOrEmpty())
+					{
+						item.ModelProperty.DefinedByModelObject = Solution.ModelObjectList.FindByID((Guid)item.ModelProperty.DefinedByModelObjectID);
+					}
+					if (!item.ModelProperty.DefinedByValueID.IsNullOrEmpty())
+					{
+						item.ModelProperty.DefinedByValue = Solution.ValueList.FindByID((Guid)item.ModelProperty.DefinedByValueID);
+					}
+					item.OnUpdated(item, null);
+					item.ShowInTreeView();
+					break;
+				}
+			}
+			if (isItemMatch == false)
+			{
+				// add new ModelProperty
+				modelProperty.ModelObject = ModelObject;
+				ModelPropertyViewModel newItem = new ModelPropertyViewModel(modelProperty, Solution);
+				if (!newItem.ModelProperty.DefinedByEnumerationID.IsNullOrEmpty())
+				{
+					newItem.ModelProperty.DefinedByEnumeration = Solution.EnumerationList.FindByID((Guid)newItem.ModelProperty.DefinedByEnumerationID);
+				}
+				if (!newItem.ModelProperty.DefinedByModelObjectID.IsNullOrEmpty())
+				{
+					newItem.ModelProperty.DefinedByModelObject = Solution.ModelObjectList.FindByID((Guid)newItem.ModelProperty.DefinedByModelObjectID);
+				}
+				if (!newItem.ModelProperty.DefinedByValueID.IsNullOrEmpty())
+				{
+					newItem.ModelProperty.DefinedByValue = Solution.ValueList.FindByID((Guid)newItem.ModelProperty.DefinedByValueID);
+				}
+				newItem.Updated += new EventHandler(Children_Updated);
+				ModelProperties.Add(newItem);
+				ModelObject.ModelPropertyList.Add(modelProperty);
+				Solution.ModelPropertyList.Add(newItem.ModelProperty);
+				Items.Add(newItem);
+				OnUpdated(this, null);
+				newItem.ShowInTreeView();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds to ModelProperty deletes.</summary>
+		///--------------------------------------------------------------------------------
+		public void AddToDeletedModelProperties(ModelPropertyViewModel item)
+		{
+			ItemsToDelete.Add(item);
+			Items.Remove(item);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method applies ModelProperty deletes.</summary>
+		///--------------------------------------------------------------------------------
+		public void ProcessDeleteModelPropertyPerformed(ModelPropertyEventArgs data)
+		{
+			if (data != null && data.ModelProperty != null)
+			{
+				DeleteModelProperty(data.ModelProperty);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes an instance of ModelProperty.</summary>
+		/// 
+		/// <param name="modelProperty">The ModelProperty to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void DeleteModelProperty(ModelProperty modelProperty)
+		{
+			bool isItemMatch = false;
+			foreach (ModelPropertyViewModel item in ModelProperties.ToList<ModelPropertyViewModel>())
+			{
+				if (item.ModelProperty.ModelPropertyID == modelProperty.ModelPropertyID)
+				{
+					// remove item from tabs, if present
+					WorkspaceEventArgs message = new WorkspaceEventArgs();
+					message.ItemID = item.ModelProperty.ModelPropertyID;
+					Mediator.NotifyColleagues<WorkspaceEventArgs>(MediatorMessages.Command_CloseItemRequested, message);
+
+					// delete ModelProperty
+					isItemMatch = true;
+					ModelProperties.Remove(item);
+					ModelObject.ModelPropertyList.Remove(item.ModelProperty);
+					Solution.ModelPropertyList.Remove(item.ModelProperty);
+					Items.Remove(item);
+					ModelObject.ResetModified(true);
+					OnUpdated(this, null);
+					break;
+				}
+			}
+			if (isItemMatch == false)
+			{
+				ShowIssue(DisplayValues.Issue_DeleteItemNotFound);
+			}
 		}
 
 		///--------------------------------------------------------------------------------
@@ -901,7 +1040,11 @@ namespace MoPlus.ViewModel.Models
 				if (ModelPropertyListCustomized)
 				{
 					#region protected
-					#endregion protected
+			Solution.CodeTemplateContentParser = null;
+			Solution.CodeTemplatOutputParser = null;
+			Solution.ModelObjectNames = null;
+			Solution.ModelPropertyNames = null;
+			#endregion protected
 					// ModelObject.ModelPropertyList = new EnterpriseDataObjectList<ModelProperty>(EditModelObject.ModelPropertyList, null);
 					// ModelObject.ForwardInstance.ModelPropertyList = new EnterpriseDataObjectList<ModelProperty>(EditModelObject.ModelPropertyList, null);
 				}
@@ -917,22 +1060,36 @@ namespace MoPlus.ViewModel.Models
 			SendEditModelObjectPerformed();
 
 			// send update for any updated ModelProperties
-			if (ModelPropertiesFolder != null && ModelPropertiesFolder.IsEdited == true)
+			foreach (ModelPropertyViewModel item in ModelProperties)
 			{
-				ModelPropertiesFolder.Update();
+				if (item.IsEdited == true)
+				{
+					item.Update();
+				}
+			}
+			// send update for any new ModelProperties
+			foreach (ModelPropertyViewModel item in ItemsToAdd.OfType<ModelPropertyViewModel>())
+			{
+				item.Update();
+				ModelProperties.Add(item);
 			}
 
-			// send update for any updated ObjectInstances
-			if (ObjectInstancesFolder != null && ObjectInstancesFolder.IsEdited == true)
+			// send delete for any deleted ModelProperties
+			foreach (ModelPropertyViewModel item in ItemsToDelete.OfType<ModelPropertyViewModel>())
 			{
-				ObjectInstancesFolder.Update();
+				item.Delete();
+				ModelProperties.Remove(item);
 			}
+
+			// reset modified for ModelProperties
+			foreach (ModelPropertyViewModel item in ModelProperties)
+			{
+				item.ResetModified(false);
+			}
+			ItemsToAdd.Clear();
+			ItemsToDelete.Clear();
 			
 			#region protected
-			Solution.CodeTemplateContentParser = null;
-			Solution.CodeTemplatOutputParser = null;
-			Solution.ModelObjectNames = null;
-			Solution.ModelPropertyNames = null;
 			#endregion protected
 		}
 
@@ -987,12 +1144,7 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets ModelProperty lists.</summary>
 		///--------------------------------------------------------------------------------
-		public ModelPropertiesViewModel ModelPropertiesFolder { get; set; }
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets ObjectInstance lists.</summary>
-		///--------------------------------------------------------------------------------
-		public ObjectInstancesViewModel ObjectInstancesFolder { get; set; }
+		public EnterpriseDataObjectList<ModelPropertyViewModel> ModelProperties { get; set; }
 
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets the ModelObject.</summary>
@@ -1055,22 +1207,21 @@ namespace MoPlus.ViewModel.Models
 			ModelObject = modelObject;
 			ItemID = ModelObject.ModelObjectID;
 			Items.Clear();
+			
+			// initialize ModelProperties
+			if (ModelProperties == null)
+			{
+				ModelProperties = new EnterpriseDataObjectList<ModelPropertyViewModel>();
+			}
 			if (loadChildren == true)
 			{
 				// attach ModelProperties
-				if (ModelPropertiesFolder == null)
+				foreach (ModelProperty item in modelObject.ModelPropertyList)
 				{
-					ModelPropertiesFolder = new ModelPropertiesViewModel(modelObject, Solution);
-					ModelPropertiesFolder.Updated += new EventHandler(Children_Updated);
-					Items.Add(ModelPropertiesFolder);
-				}
-								
-				// attach ObjectInstances
-				if (ObjectInstancesFolder == null)
-				{
-					ObjectInstancesFolder = new ObjectInstancesViewModel(modelObject, Solution);
-					ObjectInstancesFolder.Updated += new EventHandler(Children_Updated);
-					Items.Add(ObjectInstancesFolder);
+					ModelPropertyViewModel itemView = new ModelPropertyViewModel(item, Solution);
+					itemView.Updated += new EventHandler(Children_Updated);
+					ModelProperties.Add(itemView);
+					Items.Add(itemView);
 				}
 				#region protected
 				#endregion protected
@@ -1088,8 +1239,10 @@ namespace MoPlus.ViewModel.Models
 		{
 			if (refreshChildren == true || refreshLevel > 0)
 			{
-				ModelPropertiesFolder.Refresh(refreshChildren, refreshLevel - 1);
-				ObjectInstancesFolder.Refresh(refreshChildren, refreshLevel - 1);
+				foreach (ModelPropertyViewModel item in ModelProperties)
+				{
+					item.Refresh(refreshChildren, refreshLevel - 1);
+				}
 			}
 			
 			#region protected
@@ -1117,14 +1270,14 @@ namespace MoPlus.ViewModel.Models
 				ModelObject.ReverseInstance = null;
 				ModelObject.IsAutoUpdated = true;
 			}
-			if (ModelPropertiesFolder.HasErrors == true)
+			foreach (ModelPropertyViewModel item in ModelProperties)
 			{
-				HasErrors = true;
+				if (item.HasErrors == true)
+				{
+					HasErrors = true;
+				}
 			}
-			if (ObjectInstancesFolder.HasErrors == true)
-			{
-				HasErrors = true;
-			}
+			Items.Sort("ItemOrder", SortDirection.Ascending);
 			OnPropertyChanged("Items");
 			OnPropertyChanged("HasCustomizations");
 			OnPropertyChanged("HasErrors");
@@ -1135,17 +1288,15 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		protected override void OnDispose()
 		{
-			if (ModelPropertiesFolder != null)
+			if (ModelProperties != null)
 			{
-				ModelPropertiesFolder.Updated -= Children_Updated;
-				ModelPropertiesFolder.Dispose();
-				ModelPropertiesFolder = null;
-			}
-			if (ObjectInstancesFolder != null)
-			{
-				ObjectInstancesFolder.Updated -= Children_Updated;
-				ObjectInstancesFolder.Dispose();
-				ObjectInstancesFolder = null;
+				for (int i = ModelProperties.Count - 1; i >= 0; i--)
+				{
+					ModelProperties[i].Updated -= Children_Updated;
+					ModelProperties[i].Dispose();
+					ModelProperties.Remove(ModelProperties[i]);
+				}
+				ModelProperties = null;
 			}
 			if (_editModelObject != null)
 			{
@@ -1162,13 +1313,12 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		public bool ChildrenHaveAnyCustomizations()
 		{
-			if (ModelPropertiesFolder != null && ModelPropertiesFolder.HasCustomizations == true)
+			foreach (ModelPropertyViewModel item in ModelProperties)
 			{
-				return true;
-			}
-			if (ObjectInstancesFolder != null && ObjectInstancesFolder.HasCustomizations == true)
-			{
-				return true;
+				if (item.HasCustomizations == true)
+				{
+					return true;
+				}
 			}
 			return false;
 		}
@@ -1193,6 +1343,8 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		private void Children_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
+			OnPropertyChanged("ModelPropertyList");
+			OnPropertyChanged("ModelPropertyListCustomized");
 		}
 
 		///--------------------------------------------------------------------------------
@@ -1204,17 +1356,119 @@ namespace MoPlus.ViewModel.Models
 		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
 		{
 			EditWorkspaceViewModel parentModel = null;
-			parentModel = ModelPropertiesFolder.FindParentViewModel(data);
-			if (parentModel != null)
+			if (data is ModelPropertyEventArgs && (data as ModelPropertyEventArgs).ModelObjectID == ModelObject.ModelObjectID)
 			{
-				return parentModel;
+				return this;
 			}
-			parentModel = ObjectInstancesFolder.FindParentViewModel(data);
-			if (parentModel != null)
+			foreach (ModelPropertyViewModel model in ModelProperties)
 			{
-				return parentModel;
+				parentModel = model.FindParentViewModel(data);
+				if (parentModel != null)
+				{
+					return parentModel;
+				}
 			}
 			return null;
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method is used to copy/paste a new item.</summary>
+		///
+		/// <param name="copyItem">The item to copy/paste.</param>
+		/// <param name="savePaste">Flag to determine whether to save the results of the paste.</param>
+		///--------------------------------------------------------------------------------
+		public ModelPropertyViewModel PasteModelProperty(ModelPropertyViewModel copyItem, bool savePaste = true)
+		{
+			ModelProperty newItem = new ModelProperty();
+			newItem.ReverseInstance = new ModelProperty();
+			newItem.TransformDataFromObject(copyItem.ModelProperty, null, false);
+			newItem.ModelPropertyID = Guid.NewGuid();
+			newItem.IsAutoUpdated = false;
+
+			// try to find Enumeration by existing id first, second by old id, finally by name
+			newItem.DefinedByEnumeration = ModelObject.Model.EnumerationList.FindByID((Guid)copyItem.ModelProperty.DefinedByEnumerationID);
+			if (newItem.DefinedByEnumeration == null && Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByEnumerationID.ToString()] is Guid)
+			{
+				newItem.DefinedByEnumeration = ModelObject.Model.EnumerationList.FindByID((Guid)Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByEnumerationID.ToString()]);
+			}
+			if (newItem.DefinedByEnumeration == null)
+			{
+				newItem.DefinedByEnumeration = ModelObject.Model.EnumerationList.Find("Name", copyItem.ModelProperty.Name);
+			}
+			if (newItem.DefinedByEnumeration == null)
+			{
+				newItem.OldDefinedByEnumerationID = newItem.DefinedByEnumerationID;
+				newItem.DefinedByEnumerationID = Guid.Empty;
+			}
+
+			// try to find ModelObject by existing id first, second by old id, finally by name
+			newItem.DefinedByModelObject = ModelObject.Model.ModelObjectList.FindByID((Guid)copyItem.ModelProperty.DefinedByModelObjectID);
+			if (newItem.DefinedByModelObject == null && Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByModelObjectID.ToString()] is Guid)
+			{
+				newItem.DefinedByModelObject = ModelObject.Model.ModelObjectList.FindByID((Guid)Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByModelObjectID.ToString()]);
+			}
+			if (newItem.DefinedByModelObject == null)
+			{
+				newItem.DefinedByModelObject = ModelObject.Model.ModelObjectList.Find("Name", copyItem.ModelProperty.Name);
+			}
+			if (newItem.DefinedByModelObject == null)
+			{
+				newItem.OldDefinedByModelObjectID = newItem.DefinedByModelObjectID;
+				newItem.DefinedByModelObjectID = Guid.Empty;
+			}
+
+			// try to find Value by existing id first, second by old id, finally by name
+			newItem.DefinedByValue = Solution.ValueList.FindByID((Guid)copyItem.ModelProperty.DefinedByValueID);
+			if (newItem.DefinedByValue == null && Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByValueID.ToString()] is Guid)
+			{
+				newItem.DefinedByValue = Solution.ValueList.FindByID((Guid)Solution.PasteNewGuids[copyItem.ModelProperty.DefinedByValueID.ToString()]);
+			}
+			if (newItem.DefinedByValue == null)
+			{
+				newItem.DefinedByValue = Solution.ValueList.Find("Name", copyItem.ModelProperty.Name);
+			}
+			if (newItem.DefinedByValue == null)
+			{
+				newItem.OldDefinedByValueID = newItem.DefinedByValueID;
+				newItem.DefinedByValueID = Guid.Empty;
+			}
+			newItem.ModelObject = ModelObject;
+			newItem.Solution = Solution;
+			ModelPropertyViewModel newView = new ModelPropertyViewModel(newItem, Solution);
+			newView.ResetModified(true);
+			AddModelProperty(newView);
+			if (savePaste == true)
+			{
+				Solution.ModelPropertyList.Add(newItem);
+				ModelObject.ModelPropertyList.Add(newItem);
+				newView.OnUpdated(this, null);
+				Solution.ResetModified(true);
+			}
+			return newView;
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method adds an instance of ModelProperty to the view model.</summary>
+		/// 
+		/// <param name="itemView">The ModelProperty to add.</param>
+		///--------------------------------------------------------------------------------
+		public void AddModelProperty(ModelPropertyViewModel itemView)
+		{
+			itemView.Updated += new EventHandler(Children_Updated);
+			ModelProperties.Add(itemView);
+			Add(itemView);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method deletes an instance of ModelProperty from the view model.</summary>
+		/// 
+		/// <param name="itemView">The ModelProperty to delete.</param>
+		///--------------------------------------------------------------------------------
+		public void DeleteModelProperty(ModelPropertyViewModel itemView)
+		{
+			itemView.Updated -= Children_Updated;
+			ModelProperties.Remove(itemView);
+			Delete(itemView);
 		}
 		#endregion "Methods"
 

@@ -98,6 +98,52 @@ namespace MoPlus.ViewModel
 		}
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This method applies ObjectInstance updates.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditObjectInstancePerformed, ParameterType = typeof(ObjectInstanceEventArgs))]
+		public void ProcessEditObjectInstancePerformed(ObjectInstanceEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ModelObjectDataViewModel)
+						{
+							(parentView as ModelObjectDataViewModel).ProcessEditObjectInstancePerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes delete ObjectInstance messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_DeleteObjectInstanceRequested, ParameterType = typeof(ObjectInstanceEventArgs))]
+		public void ProcessDeleteObjectInstanceRequested(ObjectInstanceEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ModelObjectDataViewModel)
+						{
+							(parentView as ModelObjectDataViewModel).ProcessDeleteObjectInstancePerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This method applies DatabaseSource updates.</summary>
 		///--------------------------------------------------------------------------------
 		[MediatorMessageSink(MediatorMessages.Command_EditDatabaseSourcePerformed, ParameterType = typeof(DatabaseSourceEventArgs))]

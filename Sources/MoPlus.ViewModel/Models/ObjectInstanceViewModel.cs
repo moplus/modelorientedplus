@@ -44,7 +44,13 @@ namespace MoPlus.ViewModel.Models
 		#endregion "Command Processing"
 
 		#region "Properties"
-		private EnterpriseDataObjectList<WorkspaceViewModel>_propertyItems = null;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ModelObject lists.</summary>
+		///--------------------------------------------------------------------------------
+		public EnterpriseDataObjectList<ModelObjectDataViewModel> ModelObjectDataItems { get; set; }
+
+		private EnterpriseDataObjectList<WorkspaceViewModel> _propertyItems = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the overall set of items (children of any type).</summary>
 		///--------------------------------------------------------------------------------

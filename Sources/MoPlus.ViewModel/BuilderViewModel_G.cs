@@ -56,7 +56,7 @@ namespace MoPlus.ViewModel
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>7/16/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class BuilderViewModel : WorkspaceViewModel
@@ -398,19 +398,9 @@ namespace MoPlus.ViewModel
 				(viewModel as ModelObjectViewModel).ProcessNewModelObjectCommand();
 				return;
 			}
-			else if (viewModel is ModelPropertiesViewModel)
-			{
-				(viewModel as ModelPropertiesViewModel).ProcessNewModelPropertyCommand();
-				return;
-			}
 			else if (viewModel is ModelPropertyViewModel)
 			{
 				(viewModel as ModelPropertyViewModel).ProcessNewModelPropertyCommand();
-				return;
-			}
-			else if (viewModel is ObjectInstancesViewModel)
-			{
-				(viewModel as ObjectInstancesViewModel).ProcessNewObjectInstanceCommand();
 				return;
 			}
 			else if (viewModel is ObjectInstanceViewModel)
@@ -570,6 +560,11 @@ namespace MoPlus.ViewModel
 				(viewModel as SpecificationSourcesViewModel).ProcessNewDatabaseSourceCommand();
 				return;
 			}
+			else if (viewModel is ModelObjectDataViewModel)
+			{
+				(viewModel as ModelObjectDataViewModel).ProcessNewObjectInstanceCommand();
+				return;
+			}
 			#endregion protected
 			
 			SolutionsFolder.ProcessNewSolutionCommand();
@@ -605,6 +600,11 @@ namespace MoPlus.ViewModel
 			else if (viewModel is MethodViewModel)
 			{
 				(viewModel as MethodViewModel).ProcessNewParameterCommand();
+				return;
+			}
+			else if (viewModel is ModelObjectViewModel)
+			{
+				(viewModel as ModelObjectViewModel).ProcessNewModelPropertyCommand();
 				return;
 			}
 			else if (viewModel is ObjectInstanceViewModel)
@@ -1559,9 +1559,9 @@ namespace MoPlus.ViewModel
 					if (solution.Solution.SolutionID == data.Solution.SolutionID)
 					{
 						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
-						if (parentView is ModelPropertiesViewModel)
+						if (parentView is ModelObjectViewModel)
 						{
-							(parentView as ModelPropertiesViewModel).ProcessEditModelPropertyPerformed(data);
+							(parentView as ModelObjectViewModel).ProcessEditModelPropertyPerformed(data);
 						}
 						break;
 					}
@@ -1582,55 +1582,9 @@ namespace MoPlus.ViewModel
 					if (solution.Solution.SolutionID == data.Solution.SolutionID)
 					{
 						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
-						if (parentView is ModelPropertiesViewModel)
+						if (parentView is ModelObjectViewModel)
 						{
-							(parentView as ModelPropertiesViewModel).ProcessDeleteModelPropertyPerformed(data);
-						}
-						break;
-					}
-				}
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method applies ObjectInstance updates.</summary>
-		///--------------------------------------------------------------------------------
-		[MediatorMessageSink(MediatorMessages.Command_EditObjectInstancePerformed, ParameterType = typeof(ObjectInstanceEventArgs))]
-		public void ProcessEditObjectInstancePerformed(ObjectInstanceEventArgs data)
-		{
-			if (SolutionsFolder != null)
-			{
-				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
-				{
-					if (solution.Solution.SolutionID == data.Solution.SolutionID)
-					{
-						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
-						if (parentView is ObjectInstancesViewModel)
-						{
-							(parentView as ObjectInstancesViewModel).ProcessEditObjectInstancePerformed(data);
-						}
-						break;
-					}
-				}
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This method processes delete ObjectInstance messages.</summary>
-		///--------------------------------------------------------------------------------
-		[MediatorMessageSink(MediatorMessages.Command_DeleteObjectInstanceRequested, ParameterType = typeof(ObjectInstanceEventArgs))]
-		public void ProcessDeleteObjectInstanceRequested(ObjectInstanceEventArgs data)
-		{
-			if (SolutionsFolder != null)
-			{
-				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
-				{
-					if (solution.Solution.SolutionID == data.Solution.SolutionID)
-					{
-						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
-						if (parentView is ObjectInstancesViewModel)
-						{
-							(parentView as ObjectInstancesViewModel).ProcessDeleteObjectInstancePerformed(data);
+							(parentView as ModelObjectViewModel).ProcessDeleteModelPropertyPerformed(data);
 						}
 						break;
 					}

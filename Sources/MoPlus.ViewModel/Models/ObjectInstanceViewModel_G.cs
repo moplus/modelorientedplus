@@ -1154,6 +1154,22 @@ namespace MoPlus.ViewModel.Models
 					Items.Add(itemView);
 				}
 				#region protected
+
+				// attach ModelObjectDataItems
+				if (ModelObjectDataItems == null)
+				{
+					ModelObjectDataItems = new EnterpriseDataObjectList<ModelObjectDataViewModel>();
+					foreach (ModelObject loopObject in Solution.ModelObjectList)
+					{
+						if (loopObject.ParentModelObjectID == ModelObjectID)
+						{
+							ModelObjectDataViewModel modelObjectDataViewModel = new ModelObjectDataViewModel(loopObject.Model, loopObject, ObjectInstance, Solution, loadChildren);
+							modelObjectDataViewModel.Updated += new EventHandler(Children_Updated);
+							ModelObjectDataItems.Add(modelObjectDataViewModel);
+							Items.Add(modelObjectDataViewModel);
+						}
+					}
+				}
 				#endregion protected
 				
 				Refresh(false);
@@ -1176,6 +1192,24 @@ namespace MoPlus.ViewModel.Models
 			}
 			
 			#region protected
+			if (refreshChildren == true || refreshLevel > 0)
+			{
+				foreach (ModelObjectDataViewModel item in ModelObjectDataItems)
+				{
+					item.Refresh(refreshChildren, refreshLevel - 1);
+				}
+			}
+			foreach (ModelObjectDataViewModel item in ModelObjectDataItems)
+			{
+				if (item.HasCustomizations == true)
+				{
+					HasCustomizations = true;
+				}
+				if (item.HasErrors == true)
+				{
+					HasErrors = true;
+				}
+			}
 			#endregion protected
 			
 			HasErrors = !ObjectInstance.IsValid;
@@ -1207,7 +1241,6 @@ namespace MoPlus.ViewModel.Models
 					HasErrors = true;
 				}
 			}
-			Items.Sort("Order", SortDirection.Ascending);
 			OnPropertyChanged("Items");
 			OnPropertyChanged("HasCustomizations");
 			OnPropertyChanged("HasErrors");
@@ -1291,6 +1324,14 @@ namespace MoPlus.ViewModel.Models
 				return this;
 			}
 			foreach (PropertyInstanceViewModel model in PropertyInstances)
+			{
+				parentModel = model.FindParentViewModel(data);
+				if (parentModel != null)
+				{
+					return parentModel;
+				}
+			}
+			foreach (ModelObjectDataViewModel model in ModelObjectDataItems)
 			{
 				parentModel = model.FindParentViewModel(data);
 				if (parentModel != null)
