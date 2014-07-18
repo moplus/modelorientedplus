@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/15/2014</CreatedDate>
+	/// <CreatedDate>7/18/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -810,6 +810,10 @@ namespace MoPlus.Interpreter.BLL.Models
 			{
 				modelProperty.AddItemToUsedTags(usedTags);
 			}
+			foreach (ObjectInstance objectInstance in ObjectInstanceList)
+			{
+				objectInstance.AddItemToUsedTags(usedTags);
+			}
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1020,6 +1024,16 @@ namespace MoPlus.Interpreter.BLL.Models
 				if (forwardChildItem != null)
 				{
 					forwardItem.ModelPropertyList.Add(forwardChildItem);
+					isCustomized = true;
+				}
+			}
+			foreach (ObjectInstance item in ObjectInstanceList)
+			{
+				item.ModelObject = this;
+				ObjectInstance forwardChildItem = item.GetForwardInstance(forwardSolution);
+				if (forwardChildItem != null)
+				{
+					forwardItem.ObjectInstanceList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}

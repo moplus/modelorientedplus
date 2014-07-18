@@ -1141,6 +1141,13 @@ namespace MoPlus.ViewModel.Models
 			Solution.CodeTemplatOutputParser = null;
 			Solution.ModelObjectNames = null;
 			Solution.ModelPropertyNames = null;
+
+			// refresh solution
+			ModelEventArgs message = new ModelEventArgs();
+			message.Solution = Solution;
+			message.SolutionID = Solution.SolutionID;
+			message.ModelID = ModelProperty.ModelObject.ModelID;
+			Mediator.NotifyColleagues<ModelEventArgs>(MediatorMessages.Command_ReloadModelDataRequested, message);
 			#endregion protected
 		}
 

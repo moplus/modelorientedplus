@@ -98,6 +98,31 @@ namespace MoPlus.ViewModel
 		}
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This method processes reload model data messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_ReloadModelDataRequested, ParameterType = typeof(ModelEventArgs))]
+		public void ProcessReloadModelDataRequested(ModelEventArgs args)
+		{
+			if (args != null && args.Solution != null)
+			{
+				foreach (SolutionViewModel item in SolutionsFolder.Solutions)
+				{
+					if (item.Solution.SolutionID == args.Solution.SolutionID)
+					{
+						foreach (ModelViewModel model in item.ModelsFolder.Models)
+						{
+							if (model.ModelID == args.ModelID)
+							{
+								model.ModelDataFolder.ModelObjectDataItems = null;
+								model.ModelDataFolder.LoadModelData(model.Model, item.Solution, true);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This method applies ObjectInstance updates.</summary>
 		///--------------------------------------------------------------------------------
 		[MediatorMessageSink(MediatorMessages.Command_EditObjectInstancePerformed, ParameterType = typeof(ObjectInstanceEventArgs))]

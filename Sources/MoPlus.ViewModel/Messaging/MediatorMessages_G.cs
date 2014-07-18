@@ -48,6 +48,7 @@ namespace MoPlus.ViewModel.Messaging
 		public const string Command_DebugFinished = "Command_DebugFinished";
 		public const string Command_ShowGettingStartedHelpRequested = "Command_ShowGettingStartedHelpRequested";
 		public const string Command_ShowAboutHelpRequested = "Command_ShowAboutHelpRequested";
+		public const string Command_ReloadModelDataRequested = "Command_ReloadModelDataRequested";
 		#endregion protected
 		
 		// AuditProperty edit related messages

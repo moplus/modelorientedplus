@@ -1228,7 +1228,14 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 					<%%-
 					Items.Remove(item);
 					%%><%%=../../../BLLClassName%%><%%-.ResetModified(true);
-					OnUpdated(this, null);
+					OnUpdated(this, null);%%>
+					if (Tags.Contains("DeleteRefresh") == true)
+					{
+					<%%-
+					#region protected
+					#endregion protected%%>
+					}
+					<%%-
 					break;
 				}
 			}

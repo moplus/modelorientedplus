@@ -929,6 +929,11 @@ namespace MoPlus.ViewModel.Models
 			}
 			
 			#region protected
+			if (refreshChildren == true || refreshLevel > 0)
+			{
+				ModelDataFolder.Refresh(refreshChildren, refreshLevel - 1);
+			}
+
 			#endregion protected
 			
 			HasErrors = !Model.IsValid;

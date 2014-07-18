@@ -316,6 +316,15 @@ namespace MoPlus.ViewModel.Models
 							Items.Remove(item);
 							Model.ResetModified(true);
 							OnUpdated(this, null);
+							#region protected
+
+							// refresh solution
+							ModelEventArgs deleteMessage = new ModelEventArgs();
+							deleteMessage.Solution = Solution;
+							deleteMessage.SolutionID = Solution.SolutionID;
+							deleteMessage.ModelID = item.ModelID;
+							Mediator.NotifyColleagues<ModelEventArgs>(MediatorMessages.Command_ReloadModelDataRequested, deleteMessage);
+							#endregion protected
 							break;
 						}
 					}

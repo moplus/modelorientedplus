@@ -2636,7 +2636,7 @@ The following Entity level tags are utilized in this solution:
           <Tags>DB CustomChildren </Tags>
           <SpecSourceName>Models.Model</SpecSourceName>
           <EntityID>3bc525f1-8c6a-4d13-99a0-bd6e271a592f</EntityID>
-          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
+          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -2670,10 +2670,10 @@ The following Entity level tags are utilized in this solution:
           </EntityReferenceList>
         </Entity>
         <Entity>
-          <Tags>DB ExtraUpdate </Tags>
+          <Tags>DB ExtraUpdate DeleteRefresh </Tags>
           <SpecSourceName>Models.ModelObject</SpecSourceName>
           <EntityID>49131834-6c1b-4e8f-abcb-de8c521b3b8b</EntityID>
-          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
+          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -2705,7 +2705,7 @@ The following Entity level tags are utilized in this solution:
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
+              <Tags>DB Secondary PrimaryModel </Tags>
               <SpecSourceName>Models.ModelObject.ObjectInstanceList</SpecSourceName>
               <PropertyID>cbe85828-a949-4c3f-90d0-7eac6cc50ad0</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -2738,10 +2738,10 @@ The following Entity level tags are utilized in this solution:
           </EntityReferenceList>
         </Entity>
         <Entity>
-          <Tags>DB ExtraUpdate </Tags>
+          <Tags>DB ExtraUpdate DeleteRefresh </Tags>
           <SpecSourceName>Models.ModelProperty</SpecSourceName>
           <EntityID>a684e6c4-fa81-42a7-b224-30304f2e0c8f</EntityID>
-          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
+          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -2849,7 +2849,7 @@ The following Entity level tags are utilized in this solution:
           <Tags>DB CustomEditName CustomAddEdit </Tags>
           <SpecSourceName>Models.ObjectInstance</SpecSourceName>
           <EntityID>b93efda4-2900-4e56-ac88-2e4d6832bccc</EntityID>
-          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
+          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />

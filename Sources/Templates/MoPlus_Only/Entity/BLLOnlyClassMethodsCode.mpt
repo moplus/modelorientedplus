@@ -83,7 +83,7 @@ else
 	AddTagsToUsedTags(usedTags);%%>
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Collection where Tags.Contains("Secondary") == false && ReferencedEntity.FeatureName != "Interpreter")
+		foreach (Collection where (Tags.Contains("Secondary") == false || Tags.Contains("PrimaryModel") == true) && ReferencedEntity.FeatureName != "Interpreter")
 		{
 	<%%-
 	foreach (%%><%%=ReferencedEntity.BLLClassName%%><%%- %%><%%=ReferencedEntity.BLLClassName.CamelCase()%%><%%- in %%><%%=BLLPropertyName%%><%%-)
@@ -393,7 +393,7 @@ if (BaseEntity != null)
 	}%%>
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Collection where Tags.Contains("Secondary") == false)
+		foreach (Collection where Tags.Contains("Secondary") == false || Tags.Contains("PrimaryModel") == true)
 		{
 			relationshipID = null
 			foreach (PropertyRelationship limit 1)
