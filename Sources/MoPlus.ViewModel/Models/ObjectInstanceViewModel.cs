@@ -50,6 +50,11 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		public EnterpriseDataObjectList<ModelObjectDataViewModel> ModelObjectDataItems { get; set; }
 
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets Collection lists.</summary>
+		///--------------------------------------------------------------------------------
+		public EnterpriseDataObjectList<PropertyInstanceCollectionViewModel> Collections { get; set; }
+
 		private EnterpriseDataObjectList<WorkspaceViewModel> _propertyItems = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the overall set of items (children of any type).</summary>

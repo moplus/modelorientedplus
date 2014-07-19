@@ -7286,6 +7286,15 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collection.
+        /// </summary>
+        internal static string NodeName_PropertyCollection {
+            get {
+                return ResourceManager.GetString("NodeName_PropertyCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Property References.
         /// </summary>
         internal static string NodeName_PropertyReferences {

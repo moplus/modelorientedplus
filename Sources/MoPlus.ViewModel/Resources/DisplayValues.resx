@@ -5579,4 +5579,7 @@ will skip &lt;i&gt;SomeStatements&lt;/i&gt; if &lt;i&gt;SomeCondition&lt;/i&gt; 
     <value>Instances</value>
     <comment>For instances.</comment>
   </data>
+  <data name="NodeName_PropertyCollection" xml:space="preserve">
+    <value>Collection</value>
+  </data>
 </root>

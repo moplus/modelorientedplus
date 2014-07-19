@@ -195,6 +195,7 @@
     <Compile Include="Messaging\MediatorMessages_G.cs" />
     <Compile Include="Messaging\MessageToActionsMap.cs" />
     <Compile Include="Messaging\WeakAction.cs" />
+    <Compile Include="Models\PropertyInstanceCollectionViewModel.cs" />
     <Compile Include="Models\ModelViewModel.cs" />
     <Compile Include="Models\ModelObjectDataViewModel.cs" />
     <Compile Include="Models\ModelDataViewModel.cs" />

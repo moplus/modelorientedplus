@@ -565,6 +565,11 @@ namespace MoPlus.ViewModel
 				(viewModel as ModelObjectDataViewModel).ProcessNewObjectInstanceCommand();
 				return;
 			}
+			else if (viewModel is PropertyInstanceCollectionViewModel)
+			{
+				(viewModel as PropertyInstanceCollectionViewModel).ProcessNewPropertyInstanceCommand();
+				return;
+			}
 			#endregion protected
 			
 			SolutionsFolder.ProcessNewSolutionCommand();

@@ -854,19 +854,65 @@ namespace MoPlus.ViewModel.Models
 			}
 			if (isItemMatch == false)
 			{
-				// add new PropertyInstance
-				propertyInstance.ObjectInstance = ObjectInstance;
-				PropertyInstanceViewModel newItem = new PropertyInstanceViewModel(propertyInstance, Solution);
-				if (!newItem.PropertyInstance.ModelPropertyID.IsNullOrEmpty())
+				foreach (PropertyInstanceCollectionViewModel collection in Collections)
 				{
-					newItem.PropertyInstance.ModelProperty = Solution.ModelPropertyList.FindByID((Guid)newItem.PropertyInstance.ModelPropertyID);
+					foreach (PropertyInstanceViewModel item in collection.PropertyInstances)
+					{
+						if (item.PropertyInstance.PropertyInstanceID == propertyInstance.PropertyInstanceID)
+						{
+							isItemMatch = true;
+							item.PropertyInstance.TransformDataFromObject(propertyInstance, null, false);
+							if (!item.PropertyInstance.ModelPropertyID.IsNullOrEmpty())
+							{
+								item.PropertyInstance.ModelProperty = Solution.ModelPropertyList.FindByID((Guid)item.PropertyInstance.ModelPropertyID);
+							}
+							item.OnUpdated(item, null);
+							break;
+						}
+					}
 				}
-				newItem.Updated += new EventHandler(Children_Updated);
-				PropertyInstances.Add(newItem);
-				ObjectInstance.PropertyInstanceList.Add(propertyInstance);
-				Solution.PropertyInstanceList.Add(newItem.PropertyInstance);
-				Items.Add(newItem);
-				OnUpdated(this, null);
+			}
+			if (isItemMatch == false)
+			{
+				if (propertyInstance.ModelProperty == null || propertyInstance.ModelProperty.IsCollection == false)
+				{
+					// add new PropertyInstance
+					propertyInstance.ObjectInstance = ObjectInstance;
+					PropertyInstanceViewModel newItem = new PropertyInstanceViewModel(propertyInstance, Solution);
+					if (!newItem.PropertyInstance.ModelPropertyID.IsNullOrEmpty())
+					{
+						newItem.PropertyInstance.ModelProperty = Solution.ModelPropertyList.FindByID((Guid)newItem.PropertyInstance.ModelPropertyID);
+					}
+					newItem.Updated += new EventHandler(Children_Updated);
+					PropertyInstances.Add(newItem);
+					ObjectInstance.PropertyInstanceList.Add(propertyInstance);
+					Solution.PropertyInstanceList.Add(newItem.PropertyInstance);
+					Items.Add(newItem);
+					OnUpdated(this, null);
+				}
+				else
+				{
+					foreach (PropertyInstanceCollectionViewModel collection in Collections)
+					{
+						if (collection.ModelProperty.ModelPropertyID == propertyInstance.ModelPropertyID)
+						{
+							// add new PropertyInstance
+							propertyInstance.ObjectInstance = ObjectInstance;
+							PropertyInstanceViewModel newItem = new PropertyInstanceViewModel(propertyInstance, Solution);
+							if (!newItem.PropertyInstance.ModelPropertyID.IsNullOrEmpty())
+							{
+								newItem.PropertyInstance.ModelProperty = Solution.ModelPropertyList.FindByID((Guid)newItem.PropertyInstance.ModelPropertyID);
+							}
+							newItem.Updated += new EventHandler(Children_Updated);
+							collection.PropertyInstances.Add(newItem);
+							ObjectInstance.PropertyInstanceList.Add(propertyInstance);
+							Solution.PropertyInstanceList.Add(newItem.PropertyInstance);
+							collection.Items.Add(newItem);
+							OnUpdated(this, null);
+							break;
+						}
+					}
+				}
 			}
 		}
 
@@ -916,6 +962,29 @@ namespace MoPlus.ViewModel.Models
 					ObjectInstance.ResetModified(true);
 					OnUpdated(this, null);
 					break;
+				}
+			}
+			foreach (PropertyInstanceCollectionViewModel collection in Collections)
+			{
+				foreach (PropertyInstanceViewModel item in collection.PropertyInstances)
+				{
+					if (item.PropertyInstance.PropertyInstanceID == propertyInstance.PropertyInstanceID)
+					{
+						// remove item from tabs, if present
+						WorkspaceEventArgs message = new WorkspaceEventArgs();
+						message.ItemID = item.PropertyInstance.PropertyInstanceID;
+						Mediator.NotifyColleagues<WorkspaceEventArgs>(MediatorMessages.Command_CloseItemRequested, message);
+
+						// delete PropertyInstance
+						isItemMatch = true;
+						collection.PropertyInstances.Remove(item);
+						ObjectInstance.PropertyInstanceList.Remove(item.PropertyInstance);
+						Solution.PropertyInstanceList.Remove(item.PropertyInstance);
+						collection.Items.Remove(item);
+						ObjectInstance.ResetModified(true);
+						OnUpdated(this, null);
+						break;
+					}
 				}
 			}
 			if (isItemMatch == false)
@@ -1148,12 +1217,33 @@ namespace MoPlus.ViewModel.Models
 				// attach PropertyInstances
 				foreach (PropertyInstance item in objectInstance.PropertyInstanceList)
 				{
+					#region protected
+					if (item.ModelProperty == null || item.ModelProperty.IsCollection == true)
+					{
+						continue;
+					}
+					#endregion protected
 					PropertyInstanceViewModel itemView = new PropertyInstanceViewModel(item, Solution);
 					itemView.Updated += new EventHandler(Children_Updated);
 					PropertyInstances.Add(itemView);
 					Items.Add(itemView);
 				}
 				#region protected
+				// attach Collections
+				if (Collections == null && ObjectInstance.ModelObject != null)
+				{
+					Collections = new EnterpriseDataObjectList<PropertyInstanceCollectionViewModel>();
+					foreach (ModelProperty property in ObjectInstance.ModelObject.ModelPropertyList)
+					{
+						if (property.IsCollection == true)
+						{
+							PropertyInstanceCollectionViewModel propertyInstanceCollectionViewModel = new PropertyInstanceCollectionViewModel(ObjectInstance.ModelObject.Model, ObjectInstance.ModelObject, property, ObjectInstance, Solution, loadChildren);
+							propertyInstanceCollectionViewModel.Updated += new EventHandler(Children_Updated);
+							Collections.Add(propertyInstanceCollectionViewModel);
+							Items.Add(propertyInstanceCollectionViewModel);
+						}
+					}
+				}
 
 				// attach ModelObjectDataItems
 				if (ModelObjectDataItems == null)
@@ -1332,6 +1422,14 @@ namespace MoPlus.ViewModel.Models
 				}
 			}
 			foreach (ModelObjectDataViewModel model in ModelObjectDataItems)
+			{
+				parentModel = model.FindParentViewModel(data);
+				if (parentModel != null)
+				{
+					return parentModel;
+				}
+			}
+			foreach (PropertyInstanceCollectionViewModel model in Collections)
 			{
 				parentModel = model.FindParentViewModel(data);
 				if (parentModel != null)
