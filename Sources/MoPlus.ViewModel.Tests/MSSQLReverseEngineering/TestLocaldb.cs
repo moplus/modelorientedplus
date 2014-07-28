@@ -15,6 +15,7 @@ namespace MoPlus.ViewModel.Tests.MSSQLReverseEngineering
         [TestMethod]
         public void DoTestLocalDB()
         {
+            // adding a comment
             var exe = "sqllocaldb.exe";
             var arguments = "i";
             var res = DoExecute(exe, arguments);
