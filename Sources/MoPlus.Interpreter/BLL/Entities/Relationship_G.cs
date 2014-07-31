@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>7/30/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -856,26 +856,26 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.MethodRelationship> _methodRelationshipList = null;
+		protected EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> _relationshipPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Relationship.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.MethodRelationship> MethodRelationshipList
+		public virtual EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> RelationshipPropertyList
 		{
 			get
 			{
-				if (_methodRelationshipList == null)
+				if (_relationshipPropertyList == null)
 				{
-					_methodRelationshipList = new EnterpriseDataObjectList<BLL.Entities.MethodRelationship>();
+					_relationshipPropertyList = new EnterpriseDataObjectList<BLL.Entities.RelationshipProperty>();
 				}
-				return _methodRelationshipList;
+				return _relationshipPropertyList;
 			}
 			set
 			{
-				if (_methodRelationshipList == null || _methodRelationshipList.Equals(value) == false)
+				if (_relationshipPropertyList == null || _relationshipPropertyList.Equals(value) == false)
 				{
-					_methodRelationshipList = value;
+					_relationshipPropertyList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -883,19 +883,19 @@ namespace MoPlus.Interpreter.BLL.Entities
 				}
 			}
 		}
-		[XmlArray(ElementName = "MethodRelationshipList")]
-		[XmlArrayItem(typeof(BLL.Entities.MethodRelationship), ElementName = "MethodRelationship")]
-		[DataMember(Name = "MethodRelationshipList")]
-		[DataArrayItem(ElementName = "MethodRelationshipList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.MethodRelationship> _S_MethodRelationshipList
+		[XmlArray(ElementName = "RelationshipPropertyList")]
+		[XmlArrayItem(typeof(BLL.Entities.RelationshipProperty), ElementName = "RelationshipProperty")]
+		[DataMember(Name = "RelationshipPropertyList")]
+		[DataArrayItem(ElementName = "RelationshipPropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> _S_RelationshipPropertyList
 		{
 			get
 			{
-				return _methodRelationshipList;
+				return _relationshipPropertyList;
 			}
 			set
 			{
-				_methodRelationshipList = value;
+				_relationshipPropertyList = value;
 			}
 		}
 		
@@ -942,26 +942,26 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> _relationshipPropertyList = null;
+		protected EnterpriseDataObjectList<BLL.Entities.MethodRelationship> _methodRelationshipList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Relationship.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> RelationshipPropertyList
+		public virtual EnterpriseDataObjectList<BLL.Entities.MethodRelationship> MethodRelationshipList
 		{
 			get
 			{
-				if (_relationshipPropertyList == null)
+				if (_methodRelationshipList == null)
 				{
-					_relationshipPropertyList = new EnterpriseDataObjectList<BLL.Entities.RelationshipProperty>();
+					_methodRelationshipList = new EnterpriseDataObjectList<BLL.Entities.MethodRelationship>();
 				}
-				return _relationshipPropertyList;
+				return _methodRelationshipList;
 			}
 			set
 			{
-				if (_relationshipPropertyList == null || _relationshipPropertyList.Equals(value) == false)
+				if (_methodRelationshipList == null || _methodRelationshipList.Equals(value) == false)
 				{
-					_relationshipPropertyList = value;
+					_methodRelationshipList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -969,19 +969,19 @@ namespace MoPlus.Interpreter.BLL.Entities
 				}
 			}
 		}
-		[XmlArray(ElementName = "RelationshipPropertyList")]
-		[XmlArrayItem(typeof(BLL.Entities.RelationshipProperty), ElementName = "RelationshipProperty")]
-		[DataMember(Name = "RelationshipPropertyList")]
-		[DataArrayItem(ElementName = "RelationshipPropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> _S_RelationshipPropertyList
+		[XmlArray(ElementName = "MethodRelationshipList")]
+		[XmlArrayItem(typeof(BLL.Entities.MethodRelationship), ElementName = "MethodRelationship")]
+		[DataMember(Name = "MethodRelationshipList")]
+		[DataArrayItem(ElementName = "MethodRelationshipList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.MethodRelationship> _S_MethodRelationshipList
 		{
 			get
 			{
-				return _relationshipPropertyList;
+				return _methodRelationshipList;
 			}
 			set
 			{
-				_relationshipPropertyList = value;
+				_methodRelationshipList = value;
 			}
 		}
 		
@@ -1089,9 +1089,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_methodRelationshipList != null && _methodRelationshipList.IsModified == true) return true;
-				if (_propertyRelationshipList != null && _propertyRelationshipList.IsModified == true) return true;
 				if (_relationshipPropertyList != null && _relationshipPropertyList.IsModified == true) return true;
+				if (_propertyRelationshipList != null && _propertyRelationshipList.IsModified == true) return true;
+				if (_methodRelationshipList != null && _methodRelationshipList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -1269,14 +1269,14 @@ namespace MoPlus.Interpreter.BLL.Entities
 			ReferencedEntity = null;
 			Entity = null;
 			Solution = null;
-			if (_methodRelationshipList != null)
+			if (_relationshipPropertyList != null)
 			{
-				foreach (MethodRelationship item in MethodRelationshipList)
+				foreach (RelationshipProperty item in RelationshipPropertyList)
 				{
 					item.Dispose();
 				}
-				MethodRelationshipList.Clear();
-				MethodRelationshipList = null;
+				RelationshipPropertyList.Clear();
+				RelationshipPropertyList = null;
 			}
 			if (_propertyRelationshipList != null)
 			{
@@ -1287,14 +1287,14 @@ namespace MoPlus.Interpreter.BLL.Entities
 				PropertyRelationshipList.Clear();
 				PropertyRelationshipList = null;
 			}
-			if (_relationshipPropertyList != null)
+			if (_methodRelationshipList != null)
 			{
-				foreach (RelationshipProperty item in RelationshipPropertyList)
+				foreach (MethodRelationship item in MethodRelationshipList)
 				{
 					item.Dispose();
 				}
-				RelationshipPropertyList.Clear();
-				RelationshipPropertyList = null;
+				MethodRelationshipList.Clear();
+				MethodRelationshipList = null;
 			}
 			
 			#region protected
@@ -1638,9 +1638,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_methodRelationshipList != null) _methodRelationshipList.ResetLoaded(isLoaded);
-			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetLoaded(isLoaded);
 			if (_relationshipPropertyList != null) _relationshipPropertyList.ResetLoaded(isLoaded);
+			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetLoaded(isLoaded);
+			if (_methodRelationshipList != null) _methodRelationshipList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1652,9 +1652,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_methodRelationshipList != null) _methodRelationshipList.ResetModified(isModified);
-			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetModified(isModified);
 			if (_relationshipPropertyList != null) _relationshipPropertyList.ResetModified(isModified);
+			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetModified(isModified);
+			if (_methodRelationshipList != null) _methodRelationshipList.ResetModified(isModified);
 		}
 		
 		#region protected

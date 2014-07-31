@@ -70,7 +70,7 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cance_l.
+        ///   Looks up a localized string similar to _Cancel.
         /// </summary>
         internal static string Button_Cancel {
             get {
@@ -79,7 +79,7 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cl_ose.
+        ///   Looks up a localized string similar to _Close.
         /// </summary>
         internal static string Button_Close {
             get {
@@ -88,7 +88,7 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Defau_lts.
+        ///   Looks up a localized string similar to _Initialize.
         /// </summary>
         internal static string Button_Defaults {
             get {
@@ -160,7 +160,7 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sele_ct.
+        ///   Looks up a localized string similar to S_elect.
         /// </summary>
         internal static string Button_SelectNext {
             get {

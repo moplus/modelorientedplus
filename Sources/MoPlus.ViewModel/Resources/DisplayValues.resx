@@ -122,15 +122,15 @@
     <comment>For the add button.</comment>
   </data>
   <data name="Button_Cancel" xml:space="preserve">
-    <value>Cance_l</value>
+    <value>_Cancel</value>
     <comment>For the cancel button.</comment>
   </data>
   <data name="Button_Close" xml:space="preserve">
-    <value>Cl_ose</value>
+    <value>_Close</value>
     <comment>For the close button.</comment>
   </data>
   <data name="Button_Defaults" xml:space="preserve">
-    <value>Defau_lts</value>
+    <value>_Initialize</value>
     <comment>For the defaults button.</comment>
   </data>
   <data name="Button_OK" xml:space="preserve">
@@ -154,7 +154,7 @@
     <comment>For the select button.</comment>
   </data>
   <data name="Button_SelectNext" xml:space="preserve">
-    <value>Sele_ct</value>
+    <value>S_elect</value>
     <comment>For the select button.</comment>
   </data>
   <data name="Button_Update" xml:space="preserve">

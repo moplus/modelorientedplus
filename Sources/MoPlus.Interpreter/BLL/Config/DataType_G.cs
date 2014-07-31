@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Config
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>7/30/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -401,49 +401,6 @@ namespace MoPlus.Interpreter.BLL.Config
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.Property> _propertyList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of DataType.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.Property> PropertyList
-		{
-			get
-			{
-				if (_propertyList == null)
-				{
-					_propertyList = new EnterpriseDataObjectList<BLL.Entities.Property>();
-				}
-				return _propertyList;
-			}
-			set
-			{
-				if (_propertyList == null || _propertyList.Equals(value) == false)
-				{
-					_propertyList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "PropertyList")]
-		[XmlArrayItem(typeof(BLL.Entities.Property), ElementName = "Property")]
-		[DataMember(Name = "PropertyList")]
-		[DataArrayItem(ElementName = "PropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.Property> _S_PropertyList
-		{
-			get
-			{
-				return _propertyList;
-			}
-			set
-			{
-				_propertyList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Solutions.AuditProperty> _auditPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of DataType.</summary>
@@ -484,6 +441,49 @@ namespace MoPlus.Interpreter.BLL.Config
 			set
 			{
 				_auditPropertyList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.Property> _propertyList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of DataType.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.Property> PropertyList
+		{
+			get
+			{
+				if (_propertyList == null)
+				{
+					_propertyList = new EnterpriseDataObjectList<BLL.Entities.Property>();
+				}
+				return _propertyList;
+			}
+			set
+			{
+				if (_propertyList == null || _propertyList.Equals(value) == false)
+				{
+					_propertyList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "PropertyList")]
+		[XmlArrayItem(typeof(BLL.Entities.Property), ElementName = "Property")]
+		[DataMember(Name = "PropertyList")]
+		[DataArrayItem(ElementName = "PropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.Property> _S_PropertyList
+		{
+			get
+			{
+				return _propertyList;
+			}
+			set
+			{
+				_propertyList = value;
 			}
 		}
 		
@@ -533,8 +533,8 @@ namespace MoPlus.Interpreter.BLL.Config
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_propertyList != null && _propertyList.IsModified == true) return true;
 				if (_auditPropertyList != null && _auditPropertyList.IsModified == true) return true;
+				if (_propertyList != null && _propertyList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -591,13 +591,13 @@ namespace MoPlus.Interpreter.BLL.Config
 		public virtual void AddItemToUsedTags(NameObjectCollection usedTags)
 		{
 			AddTagsToUsedTags(usedTags);
-			foreach (Property property in PropertyList)
-			{
-				property.AddItemToUsedTags(usedTags);
-			}
 			foreach (AuditProperty auditProperty in AuditPropertyList)
 			{
 				auditProperty.AddItemToUsedTags(usedTags);
+			}
+			foreach (Property property in PropertyList)
+			{
+				property.AddItemToUsedTags(usedTags);
 			}
 		}
 		
@@ -671,15 +671,6 @@ namespace MoPlus.Interpreter.BLL.Config
 				ForwardInstance = null;
 			}
 			Solution = null;
-			if (_propertyList != null)
-			{
-				foreach (Property item in PropertyList)
-				{
-					item.Dispose();
-				}
-				PropertyList.Clear();
-				PropertyList = null;
-			}
 			if (_auditPropertyList != null)
 			{
 				foreach (AuditProperty item in AuditPropertyList)
@@ -688,6 +679,15 @@ namespace MoPlus.Interpreter.BLL.Config
 				}
 				AuditPropertyList.Clear();
 				AuditPropertyList = null;
+			}
+			if (_propertyList != null)
+			{
+				foreach (Property item in PropertyList)
+				{
+					item.Dispose();
+				}
+				PropertyList.Clear();
+				PropertyList = null;
 			}
 			
 			#region protected
@@ -758,16 +758,6 @@ namespace MoPlus.Interpreter.BLL.Config
 			else
 			{
 			}
-			foreach (Property item in PropertyList)
-			{
-				item.DataType = this;
-				Property forwardChildItem = item.GetForwardInstance(forwardSolution);
-				if (forwardChildItem != null)
-				{
-					forwardItem.PropertyList.Add(forwardChildItem);
-					isCustomized = true;
-				}
-			}
 			foreach (AuditProperty item in AuditPropertyList)
 			{
 				item.DataType = this;
@@ -775,6 +765,16 @@ namespace MoPlus.Interpreter.BLL.Config
 				if (forwardChildItem != null)
 				{
 					forwardItem.AuditPropertyList.Add(forwardChildItem);
+					isCustomized = true;
+				}
+			}
+			foreach (Property item in PropertyList)
+			{
+				item.DataType = this;
+				Property forwardChildItem = item.GetForwardInstance(forwardSolution);
+				if (forwardChildItem != null)
+				{
+					forwardItem.PropertyList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -826,8 +826,8 @@ namespace MoPlus.Interpreter.BLL.Config
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_propertyList != null) _propertyList.ResetLoaded(isLoaded);
 			if (_auditPropertyList != null) _auditPropertyList.ResetLoaded(isLoaded);
+			if (_propertyList != null) _propertyList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -839,8 +839,8 @@ namespace MoPlus.Interpreter.BLL.Config
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_propertyList != null) _propertyList.ResetModified(isModified);
 			if (_auditPropertyList != null) _auditPropertyList.ResetModified(isModified);
+			if (_propertyList != null) _propertyList.ResetModified(isModified);
 		}
 		
 		#region protected

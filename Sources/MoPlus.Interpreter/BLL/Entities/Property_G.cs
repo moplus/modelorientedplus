@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>7/30/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -895,92 +895,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.IndexProperty> _indexPropertyList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Property.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.IndexProperty> IndexPropertyList
-		{
-			get
-			{
-				if (_indexPropertyList == null)
-				{
-					_indexPropertyList = new EnterpriseDataObjectList<BLL.Entities.IndexProperty>();
-				}
-				return _indexPropertyList;
-			}
-			set
-			{
-				if (_indexPropertyList == null || _indexPropertyList.Equals(value) == false)
-				{
-					_indexPropertyList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "IndexPropertyList")]
-		[XmlArrayItem(typeof(BLL.Entities.IndexProperty), ElementName = "IndexProperty")]
-		[DataMember(Name = "IndexPropertyList")]
-		[DataArrayItem(ElementName = "IndexPropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.IndexProperty> _S_IndexPropertyList
-		{
-			get
-			{
-				return _indexPropertyList;
-			}
-			set
-			{
-				_indexPropertyList = value;
-			}
-		}
-		
-		protected EnterpriseDataObjectList<BLL.Entities.PropertyReference> _referencedPropertyReferenceList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Property.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> ReferencedPropertyReferenceList
-		{
-			get
-			{
-				if (_referencedPropertyReferenceList == null)
-				{
-					_referencedPropertyReferenceList = new EnterpriseDataObjectList<BLL.Entities.PropertyReference>();
-				}
-				return _referencedPropertyReferenceList;
-			}
-			set
-			{
-				if (_referencedPropertyReferenceList == null || _referencedPropertyReferenceList.Equals(value) == false)
-				{
-					_referencedPropertyReferenceList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "ReferencedPropertyReferenceList")]
-		[XmlArrayItem(typeof(BLL.Entities.PropertyReference), ElementName = "PropertyReference")]
-		[DataMember(Name = "ReferencedPropertyReferenceList")]
-		[DataArrayItem(ElementName = "ReferencedPropertyReferenceList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> _S_ReferencedPropertyReferenceList
-		{
-			get
-			{
-				return _referencedPropertyReferenceList;
-			}
-			set
-			{
-				_referencedPropertyReferenceList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Entities.RelationshipProperty> _relationshipPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Property.</summary>
@@ -1067,6 +981,92 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected EnterpriseDataObjectList<BLL.Entities.IndexProperty> _indexPropertyList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Property.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.IndexProperty> IndexPropertyList
+		{
+			get
+			{
+				if (_indexPropertyList == null)
+				{
+					_indexPropertyList = new EnterpriseDataObjectList<BLL.Entities.IndexProperty>();
+				}
+				return _indexPropertyList;
+			}
+			set
+			{
+				if (_indexPropertyList == null || _indexPropertyList.Equals(value) == false)
+				{
+					_indexPropertyList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "IndexPropertyList")]
+		[XmlArrayItem(typeof(BLL.Entities.IndexProperty), ElementName = "IndexProperty")]
+		[DataMember(Name = "IndexPropertyList")]
+		[DataArrayItem(ElementName = "IndexPropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.IndexProperty> _S_IndexPropertyList
+		{
+			get
+			{
+				return _indexPropertyList;
+			}
+			set
+			{
+				_indexPropertyList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.PropertyReference> _referencedPropertyReferenceList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Property.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> ReferencedPropertyReferenceList
+		{
+			get
+			{
+				if (_referencedPropertyReferenceList == null)
+				{
+					_referencedPropertyReferenceList = new EnterpriseDataObjectList<BLL.Entities.PropertyReference>();
+				}
+				return _referencedPropertyReferenceList;
+			}
+			set
+			{
+				if (_referencedPropertyReferenceList == null || _referencedPropertyReferenceList.Equals(value) == false)
+				{
+					_referencedPropertyReferenceList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "ReferencedPropertyReferenceList")]
+		[XmlArrayItem(typeof(BLL.Entities.PropertyReference), ElementName = "PropertyReference")]
+		[DataMember(Name = "ReferencedPropertyReferenceList")]
+		[DataArrayItem(ElementName = "ReferencedPropertyReferenceList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> _S_ReferencedPropertyReferenceList
+		{
+			get
+			{
+				return _referencedPropertyReferenceList;
+			}
+			set
+			{
+				_referencedPropertyReferenceList = value;
+			}
+		}
+		
 		protected BLL.Config.DataType _dataType = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the DataType.</summary>
@@ -1134,10 +1134,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_indexPropertyList != null && _indexPropertyList.IsModified == true) return true;
-				if (_referencedPropertyReferenceList != null && _referencedPropertyReferenceList.IsModified == true) return true;
 				if (_relationshipPropertyList != null && _relationshipPropertyList.IsModified == true) return true;
 				if (_referencedRelationshipPropertyList != null && _referencedRelationshipPropertyList.IsModified == true) return true;
+				if (_indexPropertyList != null && _indexPropertyList.IsModified == true) return true;
+				if (_referencedPropertyReferenceList != null && _referencedPropertyReferenceList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -1321,24 +1321,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			DataType = null;
 			Entity = null;
 			Solution = null;
-			if (_indexPropertyList != null)
-			{
-				foreach (IndexProperty item in IndexPropertyList)
-				{
-					item.Dispose();
-				}
-				IndexPropertyList.Clear();
-				IndexPropertyList = null;
-			}
-			if (_referencedPropertyReferenceList != null)
-			{
-				foreach (PropertyReference item in ReferencedPropertyReferenceList)
-				{
-					item.Dispose();
-				}
-				ReferencedPropertyReferenceList.Clear();
-				ReferencedPropertyReferenceList = null;
-			}
 			if (_relationshipPropertyList != null)
 			{
 				foreach (RelationshipProperty item in RelationshipPropertyList)
@@ -1356,6 +1338,24 @@ namespace MoPlus.Interpreter.BLL.Entities
 				}
 				ReferencedRelationshipPropertyList.Clear();
 				ReferencedRelationshipPropertyList = null;
+			}
+			if (_indexPropertyList != null)
+			{
+				foreach (IndexProperty item in IndexPropertyList)
+				{
+					item.Dispose();
+				}
+				IndexPropertyList.Clear();
+				IndexPropertyList = null;
+			}
+			if (_referencedPropertyReferenceList != null)
+			{
+				foreach (PropertyReference item in ReferencedPropertyReferenceList)
+				{
+					item.Dispose();
+				}
+				ReferencedPropertyReferenceList.Clear();
+				ReferencedPropertyReferenceList = null;
 			}
 			
 			#region protected
@@ -1673,10 +1673,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 		public override void ResetLoaded(bool isLoaded)
 		{
 			base.ResetLoaded(isLoaded);
-			if (_indexPropertyList != null) _indexPropertyList.ResetLoaded(isLoaded);
-			if (_referencedPropertyReferenceList != null) _referencedPropertyReferenceList.ResetLoaded(isLoaded);
 			if (_relationshipPropertyList != null) _relationshipPropertyList.ResetLoaded(isLoaded);
 			if (_referencedRelationshipPropertyList != null) _referencedRelationshipPropertyList.ResetLoaded(isLoaded);
+			if (_indexPropertyList != null) _indexPropertyList.ResetLoaded(isLoaded);
+			if (_referencedPropertyReferenceList != null) _referencedPropertyReferenceList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1688,10 +1688,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_indexPropertyList != null) _indexPropertyList.ResetModified(isModified);
-			if (_referencedPropertyReferenceList != null) _referencedPropertyReferenceList.ResetModified(isModified);
 			if (_relationshipPropertyList != null) _relationshipPropertyList.ResetModified(isModified);
 			if (_referencedRelationshipPropertyList != null) _referencedRelationshipPropertyList.ResetModified(isModified);
+			if (_indexPropertyList != null) _indexPropertyList.ResetModified(isModified);
+			if (_referencedPropertyReferenceList != null) _referencedPropertyReferenceList.ResetModified(isModified);
 		}
 		
 		#region protected

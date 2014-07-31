@@ -12,9 +12,9 @@
   xmlns:lib="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library"
   xmlns:vm="clr-namespace:MoPlus.ViewModel;assembly=MoPlus.ViewModel"
   xmlns:Settings="clr-namespace:MoPlus.SolutionBuilder.WpfClient.Library;assembly=MoPlus.SolutionBuilder.WpfClient"
-  xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
-  xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
-  xmlns:avalonDockConverters="clr-namespace:AvalonDock.Converters;assembly=AvalonDock"
+  xmlns:avalonDock="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
+  xmlns:avalonDockControls="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
+  xmlns:avalonDockConverters="clr-namespace:Xceed.Wpf.AvalonDock.Converters;assembly=Xceed.Wpf.AvalonDock"
   mc:Ignorable="d"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
 

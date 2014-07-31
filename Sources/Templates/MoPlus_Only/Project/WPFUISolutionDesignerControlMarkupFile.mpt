@@ -67,9 +67,9 @@ foreach (Feature where Tags.Contains("DB") == true)
                     <%%-
                     xmlns:Library="clr-namespace:%%><%%=Namespace%%><%%-.Library"
                     xmlns:Interaction="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
-                    xmlns:avalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
-                    xmlns:avalonDockLayout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
-                    xmlns:avalonDockControls="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
+                    xmlns:avalonDock="clr-namespace:Xceed.Wpf.AvalonDock;assembly=Xceed.Wpf.AvalonDock"
+                    xmlns:avalonDockLayout="clr-namespace:Xceed.Wpf.AvalonDock.Layout;assembly=Xceed.Wpf.AvalonDock"
+                    xmlns:avalonDockControls="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
                     mc:Ignorable="d" 
                     d:DesignHeight="300" d:DesignWidth="300">
 	<UserControl.InputBindings>

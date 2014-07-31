@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>7/30/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -785,49 +785,6 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> _xmlAttributeList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of XmlDocument.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> XmlAttributeList
-		{
-			get
-			{
-				if (_xmlAttributeList == null)
-				{
-					_xmlAttributeList = new EnterpriseDataObjectList<BLL.Specifications.XmlAttribute>();
-				}
-				return _xmlAttributeList;
-			}
-			set
-			{
-				if (_xmlAttributeList == null || _xmlAttributeList.Equals(value) == false)
-				{
-					_xmlAttributeList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "XmlAttributeList")]
-		[XmlArrayItem(typeof(BLL.Specifications.XmlAttribute), ElementName = "XmlAttribute")]
-		[DataMember(Name = "XmlAttributeList")]
-		[DataArrayItem(ElementName = "XmlAttributeList")]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> _S_XmlAttributeList
-		{
-			get
-			{
-				return _xmlAttributeList;
-			}
-			set
-			{
-				_xmlAttributeList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Specifications.XmlNode> _xmlNodeList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of XmlDocument.</summary>
@@ -868,6 +825,49 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			set
 			{
 				_xmlNodeList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> _xmlAttributeList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of XmlDocument.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> XmlAttributeList
+		{
+			get
+			{
+				if (_xmlAttributeList == null)
+				{
+					_xmlAttributeList = new EnterpriseDataObjectList<BLL.Specifications.XmlAttribute>();
+				}
+				return _xmlAttributeList;
+			}
+			set
+			{
+				if (_xmlAttributeList == null || _xmlAttributeList.Equals(value) == false)
+				{
+					_xmlAttributeList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "XmlAttributeList")]
+		[XmlArrayItem(typeof(BLL.Specifications.XmlAttribute), ElementName = "XmlAttribute")]
+		[DataMember(Name = "XmlAttributeList")]
+		[DataArrayItem(ElementName = "XmlAttributeList")]
+		public virtual EnterpriseDataObjectList<BLL.Specifications.XmlAttribute> _S_XmlAttributeList
+		{
+			get
+			{
+				return _xmlAttributeList;
+			}
+			set
+			{
+				_xmlAttributeList = value;
 			}
 		}
 		
@@ -917,8 +917,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_xmlAttributeList != null && _xmlAttributeList.IsModified == true) return true;
 				if (_xmlNodeList != null && _xmlNodeList.IsModified == true) return true;
+				if (_xmlAttributeList != null && _xmlAttributeList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -975,13 +975,13 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		public virtual void AddItemToUsedTags(NameObjectCollection usedTags)
 		{
 			AddTagsToUsedTags(usedTags);
-			foreach (XmlAttribute xmlAttribute in XmlAttributeList)
-			{
-				xmlAttribute.AddItemToUsedTags(usedTags);
-			}
 			foreach (XmlNode xmlNode in XmlNodeList)
 			{
 				xmlNode.AddItemToUsedTags(usedTags);
+			}
+			foreach (XmlAttribute xmlAttribute in XmlAttributeList)
+			{
+				xmlAttribute.AddItemToUsedTags(usedTags);
 			}
 		}
 		
@@ -1100,15 +1100,6 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				ForwardInstance = null;
 			}
 			Solution = null;
-			if (_xmlAttributeList != null)
-			{
-				foreach (XmlAttribute item in XmlAttributeList)
-				{
-					item.Dispose();
-				}
-				XmlAttributeList.Clear();
-				XmlAttributeList = null;
-			}
 			if (_xmlNodeList != null)
 			{
 				foreach (XmlNode item in XmlNodeList)
@@ -1117,6 +1108,15 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				}
 				XmlNodeList.Clear();
 				XmlNodeList = null;
+			}
+			if (_xmlAttributeList != null)
+			{
+				foreach (XmlAttribute item in XmlAttributeList)
+				{
+					item.Dispose();
+				}
+				XmlAttributeList.Clear();
+				XmlAttributeList = null;
 			}
 			
 			#region protected
@@ -1189,16 +1189,6 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				forwardItem.XmlDocumentID = XmlDocumentID;
 			}
-			foreach (XmlAttribute item in XmlAttributeList)
-			{
-				item.XmlDocument = this;
-				XmlAttribute forwardChildItem = item.GetForwardInstance(forwardSolution);
-				if (forwardChildItem != null)
-				{
-					forwardItem.XmlAttributeList.Add(forwardChildItem);
-					isCustomized = true;
-				}
-			}
 			foreach (XmlNode item in XmlNodeList)
 			{
 				item.XmlDocument = this;
@@ -1206,6 +1196,16 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				if (forwardChildItem != null)
 				{
 					forwardItem.XmlNodeList.Add(forwardChildItem);
+					isCustomized = true;
+				}
+			}
+			foreach (XmlAttribute item in XmlAttributeList)
+			{
+				item.XmlDocument = this;
+				XmlAttribute forwardChildItem = item.GetForwardInstance(forwardSolution);
+				if (forwardChildItem != null)
+				{
+					forwardItem.XmlAttributeList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -1338,8 +1338,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_xmlAttributeList != null) _xmlAttributeList.ResetLoaded(isLoaded);
 			if (_xmlNodeList != null) _xmlNodeList.ResetLoaded(isLoaded);
+			if (_xmlAttributeList != null) _xmlAttributeList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1351,8 +1351,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_xmlAttributeList != null) _xmlAttributeList.ResetModified(isModified);
 			if (_xmlNodeList != null) _xmlNodeList.ResetModified(isModified);
+			if (_xmlAttributeList != null) _xmlAttributeList.ResetModified(isModified);
 		}
 		
 		#region protected

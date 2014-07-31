@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>7/30/2014</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -487,49 +487,6 @@ namespace MoPlus.Interpreter.BLL.Models
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Models.ModelProperty> _definedByModelPropertyList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Enumeration.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Models.ModelProperty> DefinedByModelPropertyList
-		{
-			get
-			{
-				if (_definedByModelPropertyList == null)
-				{
-					_definedByModelPropertyList = new EnterpriseDataObjectList<BLL.Models.ModelProperty>();
-				}
-				return _definedByModelPropertyList;
-			}
-			set
-			{
-				if (_definedByModelPropertyList == null || _definedByModelPropertyList.Equals(value) == false)
-				{
-					_definedByModelPropertyList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "DefinedByModelPropertyList")]
-		[XmlArrayItem(typeof(BLL.Models.ModelProperty), ElementName = "ModelProperty")]
-		[DataMember(Name = "DefinedByModelPropertyList")]
-		[DataArrayItem(ElementName = "DefinedByModelPropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Models.ModelProperty> _S_DefinedByModelPropertyList
-		{
-			get
-			{
-				return _definedByModelPropertyList;
-			}
-			set
-			{
-				_definedByModelPropertyList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Models.Value> _valueList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Enumeration.</summary>
@@ -570,6 +527,49 @@ namespace MoPlus.Interpreter.BLL.Models
 			set
 			{
 				_valueList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Models.ModelProperty> _definedByModelPropertyList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Enumeration.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Models.ModelProperty> DefinedByModelPropertyList
+		{
+			get
+			{
+				if (_definedByModelPropertyList == null)
+				{
+					_definedByModelPropertyList = new EnterpriseDataObjectList<BLL.Models.ModelProperty>();
+				}
+				return _definedByModelPropertyList;
+			}
+			set
+			{
+				if (_definedByModelPropertyList == null || _definedByModelPropertyList.Equals(value) == false)
+				{
+					_definedByModelPropertyList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "DefinedByModelPropertyList")]
+		[XmlArrayItem(typeof(BLL.Models.ModelProperty), ElementName = "ModelProperty")]
+		[DataMember(Name = "DefinedByModelPropertyList")]
+		[DataArrayItem(ElementName = "DefinedByModelPropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Models.ModelProperty> _S_DefinedByModelPropertyList
+		{
+			get
+			{
+				return _definedByModelPropertyList;
+			}
+			set
+			{
+				_definedByModelPropertyList = value;
 			}
 		}
 		
@@ -645,8 +645,8 @@ namespace MoPlus.Interpreter.BLL.Models
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_definedByModelPropertyList != null && _definedByModelPropertyList.IsModified == true) return true;
 				if (_valueList != null && _valueList.IsModified == true) return true;
+				if (_definedByModelPropertyList != null && _definedByModelPropertyList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -805,15 +805,6 @@ namespace MoPlus.Interpreter.BLL.Models
 			}
 			Model = null;
 			Solution = null;
-			if (_definedByModelPropertyList != null)
-			{
-				foreach (ModelProperty item in DefinedByModelPropertyList)
-				{
-					item.Dispose();
-				}
-				DefinedByModelPropertyList.Clear();
-				DefinedByModelPropertyList = null;
-			}
 			if (_valueList != null)
 			{
 				foreach (Value item in ValueList)
@@ -822,6 +813,15 @@ namespace MoPlus.Interpreter.BLL.Models
 				}
 				ValueList.Clear();
 				ValueList = null;
+			}
+			if (_definedByModelPropertyList != null)
+			{
+				foreach (ModelProperty item in DefinedByModelPropertyList)
+				{
+					item.Dispose();
+				}
+				DefinedByModelPropertyList.Clear();
+				DefinedByModelPropertyList = null;
 			}
 			
 			#region protected
@@ -1123,8 +1123,8 @@ namespace MoPlus.Interpreter.BLL.Models
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_definedByModelPropertyList != null) _definedByModelPropertyList.ResetLoaded(isLoaded);
 			if (_valueList != null) _valueList.ResetLoaded(isLoaded);
+			if (_definedByModelPropertyList != null) _definedByModelPropertyList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1136,8 +1136,8 @@ namespace MoPlus.Interpreter.BLL.Models
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_definedByModelPropertyList != null) _definedByModelPropertyList.ResetModified(isModified);
 			if (_valueList != null) _valueList.ResetModified(isModified);
+			if (_definedByModelPropertyList != null) _definedByModelPropertyList.ResetModified(isModified);
 		}
 		
 		#region protected
