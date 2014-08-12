@@ -76,13 +76,16 @@ namespace MoPlus.ViewModel.Models
 						{
 							// create property collection item
 							EnterpriseDataObjectList<PropertyInstanceViewModel> propertyInstances = new EnterpriseDataObjectList<PropertyInstanceViewModel>();
-							foreach (PropertyInstanceViewModel instance in Items.OfType<PropertyInstanceViewModel>())
-							{
-								if (instance.ModelPropertyID == property.ModelPropertyID)
-								{
-									propertyInstances.Add(instance);
-								}
-							}
+                            foreach (PropertyInstanceCollectionViewModel collection in Items.OfType<PropertyInstanceCollectionViewModel>())
+                            {
+                                if (collection.ModelProperty.ModelPropertyID == property.ModelPropertyID)
+                                {
+                                    foreach (PropertyInstanceViewModel instance in collection.PropertyInstances)
+                                    {
+                                             propertyInstances.Add(instance);
+                                     }
+                                }
+                            }
 							PropertyCollectionItemViewModel propertyView = new PropertyCollectionItemViewModel(propertyInstances, property, this, Solution);
 							PropertyItems.Add(propertyView);
 						}

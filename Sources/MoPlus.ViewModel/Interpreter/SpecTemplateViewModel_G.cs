@@ -1000,6 +1000,10 @@ namespace MoPlus.ViewModel.Interpreter
 			
 			#region protected
 			message.SpecTemplate.SpecificationDirectory = SpecificationDirectory;
+            if (String.IsNullOrEmpty(message.SpecTemplate.SpecificationDirectory))
+            {
+                message.SpecTemplate.SpecificationDirectory = Solution.SpecTemplatesDirectory;
+            }
 			message.SpecTemplate.NodeName = SpecTemplate.NodeName;
 			message.SpecTemplate.CategoryName = SpecTemplate.CategoryName;
 			#endregion protected

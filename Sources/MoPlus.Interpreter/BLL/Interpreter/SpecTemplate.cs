@@ -70,18 +70,29 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 						return SpecificationDirectory + "\\" + TemplateName + ".mps";
 					}
 				}
-				else if (!String.IsNullOrEmpty(SuggestedDirectory))
-				{
-					if (NodeName != Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SpecificationSource))
-					{
-						return SuggestedDirectory + "\\" + NodeName + "\\" + TemplateName + ".mps";
-					}
-					else
-					{
-						return SuggestedDirectory + "\\" + TemplateName + ".mps";
-					}
-				}
-				return String.Empty;
+                else if (!String.IsNullOrEmpty(SuggestedDirectory))
+                {
+                    if (NodeName != Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SpecificationSource))
+                    {
+                        return SuggestedDirectory + "\\" + NodeName + "\\" + TemplateName + ".mps";
+                    }
+                    else
+                    {
+                        return SuggestedDirectory + "\\" + TemplateName + ".mps";
+                    }
+                }
+                else if (!String.IsNullOrEmpty(Solution.SpecTemplatesDirectory))
+                {
+                    if (NodeName != Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SpecificationSource))
+                    {
+                        return Solution.SpecTemplatesDirectory + "\\" + NodeName + "\\" + TemplateName + ".mps";
+                    }
+                    else
+                    {
+                        return Solution.SpecTemplatesDirectory + "\\" + TemplateName + ".mps";
+                    }
+                }
+                return String.Empty;
 			}
 		}
 

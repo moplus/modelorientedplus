@@ -1331,6 +1331,16 @@ namespace MoPlus.ViewModel.Models
 					HasErrors = true;
 				}
 			}
+            if (Collections != null)
+            {
+                foreach (PropertyInstanceCollectionViewModel item in Collections)
+                {
+                    if (item.HasErrors == true)
+                    {
+                        HasErrors = true;
+                    }
+                }
+            }
 			OnPropertyChanged("Items");
 			OnPropertyChanged("HasCustomizations");
 			OnPropertyChanged("HasErrors");
@@ -1373,7 +1383,27 @@ namespace MoPlus.ViewModel.Models
 					return true;
 				}
 			}
-			return false;
+            if (Collections != null)
+            {
+                foreach (PropertyInstanceCollectionViewModel item in Collections)
+                {
+                    if (item.HasCustomizations == true)
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (ModelObjectDataItems != null)
+            {
+                foreach (ModelObjectDataViewModel item in ModelObjectDataItems)
+                {
+                    if (item.HasCustomizations == true)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
 		}
 
 		///--------------------------------------------------------------------------------

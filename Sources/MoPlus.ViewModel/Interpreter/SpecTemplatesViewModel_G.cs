@@ -233,7 +233,11 @@ namespace MoPlus.ViewModel.Interpreter
 			
 			#region protected
 			message.SpecTemplate.SpecificationDirectory = SpecificationDirectory;
-			if (TemplateModelNode == ModelContextTypeCode.Solution.ToString())
+            if (String.IsNullOrEmpty(message.SpecTemplate.SpecificationDirectory))
+            {
+                message.SpecTemplate.SpecificationDirectory = Solution.SpecTemplatesDirectory;
+            }
+            if (TemplateModelNode == ModelContextTypeCode.Solution.ToString())
 			{
 				message.SpecTemplate.NodeName = SpecModelContextTypeCode.SpecificationSource.ToString();
 			}

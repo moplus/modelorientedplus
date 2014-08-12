@@ -19,6 +19,7 @@ using MoPlus.Interpreter.BLL.Solutions;
 using MoPlus.Data;
 using MoPlus.Interpreter.BLL.Entities;
 using MoPlus.Interpreter.Resources;
+using MoPlus.Interpreter.BLL.Models;
 
 namespace MoPlus.Interpreter.BLL.Interpreter
 {
@@ -131,7 +132,24 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				{
 					if (ModelProperty != null)
 					{
-						return collection.FindItem(ModelProperty.ModelPropertyName, Parameter.GetObjectValue(solutionContext, templateContext, modelContext, interpreterType)) as IDomainEnterpriseObject;
+                        object paramValue = Parameter.GetObjectValue(solutionContext, templateContext, modelContext, interpreterType);
+						IDomainEnterpriseObject item = collection.FindItem(ModelProperty.ModelPropertyName, paramValue) as IDomainEnterpriseObject;
+                        if (item != null) return item;
+                        if (modelContext is ObjectInstance)
+                        {
+                            // get item by specified model property
+                            foreach (ObjectInstance instance in collection)
+                            {
+                                foreach (PropertyInstance property in instance.PropertyInstanceList)
+                                {
+                                    if (property.ModelPropertyName == ModelProperty.ModelPropertyName && property.PropertyValue == paramValue.ToString())
+                                    {
+                                        return instance;
+                                    }
+                                }
+                            }
+                        }
+                        return null;
 					}
 					else
 					{

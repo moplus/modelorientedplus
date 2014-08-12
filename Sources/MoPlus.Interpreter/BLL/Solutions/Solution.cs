@@ -1530,6 +1530,9 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 
+        public string SpecTemplatesDirectory { get; set; }
+        public string CodeTemplatesDirectory { get; set; }
+
 		#endregion "Fields and Properties"
 
 		#region "Events"

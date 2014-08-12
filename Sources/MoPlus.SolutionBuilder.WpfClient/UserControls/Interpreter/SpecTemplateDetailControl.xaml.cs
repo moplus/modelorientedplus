@@ -326,7 +326,8 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls.Interpreter
 				System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 				if (result == System.Windows.Forms.DialogResult.OK && !String.IsNullOrEmpty(dialog.SelectedPath))
 				{
-					view.SpecTemplate.SuggestedDirectory = dialog.SelectedPath;
+                    view.Solution.SpecTemplatesDirectory = dialog.SelectedPath;
+                    //view.SpecTemplate.SuggestedDirectory = dialog.SelectedPath;
 					view.UpdateCommand.Execute(null);
 				}
 			}
