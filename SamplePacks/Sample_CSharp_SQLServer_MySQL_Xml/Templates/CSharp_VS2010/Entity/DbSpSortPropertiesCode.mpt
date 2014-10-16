@@ -12,7 +12,7 @@ CurrentEntity = Entity
 %%><%%=Solution.LIBDoubleSpace%%><%%-CASE WHEN @SortDirection = 'Random' THEN NEWID() END%%>
 foreach (Entity in EntityAndBaseEntities where Tags.Contains("DB") == true)
 {
-	foreach (Property where IsBaseProperty == false && Tags.Contains("DB") == true)
+	foreach (Property where IsBaseProperty == false && DbSpIsSortableProperty == true && Tags.Contains("DB") == true)
 	{
 		<%%-
 		, CASE WHEN @sortDirection = 'Ascending' AND @sortColumn = '%%>

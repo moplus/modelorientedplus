@@ -28,9 +28,11 @@ EndGlobal
 <%%=Solution.SolutionDirectory%%><%%-\%%><%%=Solution.OutputSolutionFileName%%>
 <%%:
 progress(Solution.EntityCount * 2 * ProjectCount)
-
+//
+// view the comments in the CREATE_VS_SOLUTION_FILES template to control how your solution file is created
+//
 // create solution file if it does not exist
-if (FileExists(Path) == false)
+if (CREATE_VS_SOLUTION_FILES == true && FileExists(Path) == false)
 {
 	update(Path)
 }

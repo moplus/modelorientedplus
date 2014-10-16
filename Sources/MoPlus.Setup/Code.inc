@@ -336,10 +336,5 @@ end;
 
 function InitializeSetup: Boolean;
 begin
-  if not VSNET2010 then begin
-    MsgBox(ExpandConstant('Visual Studio 2010 not installed!'), MbError, MB_OK);
-    Result := false;
-    exit;
-   end;
   Result := true;
 end;

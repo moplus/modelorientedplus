@@ -2,6 +2,7 @@
 	NAME DALClassConstructorsCode
 	CATEGORY DAL
 	NODE Entity
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
 <%%=USETABS true%%>
@@ -12,7 +13,11 @@
 /// <summary>The default constructor (for reflection, etc.).</summary>
 ///--------------------------------------------------------------------------------
 public %%><%%=DALClassName%%><%%-(){}
-
+%%>
+<%%:
+if (IsStringPrimaryKey == false)
+{
+<%%-
 ///--------------------------------------------------------------------------------
 /// <summary>This constructor creates a data access %%><%%=DALClassName%%><%%- instance
 /// with primary key values.</summary>
@@ -25,7 +30,9 @@ public %%><%%=DALClassName%%><%%-(string primaryKeyValues)
 	PrimaryKeyValues = primaryKeyValues;%%>
 <%%=TAB -1%%><%%-
 }
-
+%%>
+}
+%%><%%-
 ///--------------------------------------------------------------------------------
 /// <summary>This constructor creates a data access %%><%%=DALClassName%%><%%- instance
 /// with primary key properties individually.</summary>

@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME IsStringPrimaryKey
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var stringPrimaryKeyCount = 0
+foreach (Property where IsPrimaryKeyMember == true)
+{
+	if (IsStringProperty == true)
+	{
+		stringPrimaryKeyCount = stringPrimaryKeyCount + 1
+	}
+}
+if (stringPrimaryKeyCount == 1)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

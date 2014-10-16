@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME DbSpIsSortableProperty
+	CATEGORY DbSp
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var isSortable
+switch (DataTypeCode)
+{
+	case 15: // Object
+	case 19: // Text
+	case 20: // TextUnicode
+	case 27: // Image
+		isSortable = false
+		break
+	default:
+		isSortable = true
+		break
+}
+<%%=isSortable%%>
+%%></CONTENT>

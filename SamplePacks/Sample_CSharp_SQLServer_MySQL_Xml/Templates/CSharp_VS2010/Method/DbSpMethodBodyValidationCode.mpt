@@ -2,6 +2,7 @@
 	NAME DbSpMethodBodyValidationCode
 	CATEGORY DbSp
 	NODE Method
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
 <%%=USETABS true%%>
@@ -61,7 +62,7 @@ switch (MethodTypeCode)
 				<%%-NOT %%>
 				break
 		}
-		<%%-EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=Entity.DBTableName%%><%%- WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%-)%%>
+		<%%-EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM [%%><%%=Entity.DBTableName%%><%%-] WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%-)%%>
 		<%%-
 		BEGIN%%><%%=TAB 1%%>
 		switch (MethodTypeCode)
@@ -90,7 +91,7 @@ switch (MethodTypeCode)
 			<%%-
 		
 			-- timestamp validation
-			IF (@checkTimestamp = 1) AND EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=Entity.DBTableName%%><%%- WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%- AND %%><%%=DBColumnName%%><%%- <> %%><%%=DBParameterName%%><%%-)
+			IF (@checkTimestamp = 1) AND EXISTS (SELECT %%><%%=Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM [%%><%%=Entity.DBTableName%%><%%-] WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%- AND %%><%%=DBColumnName%%><%%- <> %%><%%=DBParameterName%%><%%-)
 			BEGIN%%><%%=TAB 1%%><%%-
 				RAISERROR(50004,16,1)%%><%%=TAB -1%%><%%-
 			END%%>

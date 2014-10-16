@@ -2,6 +2,7 @@
 	NAME BLLDefaultValue
 	CATEGORY BLL
 	NODE Property
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
 <%%:
@@ -64,6 +65,9 @@
 		case 13: // Char
 		case 14: // CharUnicode
 			<%%-DefaultValue.Char%%>
+			break
+		case 27: // Image
+			<%%-null%%>
 			break
 		default:
 			<%%-DefaultValue.String%%>

@@ -107,14 +107,17 @@
 
 <%%=ProjectFilePath%%>
 <%%:
+//
+// view the comments in the CREATE_VS_PROJECT_FILES template to control how your project file is created
+//
 // delete project file if of a different type
-if (File(Path).Contains("<ProjectType>REST</ProjectType>") == false)
+if (CREATE_VS_PROJECT_FILES == true && File(Path).Contains("<ProjectType>REST</ProjectType>") == false)
 {
 	delete(Path)
 }
 
 // create project file if it does not exist
-if (FileExists(Path) == false)
+if (CREATE_VS_PROJECT_FILES == true && FileExists(Path) == false)
 {
 	update(Path)
 }

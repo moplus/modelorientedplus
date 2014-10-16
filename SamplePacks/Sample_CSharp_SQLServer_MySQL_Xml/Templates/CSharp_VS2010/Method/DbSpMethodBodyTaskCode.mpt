@@ -2,6 +2,7 @@
 	NAME DbSpMethodBodyTaskCode
 	CATEGORY DbSp
 	NODE Method
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
 <%%=USETABS true%%>
@@ -29,7 +30,7 @@ switch (MethodTypeCode)
 			}
 		}
 		<%%-
-		INSERT %%><%%=Entity.DBTableName%%>
+		INSERT [%%><%%=Entity.DBTableName%%><%%-]%%>
 		<%%-
 		(%%><%%=TAB 1%%>
 		log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
@@ -114,10 +115,10 @@ switch (MethodTypeCode)
 		
 		-- update item to the database
 		BEGIN%%><%%=TAB 1%%><%%-
-		UPDATE %%><%%=Entity.DBTableName%%><%%-
+		UPDATE [%%><%%=Entity.DBTableName%%><%%-]
 		SET%%><%%=TAB 1%%>
 		log("DbSpMethodBodyTaskCode", "IsFirstItem", true)
-		foreach (Property)
+		foreach (Property where Identity == false)
 		{
 			CurrentAuditProperty = null
 			with (AuditProperty from Solution.Find(PropertyName, PropertyName))
@@ -170,7 +171,7 @@ switch (MethodTypeCode)
 		
 		-- delete item from the database
 		BEGIN%%><%%=TAB 1%%><%%-
-			DELETE FROM %%><%%=Entity.DBTableName%%><%%-
+			DELETE FROM [%%><%%=Entity.DBTableName%%><%%-]
 			WHERE %%><%%=Entity.DbSpPrimaryKeyWherePhrase%%><%%=TAB -1%%><%%-
 		END%%>
 		break
@@ -188,7 +189,7 @@ switch (MethodTypeCode)
 
 		// add from and join clause
 		<%%-
-		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		FROM [%%><%%=Entity.DBTableName%%><%%-] %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
 		<%%=Entity.DbSpJoinSelectEntitiesCode%%>
 		<%%=TAB -1%%>
 
@@ -217,7 +218,7 @@ switch (MethodTypeCode)
 
 		// add from and join clause
 		<%%-
-		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		FROM [%%><%%=Entity.DBTableName%%><%%-] %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
 		<%%=Entity.DbSpJoinSelectEntitiesCode%%><%%=TAB -1%%>
 
 		// add where clause
@@ -256,7 +257,7 @@ switch (MethodTypeCode)
 
 		// add from and join clause (for search table)
 		<%%-
-		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
+		FROM [%%><%%=Entity.DBTableName%%><%%-] %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%>
 		<%%=Entity.DbSpJoinSelectEntitiesCode%%><%%=TAB -1%%>
 
 		// add where clause (for search table)
@@ -294,7 +295,7 @@ switch (MethodTypeCode)
 
 		// add from and join clause (for page results)
 		<%%-
-		FROM %%><%%=Entity.DBTableName%%><%%- %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%><%%-
+		FROM [%%><%%=Entity.DBTableName%%><%%-] %%><%%=LogValue("DBBaseEntityAliasNames" + EntityID, EntityID)%%><%%=TAB 1%%><%%-
 		INNER JOIN @searchTable searchTable ON %%>
 		foreach (Property where IsPrimaryKeyMember == true)
 		{
@@ -343,7 +344,7 @@ switch (MethodTypeCode)
 							{
 								// delete foreign entity
 								<%%-
-								DELETE FROM %%><%%=DBTableName%%><%%-
+								DELETE FROM [%%><%%=DBTableName%%><%%-]
 								WHERE%%><%%=TAB 1%%>
 								<%%=CurrentMethod.DbSpWhereParametersCode%%><%%=TAB -1%%>
 								log("DbSpMethodBodyTaskCode", "IsForeignEntityProcessed", true)
@@ -354,10 +355,10 @@ switch (MethodTypeCode)
 								{
 									// delete extended entity
 									<%%-
-									DELETE FROM %%><%%=DBTableName%%><%%-
+									DELETE FROM [%%><%%=DBTableName%%><%%-]
 									WHERE %%><%%=DBPrimaryKeySelectPhrase%%><%%- IN
 									(%%><%%=TAB 1%%><%%-
-										SELECT %%><%%=DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=../Entity.DBTableName%%><%%-
+										SELECT %%><%%=DbSpPrimaryKeySelectPhrase%%><%%- FROM [%%><%%=../Entity.DBTableName%%><%%-]
 										WHERE%%><%%=TAB 1%%>
 										<%%=CurrentMethod.DbSpWhereParametersCode%%><%%=TAB -1%%><%%=TAB -1%%>
 									<%%-
@@ -367,7 +368,7 @@ switch (MethodTypeCode)
 								{
 									// delete base entities
 									<%%-
-									DELETE FROM %%><%%=DBTableName%%><%%-
+									DELETE FROM [%%><%%=DBTableName%%><%%-]
 									WHERE %%><%%=TAB 1%%>
 									foreach (Entity  in ExtendingEntities)
 									{
@@ -380,7 +381,7 @@ switch (MethodTypeCode)
 										<%%-
 										(%%><%%=TAB 1%%>
 											<%%-
-											SELECT %%><%%=../Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM %%><%%=DBTableName%%><%%=TAB -1%%>
+											SELECT %%><%%=../Entity.DbSpPrimaryKeySelectPhrase%%><%%- FROM [%%><%%=DBTableName%%><%%-]%%><%%=TAB -1%%>
 										<%%-
 										)%%>
 									}

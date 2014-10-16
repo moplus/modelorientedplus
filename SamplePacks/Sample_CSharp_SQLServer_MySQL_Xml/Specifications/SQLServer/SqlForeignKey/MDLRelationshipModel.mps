@@ -59,6 +59,7 @@ foreach (SqlForeignKeyColumn)
 		if (IsNullable == true)
 		{
 			CurrentRelationship.ReferencedItemsMin = 0
+			CurrentRelationship.IsNullable = true
 		}
 	}
 }

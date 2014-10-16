@@ -2,6 +2,7 @@
 	NAME BLLClassConstructorsCode
 	CATEGORY BLL
 	NODE Entity
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
 <%%=USETABS true%%>
@@ -26,7 +27,10 @@ public %%><%%=BLLClassName%%><%%-(DAL.%%><%%=FeatureName%%><%%-.%%><%%=DALClassN
 	TransformDataFromObject(dataAccessObject, filterElements);%%>
 <%%=TAB -1%%><%%-
 }
-
+%%><%%:
+if (IsStringPrimaryKey == false)
+{
+<%%-
 ///--------------------------------------------------------------------------------
 /// <summary>This constructor creates a business logic %%><%%=BLLClassName%%><%%- instance
 /// with primary key values.</summary>
@@ -39,7 +43,8 @@ public %%><%%=BLLClassName%%><%%-(string primaryKeyValues)
 	PrimaryKeyValues = primaryKeyValues;%%>
 <%%=TAB -1%%><%%-
 }
-
+%%>
+}%%><%%-
 ///--------------------------------------------------------------------------------
 /// <summary>This constructor creates a business logic %%><%%=BLLClassName%%><%%- instance
 /// with primary key properties individually.</summary>
