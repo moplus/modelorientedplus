@@ -160,7 +160,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		{
 			try
 			{
-				XmlAttributeName = xmlAttribute.Name;
+                XmlAttributeID = Guid.NewGuid();
+                XmlAttributeName = xmlAttribute.Name;
 				LocalName = xmlAttribute.LocalName;
 				Value = xmlAttribute.Value;
 				BaseURI = xmlAttribute.BaseURI;

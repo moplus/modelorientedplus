@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME MyFullName
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=FeatureName%%><%%-.%%><%%=EntityName%%></CONTENT>

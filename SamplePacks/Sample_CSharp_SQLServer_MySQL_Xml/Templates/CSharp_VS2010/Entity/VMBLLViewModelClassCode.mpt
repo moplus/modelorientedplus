@@ -307,7 +307,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		///--------------------------------------------------------------------------------
 		/// <summary>The default constructor (for reflection, etc.).</summary>
 		///--------------------------------------------------------------------------------
-		public %%><%%=BLLClassName%%><%%-ViewModel()
+		public %%><%%=VMBLLViewModelClassName%%><%%-()
 		{
 			WorkspaceID = Guid.NewGuid();
 		}
@@ -317,7 +317,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		/// 
 		/// <param name="property">The property to load.</param>
 		///--------------------------------------------------------------------------------
-		public %%><%%=BLLClassName%%><%%-ViewModel(%%><%%=BLLClassName%%><%%- property)
+		public %%><%%=VMBLLViewModelClassName%%><%%-(%%><%%=BLLClassName%%><%%- property)
 		{
 			WorkspaceID = Guid.NewGuid();
 			Load%%><%%=BLLClassName%%><%%-(property);
@@ -329,7 +329,10 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 %%>
 %%></CONTENT><OUTPUT>
 <%%:
-if (File(VMBLLViewModelClassFilePath) == null || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewModelClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+if (File(VMBLLViewModelClassFilePath) == null 
+    || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true 
+          && File(VMBLLViewModelClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != 
+                Text.Filter("<CreatedByUserName>","</CreatedDate>")))
 {
 	update(VMBLLViewModelClassFilePath)
 }

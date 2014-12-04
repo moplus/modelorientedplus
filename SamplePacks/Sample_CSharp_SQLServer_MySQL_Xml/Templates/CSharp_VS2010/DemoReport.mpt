@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME DemoReport
+	CATEGORY Demo
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Feature)
+{
+<%%-
+Feature is: %%><%%=FeatureName%%>
+	foreach (Entity where DemoEntityReport.Contains("Customer"))
+	{
+		<%%=DemoEntityReport%%>
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:update("c:\\temp\\demoreport.txt")%%></OUTPUT>

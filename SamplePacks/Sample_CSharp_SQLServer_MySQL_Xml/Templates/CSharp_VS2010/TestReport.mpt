@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME TestReport
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity where MyFullName.Contains("Customer"))
+{
+<%%-
+The entity name is: %%><%%=MyFullName%%>
+}
+%%></CONTENT>

@@ -111,6 +111,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		{
 			try
 			{
+                XmlNodeID = Guid.NewGuid();
 				XmlNodeName = xmlNode.Name;
 				LocalName = xmlNode.LocalName;
 				Value = xmlNode.Value;

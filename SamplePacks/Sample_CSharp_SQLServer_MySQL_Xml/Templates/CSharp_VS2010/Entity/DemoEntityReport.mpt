@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DemoEntityReport
+	CATEGORY Demo
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%-
+	Entity is: %%><%%=EntityName%%>
+foreach (Property)
+{
+	<%%-
+		Property is: %%><%%=PropertyName%%>
+}
+%%></CONTENT>

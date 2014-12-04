@@ -491,7 +491,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		///--------------------------------------------------------------------------------
 		/// <summary>The default constructor (for reflection, etc.).</summary>
 		///--------------------------------------------------------------------------------
-		public %%><%%=BLLClassName%%><%%-ViewModel()
+		public %%><%%=VMBLLViewModelClassName%%><%%-()
 		{
 			WorkspaceID = Guid.NewGuid();
 		}
@@ -506,7 +506,7 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 		}
 		<%%-
 		///--------------------------------------------------------------------------------
-		public %%><%%=BLLClassName%%><%%-ViewModel(%%>
+		public %%><%%=VMBLLViewModelClassName%%><%%-(%%>
 		foreach (Entity in EntityAndBaseEntities)
 		{
 			if (ItemIndex > 0)
@@ -536,7 +536,9 @@ namespace %%><%%=Project.Namespace%%><%%-.%%><%%=FeatureName%%><%%-
 %%>
 %%></CONTENT><OUTPUT>
 <%%:
-if (File(VMBLLViewModelClassFilePath) == null || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLViewModelClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+if (File(VMBLLViewModelClassFilePath) == null
+      || (File(VMBLLViewModelClassFilePath).Contains("<Status>Generated</Status>") == true
+            && File(VMBLLViewModelClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
 {
 	update(VMBLLViewModelClassFilePath)
 }

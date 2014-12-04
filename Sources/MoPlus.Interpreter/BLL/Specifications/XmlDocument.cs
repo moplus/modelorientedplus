@@ -57,7 +57,8 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		{
 			try
 			{
-				XmlDocumentName = xmlDocument.Name;
+                XmlDocumentID = Guid.NewGuid();
+                XmlDocumentName = xmlDocument.Name;
 				LocalName = xmlDocument.LocalName;
 				Value = xmlDocument.Value;
 				BaseURI = xmlDocument.BaseURI;

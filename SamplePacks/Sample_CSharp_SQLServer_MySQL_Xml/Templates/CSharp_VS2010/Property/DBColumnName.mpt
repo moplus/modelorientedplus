@@ -2,6 +2,14 @@
 	NAME DBColumnName
 	CATEGORY DB
 	NODE Property
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
-<%%-[%%><%%=OriginalName%%><%%-]%%></CONTENT>
+<%%:
+if (OriginalName != null)
+{
+	<%%-[%%><%%=OriginalName%%><%%-]%%>
+	return
+}
+<%%-[%%><%%=PropertyName%%><%%-]%%>
+%%></CONTENT>

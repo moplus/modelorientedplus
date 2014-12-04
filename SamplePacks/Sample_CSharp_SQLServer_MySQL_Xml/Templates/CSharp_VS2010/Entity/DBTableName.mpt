@@ -2,6 +2,14 @@
 	NAME DBTableName
 	CATEGORY DB
 	NODE Entity
+	TOPLEVEL False
 </CONFIG>
 <CONTENT>
-<%%=SourceName%%></CONTENT>
+<%%:
+if (SourceName != null)
+{
+	<%%=SourceName%%>
+	return
+}
+<%%=EntityName%%>
+%%></CONTENT>

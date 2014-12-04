@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME Testing
+	CATEGORY Test
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity)
+{
+<%%-
+The entity name is:%%><%%=EntityName%%>
+}
+%%></CONTENT>

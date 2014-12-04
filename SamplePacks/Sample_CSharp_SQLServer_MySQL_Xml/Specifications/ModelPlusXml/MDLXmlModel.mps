@@ -7,6 +7,7 @@
 </CONTENT><OUTPUT>
 // copy the contents of an M+ xml file to the model
 <%%:
+var xValue
 foreach (XmlNode)
 {
 	if (XmlNodeName == "Solution")
@@ -252,7 +253,8 @@ foreach (XmlNode)
 											{
 												foreach (XmlNode)
 												{
-													with (Entity from Solution.Find(Value))
+													xValue = Value
+													with (Entity from Solution.Find(xValue))
 													{
 														CurrentEntity = Entity
 														// trace("Found entity: " + CurrentEntity.EntityName)
@@ -840,6 +842,34 @@ foreach (XmlNode)
 																foreach (XmlNode)
 																{
 																	CurrentRelationship.Tags = Value
+																}
+															}
+															if (XmlNodeName == "ItemsMin")
+															{
+																foreach (XmlNode)
+																{
+																	CurrentRelationship.ItemsMin = Value
+																}
+															}
+															if (XmlNodeName == "ItemsMax")
+															{
+																foreach (XmlNode)
+																{
+																	CurrentRelationship.ItemsMax = Value
+																}
+															}
+															if (XmlNodeName == "ReferencedItemsMin")
+															{
+																foreach (XmlNode)
+																{
+																	CurrentRelationship.ReferencedItemsMin = Value
+																}
+															}
+															if (XmlNodeName == "ReferencedItemsMax")
+															{
+																foreach (XmlNode)
+																{
+																	CurrentRelationship.ReferencedItemsMax = Value
 																}
 															}
 														}
