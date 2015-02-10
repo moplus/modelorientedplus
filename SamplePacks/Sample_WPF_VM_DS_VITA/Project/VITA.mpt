@@ -42,21 +42,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Vita.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vita.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.dll</HintPath>
+    <Reference Include="Vita">
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.dll</HintPath>
     </Reference>
     <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.MsSql.dll</HintPath>
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Data.MsSql.dll</HintPath>
     </Reference>
     <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Modules.dll</HintPath>
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Modules.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -99,14 +94,6 @@ if (CREATE_VS_PROJECT_FILES == true && FileExists(Path) == false)
 <%%>VITAPackagesConfigCode%%>
 
 // output VITA framework model and other project level items
-<%%>VITADomainEntityStoreClassCode%%>
-log("GeneratedFile", VITADomainEntityStoreClassFilePath, true)
-if (File(Path).Contains(VITADomainEntityStoreClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-{
-	// add to project file
-	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainEntityStoreClassFilePath))
-}
-
 <%%>VITADomainAppClassCode%%>
 log("GeneratedFile", VITADomainAppClassFilePath, true)
 if (File(Path).Contains(VITADomainAppClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)

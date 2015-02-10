@@ -23,7 +23,7 @@ if (BaseEntityID == null || BaseEntity.VITAIsDataModelEntity == false)
 	}	
 }
 <%%-
-[Entity(Name="%%><%%=VITAClassName%%><%%-", PluralName="%%><%%=LIBPluralEntityName%%><%%-", TableName="%%><%%=VITATableName%%><%%-")%%>
+[Entity(Name="%%><%%=VITAClassName%%><%%-", TableName="%%><%%=VITATableName%%><%%-")%%>
 if (VITAIsHeapTable == true)
 {
 	<%%-, HeapTable%%>

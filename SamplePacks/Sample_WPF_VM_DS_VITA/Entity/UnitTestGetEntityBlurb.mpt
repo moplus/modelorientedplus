@@ -10,7 +10,7 @@ param item1Name
 param item2Name
 param defineItem2
 <%%=Solution.NEWLINE%%>
-<%%-session2 = entityStore.OpenSession();%%>
+<%%-session2 = DomainApp.OpenSession();%%>
 <%%=Solution.NEWLINE%%>
 if (defineItem2 == true)
 {

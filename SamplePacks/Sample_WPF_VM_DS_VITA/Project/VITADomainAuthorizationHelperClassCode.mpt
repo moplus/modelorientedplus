@@ -66,7 +66,7 @@ namespace %%><%%=Project.Namespace%%>
 		public static IList<Role> GetRoles(UserType userType)%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
 			if (!_initialized)%%><%%=Solution.INDENT%%><%%-
-				Initialize();%%><%%=Solution.OUTDENT%%><%%-
+				EnsureInitialized();%%><%%=Solution.OUTDENT%%><%%-
 			var roles = new List<Role>();
 			if (userType.IsSet(UserType.Public))%%><%%=Solution.INDENT%%><%%-
 				roles.Add(PublicUser);%%><%%=Solution.OUTDENT%%><%%-
@@ -83,7 +83,7 @@ namespace %%><%%=Project.Namespace%%>
 		
 		private static bool _initialized;	
 		
-		public static void Initialize()%%>
+		public static void EnsureInitialized()%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
 			if (_initialized) return;
 			_initialized = true;
@@ -126,22 +126,14 @@ namespace %%><%%=Project.Namespace%%>
 				<%%-, typeof(%%><%%=VITAInterfaceName%%><%%-)%%>
 			}
 			<%%-);
-			var memberDisplayNameColumn = new EntityGroupResource("UserDisplayNameColumn");%%>
-			foreach (Entity where VITAIsPrimaryUserEntity == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%-memberDisplayNameColumn.Add<%%><%%=VITAInterfaceName%%><%%->(user => user.%%><%%=VITAPrimaryNameProperty%%><%%-);%%>
-			}
-			<%%-
 			
 			// Permissions
 			var browseAll = new EntityGroupPermission("BrowseAll", AccessType.Read, entities, members);
 			var manageAccount = new EntityGroupPermission("ManageAccount", AccessType.CRUD, members);
 			var manageEntities = new EntityGroupPermission("ManageEntities", AccessType.CRUD, entities);
-			var readMemberDisplayName = new EntityGroupPermission("ReadMemberDisplayName", AccessType.Read, memberDisplayNameColumn);
 			
 			// Activities
-			var browsing = new Activity("Browsing", browseAll, readMemberDisplayName); //browsing can include the name of the user who posted it. 
+			var browsing = new Activity("Browsing", browseAll);
 			var editing = new Activity("Editing", manageAccount, manageEntities);
 			
 			// Roles

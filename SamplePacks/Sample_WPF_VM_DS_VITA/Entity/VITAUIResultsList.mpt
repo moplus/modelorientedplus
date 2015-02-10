@@ -14,7 +14,7 @@
 param listName
 param sortAllowed
 <%%-
-<table class="table-striped table-bordered">%%><%%=Solution.INDENT%%><%%-
+<table class="table-striped table-bordered top15">%%><%%=Solution.INDENT%%><%%-
 	<tr>%%><%%=Solution.INDENT%%>
 		var itemCount = 0
 		var referenceItemCount = 0

@@ -70,14 +70,14 @@ namespace %%><%%=Project.Namespace%%>
 	<%%=Solution.OPEN_BRACE%%>
 		<%%=Solution.NEWLINE%%>
 		<%%-public static void Configure(HttpConfiguration config,%%><%%=Solution.INDENT%%><%%=Solution.INDENT%%><%%-
-					IEntityStore entityStore,
+					EntityApp app,
 					LogLevel logLevel = LogLevel.Basic, 
 					 bool sendErrorDetailsToClient = false)%%><%%=Solution.OUTDENT%%><%%=Solution.OUTDENT%%>
 	  	<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-// Logging message handler
 			var webHandlerStt = new WebHandlerSettings(logLevel, WebHandlerOptions.DefaultDebug);
-			var webContextHandler = new WebCallContextHandler(entityStore, webHandlerStt);
+			var webContextHandler = new WebCallContextHandler(app, webHandlerStt);
 			config.MessageHandlers.Add(webContextHandler);
 			
 			// Exception handling filter - to handle/save exceptions
@@ -86,21 +86,7 @@ namespace %%><%%=Project.Namespace%%>
 			// Formatters - add formatters with spies, to catch/log deserialization failures
 			config.Formatters.Clear();
 			config.Formatters.Add(new XmlMediaTypeFormatter());
-			config.Formatters.Add(new JsonMediaTypeFormatter());%%>
-/*			<%%-
-			
-			// Map routes%%>
-			if (Solution.VITA_ADD_LOGIN_MODULE == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%-config.Routes.MapHttpRoute("login", "api/auth", new { controller = "Authentication" });%%>
-			}
-			foreach (Entity in Solution where VITAIsDataModelEntity == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%-config.Routes.MapHttpRoute("%%><%%=LIBPluralEntityName.ToLower()%%><%%-", "api/%%><%%=LIBPluralEntityName.ToLower()%%><%%-", new { controller = "%%><%%=LIBPluralEntityName%%><%%-" });%%>
-			}*/
-			<%%-
+			config.Formatters.Add(new JsonMediaTypeFormatter());
 			
 			// add custom routes as necessary (main routes are defined as attributes on controller methods)
 			#region protected

@@ -86,7 +86,9 @@ foreach (Entity in EntityAndBaseEntities)
 		<%%=Solution.NEWLINE%%>
 		<%%-pageSize: $stateParams.pageSize || 10,%%>
 		<%%=Solution.NEWLINE%%>
-		<%%-totalPages: 0%%>
+		<%%-totalPages: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-filter: 'none'%%>
 	<%%=Solution.CLOSE_BRACE%%><%%-;
 
 	// data to get search results
@@ -180,6 +182,64 @@ foreach (Entity in EntityAndBaseEntities)
 	// search api
 	$scope.search = function ()%%>
 	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		$scope.searchQuery.filter = '';%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where VITADSIsQueryProperty == true)
+			{
+				switch (DataTypeCode)
+				{
+					case 24: // DateTime
+					case 29: // DateTimeSmall
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=VITAParameterName%%><%%-Start != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != '')%%>
+							<%%=Solution.OPEN_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=VITALabelName%%><%%- Start: ' + $scope.searchQuery.%%><%%=VITAParameterName%%><%%-Start;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=VITAParameterName%%><%%-End != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != ')'%%>
+							<%%=Solution.OPEN_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=VITALabelName%%><%%- End: ' + $scope.searchQuery.%%><%%=VITAParameterName%%><%%-End;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						break
+					default:
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=VITAParameterName%%><%%- != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != '')%%>
+							<%%=Solution.OPEN_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=VITALabelName%%><%%-: ' + $scope.searchQuery.%%><%%=VITAParameterName%%><%%-;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						break
+				}
+			}
+		}
+		<%%-
+		if ($scope.searchQuery.filter == '')%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-$scope.searchQuery.filter = 'none';%%>
+		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		var result = %%><%%=VITAUIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
 		itemFound = false

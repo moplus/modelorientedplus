@@ -53,6 +53,33 @@
 			}
 		}
 	}
+	<%%-
+	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-default" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Search({%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where VITADSIsQueryProperty == true)
+				{
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=VITAParameterName%%><%%-Start: searchQuery.%%><%%=VITAParameterName%%><%%-Start, %%><%%=VITAParameterName%%><%%-End: searchQuery.%%><%%=VITAParameterName%%><%%-End, %%>
+							break
+						default:
+							<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
+							break
+					}
+				}
+			}
+			<%%-page: 1})">%%><%%-Search</a>
+			<span>&nbsp;Filter:&nbsp;{{searchQuery.filter}}</span>%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-default" ng-if="searchResults.canCreate == true" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Create">New %%><%%=VITAClassName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>%%>
 	<%%=VITAUIResultsList(listName="searchResults.items", sortAllowed = true)%%>
 	<%%-
 	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
@@ -79,31 +106,6 @@
 			<option value="100">100</option>
 			<option value="200">200</option>
 			</select>&nbsp;items&nbsp;per&nbsp;page</span>%%><%%=Solution.OUTDENT%%><%%-
-		</div>%%><%%=Solution.OUTDENT%%><%%-
-	</div>
-	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
-		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
-			<a class="btn btn-default" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Search({%%>
-			foreach (Entity in EntityAndBaseEntities)
-			{
-				foreach (Property where VITADSIsQueryProperty == true)
-				{
-					switch (DataTypeCode)
-					{
-						case 24: // DateTime
-						case 29: // DateTimeSmall
-							<%%=VITAParameterName%%><%%-Start: searchQuery.%%><%%=VITAParameterName%%><%%-Start, %%><%%=VITAParameterName%%><%%-End: searchQuery.%%><%%=VITAParameterName%%><%%-End, %%>
-							break
-						default:
-							<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
-							break
-					}
-				}
-			}
-			<%%-page: 1})">%%><%%-Search</a>%%><%%=Solution.OUTDENT%%><%%-
-		</div>
-		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
-			<a class="btn btn-default" ng-if="searchResults.canCreate == true" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Create">New %%><%%=VITAClassName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
 		</div>%%><%%=Solution.OUTDENT%%><%%-
 	</div>%%><%%=Solution.OUTDENT%%><%%-
 </div>%%>

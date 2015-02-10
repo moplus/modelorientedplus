@@ -18,11 +18,11 @@ using System;
 using System.Collections.Generic;
 using Vita.Entities;
 using Vita.Entities.Authorization;
+using Vita.Entities.Runtime;
 using Vita.Entities.Services;
 using Vita.Modules.DbInfo;
 using Vita.Modules.Logging;
 using Vita.Modules.PersistentSession;
-using Vita.Web;
 using %%><%%=Project.Namespace%%><%%-.Models;
 
 namespace %%><%%=Project.Namespace%%>
@@ -41,25 +41,24 @@ namespace %%><%%=Project.Namespace%%>
 	//------------------------------------------------------------------------------
 	public partial class %%><%%=VITADomainAppClassName%%><%%-: EntityApp%%>
 	<%%=Solution.OPEN_BRACE%%><%%-
-		public %%><%%=VITADomainModuleClassName%%><%%- MainModule;%%>
-		if (Solution.VITA_ADD_LOGIN_MODULE == true)
-		{
-			<%%=Solution.NEWLINE%%>
-			<%%-IAuthorizationService Authorization;%%>
-		}
-		<%%-
-		
-		public %%><%%=VITADomainAppClassName%%><%%-() : this(true) { }
+		public %%><%%=VITADomainModuleClassName%%><%%- MainModule;
 		
 		///--------------------------------------------------------------------------------
 		/// <summary>Set up the application, incorporating all modules that should be part of the application.</summary>
 		///--------------------------------------------------------------------------------
-		public %%><%%=VITADomainAppClassName%%><%%-(bool extended)%%>
+		public %%><%%=VITADomainAppClassName%%><%%-()%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
 			this.Version = "1.0.0.1";
 			
-			// add areas
-			var domainArea = this.AddArea("Domain", "domain");%%>
+			// add main area and module
+			var domainArea = this.AddArea("Domain", "domain");
+			MainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
+			if (Solution.VITA_ADD_INFO_MODULE == true || Solution.VITA_ADD_LOGIN_MODULE == true || Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// add additional areas%%>
+			}
 			if (Solution.VITA_ADD_INFO_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
@@ -75,23 +74,7 @@ namespace %%><%%=Project.Namespace%%>
 				<%%=Solution.NEWLINE%%>
 				<%%-var logArea = this.AddArea("Log", "log");%%>
 			}
-			<%%-
-			
-			// add main module
-			MainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
-			if (Solution.VITA_ADD_LOGIN_MODULE == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%=Solution.NEWLINE%%>
-				<%%-//Add authorization 
-				Authorization = new AuthorizationService(this);
-				Authorization.UserRolesLookup += AuthorizationService_UserRolesLookup;
-				%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.Initialize(); //create all roles%%>
-			}			
-			<%%-
-			
-			if(!extended)%%><%%=Solution.INDENT%%><%%-
-				return;%%><%%=Solution.OUTDENT%%>
+
 			if (Solution.VITA_ADD_INFO_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
@@ -171,7 +154,7 @@ namespace %%><%%=Project.Namespace%%>
 					{
 						<%%=Solution.NEWLINE%%>
 						<%%-// add trigger to suspense login after 3 failed attempts within a minute
-						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(%%>
+						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(this,%%>
 						<%%=Solution.INDENT%%>
 						<%%=Solution.NEWLINE%%>
 						<%%-failureCount: 3, timeWindow: TimeSpan.FromMinutes(1), suspensionPeriod: TimeSpan.FromMinutes(5));%%>
@@ -191,26 +174,28 @@ namespace %%><%%=Project.Namespace%%>
 		<%%- 
 		
 		//Provides user roles for a given user
-		void AuthorizationService_UserRolesLookup(object sender, UserRolesLookupEventArgs e)%%>
+		 public override IList<Role> GetUserRoles(UserInfo user)%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
-			switch(e.User.Kind)%%>
+			%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.EnsureInitialized();
+			var list = new List<Role>(); 
+			switch(user.Kind)%%>
 			<%%=Solution.OPEN_BRACE%%><%%-
 				case UserKind.Anonymous:%%><%%=Solution.INDENT%%><%%-
-					e.Roles.Add(%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.PublicUser);
-					return;%%><%%=Solution.OUTDENT%%><%%-
+					list.Add(%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.PublicUser);
+					return list;%%><%%=Solution.OUTDENT%%><%%-
 				case UserKind.AuthenticatedUser:%%><%%=Solution.INDENT%%>
 					foreach (Entity where VITAIsPrimaryUserEntity == true)
 					{
 						<%%-
-						var session = e.EntityStore.OpenSystemSession();
-						var iUser = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(e.User.UserId);
+						var session = this.OpenSystemSession();
+						var iUser = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(user.UserId);
 						var roles = %%><%%=../VITADomainAuthorizationHelperClassName%%><%%-.GetRoles(iUser.Type);
-						e.Roles.AddRange(roles);%%>
+						return roles;%%><%%=Solution.OUTDENT%%>
 						break
 					}
-					<%%-
-					return;%%><%%=Solution.OUTDENT%%>
 			<%%=Solution.CLOSE_BRACE%%>
+			<%%-
+			return new List<Role>(); //never happens%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		}
 	<%%=Solution.CLOSE_BRACE%%>

@@ -16,6 +16,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Http;
+using Vita.Data;
+using Vita.Data.MsSql;
 using Vita.Entities.Services;%%>
 with (Project)
 {
@@ -59,16 +61,33 @@ namespace %%><%%=Namespace%%>
 		<%%=Solution.NEWLINE%%>
 		<%%-public static void Register(HttpConfiguration config)%%>
 		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			
+			// set up application and service
+			var app = SetupApp(ConfigurationManager.AppSettings["DbConnectionString"]);
+			DomainServiceConfig.Configure(config, app, LogLevel.Basic, sendErrorDetailsToClient: true);
+			
+			// add your customized config code here
+			#region protected
+			#endregion protected
+			
+			config.EnsureInitialized();%%>
+		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		
-		DomainEntityStore.Init(ConfigurationManager.AppSettings["DbConnectionString"]);
-		DomainServiceConfig.Configure(config, DomainEntityStore.EntityStore, LogLevel.Basic, sendErrorDetailsToClient: true);
-		
-		// add your customized config code here
-		#region protected
-		#endregion protected
-		
-		config.EnsureInitialized();%%>
+		public static %%><%%=VITADomainAppClassName%%><%%- SetupApp(string connString)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			
+			// set up application
+			var domainApp = new %%><%%=VITADomainAppClassName%%><%%-();
+			domainApp.Init();
+			var driver = MsSqlDbDriver.Create(connString);
+			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
+			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
+			domainApp.ConnectTo(dbSettings);
+			
+			return domainApp;%%>
 		<%%=Solution.CLOSE_BRACE%%>
 	<%%=Solution.CLOSE_BRACE%%>
 <%%=Solution.CLOSE_BRACE%%>

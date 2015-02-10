@@ -79,9 +79,9 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-base.Initialize(controllerContext);
 			//OpContext is setup by BaseApiConroller.Initialize method
-			_loginService = OpContext.EntityStore.GetService<ILoginService>();
-			_loginManagementService = OpContext.EntityStore.GetService<ILoginManagementService>();
-			_sessionService = OpContext.EntityStore.GetService<IUserSessionService>();%%>
+			_loginService = OpContext.App.GetService<ILoginService>();
+			_loginManagementService = OpContext.App.GetService<ILoginManagementService>();
+			_sessionService = OpContext.App.GetService<IUserSessionService>();%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		

@@ -57,24 +57,20 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
-    <Reference Include="Vita.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Vita.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.dll</HintPath>
+    <Reference Include="Vita">
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.dll</HintPath>
     </Reference>
     <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.MsSql.dll</HintPath>
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Data.MsSql.dll</HintPath>
     </Reference>
     <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Modules.dll</HintPath>
+      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Modules.dll</HintPath>
     </Reference>
-    <Reference Include="Vita.Web">
-      <HintPath>..\packages\Vita.Web.1.0.4\lib\net45\Vita.Web.dll</HintPath>
+    <Reference Include="Vita.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.Web.1.1.0\lib\net45\Vita.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

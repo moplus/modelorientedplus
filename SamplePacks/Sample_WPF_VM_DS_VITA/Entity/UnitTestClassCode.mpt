@@ -90,8 +90,7 @@ namespace %%><%%=Project.Namespace%%>
 		public void %%><%%=VITAClassName%%><%%-CRUDTest()%%>
 		<%%=Solution.OPEN_BRACE%%>
 		<%%-
-		IEntityStore entityStore = DomainEntityStore.EntityStore;
-		IEntitySession session1 = entityStore.OpenSession();
+		IEntitySession session1 = DomainApp.OpenSession();
 		IEntitySession session2;%%>
 		<%%=Solution.NEWLINE%%>
 		<%%=UnitTestCRUDMethodCode%%>

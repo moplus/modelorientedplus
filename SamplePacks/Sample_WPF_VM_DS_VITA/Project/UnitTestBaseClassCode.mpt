@@ -18,6 +18,8 @@ using System;
 using System.Configuration;
 using System.Globalization;
 using System.Text;
+using Vita.Data;
+using Vita.Data.MsSql;
 using Microsoft.VisualStudio.TestTools.UnitTesting;%%>
 with (Project)
 {
@@ -65,9 +67,19 @@ namespace %%><%%=Project.Namespace%%>
 		public static void Initialize(TestContext testContext)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
-			<%%-DomainEntityStore.Init(ConfigurationManager.AppSettings["DbConnectionString"]);%%>
+			<%%-
+			// set up application
+			DomainApp = new %%><%%=VITADomainAppClassName%%><%%-();
+			DomainApp.Init();
+			var connString = ConfigurationManager.AppSettings["DbConnectionString"];
+			var driver = MsSqlDbDriver.Create(connString);
+			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
+			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
+			DomainApp.ConnectTo(dbSettings);%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
+		protected static DomainApp DomainApp { get; set; }
+
 
 		private static Random random = new Random();
 
