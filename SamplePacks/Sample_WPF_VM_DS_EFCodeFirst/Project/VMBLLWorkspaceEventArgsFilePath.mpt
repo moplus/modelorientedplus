@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLWorkspaceEventArgsFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Events\WorkspaceEventArgs_G.cs%%></CONTENT>

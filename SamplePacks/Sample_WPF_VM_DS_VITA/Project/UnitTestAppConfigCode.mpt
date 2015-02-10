@@ -1,0 +1,22 @@
+<CONFIG>
+	NAME UnitTestAppConfigCode
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <appSettings>
+    <add key="DbConnectionString" value="Server=%%><%%=Project.DbServerName%%><%%-;Database=%%><%%=Project.DbName%%><%%-;Trusted_Connection=True;"/>
+   <!-- for local MS SQL Server
+    <add key="DbConnectionString" value="Data Source=.;Initial Catalog=%%><%%=Project.DbName%%><%%-;Integrated Security=True" />
+   --> 
+  </appSettings>
+</configuration>%%></CONTENT><OUTPUT>
+<%%:
+if (File(UnitTestAppConfigFilePath) == null)
+{
+	update(UnitTestAppConfigFilePath)
+}
+%%></OUTPUT>

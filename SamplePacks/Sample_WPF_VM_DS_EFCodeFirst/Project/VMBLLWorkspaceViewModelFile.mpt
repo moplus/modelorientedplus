@@ -1,0 +1,870 @@
+<CONFIG>
+	NAME VMBLLWorkspaceViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;%%>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as BLL
+	foreach (Project where Tags.Contains("BLL") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+%%>
+<%%-
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This abstract class requests to be removed from the UI when its CloseCommand executes.</summary>
+	/// 
+	/// <remarks>Derived from Microsoft MVVM design pattern example (http://msdn.microsoft.com/en-us/magazine/dd419663.aspx).</remarks>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class WorkspaceViewModel : ViewModelBase, IWorkspaceViewModel
+	{
+		#region "Command Processing"
+		public RoutedUICommand CloseTab
+		{
+			get
+			{
+				return CustomCommands.CloseTab;
+			}
+		}
+
+		public RoutedUICommand CloseOtherTabs
+		{
+			get
+			{
+				return CustomCommands.CloseOtherTabs;
+			}
+		}
+
+		public RoutedUICommand NextTab
+		{
+			get
+			{
+				return CustomCommands.NextTab;
+			}
+		}
+
+		public RoutedUICommand NextInnerTab
+		{
+			get
+			{
+				return CustomCommands.NextInnerTab;
+			}
+		}
+
+		private RelayCommand _requestCommand = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>Command to initiate requests.</summary>
+		///--------------------------------------------------------------------------------
+		public virtual ICommand RequestCommand
+		{
+			get
+			{
+				if (_requestCommand == null)
+				{
+					_requestCommand = new RelayCommand(param => this.OnRequest(), param => this.CanRequest());
+				}
+
+				return _requestCommand;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method determines if a request can be done.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual bool CanRequest()
+		{
+			return true;
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method initiates a request.</summary>
+		///--------------------------------------------------------------------------------
+		protected virtual void OnRequest()
+		{
+			RequestEventArgs message = new RequestEventArgs();
+			message.Name = Name;
+			Mediator.NotifyColleagues<RequestEventArgs>(MediatorMessages.Command_RequestItem, message);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method requests to show this item in the tree view.</summary>
+		///--------------------------------------------------------------------------------
+		public void ShowInTreeView(bool needsFocus = false)
+		{
+			ShowItemInTreeView(this);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method requests the tree view to show the item.</summary>
+		/// 
+		/// <param name="itemToShow">The item to.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowItemInTreeView(IWorkspaceViewModel itemToShow, bool needsFocus = false)
+		{
+			WorkspaceEventArgs message = new WorkspaceEventArgs();
+			message.ItemID = itemToShow.ItemID;
+			message.Workspace = itemToShow;
+			message.NeedsFocus = needsFocus;
+			Mediator.NotifyColleagues<WorkspaceEventArgs>(MediatorMessages.Command_ShowItemRequested, message);
+		}
+
+		#endregion "Command Processing"
+		
+		#region "Events"
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling general updates.</summary>
+		///--------------------------------------------------------------------------------
+		public event EventHandler Updated;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles update events.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		public void OnUpdated(object sender, EventArgs args)
+		{
+			OnPropertyChanged("Name");
+			OnPropertyChanged("Order");
+			if (Updated != null)
+			{
+				Updated(this, args);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling initial loads.</summary>
+		///--------------------------------------------------------------------------------
+		public event EventHandler Loaded;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles load events.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnLoaded(object sender, EventArgs args)
+		{
+			if (Loaded != null)
+			{
+				Loaded(this, args);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for requesting close confirmations.</summary>
+		///--------------------------------------------------------------------------------
+		public event EventHandler ConfirmClose;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles confirm close events.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnConfirmClose(object sender, EventArgs args)
+		{
+			if (ConfirmClose != null)
+			{
+				ConfirmClose(this, args);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for requesting close force confirmations.</summary>
+		///--------------------------------------------------------------------------------
+		public event EventHandler ForceClose;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles force close events.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnForceClose(object sender, EventArgs args)
+		{
+			if (ForceClose != null)
+			{
+				ForceClose(this, args);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling selections.</summary>
+		///--------------------------------------------------------------------------------
+		public event EventHandler Selected;
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles load events.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnSelected(object sender, EventArgs args)
+		{
+			if (Selected != null)
+			{
+				Selected(sender, args);
+			}
+		}
+
+		#endregion "Events"
+
+		#region Fields
+
+		RelayCommand _closeCommand;
+
+		#endregion // Fields
+
+		#region "Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets whether the view model has errors.</summary>
+		///--------------------------------------------------------------------------------
+		public bool HasErrors { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets whether the view model has customizations.</summary>
+		///--------------------------------------------------------------------------------
+		public bool HasCustomizations { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the workspace id.</summary>
+		///--------------------------------------------------------------------------------
+		public Guid WorkspaceID { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the item id.</summary>
+		///--------------------------------------------------------------------------------
+		public Guid ItemID { get; set; }
+
+		static readonly Mediator mediator = new Mediator();
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the mediator for passing messages with data.</summary>
+		///--------------------------------------------------------------------------------
+		public Mediator Mediator
+		{
+			get { return mediator; }
+		}
+
+		private bool _isExpanded = false;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets whether the item is expanded.</summary>
+		///--------------------------------------------------------------------------------
+		public bool IsExpanded
+		{
+			get
+			{
+				return _isExpanded;
+			}
+			set
+			{
+				if (_isExpanded != value)
+				{
+					if (value == false)
+					{
+						IsSelected = true;
+						CollapseItems();
+					}
+					_isExpanded = value;
+					OnPropertyChanged("IsExpanded");
+				}
+			}
+		}
+
+		private bool _isSelected = false;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets whether the item is selected.</summary>
+		///--------------------------------------------------------------------------------
+		public bool IsSelected
+		{
+			get
+			{
+				return _isSelected;
+			}
+			set
+			{
+				if (_isSelected != value)
+				{
+					_isSelected = value;
+					NeedsFocus = false;
+					OnPropertyChanged("IsSelected");
+					if (_isSelected == true)
+					{
+						OnSelected(this, null);
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets PropogateCurrentItem.</summary>
+		///--------------------------------------------------------------------------------
+		public bool PropogateCurrentItem { get; set; }
+
+		bool _needsFocus = false;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets whether the item needs focus.</summary>
+		///--------------------------------------------------------------------------------
+		public bool NeedsFocus
+		{
+			get
+			{
+				return _needsFocus;
+			}
+			set
+			{
+				if (_needsFocus != value)
+				{
+					_needsFocus = value;
+					OnPropertyChanged("NeedsFocus");
+				}
+			}
+		}
+
+		private readonly SortableObservableCollection<WorkspaceViewModel> _items = new SortableObservableCollection<WorkspaceViewModel>();
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the overall set of items (children of any type).</summary>
+		///--------------------------------------------------------------------------------
+		public virtual SortableObservableCollection<WorkspaceViewModel> Items
+		{
+			get
+			{
+				return _items;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the overall set of selected items (children of any type).</summary>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection<WorkspaceViewModel> SelectedItems
+		{
+			get
+			{
+				if (Items != null)
+				{
+					SortableObservableCollection<WorkspaceViewModel> items = new SortableObservableCollection<WorkspaceViewModel>();
+					foreach (WorkspaceViewModel item in Items)
+					{
+						if (item.IsSelected == true)
+						{
+							items.Add(item);
+						}
+					}
+					return items;
+				}
+				return null;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets UpdateButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string UpdateButtonLabel
+		{
+			get
+			{
+				return "_Update";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets EditLink.</summary>
+		///--------------------------------------------------------------------------------
+		public string EditLink
+		{
+			get
+			{
+				return "Edit";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets DeleteLink.</summary>
+		///--------------------------------------------------------------------------------
+		public string DeleteLink
+		{
+			get
+			{
+				return "Delete";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets DeleteButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string DeleteButtonLabel
+		{
+			get
+			{
+				return "_Delete";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets ResetButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string ResetButtonLabel
+		{
+			get
+			{
+				return "_Reset";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets CloseButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string CloseButtonLabel
+		{
+			get
+			{
+				return "_Close";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SearchButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string SearchButtonLabel
+		{
+			get
+			{
+				return "_Search";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets PreviousButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string PreviousButtonLabel
+		{
+			get
+			{
+				return "_Previous";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets NextButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string NextButtonLabel
+		{
+			get
+			{
+				return "Ne_xt";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets NewButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string NewButtonLabel
+		{
+			get
+			{
+				return "_New";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets CloseTabLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string CloseTabLabel
+		{
+			get
+			{
+				return "Close Tab";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets CloseOtherTabsLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string CloseOtherTabsLabel
+		{
+			get
+			{
+				return "Close Other Tabs";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets NextTabLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string NextTabLabel
+		{
+			get
+			{
+				return "Next Tab";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets OKButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string OKButtonLabel
+		{
+			get
+			{
+				return "OK";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets SelectButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string SelectButtonLabel
+		{
+			get
+			{
+				return "Select";
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets CancelButtonLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string CancelButtonLabel
+		{
+			get
+			{
+				return "Cancel";
+			}
+		}
+
+		private IWorkspaceViewModel _currentItem = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets CurrentItem.</summary>
+		///--------------------------------------------------------------------------------
+		public IWorkspaceViewModel CurrentItem
+		{
+			get
+			{
+				return _currentItem;
+			}
+			set
+			{
+				_currentItem = value;
+				OnPropertyChanged("CurrentItem");
+			}
+		}
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method disposes of resources in the view model.</summary>
+		///--------------------------------------------------------------------------------
+		protected override void OnDispose()
+		{
+			// dispose of children
+			foreach (IWorkspaceViewModel item in Items)
+			{
+				item.Dispose();
+			}
+			Items.Clear();
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles sets the item as (re)selected and triggers the
+		/// OnSelected event.</summary>
+		///--------------------------------------------------------------------------------
+		public void SetSelected()
+		{
+			_isSelected = true;
+			OnSelected(this, null);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles item collection changes.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="e">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+		{
+			if (e.NewItems != null && e.NewItems.Count != 0)
+			{
+				foreach (IWorkspaceViewModel item in e.NewItems)
+				{
+					item.Selected += item_Selected;
+				}
+			}
+			if (e.OldItems != null && e.OldItems.Count != 0)
+			{
+				foreach (IWorkspaceViewModel item in e.OldItems)
+				{
+					item.Selected -= item_Selected;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles item selection.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="e">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		void item_Selected(object sender, EventArgs e)
+		{
+			if (sender is IWorkspaceViewModel && (sender as IWorkspaceViewModel).IsSelected == true && (sender as IWorkspaceViewModel).PropogateCurrentItem == true)
+			{
+				CurrentItem = sender as IWorkspaceViewModel;
+			}
+			OnSelected(sender, e);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method clears selected items.</summary>
+		///--------------------------------------------------------------------------------
+		public void ClearSelectedItems()
+		{
+			if (Items != null)
+			{
+				foreach (IWorkspaceViewModel item in Items)
+				{
+					item.IsSelected = false;
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message to display an exception.</summary>
+		/// 
+		/// <param name="ex">The exception to show.</param>
+		/// <param name="showMessageBox">Flag indicating whether message box should be displayed in addition to output area.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowException(Exception ex, bool showMessageBox = true)
+		{
+			StringBuilder errorMessage = new StringBuilder();
+			StringBuilder stackTrace = new StringBuilder();
+			errorMessage.Append(ex.Message);
+			stackTrace.Append(ex.StackTrace);
+			Exception innerEx = ex.InnerException;
+
+			// TODO: show inner exception for now, friendlier error messages later once better
+			// exception management is in place
+			while (innerEx != null)
+			{
+				errorMessage.Append(innerEx.Message);
+				stackTrace.Append(innerEx.StackTrace);
+				innerEx = innerEx.InnerException;
+			}
+			ShowOutput(errorMessage.ToString() + "\r\n" + stackTrace.ToString(), "Exception", true, true, showMessageBox);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message to display an exception.</summary>
+		/// 
+		/// <param name="statusMessage">The message to show.</param>
+		/// <param name="statusTitle">The optional title to display</param>
+		/// <param name="showMessageBox">Flag indicating whether message box should be displayed in addition to output area.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowIssue(string statusMessage, string statusTitle = null, bool showMessageBox = true)
+		{
+			if (statusTitle == null)
+			{
+				ShowOutput(statusMessage, "Issue", true, true);
+			}
+			else
+			{
+				ShowOutput(statusMessage, statusTitle, true, true, showMessageBox);
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message to display a status message.</summary>
+		/// 
+		/// <param name="statusMessage">The message to show.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowStatus(string statusMessage)
+		{
+			ShowStatus(statusMessage, null, false, false);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message to display a status message.</summary>
+		/// 
+		/// <param name="statusMessage">The message to show.</param>
+		/// <param name="statusTitle">The title for the message.</param>
+		/// <param name="appendMessage">Flag indicating whether message should be appended to existing message.</param>
+		/// <param name="showMessageBox">Flag indicating whether message box should be displayed in addition to output area.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowStatus(string statusMessage, string statusTitle = null, bool appendMessage = true, bool showMessageBox = false)
+		{
+			StatusEventArgs args = new StatusEventArgs();
+			args.Title = statusTitle;
+			args.Text = statusMessage;
+			args.AppendText = appendMessage;
+			args.ShowMessageBox = showMessageBox;
+			Mediator.NotifyColleagues<StatusEventArgs>(MediatorMessages.Event_StatusChanged, args);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sends a message to display an output message.</summary>
+		/// 
+		/// <param name="outputMessage">The message to show.</param>
+		/// <param name="outputTitle">The title for the message.</param>
+		/// <param name="appendMessage">Flag indicating whether message should be appended to existing message.</param>
+		/// <param name="showMessageBox">Flag indicating whether message box should be displayed in addition to output area.</param>
+		///--------------------------------------------------------------------------------
+		public void ShowOutput(string outputMessage, string outputTitle, bool appendMessage, bool isException = false, bool showMessageBox = false)
+		{
+			StatusEventArgs args = new StatusEventArgs();
+			args.Title = outputTitle;
+			args.Text = outputMessage;
+			args.IsException = isException;
+			args.AppendText = appendMessage;
+			args.ShowMessageBox = showMessageBox;
+			Mediator.NotifyColleagues<StatusEventArgs>(MediatorMessages.Event_OutputChanged, args);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method reports progress in the status area.</summary>
+		/// 
+		/// <param name="inProgress">In progress.</param>
+		/// <param name="statusLabel">The label for the progress bar.</param>
+		/// <param name="completed">The amount of progress completed.</param>
+		/// <param name="total">The total amount of work to do.</param>
+		///--------------------------------------------------------------------------------
+		public void ReportProgress(int inProgress, string statusLabel, uint completed, uint total)
+		{
+			StatusEventArgs args = new StatusEventArgs();
+			args.Progress = inProgress;
+			args.Title = statusLabel;
+			args.CompletedWork = completed;
+			args.TotalWork = total;
+			Mediator.NotifyColleagues<StatusEventArgs>(MediatorMessages.Event_ProgressChanged, args);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sets IsExpanded locally.</summary>
+		///--------------------------------------------------------------------------------
+		public void SetExpanded(bool expanded)
+		{
+			_isExpanded = expanded;
+			OnUpdated(this, null);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method causes child items to be collapsed.</summary>
+		///--------------------------------------------------------------------------------
+		public void CollapseItems()
+		{
+			if (Items != null)
+			{
+				foreach (IWorkspaceViewModel item in Items.ToList<IWorkspaceViewModel>())
+				{
+					if (item != null)
+					{
+						if (item.IsExpanded == true)
+						{
+							item.SetExpanded(false);
+						}
+						item.CollapseItems();
+					}
+				}
+			}
+		}
+
+		#endregion "Methods"
+
+		#region Constructor
+
+		public WorkspaceViewModel()
+		{
+			WorkspaceID = Guid.NewGuid();
+			PropogateCurrentItem = true;
+			Items.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Items_CollectionChanged);
+		}
+		
+		#endregion // Constructor
+		
+		#region CloseCommand
+
+		///--------------------------------------------------------------------------------
+		/// <summary>
+		/// Returns the command that, when invoked, attempts
+		/// to remove this workspace from the user interface.
+		/// </summary>
+		///--------------------------------------------------------------------------------
+		public ICommand CloseCommand
+		{
+			get
+			{
+				if (_closeCommand == null)
+					_closeCommand = new RelayCommand(param => this.OnRequestClose());
+			
+				return _closeCommand;
+			}
+		}
+		
+		#endregion // CloseCommand
+		
+		#region RequestClose [event]
+		
+		/// <summary>
+		/// Raised when this workspace should be removed from the UI.
+		/// </summary>
+		public event EventHandler RequestClose;
+		
+		protected void OnRequestClose()
+		{
+			EventHandler handler = this.RequestClose;
+			if (handler != null)
+				handler(this, EventArgs.Empty);
+		}
+
+		public void Close()
+		{
+			OnRequestClose();
+		}
+	
+		#endregion // RequestClose [event]
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLWorkspaceViewModelFilePath) == null || (File(VMBLLWorkspaceViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLWorkspaceViewModelFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLWorkspaceViewModelFilePath)
+}
+%%></OUTPUT>

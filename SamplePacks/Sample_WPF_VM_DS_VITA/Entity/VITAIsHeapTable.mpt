@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME VITAIsHeapTable
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (EntityTypeCode == 1 /* lookup */ || EntityTypeCode == 2 /* lookup business */)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

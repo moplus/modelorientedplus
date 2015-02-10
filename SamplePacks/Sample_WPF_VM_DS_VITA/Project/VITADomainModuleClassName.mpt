@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainModuleClassName
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-DomainModule%%></CONTENT>

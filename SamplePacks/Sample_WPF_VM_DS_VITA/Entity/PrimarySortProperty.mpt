@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME PrimarySortProperty
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// get first string property
+//foreach (Entity in EntityAndBaseEntities)
+//{
+	foreach (Property where IsForeignKeyMember == false && (DataTypeCode == 16 || DataTypeCode == 17))
+	{
+		<%%=PropertyName%%>
+		return
+	}
+//}
+%%></CONTENT>

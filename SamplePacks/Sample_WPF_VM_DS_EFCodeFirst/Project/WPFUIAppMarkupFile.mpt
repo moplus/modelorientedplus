@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME WPFUIAppMarkupFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<Application x:Class="%%><%%=Namespace%%><%%-.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow_G.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIAppMarkupFilePath) == null || (File(WPFUIAppMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIAppMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIAppMarkupFilePath)
+}
+%%></OUTPUT>

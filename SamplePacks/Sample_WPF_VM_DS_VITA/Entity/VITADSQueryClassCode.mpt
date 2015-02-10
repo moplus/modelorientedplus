@@ -1,0 +1,101 @@
+<CONFIG>
+	NAME VITADSQueryClassCode
+	CATEGORY VITADS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a query class for web api searches for your entity.
+// This query object is used by web api search methods for this entity.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Vita.Common;
+using Vita.Entities;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Dtos%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines elements of search criteria for finding
+	/// instances of %%><%%=VITADSDtoClassName%%><%%-.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial interface file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=VITADSQueryClassName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		var firstItem = true
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where VITADSIsQueryProperty == true)
+			{
+				if (firstItem == false)
+				{
+					<%%=Solution.NEWLINE%%>
+				}
+				firstItem = false
+				<%%=VITADSQueryPropertyCode%%>
+			}
+		}
+		if (firstItem == false)
+		{
+			<%%=Solution.NEWLINE%%>
+		}
+		<%%-
+		 public string OrderBy { get; set; }
+		 
+		public bool Descending { get; set; }
+		
+		public int Skip { get; set; }
+		
+		public int Take { get; set; }%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITADSQueryClassFilePath, text=Text) == true)
+{
+	update(VITADSQueryClassFilePath)
+}
+%%></OUTPUT>

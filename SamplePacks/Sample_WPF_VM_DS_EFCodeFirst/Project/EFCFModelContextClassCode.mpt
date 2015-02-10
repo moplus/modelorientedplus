@@ -1,0 +1,96 @@
+<CONFIG>
+	NAME EFCFModelContextClassCode
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using %%><%%=Project.Namespace%%><%%-.Models;
+using %%><%%=Project.Namespace%%><%%-.Models.Mapping;
+
+namespace %%><%%=Project.Namespace%%><%%-
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to manage the context for
+	/// entity framework entities.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class %%><%%=EFCFModelContextClassName%%><%%-: DbContext
+	{
+		static %%><%%=EFCFModelContextClassName%%><%%-()
+		{
+			Database.SetInitializer(new MigrateDatabaseToLatestVersion<ModelContext, Migrations.Configuration>());
+			//Database.SetInitializer<ModelContext>(null);
+		}
+
+		public %%><%%=EFCFModelContextClassName%%><%%-()
+			: base(ConfigurationManager.AppSettings["DbConnectionString"])
+		{
+			Configuration.LazyLoadingEnabled = true;
+			Configuration.ProxyCreationEnabled = true;
+			Configuration.ValidateOnSaveEnabled = true;
+			Database.Log = s => Console.WriteLine(s);
+		}
+
+		protected override void OnModelCreating(DbModelBuilder modelBuilder)
+		{%%>
+		foreach (Entity where EFCFIsDataModelEntity == true)
+		{<%%-
+			modelBuilder.Configurations.Add(new %%><%%=EFCFMappingClassName%%><%%-());%%>
+		}
+		<%%-
+		}
+ 
+		public new DbSet<T> Set<T>()
+		    where T : class
+		{
+			var result = base.Set<T>();
+			if (result == null)
+			{
+				throw new Exception(string.Format("Cannot get Set for type {0}", typeof(T).FullName));
+			}
+			return result;
+		}%%>
+		foreach (Entity where EFCFIsDataModelEntity == true)
+		{
+		<%%-
+
+		public DbSet<%%><%%=EFCFClassName%%><%%-> %%><%%=EFCFPluralEntityName%%><%%-
+		{
+			get;
+			set;
+		}%%>
+		}
+		<%%-
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFModelContextClassFilePath) == null || (File(EFCFModelContextClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFModelContextClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFModelContextClassFilePath)
+}
+%%></OUTPUT>

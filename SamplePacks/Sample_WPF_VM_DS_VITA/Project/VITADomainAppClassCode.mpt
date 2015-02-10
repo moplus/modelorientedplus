@@ -1,0 +1,225 @@
+<CONFIG>
+	NAME VITADomainAppClassCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a class to set up an application with VITA managed entities.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using Vita.Entities;
+using Vita.Entities.Authorization;
+using Vita.Entities.Services;
+using Vita.Modules.DbInfo;
+using Vita.Modules.Logging;
+using Vita.Modules.PersistentSession;
+using Vita.Web;
+using %%><%%=Project.Namespace%%><%%-.Models;
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to set up an application with VITA managed entities.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=VITADomainAppClassName%%><%%-: EntityApp%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		public %%><%%=VITADomainModuleClassName%%><%%- MainModule;%%>
+		if (Solution.VITA_ADD_LOGIN_MODULE == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-IAuthorizationService Authorization;%%>
+		}
+		<%%-
+		
+		public %%><%%=VITADomainAppClassName%%><%%-() : this(true) { }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>Set up the application, incorporating all modules that should be part of the application.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VITADomainAppClassName%%><%%-(bool extended)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			this.Version = "1.0.0.1";
+			
+			// add areas
+			var domainArea = this.AddArea("Domain", "domain");%%>
+			if (Solution.VITA_ADD_INFO_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-var infoArea = this.AddArea("Info", "info");%%>
+			}
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-var loginArea = this.AddArea("Login", "login");%%>
+			}
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-var logArea = this.AddArea("Log", "log");%%>
+			}
+			<%%-
+			
+			// add main module
+			MainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-//Add authorization 
+				Authorization = new AuthorizationService(this);
+				Authorization.UserRolesLookup += AuthorizationService_UserRolesLookup;
+				%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.Initialize(); //create all roles%%>
+			}			
+			<%%-
+			
+			if(!extended)%%><%%=Solution.INDENT%%><%%-
+				return;%%><%%=Solution.OUTDENT%%>
+			if (Solution.VITA_ADD_INFO_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// add App instance info module%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-var appInstanceInfoModule = new DbInfoModule(infoArea);%%>
+			}
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-// add login functionality
+				var loginConfig = new Vita.Modules.Login.LoginModuleSettings(passwordSalt: "%%><%%=ProjectID.ToUpper()%%><%%-");
+				// LoginModule will place 2 log-type tables  (ILoginLog, ILoginWorkflow) into logArea
+				var loginModule = new Vita.Modules.Login.LoginModule(loginArea, loginConfig%%>
+				if (Solution.VITA_ADD_LOG_MODULE == true)
+				{
+					<%%-, logArea%%>
+				}
+				<%%-);%%>
+			}
+			if (Solution.VITA_ADD_SESSION_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// Server-side persistent session
+				// Define session token - it will be used to automatically retrieve and attach user session to incoming request
+				var sessionTokenInfo = new WebTokenInfo("Authorization", WebTokenSource.Header, WebTokenDirection.Input);
+				var sessionStt = new PersistentSessionSettings(sessionToken: sessionTokenInfo);%%>
+				if (Solution.VITA_ADD_LOG_MODULE == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-var sessionService = new PersistentSessionModule(logArea, sessionStt);%%>
+				}
+			}
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// add user transaction log, with extra tracking columns in "transaction" entities  
+				var transLogStt = new TransactionLogSettings(UpdateLogLevel.KeysOnly, domainArea%%>
+				if (Solution.VITA_ADD_LOGIN_MODULE == true)
+				{
+					<%%-, loginArea%%>
+				}
+				<%%-);
+				// add columns CreatedIn and UpdatedIn - tracking user/date of create/update events
+				transLogStt.AddUpdateStampColumns(new[]%%>
+				<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.INDENT%%>
+				foreach (Entity in Solution where VITAIsTransactionEntity == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					if (ItemIndex > 0)
+					{
+						<%%-, %%>
+					}
+					else
+					{
+						<%%-  %%>
+					}
+					<%%-typeof(%%><%%=VITAInterfaceName%%><%%-)%%>
+				}
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-,
+				createIdPropertyName: "CreatedIn", updateIdPropertyName: "UpdatedIn");%%>
+				<%%=Solution.OUTDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-var transLog = new TransactionLogModule(logArea, transLogStt);
+					// Error log, operation log, web call log, model change log, incident log
+					var log = new OperationLogModule(logArea);
+					var errLog = new ErrorLogModule(logArea);
+					var webCallLog = new WebCallLogModule(logArea);
+					var modelChangeLog = new DbModelChangeLogModule(logArea);
+					var incLog = new IncidentLogModule(logArea);%%>
+					if (Solution.VITA_ADD_LOGIN_MODULE == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%-// add trigger to suspense login after 3 failed attempts within a minute
+						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(%%>
+						<%%=Solution.INDENT%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-failureCount: 3, timeWindow: TimeSpan.FromMinutes(1), suspensionPeriod: TimeSpan.FromMinutes(5));%%>
+						<%%=Solution.OUTDENT%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-incLog.AddTrigger(loginFailedTrigger);%%>
+					}
+			}
+			<%%-
+			
+			// add additional custom areas, authorization, and other features here
+			#region protected
+			#endregion protected%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		if (Solution.VITA_ADD_LOGIN_MODULE == true)
+		{
+		<%%- 
+		
+		//Provides user roles for a given user
+		void AuthorizationService_UserRolesLookup(object sender, UserRolesLookupEventArgs e)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			switch(e.User.Kind)%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				case UserKind.Anonymous:%%><%%=Solution.INDENT%%><%%-
+					e.Roles.Add(%%><%%=VITADomainAuthorizationHelperClassName%%><%%-.PublicUser);
+					return;%%><%%=Solution.OUTDENT%%><%%-
+				case UserKind.AuthenticatedUser:%%><%%=Solution.INDENT%%>
+					foreach (Entity where VITAIsPrimaryUserEntity == true)
+					{
+						<%%-
+						var session = e.EntityStore.OpenSystemSession();
+						var iUser = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(e.User.UserId);
+						var roles = %%><%%=../VITADomainAuthorizationHelperClassName%%><%%-.GetRoles(iUser.Type);
+						e.Roles.AddRange(roles);%%>
+						break
+					}
+					<%%-
+					return;%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITADomainAppClassFilePath) == null || (File(VITADomainAppClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(VITADomainAppClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(VITADomainAppClassFilePath)
+}
+%%></OUTPUT>

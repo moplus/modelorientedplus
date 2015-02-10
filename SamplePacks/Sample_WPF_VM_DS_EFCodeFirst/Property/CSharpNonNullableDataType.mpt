@@ -1,0 +1,95 @@
+<CONFIG>
+	NAME CSharpNonNullableDataType
+	CATEGORY LIB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		<%%-sbyte%%>
+		break
+	case 2: // IntShort
+		<%%-short%%>
+		break
+	case 3: // Int
+		<%%-int%%>
+		break
+	case 4: // IntLong
+		<%%-long%%>
+		break
+	case 5: // Byte
+		<%%-byte%%>
+		break
+	case 6: // UIntShort
+		<%%-ushort%%>
+		break
+	case 7: // UInt
+		<%%-uint%%>
+		break
+	case 8: // UIntLong
+		<%%-ulong%%>
+		break
+	case 9: // FloatSingle
+		<%%-float%%>
+		break
+	case 10: // FloatDouble
+		<%%-double%%>
+		break
+	case 11: // Decimal
+		<%%-decimal%%>
+		break
+	case 12: // Boolean
+		<%%-bool%%>
+		break
+	case 13: // Char
+		<%%-char%%>
+		break
+	case 14: // CharUnicode
+		<%%-char%%>
+		break
+	case 15: // Object
+		<%%-object%%>
+		break
+	case 16: // String
+		<%%-string%%>
+		break
+	case 17: // StringUnicode
+		<%%-string%%>
+		break
+	case 18: // Currency
+		<%%-decimal%%>
+		break
+	case 19: // Text
+		<%%-string%%>
+		break
+	case 20: // TextUnicode
+		<%%-string%%>
+		break
+	case 21: // IntTiny
+		<%%-byte%%>
+		break
+	case 22: // UIntTiny
+		<%%-byte%%>
+		break
+	case 23: // Binary
+		<%%-byte%%>
+		break
+	case 24: // DateTime
+		<%%-DateTime%%>
+		break
+	case 25: // Timestamp
+		<%%-byte%%>
+		break
+	case 26: // Guid
+		<%%-Guid%%>
+		break
+	case 27: // Image
+		<%%-byte%%>
+		break
+	default:
+		<%%-string%%>
+		break
+}
+%%></CONTENT>

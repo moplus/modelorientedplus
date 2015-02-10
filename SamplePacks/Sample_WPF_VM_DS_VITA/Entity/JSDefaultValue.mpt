@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME JSDefaultValue
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true)
+{
+	<%%=JSDefaultValue%%>
+	break
+}
+%%></CONTENT>

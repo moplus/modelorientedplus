@@ -1,0 +1,72 @@
+<CONFIG>
+	NAME TestValue
+	CATEGORY UnitTest
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+switch (DataTypeCode)
+{
+	case 2: // IntShort
+<%%-(short)GetRandomNumeric(1, short.MaxValue)%%>
+		break
+	case 6: // UIntShort
+<%%-(ushort)GetRandomNumeric(1, short.MaxValue)%%>
+		break
+	case 3: // Int
+<%%-GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 7: // UInt
+<%%-(uint)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 4: // IntLong
+<%%-(long)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 8: // UIntLong
+<%%-(uling)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 9: // FloatSingle
+<%%-(float)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 10: // FloatDouble
+<%%-(double)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 11: // Decimal
+	case 18: // Currency
+<%%-(decimal)GetRandomNumeric(1, int.MaxValue)%%>
+		break
+	case 12: // Boolean
+<%%-GetRandomBool()%%>
+		break
+	case 13: // Char
+	case 14: // CharUnicode
+<%%-GetRandomChar()%%>
+		break
+	case 16: // String
+	case 17: // StringUnicode
+	case 19: // Text
+	case 20: // TextUnicode
+		if (IsPrimaryKeyMember == true)
+		{
+<%%-GetRandomString(%%><%%=DefaultStringLength%%><%%-, %%><%%=DefaultStringLength%%><%%-)%%>
+		}
+		else
+		{
+<%%-GetRandomString(1, %%><%%=DefaultStringLength%%><%%-)%%>
+		}
+		break
+	case 21: // IntTiny
+	case 22: // UIntTiny
+<%%-GetRandomNumeric(1, 16)%%>
+		break
+	case 24: // DateTime
+<%%-GetRandomDate()%%>
+		break
+	case 26: // Guid
+<%%-GetRandomGuid()%%>
+		break
+	default:
+		break
+}
+%%></CONTENT>

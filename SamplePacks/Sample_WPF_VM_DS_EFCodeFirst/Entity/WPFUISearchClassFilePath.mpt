@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUISearchClassFilePath
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Project.Namespace%%><%%-\UserControls\%%><%%=Feature.FeatureName%%><%%-\%%><%%=WPFUISearchClassFileName%%></CONTENT>

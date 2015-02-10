@@ -1,0 +1,112 @@
+<CONFIG>
+	NAME EFCFPropertyAttributesCode
+	CATEGORY EFCF
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+/*
+if (IsPrimaryKeyMember == true)
+{
+	<%%-
+		[Key]%%>
+}
+*/
+if (IsNullable == false && IsPrimaryKeyMember == false && DataTypeCode != 25 /* Timestamp */)
+{
+	<%%-
+		[Required]%%>
+}
+<%%-
+		[Display(Name = "%%><%%=EFCFPropertyDisplayName%%><%%-")]%%>
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		break
+	case 2: // IntShort
+		break
+	case 3: // Int
+		break
+	case 4: // IntLong
+		break
+	case 5: // Byte
+		break
+	case 6: // UIntShort
+		break
+	case 7: // UInt
+		break
+	case 8: // UIntLong
+		break
+	case 9: // FloatSingle
+		break
+	case 10: // FloatDouble
+		break
+	case 11: // Decimal
+		break
+	case 12: // Boolean
+		break
+	case 13: // Char
+		break
+	case 14: // CharUnicode
+		break
+	case 15: // Object
+		break
+	case 16: // String
+	case 17: // StringUnicode
+		if ((Tags.Contains("HTML") == false || IsNullable == true) && Length != null)
+		{
+		<%%-
+		[StringLength(%%><%%=Length%%><%%-)]%%>
+		}
+		else if (Length != null)
+		{
+		<%%-
+		[StringLength(%%><%%=Length%%><%%-, MinimumLength=300, ErrorMessage="Please explain your %%><%%=Entity.EntityName.CapitalWordCase().ToLower()%%><%%- in more detail with at least 300 characters.  Otherwise, you can leave a comment.")]%%>
+		}
+		if (Length > 255)
+		{
+		<%%-
+		[DataType(DataType.MultilineText)]%%>
+		}
+		break
+	case 19: // Text
+	case 20: // TextUnicode
+		if (Tags.Contains("HTML") == true && IsNullable == false)
+		{
+		<%%-
+		[StringLength(1000000,MinimumLength=300, ErrorMessage="Please explain your %%><%%=Entity.EntityName.CapitalWordCase().ToLower()%%><%%- in more detail with at least 300 characters (and not over a Mb).  Otherwise, you can leave a comment.")]%%>
+		}
+		if (Length > 255)
+		{
+		<%%-
+		[DataType(DataType.MultilineText)]%%>
+		}
+		break
+	case 18: // Currency
+		<%%-
+		[DisplayFormat(DataFormatString = "{0:C}")]%%>
+		break
+	case 21: // IntTiny
+		break
+	case 22: // UIntTiny
+		break
+	case 23: // Binary
+		break
+	case 24: // DateTime
+		break
+	case 25: // Timestamp
+		break
+	case 26: // Guid
+		break
+	case 27: // Image
+		break
+	default:
+		break
+}
+if (Tags.Contains("HTML") == true)
+{
+	<%%-
+		[AllowHtml]%%>
+}
+%%></CONTENT>

@@ -1,0 +1,32 @@
+<CONFIG>
+	NAME VITAIsUINavEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// make entities that are not relational in nature to qualify for the admin ui
+// include extending entities but not the base
+if (EntityTypeCode == 8 /* Relational */ || VITAIsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+if (BaseEntity != null)
+{
+	<%%-true%%>
+	return
+}
+foreach (Entity in ExtendingEntities)
+{
+	<%%-false%%>
+	return
+}
+foreach (Property where IsPrimaryKeyMember == true && IsForeignKeyMember == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME UnitTestGetTestMethod
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+		public static %%><%%=EntityName%%><%%- GetTest%%><%%=EntityName%%><%%-()
+		{%%><%%=TAB 1%%><%%-
+			return new %%><%%=EntityName%%><%%-
+			{%%><%%=TAB 1%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where EFCFIsConceptualModelProperty == true && TestValue != null && (IsPrimaryKeyMember == false || Identity == false) && IsForeignKeyMember == false)
+				{
+				<%%-
+				%%><%%=EFCFPropertyName%%><%%- = %%><%%=TestValue%%><%%-,%%>
+				}
+		             foreach (EntityReference)
+		             {
+	                <%%-
+				%%><%%=EntityReferenceName%%><%%- = %%><%%=ReferencedEntity.EntityName%%><%%-Test.GetTest%%><%%=ReferencedEntity.EntityName%%><%%-(),%%>
+	        	     }
+			}
+            <%%=TAB -1%%><%%-
+			};%%><%%=TAB -1%%><%%-
+		}%%>
+%%></CONTENT>

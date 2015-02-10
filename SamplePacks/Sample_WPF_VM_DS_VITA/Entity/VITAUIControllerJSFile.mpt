@@ -1,0 +1,671 @@
+<CONFIG>
+	NAME VITAUIControllerJSFile
+	CATEGORY VITAUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router controller for your entity.
+// This controller enables CRUD and search operations with your entity.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var itemFound
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This controller provides access to CRUD operations on
+/// %%><%%=VITAInterfaceName%%><%%- items.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var %%><%%=VITAUIControllerClassName%%><%%- = function($scope, $stateParams, $state, $window, $location%%>
+var serviceReferences = ", " + VITAUIServiceName
+var serviceReference
+CurrentEntity = Entity
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where VITAIsAdminUIReference == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", " + VITAUIServiceName
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Collection where VITAIsAdminUICollection == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", " + VITAUIServiceName
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+<%%=serviceReferences%%><%%-)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+	// data for search operations
+	$scope.searchQuery =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where VITADSIsQueryProperty == true)
+			{
+				<%%=VITAUISearchQueryBlurb%%>
+			}
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-orderBy: $stateParams.orderBy || '',%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-descending: $stateParams.descending || 'false',%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-page: $stateParams.page || 1,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-pageSize: $stateParams.pageSize || 10,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalPages: 0%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+
+	// data to get search results
+	$scope.searchResults =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-items: null,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalPages: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalItems: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-hasResults: false,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-canCreate: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+
+	// data to get an item
+	$scope.itemQuery =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=VITAUIItemQueryBlurb%%>
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-itemFound: false%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// data for create, update, and delete operations
+	$scope.itemForm =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where IsUIEditableProperty == true)
+			{
+				if (IsForeignKeyMember == true)
+				{
+					<%%=VITAUIItemQueryBlurb%%>
+				}
+				else
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%=VITAParameterName%%><%%-: %%>
+					<%%=JSDefaultValue%%><%%-,%%>
+				}
+			}
+		}
+		var foundReferences = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (EntityReference where IsUIEditableProperty == true)
+			{
+				if (foundReferences.Contains("'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'") == false)
+				{
+					foundReferences = foundReferences + "'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'"
+					<%%=Solution.NEWLINE%%>
+					<%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-: null,%%>
+				}
+			}
+		}
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Collection where IsPrimaryCollection== true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=VITAParameterName%%><%%-: null,%%>
+			}
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-canEdit: false,
+		canDelete: false%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// status on any operation
+	$scope.status =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		isReadOnly: false,
+		isError: false,
+		errorMessage: '',
+		isSuccess: false,
+		successMessage: ''%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	$scope.navbarProperties =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		isCollapsed: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// search api
+	$scope.search = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = %%><%%=VITAUIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where VITADSIsQueryProperty == true)
+			{
+				switch (DataTypeCode)
+				{
+					case 24: // DateTime
+					case 29: // DateTimeSmall
+						if (itemFound == true)
+						{
+							<%%-, %%>
+						}
+						itemFound = true
+						<%%-$scope.searchQuery.%%><%%=VITAParameterName%%><%%-Start%%>
+						<%%-, $scope.searchQuery.%%><%%=VITAParameterName%%><%%-End%%>
+						break
+					default:
+						if (itemFound == true)
+						{
+							<%%-, %%>
+						}
+						itemFound = true
+						<%%-$scope.searchQuery.%%><%%=VITAParameterName%%>
+						break
+				}
+			}
+		}
+		if (itemFound == true)
+		{
+			<%%-, %%>
+		}
+		<%%-$scope.searchQuery.orderBy, $scope.searchQuery.descending, $scope.searchQuery.page, $scope.searchQuery.pageSize);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.searchResults.items = result.items;
+				$scope.searchResults.totalPages = Math.ceil(1.0 * result.totalItems / $scope.searchQuery.pageSize);
+				$scope.searchResults.totalItems = result.totalItems;
+				$scope.searchResults.hasResults = true;
+				$scope.searchResults.canCreate = result.canCreate;%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+	$scope.refreshSearch = function ()%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		$state.go('%%><%%=VITAClassName.CamelCase()%%><%%-Results',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where VITADSIsQueryProperty == true)
+				{
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=VITAParameterName%%><%%-Start': $scope.searchQuery.%%><%%=VITAParameterName%%><%%-Start,%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=VITAParameterName%%><%%-End': $scope.searchQuery.%%><%%=VITAParameterName%%><%%-End,%%>
+							break
+						default:
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=VITAParameterName%%><%%-': $scope.searchQuery.%%><%%=VITAParameterName%%><%%-,%%>
+							break
+					}
+				}
+			}
+			<%%-
+			'orderBy': $scope.searchQuery.orderBy,
+			'descending': $scope.searchQuery.descending,
+			'page': $scope.searchQuery.page,
+			'pageSize': $scope.searchQuery.pageSize%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// get api
+	$scope.get = function (isEdit)%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = %%><%%=VITAUIServiceName%%><%%-.get%%><%%=VITAClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%-$scope.itemQuery.%%><%%=VITAParameterName%%>
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				$scope.status.isSuccess = true;%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where VITADSIsDtoClassProperty == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%-$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.data.%%><%%=VITAPropertyName%%><%%-;%%>
+					}
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-$scope.itemForm.canEdit = result.data.CanEdit;
+				$scope.itemForm.canDelete = result.data.CanDelete;
+				if (isEdit == true && $scope.itemForm.canEdit == false)%%>
+				<%%=Solution.OPEN_BRACE%%><%%-
+					$scope.status.isReadOnly = true;%%>
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-
+				$scope.init();%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Collection where IsPrimaryCollection == true)
+		{
+			<%%-
+			
+			// get %%><%%=VITAPropertyName%%><%%- api
+			$scope.get%%><%%=VITAPropertyName%%><%%- = function ()%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				var editing = $stateParams.editing;
+				if (editing != 'true' && editing != true)%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%-
+					$scope.status.isReadOnly = true;%%>
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-
+				var result = %%><%%=CurrentEntity.VITAUIServiceName%%><%%-.get%%><%%=CurrentEntity.VITAClassName%%><%%-(%%>
+				foreach (Property in CurrentEntity where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-, %%>
+					}
+					<%%-$scope.itemQuery.%%><%%=VITAParameterName%%>
+				}
+				<%%-);
+				result.then(function(result)%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%-
+					if (result.isSuccess)%%>
+					<%%=Solution.OPEN_BRACE%%><%%-
+						$scope.status.isSuccess = true;%%>
+						with (CurrentEntity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsDtoClassProperty == true)
+								{
+									<%%=Solution.NEWLINE%%>
+									<%%-$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.data.%%><%%=VITAPropertyName%%><%%-;%%>
+								}
+							}
+						}
+						<%%=Solution.NEWLINE%%>
+						<%%-$scope.init();%%>
+						with (ReferencedEntity)
+						{
+							<%%-
+							var searchResult = %%><%%=VITAUIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
+							itemFound = false
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsQueryProperty == true)
+								{
+									switch (DataTypeCode)
+									{
+										case 24: // DateTime
+										case 29: // DateTimeSmall
+											if (itemFound == true)
+											{
+												<%%-, %%>
+											}
+											itemFound = true
+											<%%=JSDefaultValue%%>
+											<%%-, %%><%%=JSDefaultValue%%>
+											break
+										default:
+											if (itemFound == true)
+											{
+												<%%-, %%>
+											}
+											itemFound = true
+											if (IsForeignKeyToEntity(entityID=CurrentEntity.EntityID) == true)
+											{
+												<%%-$scope.itemQuery.%%>
+												foreach (Property in CurrentEntity where IsPrimaryKeyMember == true)
+												{
+													<%%=VITAParameterName%%>
+												}
+											}
+											else
+											{
+												<%%=JSDefaultValue%%>
+											}
+											break
+									}
+								}
+							}
+							if (itemFound == true)
+							{
+								<%%-, %%>
+							}
+						}
+							<%%-$scope.searchQuery.orderBy, $scope.searchQuery.descending, $scope.searchQuery.page, $scope.searchQuery.pageSize);
+							searchResult.then(function(result)%%>
+							<%%=Solution.OPEN_BRACE%%>
+								<%%-
+								if (result.isSuccess)%%>
+								<%%=Solution.OPEN_BRACE%%><%%-
+									$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.items;%%>
+								<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+								<%%=Solution.OPEN_BRACE%%>
+									<%%-
+									$scope.status.isError = true;
+									$scope.status.isSuccess = false;
+									$scope.status.errorMessage = result.message;%%>
+								<%%=Solution.CLOSE_BRACE%%>
+							<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+						<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+						<%%=Solution.OPEN_BRACE%%>
+							<%%-
+							$scope.status.isError = true;
+							$scope.status.isSuccess = false;
+							$scope.status.errorMessage = result.message;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+	}
+	<%%-
+	
+	// create api
+	$scope.create = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = %%><%%=VITAUIServiceName%%><%%-.create%%><%%=VITAClassName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where IsCreateProperty == true)
+			{
+				if (itemFound == true)
+				{
+					<%%-, %%>
+				}
+				itemFound = true
+				<%%-$scope.itemForm.%%><%%=VITAParameterName%%>
+			}
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully created."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// update api
+	$scope.update = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = %%><%%=VITAUIServiceName%%><%%-.update%%><%%=VITAClassName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where VITADSIsDtoClassProperty == true)
+			{
+				if (itemFound == true)
+				{
+					<%%-, %%>
+				}
+				itemFound = true
+				<%%-$scope.itemForm.%%><%%=VITAParameterName%%>
+			}
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully updated."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// delete api
+	$scope.delete = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = %%><%%=VITAUIServiceName%%><%%-.delete%%><%%=VITAClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%-$scope.itemQuery.%%><%%=VITAParameterName%%>
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully deleted."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// navigation and other functions
+	$scope.back = function()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-$window.history.back();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.first = function ()%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		$scope.searchQuery.page = 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.next = function ()%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		$scope.searchQuery.page = parseInt($scope.searchQuery.page) + 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.previous = function ()%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		$scope.searchQuery.page = parseInt($scope.searchQuery.page) - 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.last = function ()%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		$scope.searchQuery.page = $scope.searchResults.totalPages;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// init api
+	$scope.init = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+	foundReferences = ""
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (EntityReference where IsUIEditableProperty == true)
+		{
+			if (foundReferences.Contains("'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'") == false)
+			{
+				foundReferences = foundReferences + "'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'"
+				<%%-
+				var %%><%%=EntityReferenceName.CamelCase()%%><%%-Result = %%><%%=ReferencedEntity.VITAUIServiceName%%><%%-.list%%><%%=ReferencedEntity.VITAClassName%%><%%-(%%>
+				foreach (PropertyRelationship)
+				{
+					foreach (RelationshipProperty in Relationship)
+					{
+						if (ItemIndex > 0)
+						{
+							<%%-, %%>
+						}
+						<%%-$scope.itemForm.%%><%%=Property.VITAParameterName%%>
+						break
+					}
+				}
+				<%%-);
+				%%><%%=EntityReferenceName.CamelCase()%%><%%-Result.then(function(result)%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%-
+					if (result.isSuccess)%%>
+					<%%=Solution.OPEN_BRACE%%>
+						<%%-
+						$scope.itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%- = result.data.Items;%%>
+					<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+					<%%=Solution.OPEN_BRACE%%>
+						<%%-
+						$scope.status.isError = true;
+						$scope.status.isSuccess = false;
+						$scope.status.errorMessage = result.message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			}
+		}
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+%%><%%=VITAUIControllerClassName%%><%%-.$inject = ['$scope', '$stateParams', '$state', '$window', '$location'%%>
+serviceReferences = ", '" + VITAUIServiceName + "'"
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where VITAIsAdminUIReference == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", '" + VITAUIServiceName + "'"
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Collection where VITAIsAdminUICollection == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", '" + VITAUIServiceName + "'"
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+<%%=serviceReferences%%><%%-];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUIControllerJSFilePath, text=Text) == true)
+{
+	update(VITAUIControllerJSFilePath)
+}
+%%></OUTPUT>

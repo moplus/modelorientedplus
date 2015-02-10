@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAInterfaceName
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-I%%><%%=VITAClassName%%></CONTENT>

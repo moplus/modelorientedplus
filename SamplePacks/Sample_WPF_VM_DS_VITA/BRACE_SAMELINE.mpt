@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME BRACE_SAMELINE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	Use this to create open braces in C# code, managing formatting and indenting according to your desired style.
+	
+	This works best of you have USETABS set to true to handle your indenting.
+	You can set your desired tab (spaces or tabs) with the TABSTRING property (usually in your Solution template).
+	
+	If the value is true, the brace will be emitted at the end of the line, as in:
+	
+	if (xxx) {
+	}
+	
+	If the value is false, the brace will be emitted in a new line, as in:
+	
+	if (xxx)
+	{
+	}
+*/
+<%%-true%%></CONTENT>

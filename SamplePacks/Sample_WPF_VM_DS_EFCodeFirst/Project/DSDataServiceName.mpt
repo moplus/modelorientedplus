@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME DSDataServiceName
+	CATEGORY DS
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectName.Replace(" ", "")%%></CONTENT>

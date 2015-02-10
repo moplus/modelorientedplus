@@ -100,7 +100,12 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 		}
 
-		private List<int> _contentBreakpoints = null;
+        ///--------------------------------------------------------------------------------
+        /// <summary>This property gets/sets the HasRelativeSettings.</summary>
+        ///--------------------------------------------------------------------------------
+        public bool HasRelativeSettings { get; set; }
+
+        private List<int> _contentBreakpoints = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets ContentBreakpoints.</summary>
 		///--------------------------------------------------------------------------------

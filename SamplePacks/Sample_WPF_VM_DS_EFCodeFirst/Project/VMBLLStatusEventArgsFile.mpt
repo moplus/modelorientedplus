@@ -1,0 +1,91 @@
+<CONFIG>
+	NAME VMBLLStatusEventArgsFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Linq;
+using System.Text;
+
+namespace %%><%%=Namespace%%><%%-.Events
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class defines event arguments for status and progress changes.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class StatusEventArgs : EventArgs
+	{
+		#region "Fields and Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the Title.</summary>
+		///--------------------------------------------------------------------------------
+		public string Title { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the Text.</summary>
+		///--------------------------------------------------------------------------------
+		public string Text { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets IsException.</summary>
+		///--------------------------------------------------------------------------------
+		public bool IsException { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ShowMessageBox.</summary>
+		///--------------------------------------------------------------------------------
+		public bool ShowMessageBox { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the AppendText.</summary>
+		///--------------------------------------------------------------------------------
+		public bool AppendText { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the Progress.</summary>
+		///--------------------------------------------------------------------------------
+		public int Progress { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the CompletedWork.</summary>
+		///--------------------------------------------------------------------------------
+		public uint CompletedWork { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the TotalWork.</summary>
+		///--------------------------------------------------------------------------------
+		public uint TotalWork { get; set; }
+
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		#endregion "Methods"
+
+		#region "Constructors"
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLStatusEventArgsFilePath) == null || (File(VMBLLStatusEventArgsFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLStatusEventArgsFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLStatusEventArgsFilePath)
+}
+%%></OUTPUT>

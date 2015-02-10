@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLStatusEventArgsFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Events\StatusEventArgs_G.cs%%></CONTENT>

@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME DataServicesGlobalMarkupFile
+	CATEGORY DataServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<%@ Application Codebehind="Global.asax.cs" Inherits="%%><%%=Namespace%%><%%-.Global" Language="C#" %>%%></CONTENT><OUTPUT>
+<%%=ProjectDirectory%%><%%-\Global.asax%%>
+<%%:
+if (File(Path) != Text)
+{
+	update(Path)
+}
+%%></OUTPUT>

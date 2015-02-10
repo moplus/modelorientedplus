@@ -1,0 +1,26 @@
+<CONFIG>
+	NAME BRACE_NEWLINE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	This is a global property that you can use to determine how to emit open braces in C# code.
+	
+	If the value is true, the brace will be emitted in a new line, as in:
+	
+	if (xxx)
+	{
+	}
+	else
+	{
+	}
+	
+	If the value is false, the brace will be emitted at the end of the line, as in:
+	
+	if (xxx) {
+	} else {
+	}
+*/
+<%%-true%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIThemeFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Resources\Theme_G.xaml%%></CONTENT>

@@ -1,0 +1,133 @@
+<CONFIG>
+	NAME VITADSDomainServiceConfigClassCode
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a class to set up web api services for your project.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Net.Http.Formatting;
+using Vita.Entities;
+using Vita.Entities.Services;
+using Vita.Web;
+using %%><%%=Namespace%%><%%-.Controllers;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class configures the web api services for providing
+	/// and managing all data for the entities in the VITA entity store.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public static partial class DomainServiceConfig%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public static void Configure(HttpConfiguration config,%%><%%=Solution.INDENT%%><%%=Solution.INDENT%%><%%-
+					IEntityStore entityStore,
+					LogLevel logLevel = LogLevel.Basic, 
+					 bool sendErrorDetailsToClient = false)%%><%%=Solution.OUTDENT%%><%%=Solution.OUTDENT%%>
+	  	<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// Logging message handler
+			var webHandlerStt = new WebHandlerSettings(logLevel, WebHandlerOptions.DefaultDebug);
+			var webContextHandler = new WebCallContextHandler(entityStore, webHandlerStt);
+			config.MessageHandlers.Add(webContextHandler);
+			
+			// Exception handling filter - to handle/save exceptions
+			config.Filters.Add(new ExceptionHandlingFilter());
+			
+			// Formatters - add formatters with spies, to catch/log deserialization failures
+			config.Formatters.Clear();
+			config.Formatters.Add(new XmlMediaTypeFormatter());
+			config.Formatters.Add(new JsonMediaTypeFormatter());%%>
+/*			<%%-
+			
+			// Map routes%%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-config.Routes.MapHttpRoute("login", "api/auth", new { controller = "Authentication" });%%>
+			}
+			foreach (Entity in Solution where VITAIsDataModelEntity == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-config.Routes.MapHttpRoute("%%><%%=LIBPluralEntityName.ToLower()%%><%%-", "api/%%><%%=LIBPluralEntityName.ToLower()%%><%%-", new { controller = "%%><%%=LIBPluralEntityName%%><%%-" });%%>
+			}*/
+			<%%-
+			
+			// add custom routes as necessary (main routes are defined as attributes on controller methods)
+			#region protected
+			#endregion protected
+			
+			// the following is just ensure that router finds actual types
+			var contrTypes = new Type[]%%>
+			<%%=Solution.OPEN_BRACE%%>
+				if (Solution.VITA_ADD_LOGIN_MODULE == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-typeof(AuthenticationController),%%>
+				}
+				foreach (Entity in Solution where VITAIsDataModelEntity == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-typeof(%%><%%=VITADSApiControllerClassName%%><%%-),%%>
+				}
+			<%%=Solution.CLOSE_BRACE%%><%%-;
+			config.MapHttpAttributeRoutes();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITADSDomainServiceConfigClassFilePath, text=Text) == true)
+{
+	update(VITADSDomainServiceConfigClassFilePath)
+}
+%%></OUTPUT>

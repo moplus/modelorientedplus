@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME IsListDisplayProperty
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsAuditProperty == true && DataTypeCode != 24 /* DateTime */)
+{
+	<%%-false%%>
+	return
+}
+if (IsBaseProperty == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

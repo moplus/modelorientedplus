@@ -1,0 +1,168 @@
+<CONFIG>
+	NAME WPFUISearchMarkupCode
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<UI:UIControl x:Class="%%><%%=Project.Namespace%%><%%-.UserControls.%%><%%=FeatureName%%><%%-.%%><%%=WPFUISearchClassName%%><%%-"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"%%>
+                     
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as VM
+		foreach (Project where Tags.Contains("VM") == true)
+		{
+                    <%%-
+                     xmlns:%%><%%=../../FeatureName%%><%%-VM="clr-namespace:%%><%%=Namespace%%><%%-.%%><%%=../../FeatureName%%><%%-;assembly=%%><%%=Namespace%%><%%-"%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+                    <%%-
+                     xmlns:%%><%%=../../FeatureName%%><%%-VM="clr-namespace:%%><%%=Namespace%%><%%-.%%><%%=../../FeatureName%%><%%-;assembly=%%><%%=Namespace%%><%%-"%%>
+		}
+	}
+}
+                     <%%-
+                     xmlns:UI="clr-namespace:%%><%%=Project.Namespace%%><%%-"
+                     mc:Ignorable="d" 
+                     d:DesignHeight="300" d:DesignWidth="300">
+	<UI:UIControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme_G.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UI:UIControl.Resources>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}">
+		<Grid MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>%%>
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsCandidateSearchProperty == true)
+	{
+				<%%-
+				<RowDefinition Height="Auto"></RowDefinition>%%>
+	}
+}
+				<%%-
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName.CapitalWordCase()%%><%%- Search" />%%>
+log("WPFUISearchMarkupCode", "RowIndex", 0)
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsCandidateSearchProperty == true)
+	{
+		log("WPFUISearchMarkupCode", "RowIndex", LogValue("WPFUISearchMarkupCode", "RowIndex") + 1)
+		if (DataTypeCode != 12 /* Boolean */)
+		{
+		<%%-
+		<Label Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-:" />%%>
+		}
+	}
+}
+log("WPFUISearchMarkupCode", "RowIndex", LogValue("WPFUISearchMarkupCode", "RowIndex") + 1)
+			<%%-
+			<Label Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="Page Size:" />%%>
+log("WPFUISearchMarkupCode", "RowIndex", 0)
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsCandidateSearchProperty == true)
+	{
+		log("WPFUISearchMarkupCode", "RowIndex", LogValue("WPFUISearchMarkupCode", "RowIndex") + 1)
+		if (DataTypeCode != 12 /* Boolean */)
+		{
+		<%%-
+		<TextBox Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Text="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>%%>
+		}
+		else
+		{
+		<%%-
+		<CheckBox Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Text="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>%%>
+		}
+	}
+}
+log("WPFUISearchMarkupCode", "RowIndex", LogValue("WPFUISearchMarkupCode", "RowIndex") + 1)
+			<%%-
+			<TextBox Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Text="{Binding PageSize, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="3" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput"/>
+			<StackPanel Orientation="Horizontal" Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex") + 1%%><%%-" Grid.Column="2" Margin="5">
+				<Button Command="{Binding SearchCommand}" Content="{Binding SearchButtonLabel}"></Button>
+				<Button Command="{Binding PreviousCommand}" Content="{Binding PreviousButtonLabel}"></Button>
+				<Button Command="{Binding NextCommand}" Content="{Binding NextButtonLabel}"></Button>
+				<Button Command="{Binding NewCommand}" Content="{Binding NewButtonLabel}"></Button>
+				<Button Command="{Binding CloseConfirmCommand}" Content="{Binding CloseButtonLabel}"></Button>
+			</StackPanel>
+			<DataGrid Grid.Row="%%><%%=LogValue("WPFUISearchMarkupCode", "RowIndex") + 2%%><%%-" Grid.Column="1" Grid.ColumnSpan="2" SelectionUnit="Cell" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column" ItemsSource="{Binding Items}" PreviewMouseDown="DataGrid_MouseDown">
+				<DataGrid.Columns>%%>
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsListDisplayProperty == true)
+	{
+		if (DataTypeCode != 12 /* Boolean */)
+		{
+				<%%-
+					<DataGridTextColumn Header="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="*" />%%>
+		}
+		else
+		{
+				<%%-
+					<DataGridCheckBoxColumn Header="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" Binding="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Width="Auto" />%%>
+		}
+	}
+}
+					<%%-
+					<DataGridHyperlinkColumn Binding="{Binding EditLink}">
+						<DataGridHyperlinkColumn.ElementStyle>
+							<Style TargetType="TextBlock">
+								<EventSetter Event="Hyperlink.Click" Handler="Edit_Click"/>
+							</Style>
+						</DataGridHyperlinkColumn.ElementStyle>
+					</DataGridHyperlinkColumn>
+					<DataGridHyperlinkColumn Binding="{Binding DeleteLink}">
+						<DataGridHyperlinkColumn.ElementStyle>
+							<Style TargetType="TextBlock">
+								<EventSetter Event="Hyperlink.Click" Handler="Delete_Click"/>
+							</Style>
+						</DataGridHyperlinkColumn.ElementStyle>
+					</DataGridHyperlinkColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</ScrollViewer>
+</UI:UIControl>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUISearchMarkupFilePath) == null || (File(WPFUISearchMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUISearchMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUISearchMarkupFilePath)
+}
+%%></OUTPUT>

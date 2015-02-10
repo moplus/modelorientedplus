@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME ProjectFileName
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Namespace%%>
+<%%:
+if (Tags.Contains("Database") == true)
+{
+	<%%-.dbproj%%>
+}
+else
+{
+	<%%-.csproj%%>
+}
+%%></CONTENT>

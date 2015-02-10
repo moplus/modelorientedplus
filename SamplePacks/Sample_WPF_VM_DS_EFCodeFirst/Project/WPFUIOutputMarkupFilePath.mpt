@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIOutputMarkupFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\Output_G.xaml%%></CONTENT>

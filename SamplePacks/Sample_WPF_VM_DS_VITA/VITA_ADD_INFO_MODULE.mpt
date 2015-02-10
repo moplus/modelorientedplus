@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME VITA_ADD_INFO_MODULE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// set this value to true if you want to add the VITA db info module to your database and solution
+//
+<%%-true%%></CONTENT>

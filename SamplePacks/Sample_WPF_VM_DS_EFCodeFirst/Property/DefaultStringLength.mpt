@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME DefaultStringLength
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (Length != null && Length > 0)
+{
+	<%%=Length%%>
+}
+else
+{
+	<%%-50%%>
+}
+%%></CONTENT>

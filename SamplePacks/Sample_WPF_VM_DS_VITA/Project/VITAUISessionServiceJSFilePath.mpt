@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUISessionServiceJSFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Scripts\Services\SessionService.js%%></CONTENT>

@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFMigrationsConfigurationClassFileProjectItem
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=EFCFMigrationsConfigurationClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WPFUISearchClassName
+	CATEGORY WPFUI
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=BLLClassName%%><%%-Search%%></CONTENT>

@@ -1,0 +1,123 @@
+<CONFIG>
+	NAME WPFUIStatusCodeFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;%%>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as VM
+	foreach (Project where Tags.Contains("VM") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;%%>
+	}
+}
+%%><%%-
+
+namespace %%><%%=Namespace%%><%%-.UserControls
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>Interaction logic for Status.xaml.</summary>
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class Status : UserControl
+	{
+		public Status()
+		{
+			InitializeComponent();
+			StatusViewModel = new StatusViewModel();
+			StatusViewModel.ProgressChanged += new StatusViewModel.StatusChangeEventHandler(StatusViewModel_ProgressChanged);
+			StatusViewModel.StatusChanged += new StatusViewModel.StatusChangeEventHandler(StatusViewModel_StatusChanged);
+		}
+
+		#region "Properties and Fields"
+
+		public StatusViewModel StatusViewModel { get; set; }
+		#endregion "Properties and Fields"
+
+		#region "Methods"
+		void StatusViewModel_ProgressChanged(object sender, StatusEventArgs args)
+		{
+			if (args != null)
+			{
+				lblStatus.Content = args.Title;
+				prgStatus.Value = args.CompletedWork;
+				if (args.TotalWork <= 0)
+				{
+					prgStatus.Visibility = System.Windows.Visibility.Hidden;
+				}
+				else
+				{
+					prgStatus.Visibility = System.Windows.Visibility.Visible;
+				}
+			}
+		}
+
+		delegate void StatusViewModel_StatusChangedCallback(object sender, StatusEventArgs args);
+		void StatusViewModel_StatusChanged(object sender, StatusEventArgs args)
+		{
+			if (lblStatus.Dispatcher.Thread != System.Threading.Thread.CurrentThread)
+			{
+				StatusViewModel_StatusChangedCallback callback = new StatusViewModel_StatusChangedCallback(StatusViewModel_StatusChanged);
+				this.Dispatcher.Invoke(callback, new object[] { sender, args });
+			}
+			else
+			{
+				if (args != null)
+				{
+					lblStatus.Content = args.Text;
+				}
+			}
+		}
+
+		#endregion "Methods"
+
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIStatusCodeFilePath) == null || (File(WPFUIStatusCodeFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIStatusCodeFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIStatusCodeFilePath)
+}
+%%></OUTPUT>

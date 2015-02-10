@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSQueryResultsClassFilePath
+	CATEGORY VITADS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\%%><%%=VITADSQueryResultsClassName%%><%%-_G.cs%%></CONTENT>

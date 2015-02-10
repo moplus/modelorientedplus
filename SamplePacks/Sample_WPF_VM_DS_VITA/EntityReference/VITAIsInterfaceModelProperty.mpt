@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsInterfaceModelProperty
+	CATEGORY CONFIG
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.VITAIsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

@@ -1,0 +1,33 @@
+<CONFIG>
+	NAME UnitTestAppConfigCode
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
+  </configSections>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
+    <providers>
+      <provider invariantName="System.Data.SqlClient" type="System.Data.Entity.SqlServer.SqlProviderServices, EntityFramework.SqlServer" />
+    </providers>
+  </entityFramework>
+  <appSettings>
+    <add key="DebugLevel" value="1"/>
+    <add key="DbCommandTimeout" value="500"/>
+    <add key="DbPageSize" value="50"/>
+    <add key="DbConnectionString" value="Server=%%><%%=Project.DbServerName%%><%%-;Database=%%><%%=Project.DbName%%><%%-;Trusted_Connection=True;"/>
+    <add key="DbMaximumListSize" value="2000"/>
+  </appSettings>
+</configuration>%%></CONTENT><OUTPUT>
+<%%:
+if (File(UnitTestAppConfigFilePath) == null)
+{
+	update(UnitTestAppConfigFilePath)
+}
+%%></OUTPUT>

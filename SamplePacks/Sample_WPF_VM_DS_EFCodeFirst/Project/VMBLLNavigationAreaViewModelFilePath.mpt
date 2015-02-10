@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLNavigationAreaViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\NavigationAreaViewModel_G.cs%%></CONTENT>

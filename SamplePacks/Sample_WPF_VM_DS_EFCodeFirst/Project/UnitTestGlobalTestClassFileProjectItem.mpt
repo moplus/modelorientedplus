@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME UnitTestGlobalTestClassFileProjectItem
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=UnitTestGlobalTestClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

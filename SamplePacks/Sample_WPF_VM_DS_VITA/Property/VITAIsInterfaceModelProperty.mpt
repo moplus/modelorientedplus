@@ -1,0 +1,32 @@
+<CONFIG>
+	NAME VITAIsInterfaceModelProperty
+	CATEGORY CONFIG
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAIsConceptualModelProperty == false)
+{
+	<%%-false%%>
+	return
+}
+if (IsForeignKeyMember == true)
+{
+	foreach (EntityReference in Entity)
+	{
+		foreach (PropertyRelationship)
+		{
+			foreach (RelationshipProperty in Relationship)
+			{
+				if (Property.PropertyID == ../../../PropertyID)
+				{
+					<%%-false%%>
+					return
+				}
+			}
+		}
+	}
+}
+<%%-true%%>
+%%></CONTENT>

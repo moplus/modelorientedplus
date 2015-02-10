@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainEntityStoreClassName
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-DomainEntityStore%%></CONTENT>

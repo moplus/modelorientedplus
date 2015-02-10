@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIMainWindowCodeFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\MainWindow_G.xaml.cs%%></CONTENT>

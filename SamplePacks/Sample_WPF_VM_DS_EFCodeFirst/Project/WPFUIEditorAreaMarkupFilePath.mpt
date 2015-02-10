@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIEditorAreaMarkupFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\EditorArea_G.xaml%%></CONTENT>

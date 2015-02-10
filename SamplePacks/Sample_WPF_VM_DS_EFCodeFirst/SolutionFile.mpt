@@ -1,0 +1,57 @@
+<CONFIG>
+	NAME SolutionFile
+	NODE Solution
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "#region protected"%%>
+<%%=PROTECTEDAREAEND "#endregion protected"%%>
+<%%=USEIGNOREDAREAS true%%>
+<%%=IGNOREDAREASTART "<CreatedByUserName>"%%>
+<%%=IGNOREDAREAEND "</Status>"%%>
+<%%-Microsoft Visual Studio Solution File, Format Version %%><%%=VISUAL_STUDIO_VERSION_SHORT%%><%%-
+# Visual Studio %%><%%=VISUAL_STUDIO_YEAR%%><%%-
+VisualStudioVersion = %%><%%=VISUAL_STUDIO_VERSION_LONG%%><%%-
+MinimumVisualStudioVersion = %%><%%=VISUAL_STUDIO_VERSION_MIN%%><%%-
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
+%%></CONTENT><OUTPUT>
+<%%=Solution.SolutionDirectory%%><%%-\%%><%%=Solution.OutputSolutionFileName%%>
+<%%:
+progress(Solution.EntityCount * 2 * ProjectCount)
+//
+// view the comments in the CREATE_VS_SOLUTION_FILES template to control how your solution file is created
+//
+// create solution file if it does not exist
+if (CREATE_VS_SOLUTION_FILES == true && FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// Add projects
+foreach (Project)
+{
+	CurrentProject = Project
+	
+	// add project to solution if it is not present in solution
+	if (File(Path).Contains(ProjectItemPath) == false)
+	{
+		insert(Path, "Global", ProjectSolutionItem)
+		insert(Path, "EndGlobalSection", "EndGlobalSection", "GlobalSection(SolutionProperties) = preSolution", ProjectSolutionBuildItem)
+	}
+	
+	// output project contents
+	<%%>Template%%>
+}
+%%></OUTPUT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUILoginViewFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\Login\Login.html%%></CONTENT>

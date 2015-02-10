@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMEFDSDataServiceClientFilePath
+	CATEGORY VMEFDS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\DataServiceClient_G.cs%%></CONTENT>

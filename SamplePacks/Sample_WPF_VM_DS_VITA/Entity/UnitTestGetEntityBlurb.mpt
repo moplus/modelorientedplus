@@ -1,0 +1,48 @@
+<CONFIG>
+	NAME UnitTestGetEntityBlurb
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param item1Name
+param item2Name
+param defineItem2
+<%%=Solution.NEWLINE%%>
+<%%-session2 = entityStore.OpenSession();%%>
+<%%=Solution.NEWLINE%%>
+if (defineItem2 == true)
+{
+	<%%=VITAInterfaceName%%><%%- %%>
+}
+if (PrimaryKeyCount == 1)
+{
+	<%%=item2Name%%><%%- = session2.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		<%%=item1Name%%><%%-.%%><%%=VITAPrimaryKeyPath%%>
+	}
+	<%%-);%%>
+}
+else
+{
+	<%%=item2Name%%><%%- = (from i in session2.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex == 0)
+		{
+			<%%-
+			where %%>
+		}
+		else
+		{
+			<%%-
+			&& %%>
+		}
+		<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == %%><%%=item1Name%%><%%-.%%><%%=VITAPrimaryKeyPath%%>
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+}
+%%></CONTENT>

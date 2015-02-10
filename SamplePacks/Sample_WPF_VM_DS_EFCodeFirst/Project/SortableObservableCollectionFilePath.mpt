@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME SortableObservableCollectionFilePath
+	CATEGORY VM
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\SortableObservableCollection_G.cs%%></CONTENT>

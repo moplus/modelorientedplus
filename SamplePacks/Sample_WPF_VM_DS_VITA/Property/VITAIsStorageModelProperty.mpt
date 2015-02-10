@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsStorageModelProperty
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryKeyMember == true || IsBaseProperty == false)
+{
+	<%%-true%%>
+	return
+}
+%%>
+<%%-false%%></CONTENT>

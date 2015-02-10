@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSPackagesConfigFilePath
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%-packages.config%%></CONTENT>

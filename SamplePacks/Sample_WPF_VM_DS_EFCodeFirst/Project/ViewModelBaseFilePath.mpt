@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ViewModelBaseFilePath
+	CATEGORY VM
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\ViewModelBase_G.cs%%></CONTENT>

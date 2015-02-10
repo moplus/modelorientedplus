@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLOutputViewModelFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\OutputViewModel_G.cs%%></CONTENT>

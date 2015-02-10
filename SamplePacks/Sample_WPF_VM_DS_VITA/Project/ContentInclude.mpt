@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME ContentInclude
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+param filePath
+if (filePath != null)
+{
+<%%-<Content Include="%%><%%=filePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%>
+}
+%%></CONTENT>

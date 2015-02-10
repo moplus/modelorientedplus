@@ -12,7 +12,7 @@ if (CurrentEntity.EntityTypeCode != 8 /* Relational */ && CurrentEntity.EntityTy
 	// add collections
 	foreach (Entity in Solution)
 	{
-		if (EntityID != CurrentEntity.EntityID && BaseEntityID != CurrentEntity.EntityID)
+		if (EntityID != CurrentEntity.EntityID)// && BaseEntityID != CurrentEntity.EntityID)
 		{
 			foreach (Relationship)
 			{

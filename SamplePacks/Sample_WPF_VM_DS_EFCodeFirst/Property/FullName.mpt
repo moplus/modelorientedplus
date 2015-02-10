@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME FullName
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-.%%><%%=PropertyName%%></CONTENT>

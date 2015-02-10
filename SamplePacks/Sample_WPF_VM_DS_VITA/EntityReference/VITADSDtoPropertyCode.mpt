@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VITADSDtoPropertyCode
+	CATEGORY VITADS
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-public %%><%%=ReferencedEntity.VITADSDtoClassName%%><%%- %%><%%=VITAPropertyName%%><%%- { get; set; }%%></CONTENT>

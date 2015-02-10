@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME VITA_ADD_SESSION_MODULE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// set this value to true if you want to add the VITA persistent session module to your solution
+//
+<%%-true%%></CONTENT>

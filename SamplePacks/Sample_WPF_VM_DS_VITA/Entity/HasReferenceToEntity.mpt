@@ -1,0 +1,47 @@
+<CONFIG>
+	NAME HasReferenceToEntity
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// check base entities and 3 layers of references for a reference to the input entity
+param entityID
+foreach (Entity in EntityAndBaseEntities)
+{
+	if (EntityID == entityID)
+	{
+		<%%-true%%>
+		return
+	}
+	foreach (EntityReference)
+	{
+		if (ReferencedEntity.EntityID == entityID)
+		{
+			<%%-true%%>
+			return
+		}
+		with (ReferencedEntity)
+		{
+			foreach (EntityReference)
+			{
+				if (ReferencedEntity.EntityID == entityID)
+				{
+					<%%-true%%>
+					return
+				}
+				foreach (EntityReference)
+				{
+					if (ReferencedEntity.EntityID == entityID)
+					{
+						<%%-true%%>
+						return
+					}
+				}
+			}
+		}
+	}
+}
+<%%-false%%>
+%%></CONTENT>

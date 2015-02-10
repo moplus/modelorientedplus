@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFAppConfigFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%-App.config%%></CONTENT>

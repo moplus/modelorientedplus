@@ -1,0 +1,102 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryClassCode
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace %%><%%=Project.Namespace%%><%%-
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to manage repository operations for
+	/// entity framework entities.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class %%><%%=EFCFGenericRepositoryClassName%%><%%-<TEntity> where TEntity : class
+	{
+		internal %%><%%=EFCFModelContextClassName%%><%%- context;
+		internal DbSet<TEntity> dbSet;
+		
+		public GenericRepository(%%><%%=EFCFModelContextClassName%%><%%- context)
+		{
+			this.context = context;
+			this.dbSet = context.Set<TEntity>();
+		}
+		
+		public virtual IEnumerable<TEntity> GetAll()
+		{
+			IQueryable<TEntity> query = dbSet;
+			return query.ToList();
+		}
+		
+		public virtual TEntity Get(object id)
+		{
+			try
+			{
+				return dbSet.Find(id);
+			}
+			catch (InvalidOperationException ex)
+			{
+				// TODO: this happens when you try to get a post with a valid ID but wrong type.
+				// See if there is a better way of handling this.
+				throw ex;
+			}
+			return null;
+		}
+		
+		public virtual void Insert(TEntity entity)
+		{
+			dbSet.Add(entity);
+		}
+		
+		public virtual void Delete(object id)
+		{
+			TEntity entityToDelete = dbSet.Find(id);
+			Delete(entityToDelete);
+		}
+		
+		public virtual void Delete(TEntity entityToDelete)
+		{
+			if (context.Entry(entityToDelete).State == EntityState.Detached)
+			{
+				dbSet.Attach(entityToDelete);
+			}
+			dbSet.Remove(entityToDelete);
+		}
+		
+		public virtual void Update(TEntity entityToUpdate)
+		{
+			dbSet.Attach(entityToUpdate);
+			context.Entry(entityToUpdate).State = EntityState.Modified;
+		}
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFGenericRepositoryClassFilePath) == null || (File(EFCFGenericRepositoryClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFGenericRepositoryClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFGenericRepositoryClassFilePath)
+}
+%%></OUTPUT>

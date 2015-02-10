@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UnitTestGlobalTestClassFilePath
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=UnitTestGlobalTestClassName%%><%%-_G.cs%%></CONTENT>

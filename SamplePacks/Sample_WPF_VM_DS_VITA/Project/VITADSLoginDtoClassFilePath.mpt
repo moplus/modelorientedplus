@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSLoginDtoClassFilePath
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\LoginDto_G.cs%%></CONTENT>

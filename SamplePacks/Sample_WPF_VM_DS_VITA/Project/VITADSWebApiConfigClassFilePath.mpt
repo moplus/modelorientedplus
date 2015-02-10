@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSWebApiConfigClassFilePath
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\WebApiConfig_G.cs%%></CONTENT>

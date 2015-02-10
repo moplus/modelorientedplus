@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME VITAPrimaryKeyPropertyName
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property in ReferencedEntity where IsPrimaryKeyMember == true)
+{
+	<%%=VITAPropertyName%%>
+	break
+}
+%%></CONTENT>

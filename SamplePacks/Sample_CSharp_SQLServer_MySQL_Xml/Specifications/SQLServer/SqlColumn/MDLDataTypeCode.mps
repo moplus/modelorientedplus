@@ -52,7 +52,7 @@ switch (DataType)
 		<%%=13%%>
 		break
 	case "nchar":
-		<%%=17%%>
+		<%%=14%%>
 		break
 	/*case "binary":
 		<%%=15%%>

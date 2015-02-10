@@ -1,0 +1,197 @@
+<CONFIG>
+	NAME VITAUILoginControllerJSFile
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router controller for login functions.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var itemFound
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This controller provides access to login operations.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var LoginController = function($scope, $rootScope, $stateParams, $state, $window, $location, LoginService, SessionService)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+	$scope.title = '%%><%%=SolutionName%%><%%-';
+	
+	// form for login and registration
+	$scope.itemForm =%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		userName: '',
+		password: '',%%>
+		foreach (Entity where VITAIsPrimaryUserEntity == true)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsUIEditableProperty == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%=VITAParameterName%%><%%-: %%>
+					<%%=JSDefaultValue%%><%%-,%%>
+				}
+			}
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-isAdmin: false%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// status on any operation
+	$scope.status =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		isReadOnly: false,
+		isError: false,
+		errorMessage: '',
+		isSuccess: false,
+		successMessage: ''%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	$scope.navbarProperties =%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		isCollapsed: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// login api
+	$scope.login = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = LoginService.login($scope.itemForm.userName, $scope.itemForm.password);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				if (result.data.ResultCode == 'LoginFailed')%%>
+				<%%=Solution.OPEN_BRACE%%>
+				<%%-
+					$scope.status.isSuccess = false;
+					$scope.status.isError = true;
+					$rootScope.IsLoggedIn = false;
+					$scope.status.errorMessage = "Login failed, please correct your username or password."%%>
+				<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+				<%%=Solution.OPEN_BRACE%%>
+				<%%-
+					$scope.status.isSuccess = true;
+					SessionService.setToken(result.data.AuthenticationToken);
+					$rootScope.IsLoggedIn = true;
+					$scope.status.isReadOnly = true;
+					$scope.status.isError = false;
+					$scope.status.successMessage = "Login successful, welcome back!"%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$rootScope.IsLoggedIn = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// logout api
+	$scope.logout = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = LoginService.logout();
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			$rootScope.IsLoggedIn = false;
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				SessionService.setToken(null);
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "Logout successful, come back soon!"%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// register  api
+	$scope.register = function ()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		var result = LoginService.register($scope.itemForm.userName, $scope.itemForm.password%%>
+		foreach (Entity where VITAIsPrimaryUserEntity == true)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsUIEditableProperty == true)
+				{
+					<%%-, %%><%%-$scope.itemForm.%%><%%=VITAParameterName%%>
+				}
+			}
+		}
+		<%%-, $scope.itemForm.isAdmin);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				SessionService.setToken(result.data.AuthenticationToken);
+				$rootScope.IsLoggedIn = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "You have been registered, welcome aboard!"%%>
+			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$rootScope.IsLoggedIn = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// navigation and other functions
+	$scope.back = function()%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-$window.history.back();%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+LoginController.$inject = ['$scope', '$rootScope', '$stateParams', '$state', '$window', '$location', 'LoginService', 'SessionService'];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUILoginControllerJSFilePath, text=Text) == true)
+{
+	update(VITAUILoginControllerJSFilePath)
+}
+%%></OUTPUT>

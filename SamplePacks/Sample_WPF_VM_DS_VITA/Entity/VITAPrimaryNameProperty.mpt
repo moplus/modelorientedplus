@@ -1,0 +1,32 @@
+<CONFIG>
+	NAME VITAPrimaryNameProperty
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where (((DataTypeCode == 14 || DataTypeCode == 14) && Length > 1) || DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)  && PropertyName.ToLower().EndsWith("name") == true)
+	{
+		<%%=VITAPropertyName%%>
+		return
+	}
+}
+// get first string property
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where ((DataTypeCode == 14 || DataTypeCode == 14) && Length > 1) || DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)
+	{
+		<%%=VITAPropertyName%%>
+		return
+	}
+}
+// get first primary key property
+foreach (Property where IsPrimaryKeyMember == true)
+{
+	<%%=VITAPropertyName%%>
+	return
+}
+%%></CONTENT>

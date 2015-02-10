@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DataServicesMarkupFileName
+	CATEGORY DataServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=DSDataServiceName%%><%%-.svc%%></CONTENT>

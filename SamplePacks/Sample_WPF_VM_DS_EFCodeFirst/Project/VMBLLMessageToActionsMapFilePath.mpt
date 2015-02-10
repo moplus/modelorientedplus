@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLMessageToActionsMapFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Messaging\MessageToActionsMap_G.cs%%></CONTENT>

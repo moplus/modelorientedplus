@@ -1,0 +1,452 @@
+<CONFIG>
+	NAME VITAUIDomainAppJSFile
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS module for your project.  This module, which uses ui.router, ui.bootstrap, and angular.Validator is used to
+// register all of the Angular controllers, services, and factories in your application.  This module also implements the state provider for your application,
+// which determines updates to the url, views, and controllers based on change in state.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+var isFirstItem
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// This file manages controllers, states, and other details for the
+/// primary angular module for this application.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, change the Status
+/// value below to something other than Generated to prevent changes from
+/// being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+
+// define module with ui router
+var DomainApp = angular.module('DomainApp', ['ui.router', 'ui.bootstrap', 'angularValidator', 'ngCookies']);
+
+// add controllers, services, and factories%%>
+var tokenName = Solution.SolutionName.Replace(" ", "") + "Token"
+foreach (Entity in Solution where VITAIsUIEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.controller('%%><%%=VITAUIControllerClassName%%><%%-', %%><%%=VITAUIControllerClassName%%><%%-);%%>
+}
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.controller('LoginController', LoginController);%%>
+}
+<%%=Solution.NEWLINE%%>
+foreach (Entity in Solution where VITAIsUIEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.service('%%><%%=VITAUIServiceName%%><%%-', %%><%%=VITAUIServiceName%%><%%-);%%>
+}
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.service('LoginService', LoginService);%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.service('SessionService', SessionService);%%>
+}
+<%%-
+DomainApp.factory('WebConfigFactory', WebConfigFactory);%%>
+/*
+
+<%%-DomainApp.run(['$rootScope', function ($rootScope) %%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-$rootScope.WebApiBaseUrl = '%%><%%=VITADSUrl%%><%%-'; // TODO: want to do something like this: WebConfigFactory.getSetting('WebApiBaseUrl');%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-]);%%>*/
+<%%-
+
+var configFunction = function ($stateProvider, $httpProvider, $locationProvider)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+
+	$locationProvider.hashPrefix('!').html5Mode(true);
+	
+	$httpProvider.interceptors.push(function ($q, $cookies)%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		return%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			'request': function ($config)%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				if ($cookies.ForumsVITAToken != undefined)%%>
+				<%%=Solution.OPEN_BRACE%%><%%-
+					$config.headers['Authorization'] = $cookies.%%><%%=tokenName%%><%%-;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				return $config;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-);
+	
+	$stateProvider%%><%%=Solution.INDENT%%>
+	if (Solution.VITA_ADD_LOGIN_MODULE == true)
+	{
+		//
+		// login and register states
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('loginUser',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/login',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/login/Login.html',
+					controller: LoginController%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('registerUser',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/register',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/login/Register.html',
+					controller: LoginController%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+	}
+	foreach (Entity in Solution where VITAIsUIEntity == true)
+	{
+		//
+		// search state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Search',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where VITADSIsQueryProperty == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=VITAParameterName%%><%%-Start&%%>
+							<%%=VITAParameterName%%><%%-End%%>
+							break
+						default:
+							<%%=VITAParameterName%%>
+							break
+					}
+				}
+			}
+			if (isFirstItem == true)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%-orderBy&descending&page&pageSize',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"searchView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Search.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// results state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Results',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Results%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where VITADSIsQueryProperty == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=VITAParameterName%%><%%-Start&%%>
+							<%%=VITAParameterName%%><%%-End%%>
+							break
+						default:
+							<%%=VITAParameterName%%>
+							break
+					}
+				}
+			}
+			if (isFirstItem == true)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%-orderBy&descending&page&pageSize',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Results.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// get state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Get',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/get%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=VITAParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Get.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// create state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Create',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/create%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsForeignKeyMember == true && IsBasePropertyMember == false)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					<%%=VITAParameterName%%>
+				}
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Create.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// update state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Update',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/update%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=VITAParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Update.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// delete state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=VITAClassName.CamelCase()%%><%%-Delete',%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/delete%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=VITAParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Delete.html',
+					controller: %%><%%=VITAUIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		foreach (Collection where IsPrimaryCollection== true)
+		{
+			//
+			// get collection
+			//
+			<%%=Solution.NEWLINE%%>
+			<%%-.state('%%><%%=../VITAClassName.CamelCase()%%><%%-Get%%><%%=VITAPropertyName%%><%%-',%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-url: '/%%><%%=../LIBPluralEntityName.CamelCase()%%><%%-/get%%><%%=VITAPropertyName%%>
+				isFirstItem = true
+				foreach (Property in ../ where IsPrimaryKeyMember == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					<%%=VITAParameterName%%>
+					isFirstItem = false
+				}
+				if (isFirstItem == true)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%-editing&orderBy&descending&page&pageSize',
+				views:%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-"detailView":%%>
+					<%%=Solution.OPEN_BRACE%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-templateUrl: '/Templates/%%><%%=../LIBPluralEntityName.CamelCase()%%><%%-/Get%%><%%=VITAPropertyName%%><%%-.html',
+						controller: %%><%%=../VITAUIControllerClassName%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-)%%>
+		}
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-.state('home',%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-url: '/'%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-);%%><%%=Solution.OUTDENT%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+configFunction.$inject = ['$stateProvider', '$httpProvider', '$locationProvider'];
+
+DomainApp.config(configFunction);%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUIDomainAppJSFilePath, text=Text) == true)
+{
+	update(VITAUIDomainAppJSFilePath)
+}
+%%></OUTPUT>

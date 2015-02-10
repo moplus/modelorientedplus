@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME ProjectFilePath
+	CATEGORY LIB
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\%%><%%=ProjectFileName%%></CONTENT>

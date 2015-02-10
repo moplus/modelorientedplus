@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFUnitOfWorkClassFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=EFCFUnitOfWorkClassName%%><%%-_G.cs%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UnitTestGlobalTestClassName
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-GlobalCRUDTest%%></CONTENT>

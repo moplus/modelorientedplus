@@ -1,0 +1,38 @@
+<CONFIG>
+	NAME CSharpDataType
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=CSharpNonNullableDataType%%>
+if (IsNullable == true)
+{
+	switch (DataTypeCode)
+	{
+		case 15: // Object
+		case 16: // String
+		case 17: // StringUnicode
+		case 19: // Text
+		case 20: // TextUnicode
+		case 27: // Image
+			break
+		case 13: // Char
+			if (Length <= 1)
+			{
+				<%%-?%%>
+			}
+			break
+		case 14: // CharUnicode
+			if (Length <= 1)
+			{
+				<%%-?%%>
+			}
+			break
+		default:
+			<%%-?%%>
+			break
+	}
+}
+%%></CONTENT>

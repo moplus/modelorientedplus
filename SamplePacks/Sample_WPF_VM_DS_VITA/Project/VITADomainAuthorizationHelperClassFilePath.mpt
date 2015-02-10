@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainAuthorizationHelperClassFilePath
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=VITADomainAuthorizationHelperClassName%%><%%-_G.cs%%></CONTENT>

@@ -1,0 +1,138 @@
+<CONFIG>
+	NAME WPFUIEditorAreaCodeFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;%%>
+<%%:
+if (ProjectReferenceCount > 1)
+{
+	// get a project tagged as VM
+	foreach (Project where Tags.Contains("VM") == true)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+else
+{
+	foreach (Project)
+	{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+	}
+}
+%%><%%-
+
+namespace %%><%%=Namespace%%><%%-.UserControls
+{
+	///--------------------------------------------------------------------------------
+	/// Interaction logic for EditorArea.xaml
+	///
+	/// This library code was generated from a template.  Change the
+	/// Status value below to something other than Generated if you have
+	/// customized this file to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public partial class EditorArea : UserControl
+	{
+		public EditorArea()
+		{
+			InitializeComponent();
+			DataContext = new EditorAreaViewModel();
+		}
+	
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles the close tab command.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="e">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void CloseTabExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			if (tabDesigner.SelectedItem is IEditWorkspaceViewModel)
+			{
+				(tabDesigner.SelectedItem as IEditWorkspaceViewModel).CloseConfirmCommand.Execute(null);
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles the close other tabs command.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="e">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void CloseOtherTabsExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			for (int i = tabDesigner.Items.Count - 1; i >= 0; i-- )
+			{
+				if (tabDesigner.Items[i] != tabDesigner.SelectedItem && tabDesigner.Items[i] is IEditWorkspaceViewModel)
+				{
+					(tabDesigner.Items[i] as IEditWorkspaceViewModel).CloseConfirmCommand.Execute(null);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method moves selection/focus to next tab or document.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="e">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		private void NextTabExecuted(object sender, ExecutedRoutedEventArgs e)
+		{
+			bool foundItem = false;
+			foreach (var document in tabDesigner.Items)
+			{
+				if (foundItem == true && document is IEditWorkspaceViewModel)
+				{
+					(document as IEditWorkspaceViewModel).IsSelected = true;
+					tabDesigner.SelectedItem = document;
+					return;
+				}
+				if (document == tabDesigner.SelectedItem)
+				{
+					foundItem = true;
+				}
+			}
+			foreach (var document in tabDesigner.Items)
+			{
+				if (document is IEditWorkspaceViewModel)
+				{
+					(document as IEditWorkspaceViewModel).IsSelected = true;
+					tabDesigner.SelectedItem = document;
+					return;
+				}
+			}
+		}
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIEditorAreaCodeFilePath) == null || (File(WPFUIEditorAreaCodeFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIEditorAreaCodeFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIEditorAreaCodeFilePath)
+}
+%%></OUTPUT>

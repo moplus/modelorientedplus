@@ -1,0 +1,122 @@
+<CONFIG>
+	NAME EFCFClassCode
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+var isMappedCollection
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace %%><%%=Project.Namespace%%><%%-.Models
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class implements members
+	/// for %%><%%=EFCFClassName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------%%>
+//	<%%-
+//	[Table("%%><%%=SourceName%%><%%-")]%%>
+	<%%-
+	public partial class %%><%%=EFCFClassName%%>
+	if (BaseEntity != null && BaseEntity.EFCFIsDataModelEntity == true)
+	{
+		<%%- : %%><%%=BaseEntity.EFCFClassName%%>
+	}
+	<%%-
+	{
+		public %%><%%=EFCFClassName%%><%%-()
+		{%%>
+       foreach (Collection where ReferencedEntity.EFCFIsDataModelEntity == true)
+	{
+		<%%-
+			this.%%><%%=EFCFPropertyName%%><%%- = new HashSet<%%><%%=ReferencedEntity.EFCFClassName%%><%%->();%%>
+	}
+	<%%-
+		}%%>
+	foreach (Property where EFCFIsClassModelProperty == true)
+	{
+	<%%-
+	%%>
+		<%%=EFCFPropertyAttributesCode%%>
+		<%%-
+		public %%><%%=EFCFDataType%%><%%- %%><%%=EFCFPropertyName%%><%%-
+		{
+			get;
+			set;
+		}%%>
+	}
+	foreach (Collection where ReferencedEntity.EFCFIsDataModelEntity == true)
+	{
+		<%%-
+%%>
+		isMappedCollection = false
+		foreach (EntityReference in ReferencedEntity)
+		{
+			if (ReferencedEntity.EntityID == ../../EntityID)
+			{
+				isMappedCollection = true
+			}
+		}
+		if (isMappedCollection == false)
+		{
+			<%%-
+		[NotMapped]%%>
+		}
+		<%%-	
+		public virtual ICollection<%%><%%=ReferencedEntity.EFCFClassName%%><%%-> %%><%%=EFCFPropertyName%%><%%-
+		{
+			get;
+			set;
+		}%%>
+	}
+	foreach (EntityReference where ReferencedEntity.EFCFIsDataModelEntity == true)
+	{
+	<%%-
+%%>
+/*		foreach (PropertyRelationship)
+		{
+			foreach (RelationshipProperty in Relationship)
+			{
+			<%%-
+		[ForeignKey("%%><%%=Property.EFCFPropertyName%%><%%-")]%%>
+			}
+		}*/
+	<%%-
+		public virtual %%><%%=ReferencedEntity.EFCFClassName%%><%%- %%><%%=EFCFPropertyName%%><%%-
+		{
+			get;
+			set;
+		}%%>
+	}
+	<%%-
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFClassFilePath) == null || (File(EFCFClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFClassFilePath)
+}
+%%></OUTPUT>

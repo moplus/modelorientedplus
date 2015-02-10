@@ -1,0 +1,90 @@
+<CONFIG>
+	NAME VITAUICollectionViewFile
+	CATEGORY VITAUI
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-<!DOCTYPE html>
+<!--Copyright:
+%%>
+<%%=Solution.Copyright%%><%%-
+
+//------------------------------------------------------------------------------
+/// This file is for providing detail ui functionality for %%><%%=Entity.VITAClassName%%><%%- %%><%%=VITAPropertyName%%><%%-items.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+-->
+<div class="container-fluid" data-ng-init="get%%><%%=VITAPropertyName%%><%%-()">%%><%%=Solution.INDENT%%><%%-
+	<h2>%%><%%=VITAPropertyName%%><%%- for %%><%%=Entity.VITAClassName%%><%%-: (%%>
+	foreach (Property in Entity where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%-{{ itemForm.%%><%%=VITAParameterName%%><%%- }}%%>
+	}
+	<%%-) {{ itemForm.%%><%%=Entity.VITAPrimaryNameProperty.CamelCase()%%><%%- }}</h2>
+	<div class="row top5">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%>
+			<%%=ReferencedEntity.VITAUIResultsList(listName="itemForm." + VITAPropertyName.CamelCase(), sortAllowed = false)%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-default" ui-sref="%%>
+			var isFirstItem = true
+			<%%=ReferencedEntity.VITAClassName.CamelCase()%%><%%-Create%%>
+			foreach (PropertyRelationship)
+			{
+				foreach (RelationshipProperty in Relationship)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-({ %%>
+					}
+					else
+					{
+						<%%-, %%>
+					}
+					isFirstItem = false
+					<%%=Property.VITAParameterName%%><%%-: itemForm.%%><%%=ReferencedProperty.VITAParameterName%%>
+				}
+			}
+			if (isFirstItem == false)
+			{
+				<%%- })%%>
+			}
+			<%%-" ng-disabled="status.isReadOnly">New %%><%%=ReferencedEntity.VITAClassName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+			<button class="btn btn-default" ng-click="back()">OK</button>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top5">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12 text-danger" ng-if="status.isError">%%><%%=Solution.INDENT%%><%%-
+			{{status.errorMessage}}%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>%%><%%=Solution.OUTDENT%%><%%-
+</div>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUICollectionViewFilePath, text=Text) == true)
+{
+	update(VITAUICollectionViewFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME WPFUIAppConfigFilePath
+	CATEGORY WPFUI
+	NODE Project
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\App.Config%%></CONTENT>

@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME VITAPropertyCode
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAPropertyAttributesCode%%>
+<%%=Solution.NEWLINE%%>
+<%%=ReferencedEntity.VITAInterfaceName%%><%%- %%><%%=VITAPropertyName%%><%%- { get; set; }%%></CONTENT>

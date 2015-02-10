@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSIsDtoClassProperty
+	CATEGORY VITADS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAIsConceptualModelProperty%%></CONTENT>

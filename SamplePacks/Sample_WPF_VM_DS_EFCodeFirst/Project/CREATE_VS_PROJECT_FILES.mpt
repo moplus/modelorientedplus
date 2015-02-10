@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME CREATE_VS_PROJECT_FILES
+	CATEGORY CONFIG
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+This configuration value is used to determine if Mo+ should create Visual Studio project files.
+
+If the value returned is true, Mo+ templates that use this config value will create Visual Studio project files.
+
+If the value returned is false, Mo+ templates that use this config value will NOT create Visual Studio project files.  You will then have to:
+
+1) Create the project in Visual Studio, typically with the same name/location where your Mo+ templates expect it.
+2) Add appropriate nuget packages and other references to your project.
+3) In Mo+, create a project, with the project name being the same as the Visual Studio project you created.
+4) In Mo+, generate your code!  The templates in this library typically will add (or remove) generated files in your project automatically.
+*/
+<%%-true%%></CONTENT>

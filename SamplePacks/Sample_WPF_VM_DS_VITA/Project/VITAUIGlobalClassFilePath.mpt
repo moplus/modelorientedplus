@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIGlobalClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Global.asax.cs%%></CONTENT>

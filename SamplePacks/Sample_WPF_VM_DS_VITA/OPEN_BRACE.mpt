@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME OPEN_BRACE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	Use this to create open braces in C# code, managing formatting and indenting according to your desired style.
+	
+	This works best of you have USETABS set to true to handle your indenting.
+	You can set your desired tab (spaces or tabs) with the TABSTRING property (usually in your Solution template).
+*/
+<%%:
+if (BRACE_SAMELINE == true)
+{
+<%%- {%%>
+}
+else
+{
+<%%-
+{%%>
+}
+<%%=INDENT%%>
+// until a "no cache" property is provided, param statement is used to turn off caching for this template
+param noCache
+%%></CONTENT>

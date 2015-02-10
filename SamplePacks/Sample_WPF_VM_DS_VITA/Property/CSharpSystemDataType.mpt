@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME CSharpSystemDataType
+	CATEGORY LIB
+	NODE Property
+</CONFIG>
+<CONTENT>
+<%%:<%%-System.%%>
+<%%=CSharpBaseDataType%%>
+if (IsNullable == true)
+{
+	switch (DataTypeCode)
+	{
+		case 15: // Object
+		case 16: // String
+		case 17: // StringUnicode
+		case 19: // Text
+		case 20: // TextUnicode
+		case 27: // Image
+			break
+		default:
+			<%%-?%%>
+			break
+	}
+}
+%%></CONTENT>

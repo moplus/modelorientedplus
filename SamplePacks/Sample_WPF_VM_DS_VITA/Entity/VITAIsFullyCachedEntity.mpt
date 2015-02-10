@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME VITAIsFullyCachedEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// determine which entities should be fully cached by VITA
+//
+if (EntityTypeCode == 1 /* lookup */ || EntityTypeCode == 2 /* lookup business */ || Tags.Contains("Cache") == true)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

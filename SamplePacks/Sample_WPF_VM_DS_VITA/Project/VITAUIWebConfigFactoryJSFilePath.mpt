@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIWebConfigFactoryJSFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Scripts\Factories\WebConfigFactory.js%%></CONTENT>

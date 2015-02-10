@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VISUAL_STUDIO_VERSION_MIN
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// VisualStudioVersion (minimum) to be utilized in generating solution files, etc.
+<%%-10.0.40219.1%%></CONTENT>

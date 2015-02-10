@@ -1,0 +1,55 @@
+<CONFIG>
+	NAME VITAUserTypeEnumCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create the user type enum.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.ComponentModel;
+
+namespace %%><%%=Project.Namespace%%><%%-.Models%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This enumeration describes the user types that are
+	/// recognized by the VITA authentication module.  Logged in
+	/// users can be of one or more of the user types.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	 [Flags, Description("User types.")]
+	public enum UserType%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		Public = 1,
+		Member = 1 << 1,
+		Administrator = 1 << 2,
+		
+		#region protected
+		#endregion protected%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITAUserTypeEnumFilePath) == null || (File(VITAUserTypeEnumFilePath).Contains("<Status>Generated</Status>") == true
+     && File(VITAUserTypeEnumFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(VITAUserTypeEnumFilePath)
+}
+%%></OUTPUT>

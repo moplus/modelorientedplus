@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUICreateViewFilePath
+	CATEGORY VITAUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Create.html%%></CONTENT>

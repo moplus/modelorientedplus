@@ -124,6 +124,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				if (MethodName == LanguageTerms.TabMethod)
 				{
 					solutionContext.CurrentTabIndent += ParameterValue.GetInt();
+                    templateContext.HasRelativeSettings = true;
 				}
 				else if (MethodName == LanguageTerms.UseTabsMethod)
 				{
@@ -135,11 +136,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					{
 						solutionContext.UseTabs = false;
 					}
-				}
+                }
 				else if (MethodName == LanguageTerms.TabStringMethod)
 				{
 					solutionContext.TabString = ParameterValue;
-				}
+                }
 				else if (MethodName == LanguageTerms.UseProtectedAreasMethod)
 				{
 					if (ParameterValue == "true")
@@ -150,11 +151,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					{
 						solutionContext.UseProtectedAreas = false;
 					}
-				}
+                }
 				else if (MethodName == LanguageTerms.ProtectedAreaStartMethod)
 				{
 					solutionContext.ProtectedAreaStart = ParameterValue;
-				}
+                }
 				else if (MethodName == LanguageTerms.ProtectedAreaEndMethod)
 				{
 					solutionContext.ProtectedAreaEnd = ParameterValue;

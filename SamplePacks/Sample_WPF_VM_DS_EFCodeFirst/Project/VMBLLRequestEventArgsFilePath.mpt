@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VMBLLRequestEventArgsFilePath
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Events\RequestEventArgs_G.cs%%></CONTENT>

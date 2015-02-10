@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUINavigationAreaCodeFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\UserControls\NavigationArea_G.xaml.cs%%></CONTENT>

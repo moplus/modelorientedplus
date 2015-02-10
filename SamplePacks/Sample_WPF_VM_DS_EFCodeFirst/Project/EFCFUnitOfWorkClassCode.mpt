@@ -1,0 +1,87 @@
+<CONFIG>
+	NAME EFCFUnitOfWorkClassCode
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using %%><%%=Project.Namespace%%><%%-.Models;
+
+namespace %%><%%=Project.Namespace%%><%%-
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to manage the repositories.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public  class %%><%%=EFCFUnitOfWorkClassName%%><%%-
+	{
+		private ModelContext context = new ModelContext();%%>
+		foreach (Entity where EFCFIsDataModelEntity == true)
+		{
+		<%%-
+		private GenericRepository<%%><%%=EFCFClassName%%><%%-> %%><%%=EFCFClassName.CamelCase()%%><%%-Repository;%%>
+		}
+		foreach (Entity where EFCFIsDataModelEntity == true)
+		{
+		<%%-
+		
+		public GenericRepository<%%><%%=EFCFClassName%%><%%-> %%><%%=EFCFClassName%%><%%-Repository
+		{
+			get
+			{
+				if (this.%%><%%=EFCFClassName.CamelCase()%%><%%-Repository == null)
+					this.%%><%%=EFCFClassName.CamelCase()%%><%%-Repository = new GenericRepository<%%><%%=EFCFClassName%%><%%->(context);
+				return %%><%%=EFCFClassName.CamelCase()%%><%%-Repository;
+			}
+		}%%>
+		}		
+		<%%-
+		public void Save()
+		{
+			context.SaveChanges();
+		}
+		
+		private bool disposed = false;
+		
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!this.disposed)
+			{
+				if (disposing)
+				{
+					context.Dispose();
+				}
+			}
+			this.disposed = true;
+		}
+		
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFUnitOfWorkClassFilePath) == null || (File(EFCFUnitOfWorkClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFUnitOfWorkClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFUnitOfWorkClassFilePath)
+}
+%%></OUTPUT>

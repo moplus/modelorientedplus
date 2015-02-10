@@ -1,0 +1,34 @@
+<CONFIG>
+	NAME VITADSIsQueryProperty
+	CATEGORY VITADS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAIsConceptualModelProperty == false || (IsPrimaryKeyMember == true && IsForeignKeyMember == false))
+{
+	<%%-false%%>
+	return
+}
+//
+// query on foreign key or indexed properties only
+//
+if (IsForeignKeyMember == true)
+{
+	<%%-true%%>
+	return
+}
+foreach (Index in Entity)
+{
+	foreach (IndexProperty)
+	{
+		if (PropertyID == ../../PropertyID)
+		{
+			<%%-true%%>
+			return
+		}
+	}
+}
+<%%-false%%>
+%%></CONTENT>

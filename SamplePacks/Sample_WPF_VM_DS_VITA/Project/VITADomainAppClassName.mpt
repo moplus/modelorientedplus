@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainAppClassName
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-DomainApp%%></CONTENT>

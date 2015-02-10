@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAPropertyName
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=PropertyName%%></CONTENT>

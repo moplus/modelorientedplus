@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME OUTDENT
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	This template is used to "outdent", bring the subsequent lines of code with one less indent.  This only works in conjuction with USETABS being true.
+	Use this template at the END of a line prior to the line out want to outdent.
+*/
+<%%=TAB -1%%>
+<%%:
+// until a "no cache" property is provided, param statement is used to turn off caching for this template
+param noCache
+%%></CONTENT>

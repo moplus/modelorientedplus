@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSAuthenticationControllerClassFilePath
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Controllers\AuthenticationController_G.cs%%></CONTENT>

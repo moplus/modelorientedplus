@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME EFCFIsBaseRelationship
+	CATEGORY EFCF
+	NODE Relationship
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (Entity.BaseEntityID == null || Entity.BaseEntity.EntityID != ReferencedEntity.EntityID)
+{
+	<%%-false%%>
+	return
+}
+foreach (RelationshipProperty)
+{
+	if (Property.IsPrimaryKeyMember == false)
+	{
+		<%%-false%%>
+		return
+	}
+}
+%%>
+<%%-true%%></CONTENT>

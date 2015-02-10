@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsAdminUIReference
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryReference == true && ReferencedEntity.VITAIsUIEntity == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

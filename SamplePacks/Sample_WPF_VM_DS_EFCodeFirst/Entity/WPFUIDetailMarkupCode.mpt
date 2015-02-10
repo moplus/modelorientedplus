@@ -1,0 +1,125 @@
+<CONFIG>
+	NAME WPFUIDetailMarkupCode
+	CATEGORY WPFUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<UI:UIControl x:Class="%%><%%=Project.Namespace%%><%%-.UserControls.%%><%%=FeatureName%%><%%-.%%><%%=WPFUIDetailClassName%%><%%-"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"%%>
+                     
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as VM
+		foreach (Project where Tags.Contains("VM") == true)
+		{
+                    <%%-
+                     xmlns:%%><%%=../../FeatureName%%><%%-VM="clr-namespace:%%><%%=Namespace%%><%%-.%%><%%=../../FeatureName%%><%%-;assembly=%%><%%=Namespace%%><%%-"%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+                    <%%-
+                     xmlns:%%><%%=../../FeatureName%%><%%-VM="clr-namespace:%%><%%=Namespace%%><%%-.%%><%%=../../FeatureName%%><%%-;assembly=%%><%%=Namespace%%><%%-"%%>
+		}
+	}
+}
+                     <%%-
+                     xmlns:UI="clr-namespace:%%><%%=Project.Namespace%%><%%-"
+                     mc:Ignorable="d" 
+                     d:DesignHeight="300" d:DesignWidth="300">
+	<UI:UIControl.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="../../Resources/Theme_G.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</UI:UIControl.Resources>
+	<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Background="{StaticResource ControlBackgroundBrush}">
+		<Grid MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType=ScrollViewer}}">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>%%>
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsUIEditableProperty == true)
+	{
+				<%%-
+				<RowDefinition Height="Auto"></RowDefinition>%%>
+	}
+}
+				<%%-
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+				<ColumnDefinition Width="Auto"></ColumnDefinition>
+				<ColumnDefinition Width="*"></ColumnDefinition>
+				<ColumnDefinition Width="10"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+			<Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{DynamicResource LabelHeader}" Content="%%><%%=BLLClassName.CapitalWordCase()%%><%%- Details" />%%>
+log("WPFUIDetailMarkupCode", "RowIndex", 0)
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsUIEditableProperty == true)
+	{
+		log("WPFUIDetailMarkupCode", "RowIndex", LogValue("WPFUIDetailMarkupCode", "RowIndex") + 1)
+		if (DataTypeCode != 12 /* Boolean */)
+		{
+			<%%-
+			<Label Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="1" Style="{StaticResource LabelInput}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-:" />%%>
+		}
+	}
+}
+log("WPFUIDetailMarkupCode", "RowIndex", 0)
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where IsUIEditableProperty == true)
+	{
+		log("WPFUIDetailMarkupCode", "RowIndex", LogValue("WPFUIDetailMarkupCode", "RowIndex") + 1)
+		if (DataTypeCode != 12 /* Boolean */)
+		{
+			<%%-
+			<TextBox Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Text="{Binding %%><%%=BLLPropertyName%%><%%-, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}"/>%%>
+		}
+		else
+		{
+			<%%-
+			<CheckBox Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Style="{StaticResource BasicCheckBox}" Content="%%><%%=BLLPropertyName.CapitalWordCase()%%><%%-" IsChecked="{Binding %%><%%=BLLPropertyName%%><%%-}" />%%>
+		}
+	}
+}
+log("WPFUIDetailMarkupCode", "RowIndex", LogValue("WPFUIDetailMarkupCode", "RowIndex") + 1)
+			<%%-
+			<StackPanel Orientation="Horizontal" Grid.Row="%%><%%=LogValue("WPFUIDetailMarkupCode", "RowIndex")%%><%%-" Grid.Column="2" Margin="5">
+				<Button Command="{Binding UpdateCommand}" Content="{Binding UpdateButtonLabel}"></Button>
+				<Button Command="{Binding ResetCommand}" Content="{Binding ResetButtonLabel}"></Button>
+				<Button Command="{Binding CloseConfirmCommand}" Content="{Binding CloseButtonLabel}"></Button>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</UI:UIControl>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIDetailMarkupFilePath) == null || (File(WPFUIDetailMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIDetailMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIDetailMarkupFilePath)
+}
+%%></OUTPUT>

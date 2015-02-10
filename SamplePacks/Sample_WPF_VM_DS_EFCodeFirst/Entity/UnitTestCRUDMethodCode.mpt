@@ -1,0 +1,82 @@
+<CONFIG>
+	NAME UnitTestCRUDMethodCode
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+			// create %%><%%=EFCFClassName%%><%%-
+			%%><%%=EFCFClassName%%><%%- %%><%%=EFCFClassName.CamelCase()%%><%%- = new %%><%%=EFCFClassName%%><%%-();%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where EFCFIsConceptualModelProperty == true && TestValue != null && (IsPrimaryKeyMember == false || Identity == false) && IsForeignKeyMember == false)
+				{
+			<%%-
+			%%><%%=../../EFCFClassName.CamelCase()%%><%%-.%%><%%=EFCFPropertyName%%><%%- = %%><%%=TestValue%%><%%-;%%>
+				}
+		             foreach (EntityReference)
+		             {
+			<%%-
+			%%><%%=../../EFCFClassName.CamelCase()%%><%%-.%%><%%=EntityReferenceName%%><%%- = %%><%%=ReferencedEntity.EntityName%%><%%-Test.GetTest%%><%%=ReferencedEntity.EntityName%%><%%-();%%>
+	        	     }
+			}
+			<%%-
+			unitOfWork.%%><%%=EFCFClassName%%><%%-Repository.Insert(%%><%%=EFCFClassName.CamelCase()%%><%%-);
+			unitOfWork.Save();%%>
+			if (IdentifierTypeCode != 4 /* multi column */)
+			{
+			<%%-
+			
+			// read %%><%%=EFCFClassName%%><%%-
+			%%><%%=EFCFClassName.CamelCase()%%><%%- = unitOfWork.%%><%%=EFCFClassName%%><%%-Repository.Get(%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+				<%%=../EFCFClassName.CamelCase()%%><%%-.%%><%%=EFCFPropertyName%%>
+				}
+				<%%-);%%>
+			}
+			<%%-
+			
+			// update %%><%%=EFCFClassName%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where EFCFIsConceptualModelProperty == true && IsBaseProperty == false && IsPrimaryKeyMember == false && IsForeignKeyMember == false && TestValue != null)
+				{
+			<%%-
+			%%><%%=../../EFCFClassName.CamelCase()%%><%%-.%%><%%=EFCFPropertyName%%><%%- = %%><%%=TestValue%%><%%-;%%>
+				}
+			}
+			<%%-
+			unitOfWork.%%><%%=EFCFClassName%%><%%-Repository.Update(%%><%%=EFCFClassName.CamelCase()%%><%%-);
+			unitOfWork.Save();
+			
+			// delete %%><%%=EFCFClassName%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (EntityReference)
+				{
+					foreach (Entity in EntityAndBaseEntities)
+					{
+						foreach (EntityReference)
+						{
+			<%%-
+			if (%%><%%=../../../../EFCFClassName.CamelCase()%%><%%-.%%><%%=../../EntityReferenceName%%><%%- != null && %%><%%=../../../../EFCFClassName.CamelCase()%%><%%-.%%><%%=../../EntityReferenceName%%><%%-.%%><%%=EntityReferenceName%%><%%- != null)
+			{%%><%%=TAB 1%%><%%-
+				unitOfWork.%%><%%=ReferencedEntity.EFCFClassName%%><%%-Repository.Delete(%%><%%=../../../../EFCFClassName.CamelCase()%%><%%-.%%><%%=../../EntityReferenceName%%><%%-.%%><%%=EntityReferenceName%%><%%-);%%><%%=TAB -1%%><%%-
+			}%%>
+						}
+					}
+			<%%-
+			if (%%><%%=../../EFCFClassName.CamelCase()%%><%%-.%%><%%=EntityReferenceName%%><%%- != null)
+			{%%><%%=TAB 1%%><%%-
+				unitOfWork.%%><%%=ReferencedEntity.EFCFClassName%%><%%-Repository.Delete(%%><%%=../../EFCFClassName.CamelCase()%%><%%-.%%><%%=EntityReferenceName%%><%%-);%%><%%=TAB -1%%><%%-
+			}%%>
+				}
+			}
+			<%%-
+			unitOfWork.%%><%%=EFCFClassName%%><%%-Repository.Delete(%%><%%=EFCFClassName.CamelCase()%%><%%-);
+			unitOfWork.Save();%%>
+%%></CONTENT>

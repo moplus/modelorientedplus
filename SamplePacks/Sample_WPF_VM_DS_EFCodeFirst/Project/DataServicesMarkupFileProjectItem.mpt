@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME DataServicesMarkupFileProjectItem
+	CATEGORY DataServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Content Include="%%><%%=DataServicesMarkupFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

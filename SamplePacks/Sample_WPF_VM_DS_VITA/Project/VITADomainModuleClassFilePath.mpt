@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainModuleClassFilePath
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=VITADomainModuleClassName%%><%%-_G.cs%%></CONTENT>

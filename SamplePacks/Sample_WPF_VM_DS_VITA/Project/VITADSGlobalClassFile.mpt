@@ -1,0 +1,56 @@
+<CONFIG>
+	NAME VITADSGlobalClassFile
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Routing;
+
+namespace %%><%%=Namespace%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+	///--------------------------------------------------------------------------------
+	/// <summary>For managing application configurations.</summary>
+	///
+	/// This code was generated from a template, and should not be modified
+	/// unless absolutely necessary.  If you need to customize this file, change
+	/// the Status value below to something other than Generated to prevent
+	/// changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class WebApiApplication : System.Web.HttpApplication%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		
+		protected void Application_Start()%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%-
+			WebApiConfig.Register(GlobalConfiguration.Configuration);
+			
+			// add your customized config code here
+			#region protected
+			#endregion protected%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITADSGlobalClassFilePath) == null || (File(VITADSGlobalClassFilePath).Contains("<Status>Generated</Status>") == true && File(VITADSGlobalClassFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VITADSGlobalClassFilePath)
+}
+%%></OUTPUT>

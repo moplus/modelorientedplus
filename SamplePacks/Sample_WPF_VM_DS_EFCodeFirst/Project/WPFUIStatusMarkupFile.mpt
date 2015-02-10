@@ -1,0 +1,47 @@
+<CONFIG>
+	NAME WPFUIStatusMarkupFile
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<!--
+ This  code was generated from a template.  Change the
+ Status value below to something other than Generated if you have
+ customized this file to prevent changes from being overwritten.
+
+ <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+ <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+ <Status>Generated</Status>
+-->
+<UserControl x:Class="%%><%%=Namespace%%><%%-.UserControls.Status"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Theme_G.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+	<Grid Background="{StaticResource ControlBackgroundBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="57"></ColumnDefinition>
+			<ColumnDefinition Width="163" />
+		</Grid.ColumnDefinitions>
+		<Label Name="lblStatus" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,0,0" >Ready</Label>
+        <ProgressBar Name="prgStatus" Grid.Column="1" Value="0" UseLayoutRounding="True" Margin="10" Height="12" Width="200" Grid.ColumnSpan="2" Visibility="Hidden"></ProgressBar>
+    </Grid>
+</UserControl>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WPFUIStatusMarkupFilePath) == null || (File(WPFUIStatusMarkupFilePath).Contains("<Status>Generated</Status>") == true && File(WPFUIStatusMarkupFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(WPFUIStatusMarkupFilePath)
+}
+%%></OUTPUT>

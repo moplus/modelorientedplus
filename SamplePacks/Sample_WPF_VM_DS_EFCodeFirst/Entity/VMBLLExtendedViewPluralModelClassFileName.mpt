@@ -1,0 +1,7 @@
+<CONFIG>
+	NAME VMBLLExtendedViewPluralModelClassFileName
+	CATEGORY VMBLL
+	NODE Entity
+</CONFIG>
+<CONTENT>
+<%%=VMBLLViewPluralModelClassName%%><%%-_Ext.cs%%></CONTENT>

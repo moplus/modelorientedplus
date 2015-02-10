@@ -1,0 +1,152 @@
+<CONFIG>
+	NAME SortableObservableCollectionFile
+	CATEGORY VM
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Xml;
+using System.Xml.Serialization;
+using System.Text;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class is used for sortable observable collections, with no restriction on T.</summary>
+	///--------------------------------------------------------------------------------
+	[Serializable()]
+	public class SortableObservableCollection<T> : ObservableCollection<T>
+	{
+		#region "Fields and Properties"
+		#endregion "Fields and Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sorts the list by the input lamda expression and direction.</summary>
+		/// 
+		///	<param name="sortProperty">The lamda expression to indicate which property to sort by.</param>
+		///	<param name="sortDirection">The direction of the sort: ascending or descending.</param>
+		///--------------------------------------------------------------------------------
+		public void Sort<TKey>(Func<T, TKey> sortProperty, ListSortDirection sortDirection)
+		{
+			switch (sortDirection)
+			{
+				case ListSortDirection.Ascending:
+					ApplySort(Items.OrderBy(sortProperty));
+					break;
+				case ListSortDirection.Descending:
+					ApplySort(Items.OrderByDescending(sortProperty));
+					break;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sorts the list by the input lamda expression and comparer.</summary>
+		/// 
+		///	<param name="sortProperty">The lamda expression to indicate which property to sort by.</param>
+		///	<param name="comparer">The comparer for the sort.</param>
+		///--------------------------------------------------------------------------------
+		public void Sort<TKey>(Func<T, TKey> sortProperty, IComparer<TKey> comparer)
+		{
+			ApplySort(Items.OrderBy(sortProperty, comparer));
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method sorts the list by input sorted order.</summary>
+		/// 
+		///	<param name="sortedItems">The desired order of the items.</param>
+		///--------------------------------------------------------------------------------
+		private void ApplySort(IEnumerable<T> sortedItems)
+		{
+			var items = sortedItems.ToList();
+
+			foreach (var item in items)
+			{
+				Move(IndexOf(item), items.IndexOf(item));
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method finds an item by lamda expression.</summary>
+		/// 
+		///	<param name="predicate">The lamda expression for the find.</param>
+		/// 
+		/// <returns>A T of an item found.</returns>
+		///--------------------------------------------------------------------------------
+		public virtual T Find(System.Predicate<T> predicate)
+		{
+			// if the list is not empty and the property is valid, find an item
+			if (this.Count > 0)
+			{
+				return (Items as List<T>).Find(predicate);
+			}
+			return default(T);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method finds all items by lamda expression.</summary>
+		/// 
+		///	<param name="predicate">The lamda expression for the find.</param>
+		/// 
+		/// <returns>A T of an item found.</returns>
+		///--------------------------------------------------------------------------------
+		public virtual List<T> FindAll(System.Predicate<T> predicate)
+		{
+			// if the list is not empty and the property is valid, find an item
+			if (this.Count > 0)
+			{
+				return (Items as List<T>).FindAll(predicate);
+			}
+			return null;
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+		///--------------------------------------------------------------------------------
+		/// <summary>Base constructor.</summary>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection() : base()
+		{
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor takes in a list from which data is copied from.</summary>
+		/// 
+		/// <param name="sourceList">The source list to copy to this list.</param>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection(List<T> sourceList) : base(sourceList)
+		{
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This constructor takes in a list from which data is copied from.</summary>
+		/// 
+		/// <param name="sourceList">The source list to copy to this list.</param>
+		///--------------------------------------------------------------------------------
+		public SortableObservableCollection(IEnumerable<T> collection) : base(collection)
+		{
+		}
+
+		#endregion "Constructors"
+	}
+}%%></CONTENT><OUTPUT>
+<%%:
+if (File(SortableObservableCollectionFilePath) == null || (File(SortableObservableCollectionFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(SortableObservableCollectionFilePath)
+}
+%%></OUTPUT>

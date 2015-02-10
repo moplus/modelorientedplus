@@ -1,0 +1,249 @@
+<CONFIG>
+	NAME VITAUIResultsList
+	CATEGORY VITAUI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router results view (template) for your entity.
+// This view provides a view to allow you to view and manage your entity data.
+//
+<%%=USETABS true%%>
+<%%:
+param listName
+param sortAllowed
+<%%-
+<table class="table-striped table-bordered">%%><%%=Solution.INDENT%%><%%-
+	<tr>%%><%%=Solution.INDENT%%>
+		var itemCount = 0
+		var referenceItemCount = 0
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (referenceItemCount >= 3)
+			{
+				break
+			}
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				referenceItemCount = referenceItemCount + 1
+				if (referenceItemCount >= 3)
+				{
+					break
+				}
+			}
+		}
+		itemCount = referenceItemCount
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (itemCount > 5)
+			{
+				break
+			}
+			foreach (Property where VITADSIsResultsProperty == true)
+			{
+				itemCount = itemCount + 1
+				if (itemCount > 5)
+				{
+					break
+				}
+				if (sortAllowed == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-<th class="col-md-2" ng-switch="searchQuery.orderBy != '%%><%%=VITAPropertyName%%><%%-' || searchQuery.descending == 'true'">%%><%%=Solution.INDENT%%><%%-
+						<a ng-switch-when="true" ui-sref="%%><%%=../../VITAClassName.CamelCase()%%><%%-Results({%%>
+						with (../../Entity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsQueryProperty == true)
+								{
+									switch (DataTypeCode)
+									{
+										case 24: // DateTime
+										case 29: // DateTimeSmall
+											<%%=VITAParameterName%%><%%-Start: searchQuery.%%><%%=VITAParameterName%%><%%-Start, %%><%%=VITAParameterName%%><%%-End: searchQuery.%%><%%=VITAParameterName%%><%%-End, %%>
+											break
+										default:
+											<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
+											break
+									}
+								}
+							}
+						}
+						<%%-orderBy: '%%><%%=VITAPropertyName%%><%%-', descending: 'false', page: 1, pageSize: searchQuery.pageSize})">%%><%%=VITALabelName%%><%%-</a>
+						<a ng-switch-default ui-sref="%%><%%=../../VITAClassName.CamelCase()%%><%%-Results({%%>
+						with (../../Entity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsQueryProperty == true)
+								{
+									switch (DataTypeCode)
+									{
+										case 24: // DateTime
+										case 29: // DateTimeSmall
+											<%%=VITAParameterName%%><%%-Start: searchQuery.%%><%%=VITAParameterName%%><%%-Start, %%><%%=VITAParameterName%%><%%-End: searchQuery.%%><%%=VITAParameterName%%><%%-End, %%>
+											break
+										default:
+											<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
+											break
+									}
+								}
+							}
+						}
+						<%%-orderBy: '%%><%%=VITAPropertyName%%><%%-', descending: 'true', page: 1, pageSize: searchQuery.pageSize})">%%><%%=VITALabelName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+					</th>%%>
+				}
+				else
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-<th class="col-md-2">%%><%%=VITALabelName%%><%%-</th>%%>
+				}
+			}
+		}
+		itemCount = 0
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (itemCount > referenceItemCount)
+			{
+				break
+			}
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				itemCount = itemCount + 1
+				if (itemCount > referenceItemCount)
+				{
+					break
+				}
+				if (sortAllowed == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-<th class="col-md-2" ng-switch="searchQuery.orderBy != '%%><%%=VITADerivedPropertyName%%><%%-' || searchQuery.descending == 'true'">%%><%%=Solution.INDENT%%><%%-
+						<a ng-switch-when="true" ui-sref="%%><%%=../../VITAClassName.CamelCase()%%><%%-Results({%%>
+						with (../../Entity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsQueryProperty == true)
+								{
+									<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
+								}
+							}
+						}
+						<%%-orderBy: '%%><%%=VITADerivedPropertyName%%><%%-', descending: 'false', page: 1, pageSize: searchQuery.pageSize})">%%><%%=VITALabelName%%><%%-</a>
+						<a ng-switch-default ui-sref="%%><%%=../../VITAClassName.CamelCase()%%><%%-Results({%%>
+						with (../../Entity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where VITADSIsQueryProperty == true)
+								{
+									<%%=VITAParameterName%%><%%-: searchQuery.%%><%%=VITAParameterName%%><%%-, %%>
+								}
+							}
+						}
+						<%%-orderBy: '%%><%%=VITADerivedPropertyName%%><%%-', descending: 'true', page: 1, pageSize: searchQuery.pageSize})">%%><%%=VITALabelName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+					</th>%%>
+				}
+				else
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-<th class="col-md-2">%%><%%=VITALabelName%%><%%-</th>%%>
+				}
+			}
+		}
+		<%%-
+		<th class="col-md-2">%%><%%=Solution.INDENT%%><%%-
+			Manage%%><%%=Solution.OUTDENT%%><%%-
+		</th>%%><%%=Solution.OUTDENT%%><%%-
+	</tr>
+	<tr ng-repeat="item in %%><%%=listName%%><%%-">%%><%%=Solution.INDENT%%>
+		itemCount = referenceItemCount
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (itemCount > 5)
+			{
+				break
+			}
+			foreach (Property where VITADSIsResultsProperty == true)
+			{
+				itemCount = itemCount + 1
+				if (itemCount > 5)
+				{
+					break
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-<td class="col-md-2">%%><%%=Solution.INDENT%%>
+					<%%=Solution.NEWLINE%%>
+					if (itemCount < (3 + referenceItemCount))
+					{
+						with (../../)
+						{
+							<%%-<a class="btn btn-sm" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Get({ %%>
+							foreach (Property where IsPrimaryKeyMember == true)
+							{
+								if (ItemIndex > 0)
+								{
+									<%%-, %%>
+								}
+								<%%=VITAParameterName%%><%%-: item.%%><%%=VITAPropertyName%%>
+							}
+							<%%- })">%%>
+						}
+					}
+					<%%-{{item.%%><%%=VITAPropertyName%%><%%-}}%%>
+					if (itemCount < 3)
+					{
+						<%%-</a>%%>
+					}
+					<%%=Solution.OUTDENT%%><%%-
+				</td>%%>
+			}
+		}
+		itemCount = 0
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (itemCount > referenceItemCount)
+			{
+				break
+			}
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				itemCount = itemCount + 1
+				if (itemCount > referenceItemCount)
+				{
+					break
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-<td class="col-md-2">%%><%%=Solution.INDENT%%><%%-
+					{{item.%%><%%=VITADerivedPropertyName%%><%%-}}%%><%%=Solution.OUTDENT%%><%%-
+				</td>%%>
+			}
+		}
+		<%%-
+		<td class="col-md-2">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-sm" ng-if="item.CanEdit == true" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Update({ %%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=VITAParameterName%%><%%-: item.%%><%%=VITAPropertyName%%>
+			}
+			<%%- })" ng-disabled="status.isReadOnly">Edit</a>
+			<a class="btn btn-sm" ng-if="item.CanDelete == true"ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Delete({ %%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=VITAParameterName%%><%%-: item.%%><%%=VITAPropertyName%%>
+			}
+			<%%- })" ng-disabled="status.isReadOnly">Delete</a>%%><%%=Solution.OUTDENT%%><%%-
+		</td>%%><%%=Solution.OUTDENT%%><%%-
+	</tr>%%><%%=Solution.OUTDENT%%><%%-
+</table>%%>
+%%></CONTENT>

@@ -1,0 +1,293 @@
+<CONFIG>
+	NAME VITADataServices
+	NODE Project
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+//
+// This template is for creating a data services layer that utilizes data entity framework operations
+// in a business logic layer (such as a BLL project generated using the EntityFramework template).
+//
+// Note: Tag projects using this template with DS to best work with higher layer projects in this library.
+//
+<%%=USETABS false%%>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{%%><%%=ProjectID.ToUpper()%%><%%-}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>%%><%%=Namespace%%><%%-</RootNamespace>
+    <AssemblyName>%%><%%=Namespace%%><%%-</AssemblyName>
+    <TargetFrameworkVersion>%%><%%=Solution.DOTNET_TARGET_VERSION%%><%%-</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="Vita.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.MsSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Web">
+      <HintPath>..\packages\Vita.Web.1.0.4\lib\net45\Vita.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>%%></CONTENT><OUTPUT>
+<%%=ProjectFilePath%%>
+<%%:
+//
+// view the comments in the CREATE_VS_PROJECT_FILES template to control how your project file is created
+//
+
+// create project file if it does not exist
+if (CREATE_VS_PROJECT_FILES == true && FileExists(Path) == false)
+{
+	update(Path)
+}
+
+// make sure standard project files are present
+<%%>AssemblyInfoFile%%>
+<%%>VITADSPackagesConfigCode%%>
+/*<%%>VITADSWebConfigFile%%>
+<%%>VITADSGlobalMarkupFile%%>
+<%%>VITADSGlobalClassFile%%>
+log("GeneratedFile", VITADSGlobalClassFilePath, true)*/
+	
+<%%>VITADSWebApiConfigClassFile%%>
+log("GeneratedFile", VITADSWebApiConfigClassFilePath, true)
+if (File(Path).Contains(VITADSWebApiConfigClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSWebApiConfigClassFilePath))
+}
+
+<%%>VITADSDomainServiceConfigClassCode%%>
+log("GeneratedFile", VITADSDomainServiceConfigClassFilePath, true)
+if (File(Path).Contains(VITADSDomainServiceConfigClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDomainServiceConfigClassFilePath))
+}
+
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+	<%%>VITADSRegisterDtoClassCode%%>
+	log("GeneratedFile", VITADSRegisterDtoClassFilePath, true)
+	if (File(Path).Contains(VITADSRegisterDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSRegisterDtoClassFilePath))
+	}
+	
+	<%%>VITADSLoginDtoClassCode%%>
+	log("GeneratedFile", VITADSLoginDtoClassFilePath, true)
+	if (File(Path).Contains(VITADSLoginDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSLoginDtoClassFilePath))
+	}
+	
+	<%%>VITADSLoginResponseDtoClassCode%%>
+	log("GeneratedFile", VITADSLoginResponseDtoClassFilePath, true)
+	if (File(Path).Contains(VITADSLoginResponseDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSLoginResponseDtoClassFilePath))
+	}
+	
+	<%%>VITADSAuthenticationControllerClassCode%%>
+	log("GeneratedFile", VITADSAuthenticationControllerClassFilePath, true)
+	if (File(Path).Contains(VITADSAuthenticationControllerClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSAuthenticationControllerClassFilePath))
+	}
+}
+
+// add entity based generated files that should be part of the solution
+foreach (Entity in Solution where VITAIsDataModelEntity == true)
+{
+	progress
+	
+	<%%>VITADSDtoClassCode%%>
+	log("GeneratedFile", VITADSDtoClassFilePath, true)
+	if (File(Path).Contains(VITADSDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDtoClassFilePath))
+	}
+	
+	<%%>VITADSDtoExtensionsClassCode%%>
+	log("GeneratedFile", VITADSDtoExtensionsClassFilePath, true)
+	if (File(Path).Contains(VITADSDtoExtensionsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDtoExtensionsClassFilePath))
+	}
+	
+	<%%>VITADSQueryClassCode%%>
+	log("GeneratedFile", VITADSQueryClassFilePath, true)
+	if (File(Path).Contains(VITADSQueryClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSQueryClassFilePath))
+	}
+	
+	<%%>VITADSQueryResultsClassCode%%>
+	log("GeneratedFile", VITADSQueryResultsClassFilePath, true)
+	if (File(Path).Contains(VITADSQueryResultsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSQueryResultsClassFilePath))
+	}
+	
+	<%%>VITADSApiControllerClassCode%%>
+	log("GeneratedFile", VITADSApiControllerClassFilePath, true)
+	if (File(Path).Contains(VITADSApiControllerClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSApiControllerClassFilePath))
+	}
+	
+	progress
+}
+foreach (Entity in Solution where VITAIsDataModelEntity == false)
+{
+	progress
+	progress
+}
+
+// delete generated files that are no longer part of the solution
+forfiles(ProjectDirectory, ".cs")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// trace("deleting: " + ItemPath)
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Compile Include=", "/>", ItemPath.Substring(ItemPath.IndexOf("Generated")))
+		remove(Path, "<Compile Include=", "</Compile>", ItemPath.Substring(ItemPath.IndexOf("Generated")))
+		remove(Path, "<Content Include=", "/>", ItemPath.Substring(ProjectDirectory.Length + 1))
+	}
+}
+forfiles(ProjectDirectory, ".svc")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null)
+	{
+		// trace("deleting: " + ItemPath)
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Content Include=", "/>", ItemPath.Substring(ProjectDirectory.Length + 1))
+	}
+}
+
+// make sure project references are present
+if (ProjectReferenceCount > 0)
+{
+	foreach (Project)
+	{
+		if (File(Path).Contains(ProjectFileName) == false)
+		{
+			if (File(Path).Contains("<ProjectReference") == true)
+			{
+				// add to project file
+				insert(Path, "<ProjectReference", ProjectReferenceProjectItem)
+			}
+			else
+			{
+				// add to project file as new ItemGroup
+				insert(Path, "<Import Project", ProjectReferenceProjectItemGroup)
+			}
+		}
+	}
+}
+%%></OUTPUT>

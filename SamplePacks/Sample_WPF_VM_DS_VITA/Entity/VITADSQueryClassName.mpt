@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSQueryClassName
+	CATEGORY VITADS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAClassName%%><%%-Query%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFModelContextClassName
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-ModelContext%%></CONTENT>

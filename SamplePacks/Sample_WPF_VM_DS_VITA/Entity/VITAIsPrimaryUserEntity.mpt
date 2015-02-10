@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME VITAIsPrimaryUserEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// Current rule is require authentication to manage (create,update,delete) on each entity if the Login module is enabled.
+// Update this rule to further elaborate which entities require user to be logged in to create/update/delete.
+if (Tags.Contains("USER") == true && Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+	foreach (Property where IsPrimaryKeyMember == true && DataTypeCode == 26 /* Guid */)
+	{
+		// VITA login module requires Guid key on user table
+		<%%-true%%>
+		return
+	}
+}
+<%%-false%%>
+%%></CONTENT>

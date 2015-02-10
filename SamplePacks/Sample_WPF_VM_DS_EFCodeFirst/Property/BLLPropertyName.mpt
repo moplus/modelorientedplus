@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME BLLPropertyName
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=PropertyName%%>
+%%></CONTENT>

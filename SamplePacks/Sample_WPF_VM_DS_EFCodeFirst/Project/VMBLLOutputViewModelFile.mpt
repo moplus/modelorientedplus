@@ -1,0 +1,99 @@
+<CONFIG>
+	NAME VMBLLOutputViewModelFile
+	CATEGORY VMBLL
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Windows.Input;
+using System.Collections.ObjectModel;
+using %%><%%=Namespace%%><%%-.Messaging;
+using %%><%%=Namespace%%><%%-.Events;
+
+namespace %%><%%=Namespace%%><%%-
+{
+	///--------------------------------------------------------------------------------
+	/// <summary>This class provides the view for the status workspace.</summary>
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	///--------------------------------------------------------------------------------
+	public class OutputViewModel : WorkspaceViewModel
+	{
+		#region "Properties"
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelClearText.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelClearText
+		{
+			get
+			{
+				return "Clear Text";
+			}
+		}
+
+		public delegate void StatusChangeEventHandler(object sender, StatusEventArgs args);
+		///--------------------------------------------------------------------------------
+		/// <summary>This event is for handling output changes.</summary>
+		///--------------------------------------------------------------------------------
+		public event StatusChangeEventHandler OutputChanged;
+
+		#endregion "Properties"
+
+		#region "Methods"
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes output changes.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Event_OutputChanged, ParameterType = typeof(StatusEventArgs))]
+		public void ProcessOutputChange(StatusEventArgs data)
+		{
+			OnOutputChanged(this, data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method handles output changes.</summary>
+		/// 
+		/// <param name="sender">Sender of the event.</param>
+		/// <param name="args">Event arguments.</param>
+		///--------------------------------------------------------------------------------
+		protected void OnOutputChanged(object sender, StatusEventArgs args)
+		{
+			if (OutputChanged != null)
+			{
+				OutputChanged(this, args);
+			}
+		}
+
+		#endregion "Methods"
+
+		#region "Constructors"
+
+		///--------------------------------------------------------------------------------
+		/// <summary>The default constructor.</summary>
+		///--------------------------------------------------------------------------------
+		public OutputViewModel()
+		{
+			// Register all decorated methods to the Mediator
+			Mediator.Register(this);
+		}
+
+		#endregion "Constructors"
+	}
+}
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMBLLOutputViewModelFilePath) == null || (File(VMBLLOutputViewModelFilePath).Contains("<Status>Generated</Status>") == true && File(VMBLLOutputViewModelFilePath).Filter("<CreatedByUserName>","</CreatedDate>") != Text.Filter("<CreatedByUserName>","</CreatedDate>")))
+{
+	update(VMBLLOutputViewModelFilePath)
+}
+%%></OUTPUT>

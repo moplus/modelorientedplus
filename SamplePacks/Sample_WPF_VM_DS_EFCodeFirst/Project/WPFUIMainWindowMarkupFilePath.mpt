@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WPFUIMainWindowMarkupFilePath
+	CATEGORY WPFUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\MainWindow_G.xaml%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAVariableName
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAPropertyName.CamelCase()%%></CONTENT>

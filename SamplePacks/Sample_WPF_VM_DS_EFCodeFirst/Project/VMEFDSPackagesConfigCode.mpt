@@ -1,0 +1,20 @@
+<CONFIG>
+	NAME VMEFDSPackagesConfigCode
+	CATEGORY VMEFDS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Microsoft.Data.Edm" version="5.6.2" targetFramework="net45" />
+  <package id="Microsoft.Data.OData" version="5.6.2" targetFramework="net45" />
+  <package id="Microsoft.Data.Services.Client" version="5.6.2" targetFramework="net45" />
+  <package id="System.Spatial" version="5.6.2" targetFramework="net45" />
+</packages>%%></CONTENT><OUTPUT>
+<%%:
+if (File(VMEFDSPackagesConfigFilePath) == null)
+{
+	update(VMEFDSPackagesConfigFilePath)
+}
+%%></OUTPUT>

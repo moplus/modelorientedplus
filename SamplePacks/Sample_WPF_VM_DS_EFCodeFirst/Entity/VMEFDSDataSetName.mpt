@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VMEFDSDataSetName
+	CATEGORY VMEFDS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var dbSetName = BLLPluralEntityName
+foreach (Entity in EntityAndBaseEntities)
+{
+	dbSetName = BLLPluralEntityName
+}
+<%%=dbSetName%%>
+%%></CONTENT>

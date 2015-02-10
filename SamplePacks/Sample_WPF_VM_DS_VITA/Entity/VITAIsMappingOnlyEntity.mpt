@@ -1,0 +1,32 @@
+<CONFIG>
+	NAME VITAIsMappingOnlyEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// to be a VITA mapping only table (for many to many relationships where this entity isn't used in code directly),
+// entity must be a relational type with no other info other than mapping to two and only two related entities
+if (EntityTypeCode != 8 /* Relational */)
+{
+	<%%-false%%>
+	return
+}
+if (EntityReferenceCount != 2)
+{
+	<%%-false%%>
+	return
+}
+foreach (Property where IsPrimaryKeyMember == true && IsForeignKeyMember == false)
+{
+	<%%-false%%>
+	return
+}
+foreach (Property where IsPrimaryKeyMember == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

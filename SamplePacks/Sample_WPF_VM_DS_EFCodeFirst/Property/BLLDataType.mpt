@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME BLLDataType
+	CATEGORY BLL
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

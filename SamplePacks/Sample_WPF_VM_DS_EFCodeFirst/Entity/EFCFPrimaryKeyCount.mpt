@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME EFCFPrimaryKeyCount
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var count = 0
+foreach (Property where IsPrimaryKeyMember == true && EFCFIsStorageModelProperty == true)
+{
+	count = count + 1
+}
+<%%=count%%>%%></CONTENT>

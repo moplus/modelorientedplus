@@ -442,8 +442,8 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				CachedContent[modelContext.ID.ToString()] = null;
 
-				// only cache smaller content that has no parameters
-				if (Parameters.Count == 0 && ContentCodeBuilder.Length <= Solution.TemplateCacheMaxContentSize)
+				// only cache smaller content that has no parameters or config settings
+				if (Parameters.Count == 0 && HasRelativeSettings == false && ContentCodeBuilder.Length <= Solution.TemplateCacheMaxContentSize)
 				{
 					CachedContent[modelContext.ID.ToString()] = ContentCodeBuilder.ToString();
 				}

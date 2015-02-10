@@ -1,0 +1,177 @@
+<CONFIG>
+	NAME VITA
+	NODE Project
+	TOPLEVEL True
+</CONFIG>
+<CONTENT>
+//
+// This template is for creating a VITA code first layer, which can be used to create your database in addition to communicating with it.
+//
+// Note: Tag projects using this template with BLL to best work with higher layer projects in this library.
+//
+<%%=USETABS false%%>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{%%><%%=ProjectID.ToUpper()%%><%%-}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>%%><%%=Namespace%%><%%-</RootNamespace>
+    <AssemblyName>%%><%%=Namespace%%><%%-</AssemblyName>
+    <TargetFrameworkVersion>%%><%%=Solution.DOTNET_TARGET_VERSION%%><%%-</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Vita.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Data.MsSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Vita.1.0.4\lib\net45\Vita.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>%%></CONTENT><OUTPUT>
+<%%=ProjectFilePath%%>
+<%%:
+//
+// view the comments in the CREATE_VS_PROJECT_FILES template to control how your project file is created
+//
+
+// create project file if it does not exist
+if (CREATE_VS_PROJECT_FILES == true && FileExists(Path) == false)
+{
+	update(Path)
+}
+
+<%%>AssemblyInfoFile%%>
+<%%>VITAPackagesConfigCode%%>
+
+// output VITA framework model and other project level items
+<%%>VITADomainEntityStoreClassCode%%>
+log("GeneratedFile", VITADomainEntityStoreClassFilePath, true)
+if (File(Path).Contains(VITADomainEntityStoreClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainEntityStoreClassFilePath))
+}
+
+<%%>VITADomainAppClassCode%%>
+log("GeneratedFile", VITADomainAppClassFilePath, true)
+if (File(Path).Contains(VITADomainAppClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainAppClassFilePath))
+}
+
+<%%>VITADomainModuleClassCode%%>
+log("GeneratedFile", VITADomainModuleClassFilePath, true)
+if (File(Path).Contains(VITADomainModuleClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainModuleClassFilePath))
+}
+
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+	<%%>VITADomainAuthorizationHelperClassCode%%>
+	log("GeneratedFile", VITADomainAuthorizationHelperClassFilePath, true)
+	if (File(Path).Contains(VITADomainAuthorizationHelperClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainAuthorizationHelperClassFilePath))
+	}
+	
+	<%%>VITAUserTypeEnumCode%%>
+	log("GeneratedFile", VITAUserTypeEnumFilePath, true)
+	if (File(Path).Contains(VITAUserTypeEnumFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAUserTypeEnumFilePath))
+	}
+}
+
+// add entity based generated files that should be part of the solution
+foreach (Entity in Solution where VITAIsDataModelEntity == true)
+{
+	progress
+	
+	<%%>VITAInterfaceCode%%>
+	log("GeneratedFile", VITAInterfaceFilePath, true)
+	if (File(Path).Contains("\"" + VITAInterfaceFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(../ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAInterfaceFilePath))
+	}
+	
+	progress
+}
+foreach (Entity in Solution where VITAIsDataModelEntity == false)
+{
+	progress
+	progress
+}
+// delete generated files that are no longer part of the solution
+forfiles(ProjectDirectory, ".cs")
+{
+	if (LogValue("GeneratedFile", ItemPath) == null && ItemFile.Contains("<Status>Generated</Status>") == true)
+	{
+		// delete file
+		delete(ItemPath)
+		
+		// remove from project file
+		remove(Path, "<Compile Include=", "/>", ItemPath.Substring(ProjectDirectory.Length + 1))
+	}
+}
+%%></OUTPUT>

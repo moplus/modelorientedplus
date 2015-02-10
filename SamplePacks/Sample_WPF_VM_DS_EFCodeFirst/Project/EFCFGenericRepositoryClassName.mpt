@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryClassName
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-GenericRepository%%></CONTENT>

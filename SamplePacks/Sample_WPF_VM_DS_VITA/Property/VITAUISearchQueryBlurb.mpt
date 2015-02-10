@@ -1,0 +1,41 @@
+<CONFIG>
+	NAME VITAUISearchQueryBlurb
+	CATEGORY VITAUI
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+switch (DataTypeCode)
+{
+	case 1: // SByte
+	case 2: // IntShort
+	case 3: // Int
+	case 4: // IntLong
+	case 5: // Byte
+	case 6: // UIntShort
+	case 7: // UInt
+	case 8: // UIntLong
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAParameterName%%><%%-: Number($stateParams.%%><%%=VITAParameterName%%><%%-) || %%><%%=JSDefaultValue%%><%%-,%%>
+		break
+	case 9: // FloatSingle
+	case 10: // FloatDouble
+	case 11: // Decimal
+	case 18: // Currency
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAParameterName%%><%%-: parseFloat($stateParams.%%><%%=VITAParameterName%%><%%-) || %%><%%=JSDefaultValue%%><%%-,%%>
+		break
+	case 24: // DateTime
+	case 29: // DateTimeSmall
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAParameterName%%><%%-Start: $stateParams.%%><%%=VITAParameterName%%><%%-Start || %%><%%=JSDefaultValue%%><%%-,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAParameterName%%><%%-End: $stateParams.%%><%%=VITAParameterName%%><%%-End || %%><%%=JSDefaultValue%%><%%-,%%>
+		break
+	default:
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAParameterName%%><%%-: $stateParams.%%><%%=VITAParameterName%%><%%- || %%><%%=JSDefaultValue%%><%%-,%%>
+		break
+}
+%%></CONTENT>
