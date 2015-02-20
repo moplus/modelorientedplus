@@ -1,0 +1,134 @@
+<CONFIG>
+	NAME UnitTestBaseClassCode
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a base unit test class, needed by all other generated tests.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Configuration;
+using System.Globalization;
+using System.Text;
+using Vita.Data;
+using Vita.Data.MsSql;
+using Microsoft.VisualStudio.TestTools.UnitTesting;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This base class is used to set up unit tests.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	[TestClass]
+	public abstract class %%><%%=UnitTestBaseClassName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		[AssemblyInitialize]
+		public static void Initialize(TestContext testContext)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// set up application
+			DomainApp = new %%><%%=VITADomainAppClassName%%><%%-();
+			DomainApp.Init();
+			var connString = ConfigurationManager.AppSettings["DbConnectionString"];
+			var driver = MsSqlDbDriver.Create(connString);
+			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
+			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
+			DomainApp.ConnectTo(dbSettings);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		protected static DomainApp DomainApp { get; set; }
+
+
+		private static Random random = new Random();
+
+		protected static int GetRandomNumeric(int minValue, int maxValue)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return random.Next(minValue, maxValue);%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static bool GetRandomBool()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return random.Next(1, 11) > 5;%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static Guid GetRandomGuid()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return Guid.NewGuid();%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static DateTime GetRandomDate()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return DateTime.Now.AddYears(random.Next(-10, 1)).AddDays(random.Next(-100, 100)).AddHours(random.Next(-100, 100)).AddMinutes(random.Next(-100, 100)).AddSeconds(random.Next(-100, 100));%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static string GetAlphanumericString(int minLength, int maxLength)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return Vita.Common.Util.GenerateRandomString(random.Next(minLength, maxLength), UnicodeCategory.UppercaseLetter, UnicodeCategory.LowercaseLetter, UnicodeCategory.DecimalDigitNumber);%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static string GetRandomString(int minLength, int maxLength)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			int length = random.Next(minLength, maxLength);
+			char[] chars = new char[length];
+			for (int i = 0; i < length; i++)%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				chars[i] = GetRandomChar();%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-
+			return new String(chars);%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected static char GetRandomChar()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			return (char)(' ' + random.Next(95));%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(UnitTestBaseClassFilePath) == null || (File(UnitTestBaseClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(UnitTestBaseClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(UnitTestBaseClassFilePath)
+}
+%%></OUTPUT>

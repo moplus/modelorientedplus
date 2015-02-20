@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME VITAUIControllerJSFilePath
-	CATEGORY VITAUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Project.ProjectDirectory%%><%%-\Scripts\Controllers\%%><%%=VITAUIControllerClassName%%><%%-.js%%></CONTENT>

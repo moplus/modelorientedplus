@@ -1,8 +1,0 @@
-<CONFIG>
-	NAME VITAUIServiceJSFilePath
-	CATEGORY VITAUI
-	NODE Entity
-	TOPLEVEL False
-</CONFIG>
-<CONTENT>
-<%%=Project.ProjectDirectory%%><%%-\Scripts\Services\%%><%%=VITAUIServiceName%%><%%-.js%%></CONTENT>

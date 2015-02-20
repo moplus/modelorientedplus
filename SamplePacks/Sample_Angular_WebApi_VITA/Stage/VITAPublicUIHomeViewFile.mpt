@@ -1,0 +1,61 @@
+<CONFIG>
+	NAME VITAPublicUIHomeViewFile
+	CATEGORY VITAPublicUI
+	NODE Stage
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router home view (template) for your stage.
+// This is a stub for you to enter additional details.
+//
+<%%=USETABS true%%>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "<!-- protected area start-->"%%>
+<%%=PROTECTEDAREAEND "<!-- protected area end-->"%%>
+<%%:
+<%%-<!DOCTYPE html>
+<!--Copyright:
+%%>
+<%%=Solution.Copyright%%><%%-
+
+//------------------------------------------------------------------------------
+/// This file is for providing general ui functionality for the %%><%%=VITAPropertyName%%><%%- workflow stage.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+-->
+<div class="container-fluid">%%><%%=Solution.INDENT%%><%%-
+	<h2>%%><%%=StageName%%><%%-</h2>
+	<!-- protected area start-->
+	<!-- protected area end-->%%>
+	foreach (StageTransition in Workflow where ToStageID == ../StageID)
+	{
+		foreach (Stage in Workflow where StageID == ../FromStageID)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+				<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+					<a class="btn btn-default" ui-sref="%%><%%=VITAPublicUIState%%><%%-">%%><%%=StageName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+				</div>%%><%%=Solution.OUTDENT%%><%%-
+			</div>%%>
+			break
+		}
+	}
+	<%%=Solution.OUTDENT%%><%%-
+</div>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAPublicUIHomeViewFilePath, text=Text) == true)
+{
+	update(VITAPublicUIHomeViewFilePath)
+}
+%%></OUTPUT>

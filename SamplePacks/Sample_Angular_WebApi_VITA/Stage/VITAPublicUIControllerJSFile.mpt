@@ -1,0 +1,62 @@
+<CONFIG>
+	NAME VITAPublicUIControllerJSFile
+	CATEGORY VITAPublicUI
+	NODE Stage
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router controller for your stage.  This is a stub, you need to fill in with your details.
+//
+<%%=USETABS true%%>
+<%%=USEPROTECTEDAREAS true%%>
+<%%=PROTECTEDAREASTART "// protected area start"%%>
+<%%=PROTECTEDAREAEND "// protected area end"%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var itemFound
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This controller provides access to operations relating to
+/// the %%><%%=StageName%%><%%- workflow stage.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var %%><%%=VITAPublicUIControllerClassName%%><%%- = function($scope, $stateParams, $state, $window, $location%%>
+foreach (Entity in Solution where VITAIsUIEntity == true)
+{
+	<%%-, %%><%%=VITAUIServiceName%%>
+}
+<%%-)%%>
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	<%%-
+	// protected area start
+	// protected area end%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+%%><%%=VITAPublicUIControllerClassName%%><%%-.$inject = ['$scope', '$stateParams', '$state', '$window', '$location'%%>
+foreach (Entity in Solution where VITAIsUIEntity == true)
+{
+	<%%-, '%%><%%=VITAUIServiceName%%><%%-'%%>
+}
+<%%-];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAPublicUIControllerJSFilePath, text=Text) == true)
+{
+	update(VITAPublicUIControllerJSFilePath)
+}
+%%></OUTPUT>

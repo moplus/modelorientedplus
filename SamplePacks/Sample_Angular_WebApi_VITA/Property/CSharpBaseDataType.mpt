@@ -1,5 +1,5 @@
 <CONFIG>
-	NAME CSharpDataType
+	NAME CSharpBaseDataType
 	CATEGORY LIB
 	NODE Property
 	TOPLEVEL False
@@ -9,125 +9,102 @@
 switch (DataTypeCode)
 {
 	case 1: // SByte
-		<%%-sbyte%%>
+		<%%-Sbyte%%>
 		break
 	case 2: // IntShort
-		<%%-short%%>
+		<%%-Int16%%>
 		break
 	case 3: // Int
-		<%%-int%%>
+		<%%-Int32%%>
 		break
 	case 4: // IntLong
-		<%%-long%%>
+		<%%-Int64%%>
 		break
 	case 5: // Byte
-		<%%-byte%%>
+		<%%-Byte%%>
 		break
 	case 6: // UIntShort
-		<%%-ushort%%>
+		<%%-UInt16%%>
 		break
 	case 7: // UInt
-		<%%-uint%%>
+		<%%-UInt32%%>
 		break
 	case 8: // UIntLong
-		<%%-ulong%%>
+		<%%-UInt64%%>
 		break
 	case 9: // FloatSingle
-		<%%-float%%>
+		<%%-Single%%>
 		break
 	case 10: // FloatDouble
-		<%%-double%%>
+		<%%-Double%%>
 		break
 	case 11: // Decimal
-		<%%-decimal%%>
+		<%%-Decimal%%>
 		break
 	case 12: // Boolean
-		<%%-bool%%>
+		<%%-Boolean%%>
 		break
 	case 13: // Char
 		if (Length > 1)
 		{
-			<%%-string%%>
+			<%%-String%%>
 		}
 		else
 		{
-			<%%-char%%>
+			<%%-Char%%>
 		}
 		break
 	case 14: // CharUnicode
 		if (Length > 1)
 		{
-			<%%-string%%>
+			<%%-String%%>
 		}
 		else
 		{
-			<%%-char%%>
+			<%%-Char%%>
 		}
 		break
 	case 15: // Object
-		<%%-object%%>
+		<%%-Object%%>
 		break
 	case 16: // String
-		<%%-string%%>
+		<%%-String%%>
 		break
 	case 17: // StringUnicode
-		<%%-string%%>
+		<%%-String%%>
 		break
 	case 18: // Currency
-		<%%-decimal%%>
+		<%%-Decimal%%>
 		break
 	case 19: // Text
-		<%%-string%%>
+		<%%-String%%>
 		break
 	case 20: // TextUnicode
-		<%%-string%%>
+		<%%-String%%>
 		break
 	case 21: // IntTiny
-		<%%-byte%%>
+		<%%-Byte%%>
 		break
 	case 22: // UIntTiny
-		<%%-byte%%>
+		<%%-Byte%%>
 		break
 	case 23: // Binary
-		<%%-byte[]%%>
+		<%%-Byte%%>
 		break
 	case 24: // DateTime
 		<%%-DateTime%%>
 		break
 	case 25: // Timestamp
-		<%%-byte[]%%>
+		<%%-Byte[]%%>
 		break
 	case 26: // Guid
 		<%%-Guid%%>
 		break
-	case 27: // Image
-		<%%-byte[]%%>
+	case 27: // Timestamp
+		<%%-Byte[]%%>
 		break
 	default:
-		<%%-string%%>
+		<%%-String%%>
 		break
-}
-if (IsNullable == true)
-{
-	switch (DataTypeCode)
-	{
-		case 15: // Object
-		case 16: // String
-		case 17: // StringUnicode
-		case 19: // Text
-		case 20: // TextUnicode
-		case 27: // Image
-			break
-		case 13: // Char
-		case 14: // CharUnicode
-			if (Length <= 1)
-			{
-				<%%-?%%>
-			}
-			break
-		default:
-			<%%-?%%>
-			break
-	}
 }
 %%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAPublicUIHomeViewFilePath
+	CATEGORY VITAPublicUI
+	NODE Stage
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=VITAPropertyName%%><%%-Stage\Home.html%%></CONTENT>

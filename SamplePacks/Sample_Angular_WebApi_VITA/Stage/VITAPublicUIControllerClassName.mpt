@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAPublicUIControllerClassName
+	CATEGORY VITAPublicUI
+	NODE Stage
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAPropertyName%%><%%-StageController%%></CONTENT>

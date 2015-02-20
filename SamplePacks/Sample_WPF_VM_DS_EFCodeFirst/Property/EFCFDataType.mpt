@@ -45,10 +45,24 @@ switch (DataTypeCode)
 		<%%-bool%%>
 		break
 	case 13: // Char
-		<%%-char%%>
+		if (Length > 1)
+		{
+			<%%-string%%>
+		}
+		else
+		{
+			<%%-char%%>
+		}
 		break
 	case 14: // CharUnicode
-		<%%-char%%>
+		if (Length > 1)
+		{
+			<%%-string%%>
+		}
+		else
+		{
+			<%%-char%%>
+		}
 		break
 	case 15: // Object
 		<%%-object%%>
@@ -103,6 +117,13 @@ if (IsNullable == true)
 		case 19: // Text
 		case 20: // TextUnicode
 		case 27: // Image
+			break
+		case 13: // Char
+		case 14: // CharUnicode
+			if (Length <= 1)
+			{
+				<%%-?%%>
+			}
 			break
 		default:
 			<%%-?%%>

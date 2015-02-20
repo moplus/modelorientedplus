@@ -41,7 +41,14 @@ switch (DataTypeCode)
 		break
 	case 13: // Char
 	case 14: // CharUnicode
+		if (Length > 1)
+		{
+<%%-GetRandomString(1, %%><%%=Length%%><%%-)%%>
+		}
+		else
+		{
 <%%-GetRandomChar()%%>
+		}
 		break
 	case 16: // String
 	case 17: // StringUnicode
