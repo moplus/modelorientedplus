@@ -286,7 +286,7 @@ foreach (Entity in EntityAndBaseEntities)
 				$scope.searchResults.totalItems = result.totalItems;
 				$scope.searchResults.hasResults = true;
 				$scope.searchResults.canCreate = result.canCreate;%%>
-			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
 				$scope.status.isError = true;
@@ -366,7 +366,7 @@ foreach (Entity in EntityAndBaseEntities)
 				<%%=Solution.CLOSE_BRACE%%>
 				<%%-
 				$scope.init();%%>
-			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
 				$scope.status.isError = true;
@@ -477,7 +477,7 @@ foreach (Entity in EntityAndBaseEntities)
 								if (result.isSuccess)%%>
 								<%%=Solution.OPEN_BRACE(js=true)%%><%%-
 									$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.items;%%>
-								<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+								<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 								<%%=Solution.OPEN_BRACE(js=true)%%>
 									<%%-
 									$scope.status.isError = true;
@@ -485,7 +485,7 @@ foreach (Entity in EntityAndBaseEntities)
 									$scope.status.errorMessage = result.message;%%>
 								<%%=Solution.CLOSE_BRACE%%>
 							<%%=Solution.CLOSE_BRACE%%><%%-);%%>
-						<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+						<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 						<%%=Solution.OPEN_BRACE(js=true)%%>
 							<%%-
 							$scope.status.isError = true;
@@ -527,7 +527,7 @@ foreach (Entity in EntityAndBaseEntities)
 				$scope.status.isReadOnly = true;
 				$scope.status.isError = false;
 				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully created."%%>
-			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
 				$scope.status.isError = true;
@@ -566,7 +566,7 @@ foreach (Entity in EntityAndBaseEntities)
 				$scope.status.isReadOnly = true;
 				$scope.status.isError = false;
 				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully updated."%%>
-			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
 				$scope.status.isError = true;
@@ -600,7 +600,7 @@ foreach (Entity in EntityAndBaseEntities)
 				$scope.status.isReadOnly = true;
 				$scope.status.isError = false;
 				$scope.status.successMessage = "%%><%%=VITAClassName%%><%%- item successfully deleted."%%>
-			<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
 				$scope.status.isError = true;
@@ -676,7 +676,7 @@ foreach (Entity in EntityAndBaseEntities)
 					<%%=Solution.OPEN_BRACE(js=true)%%>
 						<%%-
 						$scope.itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%- = result.data.Items;%%>
-					<%%=Solution.CLOSE_BRACE%%><%%=Solution.ELSE%%>
+					<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 					<%%=Solution.OPEN_BRACE(js=true)%%>
 						<%%-
 						$scope.status.isError = true;

@@ -56,7 +56,7 @@ namespace %%><%%=Namespace%%>
 	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
-	public static class WebApiConfig%%>
+	public static class DomainWebApiConfig%%>
 	<%%=Solution.OPEN_BRACE%%>
 		<%%=Solution.NEWLINE%%>
 		<%%-public static void Register(HttpConfiguration config)%%>

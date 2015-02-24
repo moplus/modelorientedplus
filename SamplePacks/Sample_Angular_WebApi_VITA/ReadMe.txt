@@ -1,10 +1,11 @@
 This Mo+ template library provides support for developing applications with the VITA ORM and .net Application Framework (vita.codeplex.com).
 
 The template library provides the ability to generate a working solution with either a forward and/or reverse engineered model with the following layers:
-1) An MVC/AngularJS single page web application (admin tool).
-2) A VITA WebApi data services layer.
-3) A Test layer to test VITA ORM operations.
-4) A VITA ORM data management layer.
+1) An MVC/AngularJS single page web application (admin tool) (VITAUI project template).
+2) A VITA WebApi data services layer (VITADataServices project template).
+3) A Test layer to test VITA ORM operations (VITAUnitTests project template).
+4) A VITA ORM data management layer (VITA project template).
+5) Optionally, an MVC/AngularJS single page web application public site (stubs) (VITAPublicUI project template).
 
 To use this template library to create a working application with tests:
 

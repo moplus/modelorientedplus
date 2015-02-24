@@ -62,7 +62,7 @@ namespace %%><%%=Namespace%%>
 		protected void Application_Start()%%>
 		<%%=Solution.OPEN_BRACE%%>
 		<%%-
-			WebApiConfig.Register(GlobalConfiguration.Configuration);
+			DomainWebApiConfig.Register(GlobalConfiguration.Configuration);
 			
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);

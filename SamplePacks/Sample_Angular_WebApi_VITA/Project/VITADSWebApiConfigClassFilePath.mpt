@@ -5,4 +5,4 @@
 	TOPLEVEL False
 </CONFIG>
 <CONTENT>
-<%%=ProjectDirectory%%><%%-\WebApiConfig_G.cs%%></CONTENT>
+<%%=ProjectDirectory%%><%%-\DomainWebApiConfig_G.cs%%></CONTENT>
