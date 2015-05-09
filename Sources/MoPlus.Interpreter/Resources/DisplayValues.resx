@@ -731,4 +731,7 @@
   <data name="Validation_DbPropertyNameValue" xml:space="preserve">
     <value>The value for {0} must be alphanumeric, or underscores, or periods, and not start with a number.</value>
   </data>
+  <data name="Validation_ParentObjectInstance" xml:space="preserve">
+    <value>A parent object instance must be selected.</value>
+  </data>
 </root>

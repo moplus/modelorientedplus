@@ -344,7 +344,7 @@ namespace MoPlus.ViewModel.Models
 		///--------------------------------------------------------------------------------
 		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
 		{
-			if (data is ObjectInstanceEventArgs && ObjectInstance != null && (data as ObjectInstanceEventArgs).ObjectInstance.ParentObjectInstanceID == ObjectInstance.ObjectInstanceID)
+            if (data is ObjectInstanceEventArgs && ObjectInstance != null && (data as ObjectInstanceEventArgs).ObjectInstance.ParentObjectInstanceID == ObjectInstance.ObjectInstanceID && (data as ObjectInstanceEventArgs).ObjectInstance.ModelObjectID == ModelObjectID)
 			{
 				return this;
 			}

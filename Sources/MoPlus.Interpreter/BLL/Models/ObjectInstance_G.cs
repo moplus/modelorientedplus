@@ -38,10 +38,13 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// If you need to customize this file outside of protected areas,
 	/// change the Status value below to something other than
 	/// Generated to prevent changes from being overwritten.
+    /// 
+    /// The validation for parentobjectinstanceid was customized, this can be adjusted
+    /// to be regenerated again.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
-	/// <Status>Generated</Status>
+	/// <CreatedDate>5/9/2015</CreatedDate>
+	/// <Status>Customized</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
 	[XmlRoot(Namespace="", ElementName="ObjectInstance")]
@@ -126,6 +129,13 @@ namespace MoPlus.Interpreter.BLL.Models
 		///--------------------------------------------------------------------------------
 		public string ValidateParentObjectInstanceID()
 		{
+            if (ModelObject != null && ModelObject.ParentModelObjectID != null)
+            {
+                if (ParentObjectInstanceID == null)
+                {
+                    return Resources.DisplayValues.Validation_ParentObjectInstance;
+                }
+            }
 			return null;
 		}
 		
