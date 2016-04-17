@@ -1,0 +1,83 @@
+<CONFIG>
+	NAME VITADomainAppConfigClassCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a class to set up web api services for your project.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Configuration;
+using Vita.Data;
+using Vita.Data.MsSql;
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to configure an entity application.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public static partial class DomainAppConfig%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public static %%><%%=VITADomainAppClassName%%><%%- SetupApp()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			// set up application
+			var protectedSection = (NameValueCollection)ConfigurationManager.GetSection("protected");
+			var domainApp = new %%><%%=VITADomainAppClassName%%><%%-();
+			domainApp.Init();
+			var connString = protectedSection["MsSqlConnectionString"];%%>
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%-
+				var logConnString = protectedSection["MsSqlLogConnectionString"];%%>
+			}
+			<%%-
+			var driver = MsSqlDbDriver.Create(connString);
+			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
+			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
+			domainApp.ConnectTo(dbSettings);%%>
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%-
+				var logDbSettings = new DbSettings(driver, dbOptions, logConnString);
+				domainApp.LoggingApp.ConnectTo(logDbSettings);%%>
+			}
+			<%%-
+
+			// add your customized config code here
+			#region protected
+			#endregion protected
+			
+			return domainApp;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITADomainAppConfigClassFilePath, text=Text) == true)
+{
+	update(VITADomainAppConfigClassFilePath)
+}
+%%></OUTPUT>

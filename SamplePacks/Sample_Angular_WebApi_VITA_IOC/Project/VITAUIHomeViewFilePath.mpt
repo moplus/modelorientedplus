@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIHomeViewFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Views\Home\Index.cshtml%%></CONTENT>

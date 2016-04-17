@@ -1,0 +1,98 @@
+<CONFIG>
+	NAME ServiceInterfaceCode
+	CATEGORY VITAServices
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a model defintion for this entity, to be used by VITA
+// to manage your corresponding db schema and data.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using Vita.Entities;
+using System.Linq;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Services%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This interface defines key services for %%><%%=VITAClassName%%><%%- items,
+	/// to be utilized by data services such as web api.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial interface file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-public partial interface %%><%%=ServiceInterfaceName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-%%><%%=VITAInterfaceName%%><%%- Get%%><%%=VITAClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-,%%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAParameterName%%>
+		}
+		<%%-, IEntitySession session);
+
+		IQueryable<%%><%%=VITAInterfaceName%%><%%-> Get%%><%%=LIBPluralEntityName%%><%%-(IEntitySession session);
+
+		%%><%%=VITAInterfaceName%%><%%- Create%%><%%=VITAClassName%%><%%-(%%><%%=VITAInterfaceName%%><%%- item, IEntitySession session);
+
+		%%><%%=VITAInterfaceName%%><%%- Update%%><%%=VITAClassName%%><%%-(%%><%%=VITAInterfaceName%%><%%- item, IEntitySession session);
+
+		bool Delete%%><%%=VITAClassName%%><%%-(%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-,%%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAParameterName%%>
+		}
+		<%%-, IEntitySession session);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=ServiceInterfaceFilePath, text=Text) == true)
+{
+	update(ServiceInterfaceFilePath)
+}
+%%></OUTPUT>

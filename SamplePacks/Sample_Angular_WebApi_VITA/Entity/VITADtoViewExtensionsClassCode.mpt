@@ -1,0 +1,81 @@
+<CONFIG>
+	NAME VITADtoViewExtensionsClassCode
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create Dto helper methods to transfer
+// information to/from corresponding view data managed by VITA.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Vita.Common;
+using Vita.Entities;
+using %%><%%=Project.Namespace%%><%%-.Models;
+
+namespace %%><%%=Project.Namespace%%><%%-.Dtos%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines an extension for transferring %%><%%=VITAInterfaceName%%><%%-
+	/// data object instances into corresponding %%><%%=VITADtoClassName%%><%%- data transfer object instances.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial interface file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public static partial class %%><%%=VITADtoViewExtensionsClassName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Transform an instance of %%><%%=VITAViewInterfaceName%%><%%- to a %%><%%=VITADtoViewClassName%%><%%- dto instance.</summary>
+		///
+		/// <returns>An instance of %%><%%=VITADtoViewClassName%%><%%-.</returns>
+		/// <param name="%%><%%=VITAClassName.CamelCase()%%><%%-">The %%><%%=VITAViewInterfaceName%%><%%- instance to transform.</param>
+		///--------------------------------------------------------------------------------
+		public static %%><%%=VITADtoViewClassName%%><%%- ToDto(this %%><%%=VITAViewInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			var propertyName = VITADtoViewClassName.CamelCase()
+			<%%-var %%><%%=propertyName%%><%%- = new %%><%%=VITADtoViewClassName%%><%%-()%%>
+			<%%=Solution.OPEN_BRACE%%>
+			foreach (Property where VITAIsInterfaceModelProperty == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=VITAPropertyName%%><%%- = %%><%%=../../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%-,%%>
+			}
+			foreach (PropertyReference where ReferencedEntity.VITAIsDataModelEntity == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=VITAPropertyName%%><%%- = %%><%%=../../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%-,%%>
+			}
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-;
+			return %%><%%=propertyName%%><%%-;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITADtoViewExtensionsClassFilePath, text=Text) == true)
+{
+	update(VITADtoViewExtensionsClassFilePath)
+}
+%%></OUTPUT>

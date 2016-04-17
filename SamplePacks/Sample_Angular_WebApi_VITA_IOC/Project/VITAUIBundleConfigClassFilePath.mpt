@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIBundleConfigClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\App_Start\BundleConfig_G.cs%%></CONTENT>

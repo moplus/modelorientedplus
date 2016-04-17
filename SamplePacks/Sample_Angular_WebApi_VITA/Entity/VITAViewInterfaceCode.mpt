@@ -1,0 +1,65 @@
+<CONFIG>
+	NAME VITAViewInterfaceCode
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a model defintion for this entity, to be used by VITA
+// to manage your corresponding db schema and data.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using Vita.Entities;
+
+namespace %%><%%=Project.Namespace%%><%%-.Models%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This interface defines the key elements for managing
+	/// an associated view for %%><%%=VITAClassName%%><%%- items, utilizing
+	/// the VITA ORM.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial interface file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial interface %%><%%=VITAViewInterfaceName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		foreach (Property where VITAIsInterfaceModelProperty == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%=Solution.NEWLINE%%>
+			}
+			<%%=VITAViewPropertyCode%%>
+		}
+		foreach (PropertyReference where ReferencedEntity.VITAIsDataModelEntity == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%=VITAViewPropertyCode%%>
+		}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAViewInterfaceFilePath, text=Text) == true)
+{
+	update(VITAViewInterfaceFilePath)
+}
+%%></OUTPUT>

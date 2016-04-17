@@ -1,0 +1,58 @@
+<CONFIG>
+	NAME VITASearchWhereBlurb
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=USETABS true%%>
+param baseEntityPath
+switch (DataTypeCode)
+{
+	case 13: // Char
+		<%%=Solution.NEWLINE%%>
+		if (Length > 1)
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=VITAPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%-.StartsWith(query.%%><%%=VITAPropertyName%%><%%-))%%>
+		}
+		else
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=VITAPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%- == query.%%><%%=VITAPropertyName%%><%%-.Value)%%>
+		}
+		break
+	case 14: // CharUnicode
+		<%%=Solution.NEWLINE%%>
+		if (Length > 1)
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=VITAPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%-.StartsWith(query.%%><%%=VITAPropertyName%%><%%-))%%>
+		}
+		else
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=VITAPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%- == query.%%><%%=VITAPropertyName%%><%%-.Value)%%>
+		}
+		break
+	case 16: // String
+	case 17: // StringUnicode
+	case 19: // Text
+	case 20: // TextUnicode
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIfNotEmpty(query.%%><%%=VITAPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%-.StartsWith(query.%%><%%=VITAPropertyName%%><%%-))%%>
+		break
+	case 24: // DateTime
+	case 29: // DateTimeSmall
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIfNotEmpty(%%><%%=VITAPropertyPath.CamelCase()%%><%%-Start, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyName%%><%%- >= %%><%%=VITAPropertyName.CamelCase()%%><%%-Start.Value)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIfNotEmpty(%%><%%=VITAPropertyPath.CamelCase()%%><%%-End, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyName%%><%%- <= %%><%%=VITAPropertyName.CamelCase()%%><%%-End.Value)%%>
+		break
+	case 26: // Guid
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIf(%%><%%=VITAPropertyName.CamelCase()%%><%%- != Guid.Empty, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%- == %%><%%=VITAPropertyName.CamelCase()%%><%%-)%%>
+		break
+	default:
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIf(query.%%><%%=VITAPropertyName%%><%%- != %%><%%=CSharpDefaultValue%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%- == query.%%><%%=VITAPropertyName%%><%%-.Value)%%>
+		break
+}
+%%></CONTENT>

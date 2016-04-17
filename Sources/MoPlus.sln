@@ -1,5 +1,13 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{053CED0C-F602-43FA-A069-DF880974213B}"
+	ProjectSection(SolutionItems) = preProject
+		IntegrationTests.testsettings = IntegrationTests.testsettings
+		UnitTests.testsettings = UnitTests.testsettings
+	EndProjectSection
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfClient", "MoPlus.SolutionBuilder.WpfClient\MoPlus.SolutionBuilder.WpfClient.csproj", "{571978FA-999A-41C7-B590-27EBEDD70F99}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.ViewModel", "MoPlus.ViewModel\MoPlus.ViewModel.csproj", "{1A6C3352-9781-4722-B6C8-DEC5DB0FAF53}"
@@ -19,12 +27,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.VSPackage", "MoPlus.SolutionBuilder.VSPackage\MoPlus.SolutionBuilder.VSPackage.csproj", "{0EAD40F3-F1E3-4ABF-93DC-D2DCDE78E29E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfUI", "MoPlus.SolutionBuilder.WpfUI\MoPlus.SolutionBuilder.WpfUI.csproj", "{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{053CED0C-F602-43FA-A069-DF880974213B}"
-	ProjectSection(SolutionItems) = preProject
-		IntegrationTests.testsettings = IntegrationTests.testsettings
-		UnitTests.testsettings = UnitTests.testsettings
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAApiControllerClassFilePath
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Controllers\%%><%%=VITAApiControllerClassName%%><%%-_G.cs%%></CONTENT>

@@ -1,0 +1,140 @@
+<CONFIG>
+	NAME VITAUISearchUI
+	CATEGORY VITAUI
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var attributes = ""
+var columnSize = "col-md-5"
+var inputType = "text"
+var size = 0
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		attributes = attributes + " size=\"4\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 2: // IntShort
+		attributes = attributes + " size=\"6\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 3: // Int
+		attributes = attributes + " size=\"11\""
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 4: // IntLong
+		attributes = attributes + " size=\"20\""
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 5: // Byte
+		attributes = attributes + " size=\"3\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 6: // UIntShort
+		attributes = attributes + " size=\"5\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 7: // UInt
+		attributes = attributes + " size=\"10\""
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 8: // UIntLong
+		attributes = attributes + " size=\"19\""
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 9: // FloatSingle
+		size = Precision + Scale + 1
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		break
+	case 10: // FloatDouble
+		size = Precision + Scale + 1
+		columnSize = "col-md-4"
+		attributes = attributes + " size=\"" + size + "\""
+		break
+	case 11: // Decimal
+		size = Precision + Scale + 1
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		break
+	case 12: // Boolean
+		inputType = "checkbox"
+		columnSize = "col-md-2"
+		break
+	case 18: // Currency
+		size = Precision + Scale + 1
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		break
+	case 21: // IntTiny
+		attributes = attributes + " size=\"4\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 22: // UIntTiny
+		attributes = attributes + " size=\"3\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 24: // DateTime
+		inputType = "datetime"
+		columnSize = "col-md-4"
+		break
+	default:
+		if (Length > 0)
+		{
+			attributes = attributes + " maxlength=" + "\"" + Length + "\""
+		}
+		break
+}
+switch (DataTypeCode)
+{
+	case 24: // DateTime
+	case 29: // DateTimeSmall
+		<%%=Solution.NEWLINE%%>
+		<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="%%><%%=columnSize%%><%%-">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="%%><%%=VITAParameterName%%><%%-Start">%%><%%=VITALabelName%%><%%- Start:</label>%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<input type="%%><%%=inputType%%><%%-" class="form-control" %%><%%=attributes%%><%%- id="%%><%%=VITAParameterName%%><%%-Start" ng-model="searchQuery.%%><%%=VITAParameterName%%><%%-Start" />%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="%%><%%=columnSize%%><%%-">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="%%><%%=VITAParameterName%%><%%-End">%%><%%=VITALabelName%%><%%- End:</label>%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<input type="%%><%%=inputType%%><%%-" class="form-control" %%><%%=attributes%%><%%- id="%%><%%=VITAParameterName%%><%%-End" ng-model="searchQuery.%%><%%=VITAParameterName%%><%%-End" />%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-</div>%%>
+		break
+	default:
+		<%%=Solution.NEWLINE%%>
+		<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="%%><%%=columnSize%%><%%-">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="%%><%%=VITAParameterName%%><%%-">%%><%%=VITALabelName%%><%%-:</label>%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<input type="%%><%%=inputType%%><%%-" class="form-control" %%><%%=attributes%%><%%- id="%%><%%=VITAParameterName%%><%%-" ng-model="searchQuery.%%><%%=VITAParameterName%%><%%-" />%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-</div>%%>
+		break
+}
+%%></CONTENT>

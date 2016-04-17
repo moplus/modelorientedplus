@@ -5,4 +5,13 @@
 	TOPLEVEL False
 </CONFIG>
 <CONTENT>
-<%%-true%%></CONTENT>
+<%%:
+if (Tags.Contains("Ignore") == false)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSDomainServiceConfigClassFilePath
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\DomainServiceConfig_G.cs%%></CONTENT>

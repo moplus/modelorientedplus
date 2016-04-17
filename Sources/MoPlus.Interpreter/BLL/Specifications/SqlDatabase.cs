@@ -132,6 +132,10 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				// load information for each table
 				foreach (Table loopTable in sqlDatabase.Tables)
 				{
+					if (loopTable.IsSystemObject == true)
+					{
+						continue;
+					}
 					if (DebugHelper.DebugAction == DebugAction.Stop) return;
 					SqlTable table = new SqlTable();
 					table.SqlTableID = Guid.NewGuid();

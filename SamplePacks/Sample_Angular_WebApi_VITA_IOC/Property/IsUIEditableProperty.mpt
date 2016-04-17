@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsUIEditableProperty
+	CATEGORY CONFIG
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsAuditProperty == true || VITADSIsDtoClassProperty == false || IsBaseProperty == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

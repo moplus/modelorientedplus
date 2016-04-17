@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsAdminUICollection
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryCollection == true && ReferencedEntity.VITAIsUIEntity == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

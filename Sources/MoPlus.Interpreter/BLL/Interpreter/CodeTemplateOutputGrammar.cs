@@ -354,6 +354,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					currentItem.Rule = currentItem.Rule | ToTerm("Current" + key);
 				}
 			}
+            // add all ModelObjectProperty instances in model to currentItem rule
+            if (solution != null)
+            {
+                foreach (string key in solution.ModelObjectPropertyNames.AllKeys)
+                {
+                    currentItem.Rule = currentItem.Rule | ToTerm("Current" + key);
+                }
+            }
 
 			// a model context node is a valid name of a type of node in the model or a pop context directive
 			modelContext.Rule = popContext
@@ -378,6 +386,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					modelContext.Rule = modelContext.Rule | ToTerm(key);
 				}
 			}
+            // add all ModelObjectProperty instances in model to assignableProperty rule
+            if (solution != null)
+            {
+                foreach (string key in solution.ModelObjectPropertyNames.AllKeys)
+                {
+                    modelContext.Rule = modelContext.Rule | ToTerm(key);
+                }
+            }
 
 			// an assignable property is a model property that can have values assigned to it
 			isFirstItem = true;

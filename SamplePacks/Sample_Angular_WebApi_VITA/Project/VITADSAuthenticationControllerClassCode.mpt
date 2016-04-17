@@ -26,8 +26,7 @@ using Vita.Common;
 using Vita.Entities;
 using Vita.Web;
 using Vita.Modules.Login;
-using Vita.Modules.PersistentSession;
-using %%><%%=Namespace%%><%%-.Dtos;%%>
+using Vita.Modules.Logging;%%>
 with (Project)
 {
 	if (ProjectReferenceCount > 1)
@@ -37,7 +36,8 @@ with (Project)
 		{
     <%%-
 using %%><%%=Namespace%%><%%-;
-using %%><%%=Namespace%%><%%-.Models;%%>
+using %%><%%=Namespace%%><%%-.Models;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
 		}
 	}
 	else
@@ -46,7 +46,8 @@ using %%><%%=Namespace%%><%%-.Models;%%>
 		{
     <%%-
 using %%><%%=Namespace%%><%%-;
-using %%><%%=Namespace%%><%%-.Models;%%>
+using %%><%%=Namespace%%><%%-.Models;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
 		}
 	}
 }
@@ -89,7 +90,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		public LoginResponseDto Login(LoginDto loginDto)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
-			<%%-//Validate input; if validation fails, ClientFaultException is thrown which results in BadRequest response, with body
+			<%%-// Validate input; if validation fails, ClientFaultException is thrown which results in BadRequest response, with body
 			// containing Json with client faults; if you use HttpClientWrapper (as unit tests do), it will re-throw ClientFaultException
 			// with fault list inside
 			OpContext.ThrowIfNull(loginDto, ClientFaultCodes.ContentMissing, "MessageContent", "Login object missing in request body.");
@@ -98,24 +99,16 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			OpContext.ThrowValidation();
 			
 			//Login using LoginService
-			var loginResult = _loginService.Login(loginDto.UserName, loginDto.Password);
-			if(!loginResult.Success)%%><%%=Solution.INDENT%%><%%-
-				return new LoginResponseDto() { ResultCode = "LoginFailed" };%%><%%=Solution.OUTDENT%%><%%-
+			var loginResult = _loginService.Login(OpContext, loginDto.UserName, loginDto.Password);
+			if(loginResult.Status == LoginAttemptStatus.Failed)%%><%%=Solution.INDENT%%><%%-
+			    return new LoginResponseDto() { ResultCode = "LoginFailed" };%%><%%=Solution.OUTDENT%%><%%-
 			//If account is suspended (ex: after 3 unsuccessful logins system suspends account for 10 minutes)
-			if (loginResult.Flags.IsSet(LoginFlags.Suspended))%%><%%=Solution.INDENT%%><%%-
-				return new LoginResponseDto() { ResultCode = "LoginSuspended" };%%><%%=Solution.OUTDENT%%><%%-
-			OpContext.User = loginResult.User; 
-			_sessionService.StartSession(OpContext);
+			if (loginResult.Login.Flags.IsSet(LoginFlags.Suspended))%%><%%=Solution.INDENT%%><%%-
+			    return new LoginResponseDto() { ResultCode = "LoginSuspended" };%%><%%=Solution.OUTDENT%%><%%-
+			OpContext.User = loginResult.User;
+			_sessionService.StartSession(OpContext, loginResult.User);
 			var userSession = OpContext.UserSession;
 			var resp = new LoginResponseDto() {ResultCode = "Success", AuthenticationToken = userSession.Token };
-			// Check login flags and let client know that there are extras to be completed
-			// The client app (like AngularJS app) can redirect to appropriate screen.
-			if(loginResult.Flags.IsSet(LoginFlags.ForceChangePassword))%%><%%=Solution.INDENT%%><%%-
-				resp.RequestedActions.Add("ForceChangePassword");%%><%%=Solution.OUTDENT%%><%%-
-			if(!loginResult.Flags.IsSet(LoginFlags.EmailVerified))%%><%%=Solution.INDENT%%><%%-
-				resp.RequestedActions.Add("VerifyEmail");%%><%%=Solution.OUTDENT%%><%%-
-			if(!loginResult.Flags.IsSet(LoginFlags.SecretQuestionsCreated))%%><%%=Solution.INDENT%%><%%-
-				resp.RequestedActions.Add("SetupSecretQuestions");%%><%%=Solution.OUTDENT%%><%%-
 			return resp;%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
@@ -138,7 +131,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 				%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = session.NewEntity<%%><%%=VITAInterfaceName%%><%%->();%%>
 				foreach (Entity in EntityAndBaseEntities)
 				{
-					foreach (Property where VITADSIsUpdateProperty == true && IsForeignKeyMember == false)
+					foreach (Property where VITAIsUpdateProperty == true && IsForeignKeyMember == false)
 					{
 						<%%=Solution.NEWLINE%%>
 						<%%=../../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%- = registerDto.%%><%%=VITAPropertyName%%><%%-;%%>
@@ -168,7 +161,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		public void Logout()%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
-			<%%-_loginService.Logout(OpContext.User);
+			<%%-_loginService.Logout(OpContext);
 			var userSession = OpContext.UserSession;
 			if(userSession != null)%%>
 			<%%=Solution.OPEN_BRACE%%>

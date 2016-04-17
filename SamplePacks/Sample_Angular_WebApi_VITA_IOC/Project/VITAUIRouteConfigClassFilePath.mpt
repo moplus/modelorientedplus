@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIRouteConfigClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\App_Start\RouteConfig_G.cs%%></CONTENT>

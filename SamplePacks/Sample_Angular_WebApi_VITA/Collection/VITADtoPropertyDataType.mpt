@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME VITADtoPropertyDataType
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+{
+	with (ReferencedEntity)
+	{
+		foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+		{
+			<%%=ReferencedEntity.VITADtoClassName%%>
+			return
+		}
+	}
+}
+<%%=ReferencedEntity.VITADtoClassName%%>
+%%></CONTENT>

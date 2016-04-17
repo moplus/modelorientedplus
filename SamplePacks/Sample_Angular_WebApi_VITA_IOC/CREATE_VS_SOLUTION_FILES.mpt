@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME CREATE_VS_SOLUTION_FILES
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+This configuration value is used to determine if Mo+ should create Visual Studio solution files.
+
+If the value returned is true, Mo+ templates that use this config value will create Visual Studio solution files.
+
+If the value returned is false, Mo+ templates that use this config value will NOT create Visual Studio solutions files.  You will then have to:
+
+1) Create the solution in Visual Studio, typically with the same name/location where your Mo+ templates expect it.
+2) In Mo+, create a solution, with the solution name being the same as the Visual Studio solution you created.
+3) In Mo+, generate your code!  The templates in this library typically will add (or remove) generated projects in your solution automatically.
+*/
+<%%-true%%></CONTENT>

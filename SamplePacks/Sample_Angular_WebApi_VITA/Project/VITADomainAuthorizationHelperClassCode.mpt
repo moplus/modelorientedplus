@@ -89,16 +89,8 @@ namespace %%><%%=Project.Namespace%%>
 			_initialized = true;
 			
 			// Data filters
-			// user ID reader reads current user ID from user context.
-			var userIdReader = new UserIdReader();
-			// Data filter detects if a given entity "belongs" to a data group identified 
-			// by a value in UserContext. The following data filter matches entities against UserId in UserContext
-			// The filter definition uses the AddEntity overload that expects a function that returns the group Id (userId) 
-			// for an entity (func: entity -> groupId). The returned Id for an entity will be matched against the value
-			// returned by userIdReader.
-			// The other AddEntity overload used for author data filter expects a method that returns true/false: 
-			//   func: (entity, userId) -> bool
-			var memberDataFilter = new DataFilter<Guid>("MemberData", userIdReader);%%>
+			// 'userid' value will be automatically injected by runtime when evaluating lambdas
+			var memberDataFilter = new AuthorizationFilter("MemberData");%%>
 			foreach (Entity where VITAIsPrimaryUserEntity == true)
 			{
 				foreach (Entity in Solution where VITAIsDataModelEntity == true)
@@ -106,7 +98,7 @@ namespace %%><%%=Project.Namespace%%>
 					if (HasReferenceToEntity(entityID = ../EntityID) == true)
 					{
 						<%%=Solution.NEWLINE%%>
-						<%%-memberDataFilter.AddEntity<%%><%%=VITAInterfaceName%%><%%->(i => i%%><%%=VITAPathToEntityKey(entityID = ../EntityID)%%><%%-);%%>
+						<%%-memberDataFilter.Add<%%><%%=VITAInterfaceName%%><%%-, %%><%%=VITAPrimaryKeyDataType%%><%%->((i, userId) => i%%><%%=VITAPathToEntityKey(entityID = ../EntityID)%%><%%- == userId);%%>
 					}
 				}
 			}

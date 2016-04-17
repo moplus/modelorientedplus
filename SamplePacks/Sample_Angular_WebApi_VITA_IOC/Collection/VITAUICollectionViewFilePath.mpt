@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUICollectionViewFilePath
+	CATEGORY VITAUI
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=Entity.LIBPluralEntityName%%><%%-\Get%%><%%=VITAPropertyName%%><%%-.html%%></CONTENT>

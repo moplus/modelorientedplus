@@ -1,0 +1,105 @@
+<CONFIG>
+	NAME VITAUIRegisterViewFile
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router create view (template) for registration.
+// This view provides a form to register.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-<!DOCTYPE html>
+<!--Copyright:
+%%>
+<%%=Solution.Copyright%%><%%-
+
+//------------------------------------------------------------------------------
+/// This file is for providing ui functionality for registration.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+-->
+<div class="container-fluid">%%><%%=Solution.INDENT%%><%%-
+	<h2>Registration</h2>
+	<form name="inputForm" novalidate angular-validator angular-validator-submit="register()">%%><%%=Solution.INDENT%%><%%-
+		<div class="row top5">%%><%%=Solution.INDENT%%><%%-
+                <div class="col-md-10">%%><%%=Solution.INDENT%%><%%-
+                    <label for="introText">User Name:</label>
+                    <input type="text" class="form-control" name="userName" ng-disabled="status.isReadOnly" ng-model="itemForm.userName"  maxlength="255" ng-pattern="/^.{0,255}$/" invalid-message="'User Name is too long.'"/>%%><%%=Solution.OUTDENT%%><%%-
+                </div>%%><%%=Solution.OUTDENT%%><%%-
+            </div>
+		<div class="row top5">%%><%%=Solution.INDENT%%><%%-
+                <div class="col-md-10">%%><%%=Solution.INDENT%%><%%-
+                    <label for="introText">Password:</label>
+                    <input type="password" class="form-control" name="password" ng-disabled="status.isReadOnly" ng-model="itemForm.password"  maxlength="255" ng-pattern="/^.{0,255}$/" invalid-message="'Password is too long.'"/>%%><%%=Solution.OUTDENT%%><%%-
+                </div>%%><%%=Solution.OUTDENT%%><%%-
+            </div>%%>
+		foreach (Entity where VITAIsPrimaryUserEntity == true)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsUICreateProperty == true)
+				{
+					<%%=VITAUIEditUI%%>
+				}
+			}
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (EntityReference where IsPrimaryReference == true && IsUICreateProperty == true)
+				{
+					<%%=VITAUIEditUI%%>
+				}
+			}
+		}
+		<%%-
+		<div class="row top5">%%><%%=Solution.INDENT%%><%%-
+			<div class="col-md-2">%%><%%=Solution.INDENT%%><%%-
+				 <label for="isAdministrator">Is Admin:</label>
+				 <input type="checkbox" class="form-control" name="isUpVote" ng-disabled="status.isReadOnly" ng-model="itemForm.isAdmin"  />%%><%%=Solution.OUTDENT%%><%%-
+			</div>%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="row top15" ng-if="!status.isReadOnly">%%><%%=Solution.INDENT%%><%%-
+			<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+				<button class="btn btn-default" type="submit" ng-disabled="!inputForm.$dirty">Submit</button>%%><%%=Solution.OUTDENT%%><%%-
+			</div>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</form>
+	<div class="row top15" ng-if="!status.isReadOnly">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+			<button class="btn btn-default" ng-click="back()">Cancel</button>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top15" ng-if="status.isReadOnly">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+			<button class="btn btn-default" ui-sref="home">OK</button>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top5" ng-if="status.isError">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12 text-danger">%%><%%=Solution.INDENT%%><%%-
+			{{status.errorMessage}}%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>
+	<div class="row top5" ng-if="status.isSuccess">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-12">%%><%%=Solution.INDENT%%><%%-
+			{{status.successMessage}}%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>%%><%%=Solution.OUTDENT%%><%%-
+</div>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUIRegisterViewFilePath, text=Text) == true)
+{
+	update(VITAUIRegisterViewFilePath)
+}
+%%></OUTPUT>

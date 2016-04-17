@@ -199,16 +199,47 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					_modelPropertyNames = new NameObjectCollection();
 					foreach (ModelProperty modelProperty in ModelPropertyList)
 					{
-						_modelPropertyNames[modelProperty.ModelPropertyName] = modelProperty.ModelPropertyName;
+                        if (modelProperty.DefinedByModelObjectID == null || modelProperty.DefinedByModelObjectID == Guid.Empty)
+                        {
+                            _modelPropertyNames[modelProperty.ModelPropertyName] = modelProperty.ModelPropertyName;
+                        }
 					}
 				}
 				return _modelPropertyNames;
 			}
 			set
 			{
-				_modelObjectNames = value;
+                _modelPropertyNames = value;
 			}
 		}
+
+        private NameObjectCollection _modelObjectPropertyNames = null;
+        ///--------------------------------------------------------------------------------
+        /// <summary>This property gets or sets the ModelPropertyNames.</summary>
+        ///--------------------------------------------------------------------------------
+        [XmlIgnore]
+        public NameObjectCollection ModelObjectPropertyNames
+        {
+            get
+            {
+                if (_modelObjectPropertyNames == null)
+                {
+                    _modelObjectPropertyNames = new NameObjectCollection();
+                    foreach (ModelProperty modelProperty in ModelPropertyList)
+                    {
+                        if (modelProperty.DefinedByModelObjectID != null && modelProperty.DefinedByModelObjectID != Guid.Empty)
+                        {
+                            _modelObjectPropertyNames[modelProperty.ModelPropertyName] = modelProperty.ModelPropertyName;
+                        }
+                    }
+                }
+                return _modelObjectPropertyNames;
+            }
+            set
+            {
+                _modelObjectPropertyNames = value;
+            }
+        }
 
 		private Parser _codeTemplateContentParser = null;
 		///--------------------------------------------------------------------------------

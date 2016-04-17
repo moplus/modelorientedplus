@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME VITAEntityReferencePropertyName
+	CATEGORY VITA
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var relationshipID
+foreach (PropertyRelationship)
+{
+	relationshipID = Relationship.RelationshipID
+}
+foreach (EntityReference in Entity)
+{
+	foreach (PropertyRelationship)
+	{
+		if (Relationship.RelationshipID == relationshipID)
+		{
+			<%%=../VITAPropertyName%%>
+			return
+		}
+	}
+}
+%%></CONTENT>

@@ -37,18 +37,50 @@ namespace MoPlus.Interpreter.BLL.Models
 		#endregion "Constants"
 		
 		#region "Fields and Properties"
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets/sets the name of the instance.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public override string Name
-		{
-			get
-			{
-				if (ModelProperty == null) return PropertyValue;
-				return ModelProperty.ModelPropertyName + "(" + PropertyValue + ")";
-			}
-		}
+        ///--------------------------------------------------------------------------------
+        /// <summary>This property gets/sets the name of the instance.</summary>
+        ///--------------------------------------------------------------------------------
+        [XmlIgnore]
+        public override string Name
+        {
+            get
+            {
+                if (ModelProperty == null) return PropertyValue;
+
+                return ModelProperty.ModelPropertyName + "(" + ShortName + ")";
+            }
+        }
+
+        ///--------------------------------------------------------------------------------
+        /// <summary>This property gets/sets the short name of the instance.</summary>
+        ///--------------------------------------------------------------------------------
+        [XmlIgnore]
+        public string ShortName
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                bool nameFound = false;
+                if (ModelProperty != null && ModelProperty.ModelObject != null && ModelProperty.ModelObject.Model != null && ModelProperty.DefinedByModelObjectID != null)
+                {
+                    ModelObject referencedObject = ModelProperty.ModelObject.Model.ModelObjectList.Find(i => i.ModelObjectID == ModelProperty.DefinedByModelObjectID);
+                    if (referencedObject != null)
+                    {
+                        ObjectInstance referencedInstance = referencedObject.ObjectInstanceList.Find(i => i.ObjectInstanceID.ToString().ToLower() == PropertyValue.ToLower());
+                        if (referencedInstance != null && !String.IsNullOrEmpty(referencedInstance.ShortName))
+                        {
+                            sb.Append(referencedInstance.ShortName);
+                            nameFound = true;
+                        }
+                    }
+                }
+                if (nameFound == false)
+                {
+                    sb.Append(PropertyValue);
+                }
+                return sb.ToString();
+            }
+        }
 
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets DisplayName.</summary>

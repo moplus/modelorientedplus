@@ -20,10 +20,28 @@ using Vita.Entities;
 using Vita.Entities.Authorization;
 using Vita.Entities.Runtime;
 using Vita.Entities.Services;
-using Vita.Modules.DbInfo;
+using Vita.Modules.EncryptedData;
+using Vita.Common;%%>
+if (Solution.VITA_ADD_LOG_MODULE == true || Solution.VITA_ADD_SESSION_MODULE == true)
+{
+<%%-
 using Vita.Modules.Logging;
-using Vita.Modules.PersistentSession;
+using Vita.Modules.Logging.Api;%%>
+}
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+<%%-
+using Vita.Modules.Login;
+using Vita.Modules.TextTemplates;%%>
+}
+if (Solution.VITA_ADD_INFO_MODULE == true)
+{
+<%%-
+using Vita.Modules.DbInfo;%%>
+}
+<%%-
 using %%><%%=Project.Namespace%%><%%-.Models;
+using %%><%%=Project.Namespace%%><%%-.Controllers;
 
 namespace %%><%%=Project.Namespace%%>
 <%%=Solution.OPEN_BRACE%%><%%-
@@ -40,17 +58,37 @@ namespace %%><%%=Project.Namespace%%>
 	/// <Status>Generated</Status>
 	//------------------------------------------------------------------------------
 	public partial class %%><%%=VITADomainAppClassName%%><%%-: EntityApp%%>
-	<%%=Solution.OPEN_BRACE%%><%%-
+	<%%=Solution.OPEN_BRACE%%>
+		<%%-
+		public DomainModule MainModule;
+%%>
+if (Solution.VITA_ADD_LOG_MODULE == true)
+{
+		<%%-		
+		// To use a separate database for logs, change log connection string in app.config file to point to a separate database.
+		public LoggingEntityApp LoggingApp;%%>
+}
+<%%-
+
 		///--------------------------------------------------------------------------------
 		/// <summary>Set up the application, incorporating all modules that should be part of the application.</summary>
 		///--------------------------------------------------------------------------------
+		public %%><%%=VITADomainAppClassName%%><%%-(string cryptoKey) : this()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			var cryptoService = this.GetService<IEncryptionService>();
+			var cryptoBytes = HexUtil.HexToByteArray(cryptoKey);
+			if (cryptoService != null) cryptoService.AddChannel(cryptoBytes); //sets up default unnamed channel%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
 		public %%><%%=VITADomainAppClassName%%><%%-()%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
-			this.Version = "1.0.0.1";
+			this.Version = "1.0.0.2";
 			
 			// add main area and module
 			var domainArea = this.AddArea("Domain", "domain");
-			var mainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
+			MainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
 			if (Solution.VITA_ADD_INFO_MODULE == true || Solution.VITA_ADD_LOGIN_MODULE == true || Solution.VITA_ADD_LOG_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
@@ -67,12 +105,6 @@ namespace %%><%%=Project.Namespace%%>
 				<%%=Solution.NEWLINE%%>
 				<%%-var loginArea = this.AddArea("Login", "login");%%>
 			}
-			if (Solution.VITA_ADD_LOG_MODULE == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%-var logArea = this.AddArea("Log", "log");%%>
-			}
-
 			if (Solution.VITA_ADD_INFO_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
@@ -80,45 +112,26 @@ namespace %%><%%=Project.Namespace%%>
 				<%%-// add App instance info module%%>
 				<%%=Solution.NEWLINE%%>
 				<%%-var appInstanceInfoModule = new DbInfoModule(infoArea);%%>
+				<%%=Solution.NEWLINE%%>
 			}
 			if (Solution.VITA_ADD_LOGIN_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
 				<%%-// add login functionality
-				var loginConfig = new Vita.Modules.Login.LoginModuleSettings(passwordSalt: "%%><%%=ProjectID.ToUpper()%%><%%-");
-				// LoginModule will place 2 log-type tables  (ILoginLog, ILoginWorkflow) into logArea
-				var loginModule = new Vita.Modules.Login.LoginModule(loginArea, loginConfig%%>
-				if (Solution.VITA_ADD_LOG_MODULE == true)
-				{
-					<%%-, logArea%%>
-				}
-				<%%-);%%>
-			}
-			if (Solution.VITA_ADD_SESSION_MODULE == true)
-			{
-				<%%=Solution.NEWLINE%%>
-				<%%=Solution.NEWLINE%%>
-				<%%-// Server-side persistent session
-				// Define session token - it will be used to automatically retrieve and attach user session to incoming request
-				var sessionTokenInfo = new WebTokenInfo("Authorization", WebTokenSource.Header, WebTokenDirection.Input);
-				var sessionStt = new PersistentSessionSettings(sessionToken: sessionTokenInfo);%%>
-				if (Solution.VITA_ADD_LOG_MODULE == true)
-				{
-					<%%=Solution.NEWLINE%%>
-					<%%-var sessionService = new PersistentSessionModule(logArea, sessionStt);%%>
-				}
+				var loginStt = new LoginModuleSettings(passwordExpirationPeriod: TimeSpan.FromDays(180)); //uses BCrypt hashing
+				loginStt.RequiredPasswordStrength = PasswordStrength.Medium; 
+				// var loginStt = new LoginModuleSettings(passwordHasher: new Pbkdf2PasswordHasher()); // uses Pbkdf2 hasher - inferior method
+				var loginModule = new LoginModule(loginArea, loginStt);
+				//EncryptedData is used by login module
+				var cryptModule = new EncryptedDataModule(loginArea);
+				var templateModule = new TemplateModule(domainArea);%%>
 			}
 			if (Solution.VITA_ADD_LOG_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
 				<%%=Solution.NEWLINE%%>
 				<%%-// add user transaction log, with extra tracking columns in "transaction" entities  
-				var transLogStt = new TransactionLogSettings(UpdateLogLevel.KeysOnly, domainArea%%>
-				if (Solution.VITA_ADD_LOGIN_MODULE == true)
-				{
-					<%%-, loginArea%%>
-				}
-				<%%-);
+				var transLogStt = new TransactionLogModelExtender();
 				// add columns CreatedIn and UpdatedIn - tracking user/date of create/update events
 				transLogStt.AddUpdateStampColumns(new[]%%>
 				<%%=Solution.OPEN_BRACE%%>
@@ -141,15 +154,13 @@ namespace %%><%%=Project.Namespace%%>
 				createIdPropertyName: "CreatedIn", updateIdPropertyName: "UpdatedIn");%%>
 				<%%=Solution.OUTDENT%%>
 				<%%=Solution.NEWLINE%%>
-				<%%-var transLog = new TransactionLogModule(logArea, transLogStt);
-					// Error log, operation log, web call log, model change log, incident log
-					var log = new OperationLogModule(logArea);
-					var errLog = new ErrorLogModule(logArea);
-					var webCallLog = new WebCallLogModule(logArea);
-					var modelChangeLog = new DbModelChangeLogModule(logArea);
-					var incLog = new IncidentLogModule(logArea);%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// Error log, operation log, web call log, model change log, incident log, persistent session
+					this.LoggingApp = new LoggingEntityApp("log");
+					LoggingApp.LinkTo(this);%%>
 					if (Solution.VITA_ADD_LOGIN_MODULE == true)
 					{
+						<%%=Solution.NEWLINE%%>
 						<%%=Solution.NEWLINE%%>
 						<%%-// add trigger to suspense login after 3 failed attempts within a minute
 						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(this,%%>
@@ -158,9 +169,41 @@ namespace %%><%%=Project.Namespace%%>
 						<%%-failureCount: 3, timeWindow: TimeSpan.FromMinutes(1), suspensionPeriod: TimeSpan.FromMinutes(5));%%>
 						<%%=Solution.OUTDENT%%>
 						<%%=Solution.NEWLINE%%>
-						<%%-incLog.AddTrigger(loginFailedTrigger);%%>
+						<%%-LoggingApp.IncidentLog.AddTrigger(loginFailedTrigger);%%>
 					}
 			}
+			<%%-
+			
+			//api config
+			base.ApiConfiguration.GlobalRoutePrefix = "slimapi";
+			base.ApiConfiguration.RegisterControllerTypes(%%>
+			<%%=Solution.INDENT%%>
+			foreach (Entity in Solution where VITAIsDataModelEntity == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%-
+				typeof(%%><%%=VITAApiControllerClassName%%><%%-)%%>
+			}
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%-,
+				typeof(ClientErrorController),
+				typeof(LoggingDataController)%%>
+			}
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%-,
+				typeof(AuthenticationController),
+				typeof(LoginController),
+				typeof(PasswordResetController),
+				typeof(LoginSelfServiceController),
+				typeof(LoginAdministrationController)%%>
+			}
+			<%%-);%%>
+			<%%=Solution.OUTDENT%%>
 			<%%-
 			
 			// add additional custom areas and other features here

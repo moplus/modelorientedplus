@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAViewInterfaceFilePath
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Models\%%><%%=VITAViewInterfaceName%%><%%-_G.cs%%></CONTENT>

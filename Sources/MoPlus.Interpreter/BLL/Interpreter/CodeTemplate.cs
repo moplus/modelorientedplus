@@ -410,7 +410,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		{
 			ModelContextStack = null;
 			PopCount = 0;
-			PushModelContext(modelContext);
+            PushModelContext(modelContext);
 			MessageBuilder.Clear();
 			ContentCodeBuilder.Clear();
 			Parameters.Clear();
@@ -443,7 +443,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 				CachedContent[modelContext.ID.ToString()] = null;
 
 				// only cache smaller content that has no parameters or config settings
-				if (Parameters.Count == 0 && HasRelativeSettings == false && ContentCodeBuilder.Length <= Solution.TemplateCacheMaxContentSize)
+				if (Parameters.Count == 0 && HasRelativeSettings == false && IncludesProjectContext == false && ContentCodeBuilder.Length <= Solution.TemplateCacheMaxContentSize)
 				{
 					CachedContent[modelContext.ID.ToString()] = ContentCodeBuilder.ToString();
 				}
@@ -661,7 +661,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		{
 			ModelContextStack = null;
 			PopCount = 0;
-			PushModelContext(modelContext);
+            PushModelContext(modelContext);
 			OutputCodeBuilder.Clear();
 			CurrentTabIndent = templateContext.CurrentTabIndent;
 			if (OutputAST == null)

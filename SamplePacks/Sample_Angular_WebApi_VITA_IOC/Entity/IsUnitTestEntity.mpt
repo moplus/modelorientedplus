@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsUnitTestEntity
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAIsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

@@ -42,16 +42,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Vita">
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.dll</HintPath>
-    </Reference>
-    <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Vita, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Data.MsSql.dll</HintPath>
+      <HintPath>..\packages\Vita.1.7.2.0\lib\net45\Vita.dll</HintPath>
     </Reference>
-    <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Modules.dll</HintPath>
+    <Reference Include="Vita.Modules">
+      <HintPath>..\packages\Vita.Modules.1.7.2.0\lib\net45\Vita.Modules.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -109,9 +105,56 @@ if (File(Path).Contains(VITADomainModuleClassFilePath.Substring(Project.ProjectD
 	// add to project file
 	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainModuleClassFilePath))
 }
+<%%>VITADomainAppConfigClassCode%%>
+log("GeneratedFile", VITADomainAppConfigClassFilePath, true)
+if (File(Path).Contains(VITADomainAppConfigClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADomainAppConfigClassFilePath))
+}
+<%%>VITAQueryResultsClassCode%%>
+log("GeneratedFile", VITAQueryResultsClassFilePath, true)
+if (File(Path).Contains(VITAQueryResultsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+{
+	// add to project file
+	insert(ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAQueryResultsClassFilePath))
+}
+
 
 if (Solution.VITA_ADD_LOGIN_MODULE == true)
 {
+	<%%>VITARegisterDtoClassCode%%>
+	log("GeneratedFile", VITARegisterDtoClassFilePath, true)
+	if (File(Path).Contains(VITARegisterDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITARegisterDtoClassFilePath))
+	}
+	
+	<%%>VITALoginDtoClassCode%%>
+	log("GeneratedFile", VITALoginDtoClassFilePath, true)
+	if (File(Path).Contains(VITALoginDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITALoginDtoClassFilePath))
+	}
+	
+	<%%>VITALoginResponseDtoClassCode%%>
+	log("GeneratedFile", VITALoginResponseDtoClassFilePath, true)
+	if (File(Path).Contains(VITALoginResponseDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITALoginResponseDtoClassFilePath))
+	}
+
+	<%%>VITAApiAuthenticationControllerClassCode%%>
+	log("GeneratedFile", VITAApiAuthenticationControllerClassFilePath, true)
+	if (File(Path).Contains(VITAApiAuthenticationControllerClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAApiAuthenticationControllerClassFilePath))
+	}
+
 	<%%>VITADomainAuthorizationHelperClassCode%%>
 	log("GeneratedFile", VITADomainAuthorizationHelperClassFilePath, true)
 	if (File(Path).Contains(VITADomainAuthorizationHelperClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
@@ -140,6 +183,76 @@ foreach (Entity in Solution where VITAIsDataModelEntity == true)
 	{
 		// add to project file
 		insert(../ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAInterfaceFilePath))
+	}
+	
+	if (Tags.Contains("VIEW") == true)
+	{
+		<%%>VITAViewInterfaceCode%%>
+		log("GeneratedFile", VITAViewInterfaceFilePath, true)
+		if (File(Path).Contains("\"" + VITAViewInterfaceFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// add to project file
+			insert(../ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAViewInterfaceFilePath))
+		}
+		
+		<%%>VITADtoViewClassCode%%>
+		log("GeneratedFile", VITADtoViewClassFilePath, true)
+		if (File(Path).Contains("\"" + VITADtoViewClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// add to project file
+			insert(../ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADtoViewClassFilePath))
+		}
+		
+		<%%>VITADtoViewExtensionsClassCode%%>
+		log("GeneratedFile", VITADtoViewExtensionsClassFilePath, true)
+		if (File(Path).Contains(VITADtoViewExtensionsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// add to project file
+			insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADtoViewExtensionsClassFilePath))
+		}
+	}
+	
+	if (VITAHasFullNameProperty == true)
+	{
+		<%%>VITAHelperCode%%>
+		log("GeneratedFile", VITAHelperFilePath, true)
+		if (File(Path).Contains("\"" + VITAHelperFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+		{
+			// add to project file
+			insert(../ProjectFilePath, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAHelperFilePath))
+		}
+	}
+	
+	<%%>VITADtoClassCode%%>
+	log("GeneratedFile", VITADtoClassFilePath, true)
+	if (File(Path).Contains(VITADtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADtoClassFilePath))
+	}
+	
+	<%%>VITADtoExtensionsClassCode%%>
+	log("GeneratedFile", VITADtoExtensionsClassFilePath, true)
+	if (File(Path).Contains(VITADtoExtensionsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADtoExtensionsClassFilePath))
+	}
+	
+	<%%>VITAQueryClassCode%%>
+	log("GeneratedFile", VITAQueryClassFilePath, true)
+	if (File(Path).Contains(VITAQueryClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAQueryClassFilePath))
+	}
+	
+	<%%>VITAApiControllerClassCode%%>
+	log("GeneratedFile", VITAApiControllerClassFilePath, true)
+	if (File(Path).Contains(VITAApiControllerClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
+	{
+		// add to project file
+		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITAApiControllerClassFilePath))
 	}
 	
 	progress

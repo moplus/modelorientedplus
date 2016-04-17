@@ -1,0 +1,19 @@
+<CONFIG>
+	NAME VITAPropertyDisplayName
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var displayName = PropertyName
+if (displayName.EndsWith("Code") == true)
+{
+	displayName = displayName.Substring(0, displayName.Length-4)
+}
+if (displayName.StartsWith("Is") == true && (displayName.Substring(2,1).ToUpper() == displayName.Substring(2,1)))
+{
+	displayName = displayName.Substring(2)
+}
+<%%=displayName.CapitalWordCase()%%>
+%%></CONTENT>

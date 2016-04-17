@@ -1,0 +1,132 @@
+<CONFIG>
+	NAME VITAUIViewUI
+	CATEGORY VITAUI
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var attributes = " readonly"
+var columnSize = "col-md-5"
+var inputType = "text"
+var isTextArea = false
+var size = 0
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 2: // IntShort
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 3: // Int
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 4: // IntLong
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 5: // Byte
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 6: // UIntShort
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 7: // UInt
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 8: // UIntLong
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 9: // FloatSingle
+		columnSize = "col-md-3"
+		break
+	case 10: // FloatDouble
+		columnSize = "col-md-4"
+		break
+	case 11: // Decimal
+		columnSize = "col-md-3"
+		break
+	case 12: // Boolean
+		inputType = "checkbox"
+		columnSize = "col-md-2"
+		break
+	case 18: // Currency
+		size = Precision + Scale + 1
+		columnSize = "col-md-3"
+		break
+	case 21: // IntTiny
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 22: // UIntTiny
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 24: // DateTime
+		inputType = "datetime"
+		columnSize = "col-md-4"
+		break
+	case 15: // Object
+	case 19: // Text
+	case 20: // TextUnicode
+	case 23: // Binary
+	case 27: // Image
+		columnSize = "col-md-12"
+		isTextArea = true
+		break
+	default:
+		if (Length < 10)
+		{
+			columnSize = "col-md-3"
+		}
+		else if (Length < 20)
+		{
+			columnSize = "col-md-4"
+		}
+		else if (Length > 1000)
+		{
+			columnSize = "col-md-12"
+			isTextArea = true
+		}
+		else if (Length > 400)
+		{
+			columnSize = "col-md-10"
+		}
+		else if (Length > 200)
+		{
+			columnSize = "col-md-7"
+		}
+		if (PropertyName.ToLower().Contains("password") == true)
+		{
+			inputType = "password"
+		}
+		break
+}	
+		<%%=Solution.NEWLINE%%>
+		<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="%%><%%=columnSize%%><%%-">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="%%><%%=VITAParameterName%%><%%-">%%><%%=VITALabelName%%><%%-:</label>%%>
+				<%%=Solution.NEWLINE%%>
+				if (isTextArea == true)
+				{
+					<%%-<textarea rows="3" class="form-control"%%><%%=attributes%%><%%- id="%%><%%=VITAParameterName%%><%%-" ng-model="itemForm.%%><%%=VITAParameterName%%><%%-"></textarea>%%><%%=Solution.OUTDENT%%>
+				}
+				else
+				{
+					<%%-<input type="%%><%%=inputType%%><%%-" class="form-control"%%><%%=attributes%%><%%- id="%%><%%=VITAParameterName%%><%%-" ng-model="itemForm.%%><%%=VITAParameterName%%><%%-" />%%><%%=Solution.OUTDENT%%>
+				}
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-</div>%%>
+%%></CONTENT>

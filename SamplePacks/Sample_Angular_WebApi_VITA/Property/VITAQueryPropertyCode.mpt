@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME VITAQueryPropertyCode
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (DataTypeCode == 24 /* DateTime */ || DataTypeCode == 29 /* DateTimeSmall */)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=VITAQueryDataType%%><%%- %%><%%=VITAPropertyName%%><%%-Start { get; set; }%%>
+	<%%=Solution.NEWLINE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=VITAQueryDataType%%><%%- %%><%%=VITAPropertyName%%><%%-End { get; set; }%%>
+}
+else
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=VITAQueryDataType%%><%%- %%><%%=VITAPropertyName%%><%%- { get; set; }%%>
+}
+%%></CONTENT>

@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME VITAUIEditUI
+	CATEGORY VITAUI
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var attributes = ""
+if (IsNullable == false)
+{
+	attributes = " required required-message=\"'" + VITALabelName + " is required, please choose a " + ReferencedEntity.VITAClassName.CapitalWordCase() + ".'\""
+}
+<%%=Solution.NEWLINE%%>
+<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-<div class="col-md-5">%%><%%=Solution.INDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<label for="%%><%%=VITAParameterName%%><%%-">%%><%%=VITALabelName%%><%%-:</label>%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<select class="form-control" name="%%><%%=VITAParameterName%%><%%-" ng-disabled="status.isReadOnly" ng-model="itemForm.%%><%%=VITAPropertyParameterName%%><%%-"%%>
+		if (attributes != "")
+		{
+			<%%- %%><%%=attributes%%>
+		}
+		<%%- ng-options="item.%%><%%=VITAPrimaryKeyPropertyName%%><%%- as item.%%><%%=ReferencedEntity.VITAPrimaryNameProperty%%><%%- for item in itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-"></select>%%><%%=Solution.OUTDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-</div>%%><%%=Solution.OUTDENT%%>
+<%%=Solution.NEWLINE%%>
+<%%-</div>%%>
+%%></CONTENT>

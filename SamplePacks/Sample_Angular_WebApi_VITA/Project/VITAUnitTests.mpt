@@ -47,16 +47,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Vita">
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.dll</HintPath>
-    </Reference>
-    <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Vita, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Data.MsSql.dll</HintPath>
+      <HintPath>..\packages\Vita.1.7.2.0\lib\net45\Vita.dll</HintPath>
     </Reference>
-    <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Modules.dll</HintPath>
+    <Reference Include="Vita.Modules">
+      <HintPath>..\packages\Vita.Modules.1.7.2.0\lib\net45\Vita.Modules.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

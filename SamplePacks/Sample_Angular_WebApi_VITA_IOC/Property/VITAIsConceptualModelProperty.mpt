@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsConceptualModelProperty
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsBaseProperty == true)
+{
+	<%%-false%%>
+	return
+}
+%%>
+<%%-true%%></CONTENT>

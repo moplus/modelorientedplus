@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME VITAHasMultipleReferences
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var referenceCount = 0
+with (ReferencedEntity)
+{
+	if (BaseEntity.EntityID == ../Entity.EntityID)
+	{
+		referenceCount = referenceCount + 1
+	}
+	foreach (EntityReference where ReferencedEntity.EntityID == ../Entity.EntityID)
+	{
+		referenceCount = referenceCount + 1
+	}
+}
+if (referenceCount > 0)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

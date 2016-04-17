@@ -1,0 +1,79 @@
+<CONFIG>
+	NAME UnitTestGetTestMethod
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>Get a new test instance of %%><%%=VITAInterfaceName%%><%%- for the VITA entity store.</summary>
+///
+/// <returns>An instance of %%><%%=VITAInterfaceName%%><%%- filled with test data.</returns>
+/// <param name="session">The VITA entity store session.</param>
+/// <param name="includeCollections">Flag indicating whether to include collections in adding data.</param>
+/// <param name="parentInstance">The parent instance getting this item, if applicable.</param>
+///--------------------------------------------------------------------------------
+public static %%><%%=VITAInterfaceName%%><%%- GetTest%%><%%=VITAClassName%%><%%-(IEntitySession session, bool includeCollections = true, object parentInstance = null)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-// get an item filled with test data%%>
+	<%%=Solution.NEWLINE%%>
+	<%%=VITAInterfaceName%%><%%- item = session.NewEntity<%%><%%=VITAInterfaceName%%><%%->();%%>
+         if (BaseEntityID != null)
+         {
+		<%%=Solution.NEWLINE%%>
+		<%%-item.%%><%%=BaseEntity.VITAClassName%%><%%- = %%><%%=BaseEntity.UnitTestClassName%%><%%-.GetTest%%><%%=BaseEntity.VITAClassName%%><%%-(session, false);%%>
+	     }
+	foreach (Property where VITAIsConceptualModelProperty == true && TestValue != null && IsUICreateProperty == true)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-item.%%><%%=VITAPropertyName%%><%%- = %%><%%=TestValue%%><%%-;%%>
+	}
+         foreach (EntityReference where IsPrimaryReference == true)
+         {
+		<%%=Solution.NEWLINE%%>
+		<%%-if (parentInstance is %%><%%=ReferencedEntity.VITAInterfaceName%%><%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-item.%%><%%=EntityReferenceName%%><%%- = parentInstance as %%><%%=ReferencedEntity.VITAInterfaceName%%><%%-;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.ELSE%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-item.%%><%%=EntityReferenceName%%><%%- = %%><%%=ReferencedEntity.UnitTestClassName%%><%%-.GetTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(session, false, item);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-if (includeCollections == true)%%>
+	<%%=Solution.OPEN_BRACE%%>
+	foreach (Collection where IsPrimaryCollection == true)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-for (int i = 0; i < GetRandomNumeric(1, 5); i++ )%%>
+		<%%=Solution.OPEN_BRACE%%>
+		if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.Add(%%><%%=ReferencedEntity.UnitTestClassName%%><%%-.GetTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(session, false, item));%%>
+				}
+			}
+		}
+		else
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-item.%%><%%=VITAPropertyName%%><%%-.Add(%%><%%=ReferencedEntity.UnitTestClassName%%><%%-.GetTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(session, false, item));%%>
+		}
+		<%%=Solution.CLOSE_BRACE%%>
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+   	<%%-return item;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT>

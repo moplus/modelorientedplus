@@ -13,12 +13,14 @@
 </copyright>*/
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Linq;
 using System.Web.Http;
 using Vita.Data;
 using Vita.Data.MsSql;
-using Vita.Entities.Services;%%>
+using Vita.Entities.Services;
+using Vita.Web;%%>
 with (Project)
 {
 	if (ProjectReferenceCount > 1)
@@ -63,29 +65,14 @@ namespace %%><%%=Namespace%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%-
 			// set up application and service
-			var app = SetupApp(ConfigurationManager.AppSettings["DbConnectionString"]);
-			DomainServiceConfig.Configure(config, app, LogLevel.Basic, sendErrorDetailsToClient: true);
+			var app = DomainAppConfig.SetupApp();
+			WebHelper.ConfigureWebApi(config, app);
 			
 			// add your customized config code here
 			#region protected
 			#endregion protected
 			
 			config.EnsureInitialized();%%>
-		<%%=Solution.CLOSE_BRACE%%>
-		<%%-
-		
-		public static %%><%%=VITADomainAppClassName%%><%%- SetupApp(string connString)%%>
-		<%%=Solution.OPEN_BRACE%%>
-			<%%-
-			// set up application
-			var domainApp = new %%><%%=VITADomainAppClassName%%><%%-();
-			domainApp.Init();
-			var driver = MsSqlDbDriver.Create(connString);
-			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
-			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
-			domainApp.ConnectTo(dbSettings);
-			
-			return domainApp;%%>
 		<%%=Solution.CLOSE_BRACE%%>
 	<%%=Solution.CLOSE_BRACE%%>
 <%%=Solution.CLOSE_BRACE%%>

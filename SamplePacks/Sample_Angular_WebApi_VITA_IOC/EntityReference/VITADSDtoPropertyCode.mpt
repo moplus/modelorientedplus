@@ -1,0 +1,50 @@
+<CONFIG>
+	NAME VITADSDtoPropertyCode
+	CATEGORY VITADS
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%:
+with (ReferencedEntity)
+{
+	foreach (Property where IsPrimaryKeyMember == true limit 1)
+	{
+<%%-public %%><%%=VITADataType%%><%%- %%><%%=VITAPropertyName%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-get%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-return %%><%%=../../VITAPropertyName%%><%%-.%%><%%=VITAPropertyName%%><%%-;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-set%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=../../VITAPropertyName%%><%%-.%%><%%=VITAPropertyName%%><%%- = value;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+	}
+}
+%%>
+
+<%%=Solution.NEWLINE%%>
+<%%-private %%><%%=ReferencedEntity.VITAInterfaceName%%><%%- %%><%%=VITAPropertyName.CamelCase()%%><%%-;
+public %%><%%=ReferencedEntity.VITAInterfaceName%%><%%- %%><%%=VITAPropertyName%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-get%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-if (%%><%%=VITAPropertyName.CamelCase()%%><%%- == null) %%><%%=VITAPropertyName.CamelCase()%%><%%- = new %%><%%=ReferencedEntity.VITADSDtoClassName%%><%%-();
+		return %%><%%=VITAPropertyName.CamelCase()%%><%%-;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-set%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAPropertyName.CamelCase()%%><%%- = value;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%></CONTENT>

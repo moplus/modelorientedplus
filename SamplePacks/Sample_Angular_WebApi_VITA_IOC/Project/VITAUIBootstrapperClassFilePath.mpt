@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIBootstrapperClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Bootstrapper_G.cs%%></CONTENT>

@@ -242,6 +242,9 @@
     <value> could not be dropped.  In order to copy, the drop target must be of the same type as the drag source, or the immediate parent to an item of the same type.</value>
     <comment>For drag and drop issues.</comment>
   </data>
+  <data name="Message_DuplicateSolutions" xml:space="preserve">
+    <value>You have opened a solution with the same SolutionID as an existing open solution.  This may cause unexpected results when editing.  Please close one of these solutions before editing.</value>
+  </data>
   <data name="Message_ForceClosingItemEnd" xml:space="preserve">
     <value> has outstanding edits and must be closed.  Do you want to save the changes?</value>
     <comment>Closing item end</comment>

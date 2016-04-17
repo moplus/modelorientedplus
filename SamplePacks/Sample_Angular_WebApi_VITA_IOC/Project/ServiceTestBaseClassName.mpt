@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceTestBaseClassName
+	CATEGORY ServiceTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-BaseServiceTest%%></CONTENT>

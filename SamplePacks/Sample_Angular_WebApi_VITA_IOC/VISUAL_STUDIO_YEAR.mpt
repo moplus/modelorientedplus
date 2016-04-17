@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VISUAL_STUDIO_YEAR
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// VisualStudio version (year) to be utilized in generating solution files, etc.
+<%%-2013%%></CONTENT>

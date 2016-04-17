@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIHomeControllerClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Controllers\HomeController_G.cs%%></CONTENT>

@@ -1,0 +1,62 @@
+<CONFIG>
+	NAME VITALoginResponseDtoClassCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a class to provide response data from the VITA authentication module authentication controller.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Vita.Common;
+using Vita.Entities;
+using %%><%%=Project.Namespace%%><%%-;
+using %%><%%=Project.Namespace%%><%%-.Models;
+
+namespace %%><%%=Project.Namespace%%><%%-.Dtos%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines the key elements of the Login response
+	/// data transfer object, and associated methods for validation.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class LoginResponseDto%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public string ResultCode { get; set; } //Success, AccountSuspended, Failed%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public string AuthenticationToken { get; set; } //the client app should put this token into Authorization header on each subsequent request%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public List<string> RequestedActions = new List<string>(); //if requires some extra action - reset temp password, verify email, etc.%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITALoginResponseDtoClassFilePath, text=Text) == true)
+{
+	update(VITALoginResponseDtoClassFilePath)
+}
+%%></OUTPUT>

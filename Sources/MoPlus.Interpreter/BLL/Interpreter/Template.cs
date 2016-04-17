@@ -101,6 +101,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		}
 
         ///--------------------------------------------------------------------------------
+        /// <summary>This property gets/sets the IncludesProjectContext.</summary>
+        ///--------------------------------------------------------------------------------
+        public bool IncludesProjectContext { get; set; }
+
+        ///--------------------------------------------------------------------------------
         /// <summary>This property gets/sets the HasRelativeSettings.</summary>
         ///--------------------------------------------------------------------------------
         public bool HasRelativeSettings { get; set; }

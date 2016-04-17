@@ -1,0 +1,143 @@
+<CONFIG>
+	NAME UnitTestCompareItemsMethod
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>Compare two instances (including references) of %%><%%=VITAInterfaceName%%><%%- for equality by value.</summary>
+/// 
+/// <returns>False if there are any differences between the instances, True otherwise.</returns>
+/// <param name="item1">The first instance if %%><%%=VITAInterfaceName%%><%%- to compare.</param>
+/// <param name="item2">The second instance if %%><%%=VITAInterfaceName%%><%%- to compare.</param>
+/// <param name="compareCollections">Flag to indicate whether to include collections in comparison.</param>
+/// <param name="parentInstance">The parent instance, used to skip reference check of parent.</param>
+///--------------------------------------------------------------------------------
+public static bool CompareItems(%%><%%=VITAInterfaceName%%><%%- item1, %%><%%=VITAInterfaceName%%><%%- item2, bool compareCollections = true, object parentInstance = null)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+	if (item1 == null && item2 == null) return true;
+	if (item1 == null && item2 != null) return false;
+	if (item2 == null && item1 != null) return false;%%>
+	var propertyFound = false
+	foreach (Property where VITAIsConceptualModelProperty == true && IsForeignKeyMember == false)
+	{
+		if (propertyFound == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// compare the non reference properties of item1 and item2%%>
+			propertyFound = true
+		}
+		switch (DataTypeCode)
+		{
+			case 24: // Date Time
+			case 29: // Date Time Small
+			case 30: // TIme
+				<%%=Solution.NEWLINE%%>
+				<%%-if (item1.%%><%%=VITAPropertyName%%><%%-.ToString() != item2.%%><%%=VITAPropertyName%%><%%-.ToString()) return false;%%>
+				break
+			case 25: // Timestamp
+				// don't compare values
+				break
+			default:
+				<%%=Solution.NEWLINE%%>
+				<%%-if (item1.%%><%%=VITAPropertyName%%><%%- != item2.%%><%%=VITAPropertyName%%><%%-) return false;%%>
+				break
+		}
+	}
+	propertyFound = false
+	foreach (EntityReference)
+	{
+		if (propertyFound == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// compare the reference properties of item1 and item2%%>
+			propertyFound = true
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-if (parentInstance is %%><%%=ReferencedEntity.VITAInterfaceName%%><%%- == false && %%><%%=ReferencedEntity.UnitTestClassName%%><%%-.CompareItems(item1.%%><%%=EntityReferenceName%%><%%-, item2.%%><%%=EntityReferenceName%%><%%-, compareCollections, item1) == false) return false;%%>
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-if (compareCollections == true)%%>
+	<%%=Solution.OPEN_BRACE%%>
+	foreach (Collection where IsPrimaryCollection == true)
+	{
+		if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-if (item1.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.Count != item2.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.Count) return false;%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-foreach (%%><%%=ReferencedEntity.VITAInterfaceName%%><%%- colItem in item1.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-)%%>
+					<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-if (%%><%%=ReferencedEntity.UnitTestClassName%%><%%-.CompareItems(colItem, item2.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.FirstOrDefault(i =>%%>
+					foreach (Property in ReferencedEntity where IsPrimaryKeyMember == true)
+					{
+						if (ItemIndex == 0)
+						{
+							<%%- %%>
+						}
+						else
+						{
+							<%%- && %%>
+						}
+						<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == colItem.%%><%%=VITAPrimaryKeyPath%%>
+					}
+					<%%-), false) == false) return false;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				}
+			}
+		}
+		else
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-if (item1.%%><%%=VITAPropertyName%%><%%-.Count != item2.%%><%%=VITAPropertyName%%><%%-.Count) return false;%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-foreach (%%><%%=ReferencedEntity.VITAInterfaceName%%><%%- colItem in item1.%%><%%=VITAPropertyName%%><%%-)%%>
+			<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-if (%%><%%=ReferencedEntity.UnitTestClassName%%><%%-.CompareItems(colItem, item2.%%><%%=VITAPropertyName%%><%%-.FirstOrDefault(i =>%%>
+			foreach (Property in ReferencedEntity where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%- %%>
+				}
+				else
+				{
+					<%%- && %%>
+				}
+				<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == colItem.%%><%%=VITAPrimaryKeyPath%%>
+			}
+			<%%-), false) == false) return false;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+	if (BaseEntityID != null)
+	{
+		if (propertyFound == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// compare the reference properties of item1 and item2%%>
+			propertyFound = true
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-if (%%><%%=BaseEntity.UnitTestClassName%%><%%-.CompareItems(item1.%%><%%=BaseEntity.VITAClassName%%><%%-, item2.%%><%%=BaseEntity.VITAClassName%%><%%-) == false) return false;%%>
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%=Solution.NEWLINE%%>
+   	<%%-return true;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT>

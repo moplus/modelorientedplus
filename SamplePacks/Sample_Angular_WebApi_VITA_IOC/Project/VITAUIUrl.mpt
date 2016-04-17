@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIUrl
+	CATEGORY CONFIG
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-http://localhost:%%><%%=VITAUIPort%%><%%-/%%></CONTENT>

@@ -43,7 +43,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 	firstItem = true
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Property where VITADSIsQueryProperty == true)
+		foreach (Property where VITAIsQueryProperty == true)
 		{
 			if (firstItem != true)
 			{
@@ -66,7 +66,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 	{
 		<%%-, %%>
 	}
-	<%%-orderBy, decending, page, pageSize)%%>
+	<%%-orderBy, page, pageSize)%%>
 	<%%=Solution.OPEN_BRACE(js=true)%%>
 		<%%-
 		var deferredObject = $q.defer();
@@ -84,7 +84,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 		<%%=Solution.OPEN_BRACE(js=true)%%>
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					switch (DataTypeCode)
 					{
@@ -105,20 +105,18 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-OrderBy: orderBy,%%>
 			<%%=Solution.NEWLINE%%>
-			<%%-Descending: decending,%%>
-			<%%=Solution.NEWLINE%%>
 			<%%-Skip: (page - 1) * pageSize,%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-Take: pageSize%%>
 		<%%=Solution.CLOSE_BRACE%%><%%-;
 		if (searchQuery.Skip < 0) searchQuery.Skip = 0;
 		
-		$http.get('/api/%%><%%=VITADSApiRoute%%><%%-', { params: searchQuery }).%%><%%=Solution.INDENT%%><%%-
+		$http.get('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-', { params: searchQuery }).%%><%%=Solution.INDENT%%><%%-
 			success(function (data)%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
-				results.items = data.Items;
-				results.totalItems = data.TotalItems;
+				results.items = data.Results;
+				results.totalItems = data.TotalCount;
 				results.canCreate = data.CanCreate;
 				deferredObject.resolve(results);%%>
 			<%%=Solution.CLOSE_BRACE%%>
@@ -174,7 +172,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		
-		$http.get('/api/%%><%%=VITADSApiRoute%%><%%-/%%>
+		$http.get('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-/%%>
 		if (PrimaryKeyCount > 1)
 		{
 			<%%-get', { params: { %%>
@@ -265,7 +263,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 		}
 		<%%-
 		
-		$http.get('/api/%%><%%=VITADSApiRoute%%><%%-/list', { params: { take: 100%%>
+		$http.get('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-list', { params: { take: 100%%>
 		foreach (Property where IsPrimaryKeyMember == true)
 		{
 			<%%-, %%><%%=VITAPropertyName.ToLower()%%><%%-: %%><%%=VITAParameterName%%>
@@ -351,7 +349,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 			}
 		<%%=Solution.CLOSE_BRACE%%><%%-;
 		
-		$http.post('/api/%%><%%=VITADSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
+		$http.post('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
 			success(function (data)%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
@@ -392,7 +390,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 	firstItem = true
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Property where VITADSIsDtoClassProperty == true)
+		foreach (Property where VITAIsDtoClassProperty == true)
 		{
 			if (firstItem != true)
 			{
@@ -419,7 +417,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 			firstItem = true
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsDtoClassProperty == true)
+				foreach (Property where VITAIsDtoClassProperty == true)
 				{
 					if (firstItem == false)
 					{
@@ -432,7 +430,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 			}
 		<%%=Solution.CLOSE_BRACE%%><%%-;
 		
-		$http.put('/api/%%><%%=VITADSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
+		$http.put('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
 			success(function (data)%%>
 			<%%=Solution.OPEN_BRACE(js=true)%%>
 				<%%-
@@ -491,7 +489,7 @@ var %%><%%=VITAUIServiceName%%><%%- = function ($http, $q)%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		
-		$http.delete('/api/%%><%%=VITADSApiRoute%%><%%-/%%>
+		$http.delete('/%%>if (Solution.VITA_USE_SLIMAPI == true) { <%%-slim%%>}<%%-api/%%><%%=VITADSApiRoute%%><%%-/%%>
 		if (PrimaryKeyCount > 1)
 		{
 			<%%-', { params: { %%>

@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME VITAIsAuthenticatedEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// Current rule is require authentication to manage (create,update,delete) on each entity if the Login module is enabled.
+// Update this rule to further elaborate which entities require user to be logged in to create/update/delete.
+<%%=Solution.VITA_ADD_LOGIN_MODULE%%>
+%%></CONTENT>

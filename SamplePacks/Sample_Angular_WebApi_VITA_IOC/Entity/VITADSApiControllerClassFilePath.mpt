@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSApiControllerClassFilePath
+	CATEGORY VITADS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Controllers\%%><%%=VITADSApiControllerClassName%%><%%-_G.cs%%></CONTENT>

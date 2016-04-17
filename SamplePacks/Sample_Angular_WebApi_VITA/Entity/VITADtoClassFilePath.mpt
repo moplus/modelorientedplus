@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADtoClassFilePath
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\%%><%%=VITADtoClassName%%><%%-_G.cs%%></CONTENT>

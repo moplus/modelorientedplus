@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAHelperFilePath
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Models\%%><%%=VITAClassName%%><%%-Helper_G.cs%%></CONTENT>

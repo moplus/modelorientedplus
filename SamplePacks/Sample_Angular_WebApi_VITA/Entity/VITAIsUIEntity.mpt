@@ -5,4 +5,13 @@
 	TOPLEVEL False
 </CONFIG>
 <CONTENT>
-<%%=VITAIsDataModelEntity%%></CONTENT>
+<%%:
+if (VITAIsDataModelEntity == true && Tags.Contains("IgnoreAdmin") == false)
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

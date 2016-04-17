@@ -140,7 +140,7 @@ var configFunction = function ($stateProvider, $httpProvider, $locationProvider)
 			isFirstItem = true
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					if (isFirstItem == true)
 					{
@@ -196,7 +196,7 @@ var configFunction = function ($stateProvider, $httpProvider, $locationProvider)
 			isFirstItem = true
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					if (isFirstItem == true)
 					{

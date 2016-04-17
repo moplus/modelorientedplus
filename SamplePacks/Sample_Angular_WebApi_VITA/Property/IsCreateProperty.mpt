@@ -6,7 +6,7 @@
 </CONFIG>
 <CONTENT>
 <%%:
-if (VITADSIsDtoClassProperty == false)
+if (VITAIsDtoClassProperty == false)
 {
 	<%%-false%%>
 	return

@@ -1,0 +1,67 @@
+<CONFIG>
+	NAME VITAQueryResultsClassCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using Vita.Entities;
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines elements of search or listing
+	/// results for the given generic type.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=VITAQueryResultsClassName%%><%%-<T>: SearchResults<T>%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		public bool CanCreate { get; set; }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>Create results.</summary>
+		///--------------------------------------------------------------------------------
+		public QueryResults()%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>Create results with input results.</summary>
+		///
+		/// <param name="results">Input results.</param>
+		///--------------------------------------------------------------------------------
+		public QueryResults(SearchResults<T> results)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-this.Results = results.Results;
+			this.TotalCount = results.TotalCount;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITAQueryResultsClassFilePath) == null || (File(VITAQueryResultsClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(VITAQueryResultsClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(VITAQueryResultsClassFilePath)
+}
+%%></OUTPUT>

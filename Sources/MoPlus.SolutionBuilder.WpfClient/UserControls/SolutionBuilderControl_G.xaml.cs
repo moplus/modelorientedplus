@@ -62,7 +62,7 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
 	/// <CreatedDate>7/2/2013</CreatedDate>
-	/// <Status>Generated</Status>
+	/// <Status>Customized (customized OpenExecuted)</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionBuilderControl : UserControl
 	{
@@ -165,10 +165,11 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 		///--------------------------------------------------------------------------------
 		private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
 		{
+            SolutionViewModel solution = null;
 			if (e != null && e.Parameter is String)
 			{
 				Mouse.OverrideCursor = Cursors.Wait;
-				TreeViewModel.SolutionsFolder.LoadSolution(e.Parameter as String);
+                solution = TreeViewModel.SolutionsFolder.LoadSolution(e.Parameter as String);
 				Mouse.OverrideCursor = null;
 			}
 			else
@@ -179,9 +180,14 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 				bool? result = dialog.ShowDialog();
 				if (result == true)
 				{
-					TreeViewModel.SolutionsFolder.LoadSolution(dialog.FileName);
-				}
+					solution = TreeViewModel.SolutionsFolder.LoadSolution(dialog.FileName);
+                }
 			}
+            // check for multiple solutions with same ids
+            if (solution != null && TreeViewModel.SolutionsFolder.Solutions.Find(i => i.SolutionID == solution.SolutionID) != null)
+            {
+                MessageBox.Show(DisplayValues.Message_DuplicateSolutions);
+            }
 		}
 
 		///--------------------------------------------------------------------------------

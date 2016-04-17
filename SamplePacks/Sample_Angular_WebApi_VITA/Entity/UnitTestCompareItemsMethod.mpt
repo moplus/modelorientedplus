@@ -35,6 +35,10 @@ public static bool CompareItems(%%><%%=VITAInterfaceName%%><%%- item1, %%><%%=VI
 		}
 		switch (DataTypeCode)
 		{
+			case 9: // float (single)
+				<%%=Solution.NEWLINE%%>
+				<%%-if (Math.Abs(item1.%%><%%=VITAPropertyName%%><%%- - item2.%%><%%=VITAPropertyName%%><%%-)/item1.%%><%%=VITAPropertyName%%><%%- > .00001) return false;%%>
+				break
 			case 24: // Date Time
 			case 29: // Date Time Small
 			case 30: // TIme

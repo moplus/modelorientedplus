@@ -1,0 +1,66 @@
+<CONFIG>
+	NAME VITADomainModuleClassCode
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a class to manage a module (set of related entities) for a VITA entity store.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using Vita.Entities; 
+using %%><%%=Project.Namespace%%><%%-.Models;
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used by VITA to manage a module for an
+	/// entity store.  A module is a self contained group of related entites,
+	/// which are in turn defined as interfaces.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=VITADomainModuleClassName%%><%%-: EntityModule%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		///--------------------------------------------------------------------------------
+		/// <summary>Set up the module, registering all entities that should be part of this module.</summary>
+		///--------------------------------------------------------------------------------
+		public %%><%%=VITADomainModuleClassName%%><%%-(EntityArea area) : base(area, "%%><%%=VITADomainModuleClassName%%><%%-")%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			area.RegisterEntities( %%><%%=Solution.INDENT%%>
+			foreach (Entity where VITAIsDataModelEntity == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-, %%>
+				}
+				<%%-typeof(%%><%%=VITAInterfaceName%%><%%-)%%>
+			}
+			<%%-);%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITADomainModuleClassFilePath) == null || (File(VITADomainModuleClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(VITADomainModuleClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(VITADomainModuleClassFilePath)
+}
+%%></OUTPUT>

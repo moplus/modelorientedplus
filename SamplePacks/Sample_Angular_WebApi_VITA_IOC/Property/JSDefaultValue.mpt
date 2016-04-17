@@ -1,0 +1,59 @@
+<CONFIG>
+	NAME JSDefaultValue
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+	switch (DataTypeCode)
+	{
+		case 21: // IntTiny
+		case 2: // IntShort
+		case 3: // Int
+		case 4: // IntLong
+		case 22: // UIntTiny
+		case 6: // UIntShort
+		case 7: // UInt
+		case 8: // UIntLong
+			<%%-0%%>
+			break
+		case 24: // DateTime
+			<%%-null%%>
+			break
+		case 26: // Guid
+			<%%-"00000000-0000-0000-0000-000000000000"%%>
+			break
+		case 9: // FloatSingle
+		case 10: // FloatDouble
+		case 18: // Currency
+		case 11: // Decimal
+			<%%-0.0%%>
+			break
+		case 23: // Binary
+		case 5: // Byte
+		case 25: // Timestamp
+		case 15: // Object
+			<%%-null%%>
+			break
+		case 1: // SByte
+			<%%-null%%>
+			break
+		case 12: // Boolean
+			<%%-false%%>
+			break
+		case 16: // String
+		case 17: // StringUnicode
+		case 19: // Text
+		case 20: // TextUnicode
+			<%%-''%%>
+			break
+		case 13: // Char
+		case 14: // CharUnicode
+			<%%-''%%>
+			break
+		default:
+			<%%-null%%>
+			break
+	}
+%%></CONTENT>

@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME VITAPropertyAttributesCode
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[ManyToMany(typeof(%%><%%=ReferencedEntity.VITAInterfaceName%%><%%-))]%%>
+}
+if (ReferencedEntity.PrimarySortProperty != null)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[OrderBy("%%><%%=ReferencedEntity.PrimarySortProperty%%><%%-")]%%>
+}
+if (VITAHasMultipleReferences == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[OneToMany("%%><%%=VITAEntityReferencePropertyName%%><%%-")]%%>
+}
+%%></CONTENT>

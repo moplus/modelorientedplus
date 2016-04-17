@@ -34,7 +34,7 @@
 	<h2>%%><%%=VITAClassName%%><%%- Search</h2>%%>
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Property where VITADSIsQueryProperty == true && IsForeignKeyMember == false)
+		foreach (Property where VITAIsQueryProperty == true && IsForeignKeyMember == false)
 		{
 			<%%=VITAUISearchUI%%>
 		}
@@ -52,7 +52,7 @@
 			<a class="btn btn-default" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Results({%%>
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					switch (DataTypeCode)
 					{

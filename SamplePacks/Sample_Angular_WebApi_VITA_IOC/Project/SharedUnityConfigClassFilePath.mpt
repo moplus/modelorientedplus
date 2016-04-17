@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME SharedUnityConfigClassFilePath
+	CATEGORY VITAServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\SharedUnityConfig_G.cs%%></CONTENT>

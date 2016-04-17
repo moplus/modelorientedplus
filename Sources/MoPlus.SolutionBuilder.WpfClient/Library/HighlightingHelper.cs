@@ -135,11 +135,16 @@ namespace MoPlus.SolutionBuilder.WpfClient.Library
 				StringBuilder modelWords = new StringBuilder();
 
 				// add all model objects and "current" model objects to highlighting words
-				foreach (string key in solution.ModelObjectNames.AllKeys)
-				{
-					modelWords.Append("\r\n\t<Word>").Append(key).Append("</Word>");
-					modelWords.Append("\r\n\t<Word>Current").Append(key).Append("</Word>");
-				}
+                foreach (string key in solution.ModelObjectNames.AllKeys)
+                {
+                    modelWords.Append("\r\n\t<Word>").Append(key).Append("</Word>");
+                    modelWords.Append("\r\n\t<Word>Current").Append(key).Append("</Word>");
+                }
+                foreach (string key in solution.ModelObjectPropertyNames.AllKeys)
+                {
+                    modelWords.Append("\r\n\t<Word>").Append(key).Append("</Word>");
+                    modelWords.Append("\r\n\t<Word>Current").Append(key).Append("</Word>");
+                }
 
 				// add all model properties to highlighting words
 				foreach (string key in solution.ModelPropertyNames.AllKeys)

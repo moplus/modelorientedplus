@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using Vita.Entities;
-using Vita.Modules;
 
 namespace %%><%%=Project.Namespace%%><%%-.Models%%>
 <%%=Solution.OPEN_BRACE%%><%%-
@@ -87,6 +86,11 @@ namespace %%><%%=Project.Namespace%%><%%-.Models%%>
 	{
 		<%%=Solution.NEWLINE%%>
 		<%%=VITAPropertyCode%%>
+	}
+	if (VITAHasFullNameProperty == true)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%=VITAFullNameProperty%%>
 	}
 	<%%=Solution.CLOSE_BRACE%%>
 <%%=Solution.CLOSE_BRACE%%>

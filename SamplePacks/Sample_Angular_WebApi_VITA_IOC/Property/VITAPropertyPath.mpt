@@ -1,0 +1,89 @@
+<CONFIG>
+	NAME VITAPropertyPath
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryKeyMember == true)
+{
+	with (Entity)
+	{
+		if (BaseEntityID != null)
+		{
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					if (ItemIndex > 1)
+					{
+						<%%-.%%>
+					}
+					<%%=VITAClassName%%>
+				}
+			}
+			<%%-.%%><%%=../VITAPropertyName%%>
+			return
+		}
+	}
+}
+if (IsForeignKeyMember == false)
+{
+	<%%=VITAPropertyName%%>
+	return
+}
+//
+// foreign key property names need to be derived from entity reference
+//
+var relationshipID = null
+foreach (Relationship)
+{
+	foreach (RelationshipProperty)
+	{
+		if (PropertyID == ../../PropertyID)
+		{
+			relationshipID = RelationshipID
+			break
+		}
+	}
+}
+if (relationshipID != null)
+{
+	foreach (EntityReference)
+	{
+		foreach (PropertyRelationship)
+		{
+			if (Relationship.RelationshipID == relationshipID)
+			{
+				<%%=../VITAPropertyName%%><%%-.%%>
+				with (Relationship)
+				{
+					foreach (RelationshipProperty)
+					{
+						with (ReferencedProperty)
+						{
+							with (Entity)
+							{
+								if (BaseEntity != null)
+								{
+									foreach (Entity in EntityAndBaseEntities)
+									{
+										if (ItemIndex > 0)
+										{
+											<%%=VITAClassName%%><%%-.%%>
+										}
+									}
+								}
+							}
+						}
+						<%%=ReferencedProperty.VITAPropertyName%%>
+					}
+				}
+				return
+			}
+		}
+	}
+}
+<%%=VITAPropertyName%%>
+%%></CONTENT>

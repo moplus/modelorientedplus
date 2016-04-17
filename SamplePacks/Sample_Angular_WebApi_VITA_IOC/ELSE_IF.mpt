@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME ELSE_IF
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	Use this to emit "else if" in C# code, managing formatting and indenting according to your desired style.
+	
+	This works best of you have USETABS set to true to handle your indenting.
+	You can set your desired tab (spaces or tabs) with the TABSTRING property (usually in your Solution template).
+*/
+<%%:
+if (BRACE_SAMELINE == true)
+{
+<%%- else if %%>
+}
+else
+{
+<%%-
+else if %%>
+}
+%%></CONTENT>

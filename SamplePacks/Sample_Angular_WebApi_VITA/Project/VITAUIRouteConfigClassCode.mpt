@@ -83,8 +83,8 @@ namespace %%><%%=Project.Namespace%%>
 			
 				routes.MapRoute(%%><%%=Solution.INDENT%%><%%-
 					name: "Default",
-					url: "{*url}",
-					defaults: new { controller = "Home", action = "Index" });%%><%%=Solution.OUTDENT%%>
+					url: "{controller}/{action}/{id}",
+					defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });%%><%%=Solution.OUTDENT%%>
 		<%%=Solution.CLOSE_BRACE%%>
 	<%%=Solution.CLOSE_BRACE%%>
 <%%=Solution.CLOSE_BRACE%%>

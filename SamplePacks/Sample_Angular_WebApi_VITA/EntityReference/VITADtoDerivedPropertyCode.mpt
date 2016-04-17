@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VITADtoDerivedPropertyCode
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-public %%><%%=ReferencedEntity.VITAPrimaryNamePropertyType%%><%%- %%><%%=VITADerivedPropertyName%%><%%- { get; set; }%%></CONTENT>

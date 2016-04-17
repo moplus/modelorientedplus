@@ -87,7 +87,24 @@ namespace MoPlus.Interpreter.BLL.Models
 									sb.Append(", ");
 								}
 								isFirstItem = false;
-								sb.Append(instance.PropertyValue);
+                                bool nameFound = false;
+                                if (ModelObject != null && ModelObject.Model != null && property.DefinedByModelObjectID != null)
+                                {
+                                    ModelObject referencedObject = ModelObject.Model.ModelObjectList.Find(i => i.ModelObjectID == property.DefinedByModelObjectID);
+                                    if (referencedObject != null)
+                                    {
+                                        ObjectInstance referencedInstance = referencedObject.ObjectInstanceList.Find(i => i.ObjectInstanceID.ToString().ToLower() == instance.PropertyValue.ToLower());
+                                        if (referencedInstance != null && !String.IsNullOrEmpty(referencedInstance.ShortName))
+                                        {
+                                            sb.Append(referencedInstance.ShortName);
+                                            nameFound = true;
+                                        }
+                                    }
+                                }
+                                if (nameFound == false)
+                                {
+                                    sb.Append(instance.PropertyValue);
+                                }
 							}
 						}
 					}
@@ -197,7 +214,39 @@ namespace MoPlus.Interpreter.BLL.Models
 			return null;
 		}
 
-		///--------------------------------------------------------------------------------
+
+        ///--------------------------------------------------------------------------------
+        /// <summary>This method gets the current model context for the item.</summary>
+        /// 
+        /// <param name="solutionContext">The associated solution.</param>
+        /// <param name="propertyName">The name of the model object property.</param>
+        /// <param name="parentModelContext">The parent model context from which to get current model context.</param>
+        /// <param name="isValidContext">Output flag, signifying whether context returned is a valid one.</param>
+        ///--------------------------------------------------------------------------------
+        public static IDomainEnterpriseObject GetModelContextViaProperty(Solution solutionContext, string propertyName, IDomainEnterpriseObject parentModelContext, out bool isValidContext)
+        {
+            isValidContext = true;
+            if (parentModelContext is ObjectInstance)
+            {
+                foreach (PropertyInstance property in (parentModelContext as ObjectInstance).PropertyInstanceList)
+                {
+                    if (property.ModelProperty != null && property.ModelProperty.DefinedByModelObjectID != null && property.ModelProperty.DefinedByModelObjectID != Guid.Empty && property.ModelProperty.ModelPropertyName == propertyName)
+                    {
+                        // find object instance by id
+                        ObjectInstance modelContext = solutionContext.ObjectInstanceList.Find(i => i.ObjectInstanceID.ToString().ToLower() == property.PropertyValue.ToLower());
+                        if (modelContext != null)
+                        {
+                            return modelContext;
+                        }
+                    }
+                }
+            }
+
+            isValidContext = false;
+            return null;
+        }
+        
+        ///--------------------------------------------------------------------------------
 		/// <summary>This method gets the collection context associated with this item.</summary>
 		/// 
 		/// <param name="solutionContext">The associated solution.</param>

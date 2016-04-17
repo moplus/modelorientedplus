@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME VITA_ADD_LOG_MODULE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// set this value to true if you want to add the VITA logging module to your database and solution
+//
+<%%-true%%></CONTENT>

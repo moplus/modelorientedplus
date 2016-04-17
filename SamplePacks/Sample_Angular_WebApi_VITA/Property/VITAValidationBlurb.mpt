@@ -1,0 +1,107 @@
+<CONFIG>
+	NAME VITAValidationBlurb
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		break
+	case 2: // IntShort
+		break
+	case 3: // Int
+		break
+	case 4: // IntLong
+		break
+	case 5: // Byte
+		break
+	case 6: // UIntShort
+		break
+	case 7: // UInt
+		break
+	case 8: // UIntLong
+		break
+	case 9: // FloatSingle
+		break
+	case 10: // FloatDouble
+		break
+	case 11: // Decimal
+		break
+	case 12: // Boolean
+		break
+	case 13: // Char
+		if (Length > 1)
+		{
+			<%%-string%%>
+		}
+		else
+		{
+			<%%-char%%>
+		}
+		break
+	case 14: // CharUnicode
+		if (Length > 1)
+		{
+			if (IsNullable == false)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-context.ValidateNotEmpty(%%><%%=VITAPropertyName%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- may not be empty.");%%>
+			}
+			if (Length > 0)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-context.ValidateMaxLength(%%><%%=VITAPropertyName%%><%%-, %%><%%=Length%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- text is too long.");%%>
+			}
+		}
+		break
+	case 15: // Object
+		if (IsNullable == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-context.ValidateNotNull(%%><%%=VITAPropertyName%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- may not be null.");%%>
+		}
+		break
+	case 16: // String
+	case 17: // StringUnicode
+		if (IsNullable == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-context.ValidateNotEmpty(%%><%%=VITAPropertyName%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- may not be empty.");%%>
+		}
+		if (Length > 0)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-context.ValidateMaxLength(%%><%%=VITAPropertyName%%><%%-, %%><%%=Length%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- text is too long.");%%>
+		}
+		break
+	case 19: // Text
+	case 20: // TextUnicode
+		if (IsNullable == false)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-context.ValidateNotEmpty(%%><%%=VITAPropertyName%%><%%-, "%%><%%=VITAPropertyName%%><%%-", "%%><%%=VITAPropertyName%%><%%- may not be empty.");%%>
+		}
+		break
+	case 18: // Currency
+		break
+	case 21: // IntTiny
+		break
+	case 22: // UIntTiny
+		break
+	case 23: // Binary
+		break
+	case 24: // DateTime
+		break
+	case 25: // Timestamp
+		break
+	case 26: // Guid
+		break
+	case 27: // Image
+		break
+	default:
+		break
+}
+%%></CONTENT>

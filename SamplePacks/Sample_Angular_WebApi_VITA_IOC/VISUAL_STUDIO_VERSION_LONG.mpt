@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VISUAL_STUDIO_VERSION_LONG
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// VisualStudioVersion to be utilized in generating solution files, etc.
+<%%-12.0.30501.0%%></CONTENT>

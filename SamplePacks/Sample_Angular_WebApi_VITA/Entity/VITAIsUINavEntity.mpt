@@ -8,7 +8,7 @@
 <%%:
 // make entities that are not relational in nature to qualify for the admin ui
 // include extending entities but not the base
-if (EntityTypeCode == 8 /* Relational */ || VITAIsDataModelEntity == false)
+if (EntityTypeCode == 8 /* Relational */ || VITAIsUIEntity == false)
 {
 	<%%-false%%>
 	return

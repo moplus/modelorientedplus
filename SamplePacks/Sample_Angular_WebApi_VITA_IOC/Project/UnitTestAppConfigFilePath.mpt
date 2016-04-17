@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UnitTestAppConfigFilePath
+	CATEGORY UnitTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%-App.config%%></CONTENT>

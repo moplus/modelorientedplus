@@ -348,10 +348,15 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 								solutionContext.CurrentProject.IsAutoUpdated = true;
 								solutionContext.CurrentProject.Solution = solutionContext;
 							}
-							else if (!String.IsNullOrEmpty(NullItem))
-							{
-								solutionContext.CurrentProject = null;
-							}
+                            else if (!String.IsNullOrEmpty(NullItem))
+                            {
+                                solutionContext.CurrentProject = null;
+                            }
+                            else if (modelContext is Project)
+                            {
+                                // TODO: needs more testing, inserted for bug fix 6/23/15
+                                solutionContext.CurrentProject = modelContext as Project;
+                            }
 						}
 						else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentProperty))
 						{

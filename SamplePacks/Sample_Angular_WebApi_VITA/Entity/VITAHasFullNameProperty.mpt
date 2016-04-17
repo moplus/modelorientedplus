@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME VITAHasFullNameProperty
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where PropertyName.ToLower() == "fullname")
+{
+	<%%-false%%>
+	return
+}
+foreach (Property where PropertyName.EndsWith("Name") == true)
+{
+	if (ItemIndex > 0)
+	{
+		<%%-true%%>
+		return
+	}
+}
+<%%-false%%>
+%%></CONTENT>

@@ -1,0 +1,72 @@
+<CONFIG>
+	NAME UnitTestDeleteMethod
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>Delete an instance of %%><%%=VITAInterfaceName%%><%%- from the VITA entity store,
+/// (references are also deleted).</summary>
+/// 
+/// <param name="session">The VITA entity store session.</param>
+/// <param name="item">The instance if %%><%%=VITAInterfaceName%%><%%- to delete.</param>
+///--------------------------------------------------------------------------------
+public static void Delete%%><%%=VITAClassName%%><%%-(IEntitySession session, %%><%%=VITAInterfaceName%%><%%- item)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-// delete item and references%%>
+	if (BaseEntityID != null)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-if (item.%%><%%=BaseEntity.VITAClassName%%><%%- != null)%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=BaseEntity.UnitTestClassName%%><%%-.Delete%%><%%=BaseEntity.VITAClassName%%><%%-(session, item.%%><%%=BaseEntity.VITAClassName%%><%%-);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	}
+	foreach (EntityReference where IsPrimaryReference == true)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-if (item.%%><%%=EntityReferenceName%%><%%- != null)%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=ReferencedEntity.UnitTestClassName%%><%%-.Delete%%><%%=ReferencedEntity.VITAClassName%%><%%-(session, item.%%><%%=EntityReferenceName%%><%%-);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	}
+	foreach (Collection where IsPrimaryCollection == true)
+	{
+		if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-for (int i = item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.Count - 1; i >= 0; i--)%%>
+					<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-session.DeleteEntity<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->(item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-[i]);%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-.Remove(item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-[i]);%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				}
+			}
+		}
+		else
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-foreach (%%><%%=ReferencedEntity.VITAInterfaceName%%><%%- colItem in item.%%><%%=VITAPropertyName%%><%%-)%%>
+			<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-session.DeleteEntity<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->(colItem);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+	}
+	<%%=Solution.NEWLINE%%>
+   	<%%-session.DeleteEntity<%%><%%=VITAInterfaceName%%><%%->(item);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT>

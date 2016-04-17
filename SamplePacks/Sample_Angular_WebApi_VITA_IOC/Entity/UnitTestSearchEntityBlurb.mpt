@@ -1,0 +1,40 @@
+<CONFIG>
+	NAME UnitTestSearchEntityBlurb
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param item1Name
+param item2Name
+param defineItem2
+<%%=Solution.NEWLINE%%>
+<%%-session2 = DomainApp.OpenSession();%%>
+<%%=Solution.NEWLINE%%>
+if (defineItem2 == true)
+{
+	<%%=VITAInterfaceName%%><%%- %%>
+}
+var foundItem = false
+	<%%=item2Name%%><%%- = (from i in session2.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		if (foundItem == true)
+		{
+			break
+		}
+		foreach (Property where IsPrimaryKeyMember == false)
+		{
+			if (foundItem == true)
+			{
+				break
+			}
+			foundItem = true
+			<%%-
+			where i.%%><%%=VITAPropertyPath%%><%%- == %%><%%=item1Name%%><%%-.%%><%%=VITAPropertyPath%%>
+		}
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+%%></CONTENT>

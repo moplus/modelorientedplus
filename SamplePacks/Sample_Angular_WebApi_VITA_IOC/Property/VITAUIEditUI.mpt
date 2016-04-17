@@ -1,0 +1,183 @@
+<CONFIG>
+	NAME VITAUIEditUI
+	CATEGORY VITAUI
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+var attributes = ""
+if (IsNullable == false && DataTypeCode != 12 /* boolean */)
+{
+	attributes = " required required-message=\"'" + VITALabelName + " is required.'\""
+}
+if (InitialValue != null)
+{
+	attributes = attributes + " value\"=" + InitialValue + "\""
+}
+var columnSize = "col-md-5"
+var inputType = "text"
+var isTextArea = false
+var size = 0
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		attributes = attributes + " size=\"4\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,3}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 2: // IntShort
+		attributes = attributes + " size=\"6\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,5}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 3: // Int
+		attributes = attributes + " size=\"11\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,10}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 4: // IntLong
+		attributes = attributes + " size=\"20\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,19}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 5: // Byte
+		attributes = attributes + " size=\"3\""
+		attributes = attributes + " ng-pattern=\"/^[0-9]{0,3}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 6: // UIntShort
+		attributes = attributes + " size=\"5\""
+		attributes = attributes + " ng-pattern=\"/^[0-9]{0,5}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 7: // UInt
+		attributes = attributes + " size=\"10\""
+		attributes = attributes + " ng-pattern=\"/^[0-9]{0,10}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-3"
+		inputType = "number"
+		break
+	case 8: // UIntLong
+		attributes = attributes + " size=\"19\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,19}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-4"
+		inputType = "number"
+		break
+	case 9: // FloatSingle
+		size = Precision + 3
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		size = Precision - Scale
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0," + size + "}.-?[0-9]{0," + Scale + "}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		break
+	case 10: // FloatDouble
+		size = Precision + 3
+		columnSize = "col-md-4"
+		attributes = attributes + " size=\"" + size + "\""
+		size = Precision - Scale
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0," + size + "}.-?[0-9]{0," + Scale + "}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		break
+	case 11: // Decimal
+		size = Precision + 3
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		size = Precision - Scale
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0," + size + "}.-?[0-9]{0," + Scale + "}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		break
+	case 12: // Boolean
+		inputType = "checkbox"
+		columnSize = "col-md-2"
+		break
+	case 18: // Currency
+		size = Precision + 3
+		columnSize = "col-md-3"
+		attributes = attributes + " size=\"" + size + "\""
+		size = Precision - Scale
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0," + size + "}.-?[0-9]{0," + Scale + "}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		break
+	case 21: // IntTiny
+		attributes = attributes + " size=\"4\""
+		attributes = attributes + " ng-pattern=\"/^-?[0-9]{0,4}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 22: // UIntTiny
+		attributes = attributes + " size=\"3\""
+		attributes = attributes + " ng-pattern=\"/^[0-9]{0,4}$/\" invalid-message=\"'" + VITALabelName + " is invalid.'\""
+		columnSize = "col-md-2"
+		inputType = "number"
+		break
+	case 24: // DateTime
+		inputType = "datetime"
+		columnSize = "col-md-4"
+		break
+	case 26: // Guid
+			attributes = attributes + " maxlength=\"38\"" + " ng-pattern=\"/^.{0,38}$/\" invalid-message=\"'" + VITALabelName + " is too long.'\""
+		break
+	case 15: // Object
+	case 19: // Text
+	case 20: // TextUnicode
+	case 23: // Binary
+	case 27: // Image
+		columnSize = "col-md-12"
+		isTextArea = true
+		break
+	default:
+		if (Length > 0)
+		{
+			attributes = attributes + " maxlength=" + "\"" + Length + "\"" + " ng-pattern=\"/^.{0," + Length + "}$/\" invalid-message=\"'" + VITALabelName + " is too long.'\""
+		}
+		if (Length < 10)
+		{
+			columnSize = "col-md-3"
+		}
+		else if (Length < 20)
+		{
+			columnSize = "col-md-4"
+		}
+		else if (Length > 1000)
+		{
+			columnSize = "col-md-12"
+			isTextArea = true
+		}
+		else if (Length > 400)
+		{
+			columnSize = "col-md-10"
+		}
+		else if (Length > 200)
+		{
+			columnSize = "col-md-7"
+		}
+		if (PropertyName.ToLower().Contains("password") == true)
+		{
+			inputType = "password"
+		}
+		break
+}
+		<%%=Solution.NEWLINE%%>
+		<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="%%><%%=columnSize%%><%%-">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="%%><%%=VITAParameterName%%><%%-">%%><%%=VITALabelName%%><%%-:</label>%%>
+				<%%=Solution.NEWLINE%%>
+				if (isTextArea == true)
+				{
+					<%%-<textarea rows="3" class="form-control" name="%%><%%=VITAParameterName%%><%%-" ng-disabled="status.isReadOnly" ng-model="itemForm.%%><%%=VITAParameterName%%><%%-"  %%><%%=attributes%%><%%-></textarea>%%><%%=Solution.OUTDENT%%>
+				}
+				else
+				{
+					<%%-<input type="%%><%%=inputType%%><%%-" class="form-control" name="%%><%%=VITAParameterName%%><%%-" ng-disabled="status.isReadOnly" ng-model="itemForm.%%><%%=VITAParameterName%%><%%-"  %%><%%=attributes%%><%%-/>%%><%%=Solution.OUTDENT%%>
+				}
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-</div>%%>
+%%></CONTENT>

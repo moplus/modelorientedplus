@@ -1,0 +1,49 @@
+<CONFIG>
+	NAME VITAPropertyAttributesCode
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=Solution.NEWLINE%%>
+var foundKeyColumns = false
+var attributeAdded = false
+
+<%%-[EntityRef(%%>
+foreach (PropertyRelationship)
+{
+	with (Relationship)
+	{
+		foreach (RelationshipProperty)
+		{
+			if (foundKeyColumns == false)
+			{
+				<%%-KeyColumns = "%%>
+				foundKeyColumns = true
+				attributeAdded = true
+			}
+			else
+			{
+				<%%-,%%>
+			}
+			<%%=Property.VITAPropertyName%%>
+		}
+	}
+}
+if (foundKeyColumns == true)
+{
+	<%%-"%%>
+}
+<%%-)%%>
+if (IsNullable == true)
+{
+	if (attributeAdded == true)
+	{
+		<%%-, %%>
+	}
+	attributeAdded = true
+	<%%-Nullable%%>
+}
+<%%-]%%>
+%%></CONTENT>

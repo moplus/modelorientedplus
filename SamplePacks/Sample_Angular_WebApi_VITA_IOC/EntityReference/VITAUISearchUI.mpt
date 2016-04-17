@@ -1,0 +1,26 @@
+<CONFIG>
+	NAME VITAUISearchUI
+	CATEGORY VITAUI
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=Solution.NEWLINE%%>
+<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-<div class="col-md-5">%%><%%=Solution.INDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<label for="%%><%%=VITAParameterName%%><%%-">%%><%%=VITALabelName%%><%%-:</label>%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<select class="form-control" name="%%><%%=VITAParameterName%%><%%-" ng-model="searchQuery.%%><%%=VITAPropertyParameterName%%><%%-">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<option value="%%><%%=ReferencedEntity.JSDefaultValue%%><%%-">Any</option>
+			<option ng-repeat="item in itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-" value="{{item.%%><%%=VITAPrimaryKeyPropertyName%%><%%-}}">{{item.%%><%%=ReferencedEntity.VITAPrimaryNameProperty%%><%%-}}</option>%%>
+			<%%=Solution.OUTDENT%%><%%-
+		</select>%%><%%=Solution.OUTDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-</div>%%><%%=Solution.OUTDENT%%>
+<%%=Solution.NEWLINE%%>
+<%%-</div>%%>
+%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIUnityConfigClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\App_Start\UnityConfig_G.cs%%></CONTENT>

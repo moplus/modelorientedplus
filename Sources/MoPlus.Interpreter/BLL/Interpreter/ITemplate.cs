@@ -146,6 +146,11 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		StrongNameObjectCollection Parameters { get; set; }
 
         ///--------------------------------------------------------------------------------
+        /// <summary>This property gets/sets the IncludesProjectContext.</summary>
+        ///--------------------------------------------------------------------------------
+        bool IncludesProjectContext { get; set; }
+
+        ///--------------------------------------------------------------------------------
         /// <summary>This property gets/sets the HasRelativeSettings.</summary>
         ///--------------------------------------------------------------------------------
         bool HasRelativeSettings { get; set; }

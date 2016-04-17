@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceTestBaseClassFilePath
+	CATEGORY ServiceTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Services\%%><%%=ServiceTestBaseClassName%%><%%-_G.cs%%></CONTENT>

@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsUpdateProperty
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAIsDtoClassProperty == true && IsPrimaryKeyMember == false)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

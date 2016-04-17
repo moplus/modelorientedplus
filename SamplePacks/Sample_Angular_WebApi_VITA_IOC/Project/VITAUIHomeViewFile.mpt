@@ -1,0 +1,97 @@
+<CONFIG>
+	NAME VITAUIHomeViewFile
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create the main page view.  This view also specifies the AngularJS ui views
+// that get updated based on changes in application state.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-<!DOCTYPE html>
+<!--Copyright:
+%%>
+<%%=Solution.Copyright%%><%%-
+
+//------------------------------------------------------------------------------
+/// This file is for displaying the primary view on the site.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+-->
+<html ng-app="DomainApp" ng-controller="LoginController">%%><%%=Solution.INDENT%%><%%-
+	<head>%%><%%=Solution.INDENT%%><%%-
+		<title>{{title}} Administration</title>
+		<base href="/">
+		@Styles.Render("~/Content/css")%%><%%=Solution.OUTDENT%%><%%-
+	</head>
+	<body>%%><%%=Solution.INDENT%%><%%-
+		<div class="container">%%><%%=Solution.INDENT%%><%%-
+			<div class="navbar navbar-default navbar-fixed-top" role="navigation">%%><%%=Solution.INDENT%%><%%-
+				<div class="container-fluid">%%><%%=Solution.INDENT%%><%%-
+					<div class="navbar-header">%%><%%=Solution.INDENT%%><%%-
+						<a class="navbar-brand" ui-sref="home">{{title}} Administration</a>%%><%%=Solution.OUTDENT%%><%%-
+					</div>
+					<div class="navbar-collapse collapse" collapse="navbarProperties.isCollapsed">%%><%%=Solution.INDENT%%><%%-
+						<ul class="nav navbar-nav navbar-right">%%><%%=Solution.INDENT%%>
+							if (Solution.VITA_ADD_LOGIN_MODULE == true)
+							{
+							<%%-
+							<li><a ui-sref="loginUser" ng-if="IsLoggedIn != true">Login</a></li>
+							<li><a ui-sref="home" ng-click="logout()" ng-if="IsLoggedIn == true">Logout</a></li>%%>
+							}
+							<%%=Solution.OUTDENT%%><%%-
+						</ul>%%><%%=Solution.OUTDENT%%><%%-
+					</div>%%><%%=Solution.OUTDENT%%><%%-
+				</div>%%><%%=Solution.OUTDENT%%><%%-
+			</div>%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="container-fluid mainContent">%%><%%=Solution.INDENT%%><%%-
+			<div class="row-fluid">%%><%%=Solution.INDENT%%><%%-
+				<div class="col-md-2 navbar-left">%%><%%=Solution.INDENT%%><%%-
+					<!-- navigation area -->
+					<ul class="nav">%%>
+					<%%=Solution.INDENT%%>
+						foreach (Entity in Solution where VITAIsUINavEntity == true)
+						{
+							<%%=Solution.NEWLINE%%>
+							<%%-<li><a ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Results">%%><%%=LIBPluralEntityName%%><%%-</a></li>%%>
+						}
+						<%%=Solution.OUTDENT%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-</ul>%%>
+					<%%=Solution.OUTDENT%%><%%-
+				</div>
+				<div class="col-md-10">%%><%%=Solution.INDENT%%><%%-
+					<div class="container-fluid">%%><%%=Solution.INDENT%%><%%-
+						<!-- search area -->
+						<div ui-view="searchView"></div>%%><%%=Solution.OUTDENT%%><%%-
+					</div>
+					<div class="container-fluid">%%><%%=Solution.INDENT%%><%%-
+						<!-- detail area -->
+						<div ui-view="detailView"></div>%%><%%=Solution.OUTDENT%%><%%-
+					</div>%%><%%=Solution.OUTDENT%%><%%-
+				</div>%%><%%=Solution.OUTDENT%%><%%-
+			</div>
+			@Scripts.Render("~/bundles/DomainApp")%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</body>%%><%%=Solution.OUTDENT%%><%%-
+</html>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUIHomeViewFilePath, text=Text) == true)
+{
+	update(VITAUIHomeViewFilePath)
+}
+%%></OUTPUT>

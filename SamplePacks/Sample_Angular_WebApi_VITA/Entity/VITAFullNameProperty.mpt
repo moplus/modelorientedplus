@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME VITAFullNameProperty
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAHasFullNameProperty != true)
+{
+	return
+}
+<%%-
+[Computed(typeof(%%><%%=VITAClassName%%><%%-Helper), "Get%%><%%=VITAClassName%%><%%-FullName"), DependsOn("%%>
+foreach (Property where PropertyName.EndsWith("Name") == true)
+{
+	if (ItemIndex > 0)
+	{
+		<%%-,%%>
+	}
+	<%%=VITAPropertyName%%>
+}
+<%%-")]
+string FullName { get; }%%>
+%%></CONTENT>

@@ -72,7 +72,7 @@ foreach (Entity in EntityAndBaseEntities)
 	<%%=Solution.OPEN_BRACE(js=true)%%>
 		foreach (Entity in EntityAndBaseEntities)
 		{
-			foreach (Property where VITADSIsQueryProperty == true)
+			foreach (Property where VITAIsQueryProperty == true)
 			{
 				<%%=VITAUISearchQueryBlurb%%>
 			}
@@ -136,6 +136,11 @@ foreach (Entity in EntityAndBaseEntities)
 				}
 			}
 		}
+		if (VITAHasFullNameProperty == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-fullName: '',%%>
+		}
 		var foundReferences = ""
 		foreach (Entity in EntityAndBaseEntities)
 		{
@@ -186,7 +191,7 @@ foreach (Entity in EntityAndBaseEntities)
 		$scope.searchQuery.filter = '';%%>
 		foreach (Entity in EntityAndBaseEntities)
 		{
-			foreach (Property where VITADSIsQueryProperty == true)
+			foreach (Property where VITAIsQueryProperty == true)
 			{
 				switch (DataTypeCode)
 				{
@@ -241,11 +246,18 @@ foreach (Entity in EntityAndBaseEntities)
 			<%%-$scope.searchQuery.filter = 'none';%%>
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
+		var orderBy = $scope.searchQuery.orderBy;
+		if ($scope.searchQuery.descending == 'true')%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-orderBy = orderBy + '-desc';%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
 		var result = %%><%%=VITAUIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
 		itemFound = false
 		foreach (Entity in EntityAndBaseEntities)
 		{
-			foreach (Property where VITADSIsQueryProperty == true)
+			foreach (Property where VITAIsQueryProperty == true)
 			{
 				switch (DataTypeCode)
 				{
@@ -274,7 +286,7 @@ foreach (Entity in EntityAndBaseEntities)
 		{
 			<%%-, %%>
 		}
-		<%%-$scope.searchQuery.orderBy, $scope.searchQuery.descending, $scope.searchQuery.page, $scope.searchQuery.pageSize);
+		<%%-orderBy, $scope.searchQuery.page, $scope.searchQuery.pageSize);
 		result.then(function(result)%%>
 		<%%=Solution.OPEN_BRACE(js=true)%%>
 			<%%-
@@ -302,7 +314,7 @@ foreach (Entity in EntityAndBaseEntities)
 		<%%=Solution.OPEN_BRACE(js=true)%%>
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					switch (DataTypeCode)
 					{
@@ -351,11 +363,16 @@ foreach (Entity in EntityAndBaseEntities)
 				$scope.status.isSuccess = true;%%>
 				foreach (Entity in EntityAndBaseEntities)
 				{
-					foreach (Property where VITADSIsDtoClassProperty == true)
+					foreach (Property where VITAIsDtoClassProperty == true)
 					{
 						<%%=Solution.NEWLINE%%>
 						<%%-$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.data.%%><%%=VITAPropertyName%%><%%-;%%>
 					}
+				}
+				if (VITAHasFullNameProperty == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-$scope.itemForm.fullName = result.data.FullName;%%>
 				}
 				<%%=Solution.NEWLINE%%>
 				<%%-$scope.itemForm.canEdit = result.data.CanEdit;
@@ -413,7 +430,7 @@ foreach (Entity in EntityAndBaseEntities)
 						{
 							foreach (Entity in EntityAndBaseEntities)
 							{
-								foreach (Property where VITADSIsDtoClassProperty == true)
+								foreach (Property where VITAIsDtoClassProperty == true)
 								{
 									<%%=Solution.NEWLINE%%>
 									<%%-$scope.itemForm.%%><%%=VITAParameterName%%><%%- = result.data.%%><%%=VITAPropertyName%%><%%-;%%>
@@ -429,7 +446,7 @@ foreach (Entity in EntityAndBaseEntities)
 							itemFound = false
 							foreach (Entity in EntityAndBaseEntities)
 							{
-								foreach (Property where VITADSIsQueryProperty == true)
+								foreach (Property where VITAIsQueryProperty == true)
 								{
 									switch (DataTypeCode)
 									{
@@ -545,7 +562,7 @@ foreach (Entity in EntityAndBaseEntities)
 		itemFound = false
 		foreach (Entity in EntityAndBaseEntities)
 		{
-			foreach (Property where VITADSIsDtoClassProperty == true)
+			foreach (Property where VITAIsDtoClassProperty == true)
 			{
 				if (itemFound == true)
 				{
@@ -675,7 +692,7 @@ foreach (Entity in EntityAndBaseEntities)
 					if (result.isSuccess)%%>
 					<%%=Solution.OPEN_BRACE(js=true)%%>
 						<%%-
-						$scope.itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%- = result.data.Items;%%>
+						$scope.itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%- = result.data.Results;%%>
 					<%%=Solution.CLOSE_BRACE%%><%%- else%%>
 					<%%=Solution.OPEN_BRACE(js=true)%%>
 						<%%-

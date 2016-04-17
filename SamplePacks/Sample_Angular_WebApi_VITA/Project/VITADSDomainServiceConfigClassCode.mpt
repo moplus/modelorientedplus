@@ -76,7 +76,7 @@ namespace %%><%%=Project.Namespace%%>
 	  	<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-// Logging message handler
-			var webHandlerStt = new WebHandlerSettings(logLevel, WebHandlerOptions.DefaultDebug);
+			var webHandlerStt = new WebCallContextHandlerSettings(logLevel, WebHandlerOptions.DefaultDebug);
 			var webContextHandler = new WebCallContextHandler(app, webHandlerStt);
 			config.MessageHandlers.Add(webContextHandler);
 			

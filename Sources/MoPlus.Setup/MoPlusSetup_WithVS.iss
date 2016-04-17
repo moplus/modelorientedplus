@@ -24,7 +24,7 @@ DefaultGroupName={#MyAppName}
 LicenseFile=.\License.txt
 InfoBeforeFile=.\Intro.txt
 InfoAfterFile=.\Exit.txt
-OutputBaseFilename=MoPlusSetupWinAppVS2010_2012_2013
+OutputBaseFilename=MoPlusSetupWinAppVS2010_2012_2013_2015
 SetupIconFile=Product.ico
 UninstallDisplayIcon={app}\Product.ico
 Compression=lzma
@@ -127,6 +127,31 @@ Root: HKLM; SubKey: Software\Microsoft\VisualStudio\12.0\ToolWindows\{{D02CD70D-
 Root: HKLM; SubKey: Software\Microsoft\VisualStudio\12.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; Flags: uninsdeletevalue
 Root: HKLM; SubKey: Software\Microsoft\VisualStudio\12.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionDesignerWindow; Flags: uninsdeletevalue
 
+; VS Package (2015)
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\InstalledProducts\Mo+ Solution Builder; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\InstalledProducts\Mo+ Solution Builder; ValueType: string; ValueName: Package; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\InstalledProducts\Mo+ Solution Builder; ValueType: dword; ValueName: UseInterface; ValueData: 1; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage, MoPlus.SolutionBuilder.VSPackage, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f4d94ac959d59ec3; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: InprocServer32; ValueData: {sys}\MSCOREE.DLL; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: Class; ValueData: MoPlus.SolutionBuilder.VSPackage.MoPlusPackage; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CodeBase; ValueData: {app}\MoPlus.SolutionBuilder.VSPackage.dll; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: dword; ValueName: ID; ValueData: $000003E9; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: MinEdition; ValueData: Standard; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductVersion; ValueData: 1.0; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: ProductName; ValueData: Mo+ Solution Builder; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Packages\{{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueType: string; ValueName: CompanyName; ValueData: Mo+; Flags: uninsdeletevalue
+; menu
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\Menus; ValueType: string; ValueName: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; ValueData: , Menus.ctmenu, 1; Flags: uninsdeletevalue
+; Solution Builder tool window
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{b2a086f1-775d-4f60-bb81-202c23fea3af}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionBuilderWindow; Flags: uninsdeletevalue
+; Solution Designer tool window
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: none; Flags: uninsdeletekey
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: ; ValueData: {{8fe4675c-3156-4a6a-9b35-d7cc6f4ee432}; Flags: uninsdeletevalue
+Root: HKLM; SubKey: Software\Microsoft\VisualStudio\14.0\ToolWindows\{{D02CD70D-1F36-45cb-B837-BE33C62B5839}; ValueType: string; ValueName: Name; ValueData: MoPlus.SolutionBuilder.VSPackage.SolutionDesignerWindow; Flags: uninsdeletevalue
+
 ; fake GAC
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: none; Flags: uninsdeletekey
 Root: HKLM; Subkey: Software\Microsoft\.NETFramework\v2.0.50727\AssemblyFoldersEx\MoPlus; ValueType: string; ValueName: ; ValueData: {app}\Kernel\; Flags: uninsdeletevalue
@@ -147,6 +172,7 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Fil
 Filename: {code:VSNET2010_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 Filename: {code:VSNET2012_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 Filename: {code:VSNET2013_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
+Filename: {code:VSNET2015_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 
@@ -154,5 +180,6 @@ Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChang
 Filename: {code:VSNET2010_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 Filename: {code:VSNET2012_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 Filename: {code:VSNET2013_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
+Filename: {code:VSNET2015_PATH}\devenv.exe; Parameters: /setup; Flags: nowait skipifdoesntexist
 
 

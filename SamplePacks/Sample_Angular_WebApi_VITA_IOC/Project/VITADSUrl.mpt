@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADSUrl
+	CATEGORY CONFIG
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-http://localhost:%%><%%=VITADSPort%%><%%-/%%></CONTENT>

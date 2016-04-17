@@ -1,0 +1,187 @@
+<CONFIG>
+	NAME VITADSAuthenticationControllerClassCode
+	CATEGORY VITADS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a controller to manage authentication utilizing the VITA authentication module.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web.Http;
+using Vita.Common;
+using Vita.Entities;
+using Vita.Web;
+using Vita.Modules.Login;
+using Vita.Modules.PersistentSession;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines the authentication controller to handle login functions.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class AuthenticationController : BaseApiController%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-ILoginService _loginService;
+		ILoginManagementService _loginManagementService;
+		IUserSessionService _sessionService; 
+		
+		protected override void Initialize(System.Web.Http.Controllers.HttpControllerContext controllerContext)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-base.Initialize(controllerContext);
+			//OpContext is setup by BaseApiConroller.Initialize method
+			_loginService = OpContext.App.GetService<ILoginService>();
+			_loginManagementService = OpContext.App.GetService<ILoginManagementService>();
+			_sessionService = OpContext.App.GetService<IUserSessionService>();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
+		[HttpPost, Route("api/auth/login")]
+		public LoginResponseDto Login(LoginDto loginDto)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-//Validate input; if validation fails, ClientFaultException is thrown which results in BadRequest response, with body
+			// containing Json with client faults; if you use HttpClientWrapper (as unit tests do), it will re-throw ClientFaultException
+			// with fault list inside
+			OpContext.ThrowIfNull(loginDto, ClientFaultCodes.ContentMissing, "MessageContent", "Login object missing in request body.");
+			OpContext.ValidateTrue(!string.IsNullOrEmpty(loginDto.UserName), ClientFaultCodes.ValueMissing, "UserName", null, "UserName may not be empty");
+			OpContext.ValidateTrue(!string.IsNullOrEmpty(loginDto.Password), ClientFaultCodes.ValueMissing, "Password", null, "Password may not be empty");
+			OpContext.ThrowValidation();
+			
+			//Login using LoginService
+			var loginResult = _loginService.Login(loginDto.UserName, loginDto.Password);
+			if(!loginResult.Success)%%><%%=Solution.INDENT%%><%%-
+				return new LoginResponseDto() { ResultCode = "LoginFailed" };%%><%%=Solution.OUTDENT%%><%%-
+			//If account is suspended (ex: after 3 unsuccessful logins system suspends account for 10 minutes)
+			if (loginResult.Flags.IsSet(LoginFlags.Suspended))%%><%%=Solution.INDENT%%><%%-
+				return new LoginResponseDto() { ResultCode = "LoginSuspended" };%%><%%=Solution.OUTDENT%%><%%-
+			OpContext.User = loginResult.User; 
+			_sessionService.StartSession(OpContext);
+			var userSession = OpContext.UserSession;
+			var resp = new LoginResponseDto() {ResultCode = "Success", AuthenticationToken = userSession.Token };
+			// Check login flags and let client know that there are extras to be completed
+			// The client app (like AngularJS app) can redirect to appropriate screen.
+			if(loginResult.Flags.IsSet(LoginFlags.ForceChangePassword))%%><%%=Solution.INDENT%%><%%-
+				resp.RequestedActions.Add("ForceChangePassword");%%><%%=Solution.OUTDENT%%><%%-
+			if(!loginResult.Flags.IsSet(LoginFlags.EmailVerified))%%><%%=Solution.INDENT%%><%%-
+				resp.RequestedActions.Add("VerifyEmail");%%><%%=Solution.OUTDENT%%><%%-
+			if(!loginResult.Flags.IsSet(LoginFlags.SecretQuestionsCreated))%%><%%=Solution.INDENT%%><%%-
+				resp.RequestedActions.Add("SetupSecretQuestions");%%><%%=Solution.OUTDENT%%><%%-
+			return resp;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
+		[HttpPost, Route("api/auth/register")]
+		public LoginResponseDto Register(RegisterDto registerDto)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-OpContext.ThrowIfNull(registerDto, ClientFaultCodes.ContentMissing, "MessageContent", "Register object missing in request body.");
+			OpContext.ValidateTrue(!string.IsNullOrEmpty(registerDto.UserName), ClientFaultCodes.ValueMissing, "UserName", null, "UserName may not be empty");
+			OpContext.ValidateTrue(!string.IsNullOrEmpty(registerDto.Password), ClientFaultCodes.ValueMissing, "Password", null, "Password may not be empty");
+			registerDto.Validate(OpContext);
+			OpContext.ThrowValidation();%%>
+			foreach (Entity where VITAIsPrimaryUserEntity == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-// create user
+				var session = OpenSession();
+				%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = session.NewEntity<%%><%%=VITAInterfaceName%%><%%->();%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where VITADSIsUpdateProperty == true && IsForeignKeyMember == false)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%=../../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%- = registerDto.%%><%%=VITAPropertyName%%><%%-;%%>
+					}
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%=VITAClassName.CamelCase()%%><%%-.Type = UserType.Member;
+				if (registerDto.IsAdmin)%%><%%=Solution.INDENT%%><%%-
+				%%><%%=VITAClassName.CamelCase()%%><%%-.Type |= UserType.Administrator;%%><%%=Solution.OUTDENT%%><%%-
+				session.SaveChanges();
+				
+				// create login
+				var login = _loginManagementService.NewLogin(session, registerDto.UserName, registerDto.Password, userId: %%><%%=VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPrimaryKeyPropertyName%%><%%-, loginId: %%><%%=VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPrimaryKeyPropertyName%%><%%-);
+				session.SaveChanges();%%>
+				break
+			}
+			<%%-
+
+			// login
+			LoginDto loginDto = new LoginDto { UserName = registerDto.UserName, Password = registerDto.Password };
+			return Login(loginDto);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+
+
+		[HttpDelete, Route("api/auth/login"), AuthenticatedOnly]
+		public void Logout()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-_loginService.Logout(OpContext.User);
+			var userSession = OpContext.UserSession;
+			if(userSession != null)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-_sessionService.EndSession(OpContext);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITADSAuthenticationControllerClassFilePath, text=Text) == true)
+{
+	update(VITADSAuthenticationControllerClassFilePath)
+}
+%%></OUTPUT>

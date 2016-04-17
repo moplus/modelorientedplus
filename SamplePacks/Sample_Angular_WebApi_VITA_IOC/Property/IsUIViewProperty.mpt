@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsUIViewProperty
+	CATEGORY CONFIG
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsUIEditableProperty == false || IsForeignKeyMember == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

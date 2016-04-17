@@ -1,0 +1,13 @@
+<CONFIG>
+	NAME ProjectReferenceProjectItem
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<ProjectReference Include="%%><%%=ProjectFilePath%%><%%-">
+      <Project>{%%><%%=ProjectID.ToUpper()%%><%%-}</Project>
+      <Name>%%><%%=Namespace%%><%%-</Name>
+    </ProjectReference>
+    %%></CONTENT>

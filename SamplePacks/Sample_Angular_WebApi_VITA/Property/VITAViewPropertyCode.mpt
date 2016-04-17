@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME VITAViewPropertyCode
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryKeyMember == true && Entity.VITAViewCanBeIndexed == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[UniqueClusteredIndex]%%>
+}
+<%%=Solution.NEWLINE%%>
+<%%=VITADataType%%><%%- %%><%%=VITAPropertyName%%><%%- { get; set; }%%>
+%%></CONTENT>

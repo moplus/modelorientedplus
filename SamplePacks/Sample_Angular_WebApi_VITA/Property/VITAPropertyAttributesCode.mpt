@@ -32,7 +32,7 @@ switch (DataTypeCode)
 	case 8: // UIntLong
 		break
 	case 9: // FloatSingle
-		<%%-, DbTypeSpec = "float(%%><%%=Precision%%><%%-)", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
+		<%%-, DbTypeSpec = "real", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
 		break
 	case 10: // FloatDouble
 		<%%-, DbTypeSpec = "double", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
@@ -60,7 +60,7 @@ switch (DataTypeCode)
 	case 15: // Object
 		break
 	case 16: // String
-		<%%-, DbTypeSpec = "varchar"%%>
+		//<%%-, DbTypeSpec = "varchar"%%>
 		if (Length > 0)
 		{
 		<%%-, Size = %%><%%=Length%%>
@@ -76,7 +76,7 @@ switch (DataTypeCode)
 		<%%-, DbTypeSpec = "text"%%>
 		break
 	case 20: // TextUnicode
-		<%%-, DbTypeSpec = "ntext"%%>
+		//<%%-, DbTypeSpec = "ntext"%%>
 		break
 	case 18: // Currency
 		<%%-, DbTypeSpec = "money", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>

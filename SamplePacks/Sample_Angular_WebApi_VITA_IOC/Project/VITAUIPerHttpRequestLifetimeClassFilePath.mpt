@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIPerHttpRequestLifetimeClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\App_Start\PerHttpRequestLifetime_G.cs%%></CONTENT>

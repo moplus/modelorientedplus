@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITARegisterDtoClassFilePath
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\RegisterDto_G.cs%%></CONTENT>

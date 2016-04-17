@@ -1,0 +1,29 @@
+<CONFIG>
+	NAME ShouldUpdateFile
+	CATEGORY Lib
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param path
+param text
+
+if (path == null || text == null)
+{
+	<%%-false%%>
+	return
+}
+//
+// To update, file must either not exist, or be a generated file that has updated content outside of protected and ignored areas
+//
+if (File(path) == null || (File(path).Contains("<Status>Generated</Status>") == true
+     && File(path).FilterProtected().FilterIgnored() != text.FilterProtected().FilterIgnored()))
+{
+	<%%-true%%>
+}
+else
+{
+	<%%-false%%>
+}
+%%></CONTENT>

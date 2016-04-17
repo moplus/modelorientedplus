@@ -4224,7 +4224,9 @@ Another example using more clauses:
 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;span style="color:darkgreen"&gt;&lt;b&gt;// put any number of statements here...&lt;/b&gt;&lt;/span&gt;&lt;br&gt;
 &lt;span style="color:blue"&gt;&lt;b&gt;}&lt;/b&gt;&lt;/span&gt;
 &lt;br&gt;&lt;br&gt;
-This &lt;i&gt;foreach&lt;/i&gt; will get all &lt;i&gt;Entity&lt;/i&gt; instances from the &lt;i&gt;Solution&lt;/i&gt; with a feature name of "Domain", based on the in clause.  It will then filter out the list, based on the where clause, to entity names that start with "Customer" and don't end in "s".  The iteration will be sorted descending by &lt;i&gt;EntityName&lt;/i&gt;, based on the sort clause.  The iteration will only include up to the first 2 items found, based on the limit clause.</value>
+This &lt;i&gt;foreach&lt;/i&gt; will get all &lt;i&gt;Entity&lt;/i&gt; instances from the &lt;i&gt;Solution&lt;/i&gt; with a feature name of "Domain", based on the in clause.  It will then filter out the list, based on the where clause, to entity names that start with "Customer" and don't end in "s".  The iteration will be sorted descending by &lt;i&gt;EntityName&lt;/i&gt;, based on the sort clause.  The iteration will only include up to the first 2 items found, based on the limit clause.
+&lt;br&gt;&lt;br&gt;
+&lt;b&gt;Note:&lt;/b&gt; Use the &lt;i&gt;ItemIndex&lt;/i&gt; property to find which zero based item you are within the &lt;i&gt;foreach&lt;/i&gt; .</value>
     <comment>For help.</comment>
   </data>
   <data name="Help_LanguageReferenceStatementsReturnTermParagraph1" xml:space="preserve">

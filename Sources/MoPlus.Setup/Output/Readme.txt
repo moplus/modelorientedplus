@@ -1,0 +1,1 @@
+CodePlex uploads are currently corrupting install files as of 6/17/2015, hope to have this issue resolved soon!

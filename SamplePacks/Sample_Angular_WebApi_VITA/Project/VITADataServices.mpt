@@ -52,33 +52,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Routing" />
-    <Reference Include="Vita">
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.dll</HintPath>
-    </Reference>
-    <Reference Include="Vita.Data.MsSql, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Vita, Version=1.7.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Data.MsSql.dll</HintPath>
+      <HintPath>..\packages\Vita.1.7.2.0\lib\net45\Vita.dll</HintPath>
     </Reference>
-    <Reference Include="Vita.Modules, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.1.1.0\lib\net45\Vita.Modules.dll</HintPath>
+    <Reference Include="Vita.Modules">
+      <HintPath>..\packages\Vita.Modules.1.7.2.0\lib\net45\Vita.Modules.dll</HintPath>
     </Reference>
-    <Reference Include="Vita.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Vita.Web.1.1.0\lib\net45\Vita.Web.dll</HintPath>
+    <Reference Include="Vita.Web">
+      <HintPath>..\packages\Vita.Web.1.7.2.0\lib\net45\Vita.Web.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -141,41 +136,17 @@ if (File(Path).Contains(VITADSWebApiConfigClassFilePath.Substring(Project.Projec
 	// add to project file
 	insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSWebApiConfigClassFilePath))
 }
-
+/*
 <%%>VITADSDomainServiceConfigClassCode%%>
 log("GeneratedFile", VITADSDomainServiceConfigClassFilePath, true)
 if (File(Path).Contains(VITADSDomainServiceConfigClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
 {
 	// add to project file
 	insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDomainServiceConfigClassFilePath))
-}
+}*/
 
 if (Solution.VITA_ADD_LOGIN_MODULE == true)
 {
-	<%%>VITADSRegisterDtoClassCode%%>
-	log("GeneratedFile", VITADSRegisterDtoClassFilePath, true)
-	if (File(Path).Contains(VITADSRegisterDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSRegisterDtoClassFilePath))
-	}
-	
-	<%%>VITADSLoginDtoClassCode%%>
-	log("GeneratedFile", VITADSLoginDtoClassFilePath, true)
-	if (File(Path).Contains(VITADSLoginDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSLoginDtoClassFilePath))
-	}
-	
-	<%%>VITADSLoginResponseDtoClassCode%%>
-	log("GeneratedFile", VITADSLoginResponseDtoClassFilePath, true)
-	if (File(Path).Contains(VITADSLoginResponseDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSLoginResponseDtoClassFilePath))
-	}
-	
 	<%%>VITADSAuthenticationControllerClassCode%%>
 	log("GeneratedFile", VITADSAuthenticationControllerClassFilePath, true)
 	if (File(Path).Contains(VITADSAuthenticationControllerClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
@@ -189,38 +160,6 @@ if (Solution.VITA_ADD_LOGIN_MODULE == true)
 foreach (Entity in Solution where VITAIsDataModelEntity == true)
 {
 	progress
-	
-	<%%>VITADSDtoClassCode%%>
-	log("GeneratedFile", VITADSDtoClassFilePath, true)
-	if (File(Path).Contains(VITADSDtoClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDtoClassFilePath))
-	}
-	
-	<%%>VITADSDtoExtensionsClassCode%%>
-	log("GeneratedFile", VITADSDtoExtensionsClassFilePath, true)
-	if (File(Path).Contains(VITADSDtoExtensionsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSDtoExtensionsClassFilePath))
-	}
-	
-	<%%>VITADSQueryClassCode%%>
-	log("GeneratedFile", VITADSQueryClassFilePath, true)
-	if (File(Path).Contains(VITADSQueryClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSQueryClassFilePath))
-	}
-	
-	<%%>VITADSQueryResultsClassCode%%>
-	log("GeneratedFile", VITADSQueryResultsClassFilePath, true)
-	if (File(Path).Contains(VITADSQueryResultsClassFilePath.Substring(Project.ProjectDirectory.Length + 1)) == false)
-	{
-		// add to project file
-		insert(Path, "<Compile Include=", "/>", "AssemblyInfo.cs", Project.CompileInclude(filePath = VITADSQueryResultsClassFilePath))
-	}
 	
 	<%%>VITADSApiControllerClassCode%%>
 	log("GeneratedFile", VITADSApiControllerClassFilePath, true)

@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAViewCanBeIndexed
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (EntityReference where IsNullable == true)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

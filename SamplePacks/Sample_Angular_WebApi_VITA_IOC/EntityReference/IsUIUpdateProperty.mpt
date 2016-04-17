@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME IsUIUpdateProperty
+	CATEGORY CONFIG
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+/*foreach (PropertyRelationship)
+{
+	foreach (Relationship)
+	{
+		foreach (RelationshipProperty)
+		{
+			if (Property.IsPrimaryKeyMember == true)
+			{
+				<%%-false%%>
+				return
+			}
+		}
+	}
+}*/
+<%%-true%%>
+%%></CONTENT>

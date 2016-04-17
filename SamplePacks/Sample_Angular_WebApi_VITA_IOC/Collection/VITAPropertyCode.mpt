@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME VITAPropertyCode
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAPropertyAttributesCode%%>
+<%%=Solution.NEWLINE%%>
+<%%-IList<%%><%%=VITAPropertyDataType%%><%%-> %%><%%=VITAPropertyName%%><%%- { get; }%%></CONTENT>

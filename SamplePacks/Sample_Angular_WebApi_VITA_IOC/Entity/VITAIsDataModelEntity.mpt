@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAIsDataModelEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-true%%></CONTENT>

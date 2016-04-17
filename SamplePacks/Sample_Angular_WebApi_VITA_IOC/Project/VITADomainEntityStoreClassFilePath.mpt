@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainEntityStoreClassFilePath
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=VITADomainEntityStoreClassName%%><%%-_G.cs%%></CONTENT>

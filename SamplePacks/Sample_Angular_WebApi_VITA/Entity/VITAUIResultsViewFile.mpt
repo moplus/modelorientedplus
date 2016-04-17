@@ -35,7 +35,7 @@
 	<input id="totalPages" type="hidden" ng-model="searchResults.totalPages" />%%>
 	foreach (Entity in EntityAndBaseEntities)
 	{
-		foreach (Property where VITADSIsQueryProperty == true)
+		foreach (Property where VITAIsQueryProperty == true)
 		{
 			switch (DataTypeCode)
 			{
@@ -59,7 +59,7 @@
 			<a class="btn btn-default" ui-sref="%%><%%=VITAClassName.CamelCase()%%><%%-Search({%%>
 			foreach (Entity in EntityAndBaseEntities)
 			{
-				foreach (Property where VITADSIsQueryProperty == true)
+				foreach (Property where VITAIsQueryProperty == true)
 				{
 					switch (DataTypeCode)
 					{

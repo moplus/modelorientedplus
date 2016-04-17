@@ -1,0 +1,201 @@
+<CONFIG>
+	NAME VITAPropertyAttributesCode
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// build the Column attribute
+<%%=Solution.NEWLINE%%>
+<%%-[Column("%%><%%=VITAPropertyName%%><%%-"%%>
+
+switch (DataTypeCode)
+{
+	case 1: // SByte
+		<%%-, DbTypeSpec = "sbyte"%%>
+		break
+	case 2: // IntShort
+		<%%-, DbType = DbType.Int16%%>
+		break
+	case 3: // Int
+		break
+	case 4: // IntLong
+		<%%-, DbTypeSpec = "bigint"%%>
+		break
+	case 5: // Byte
+		break
+	case 6: // UIntShort
+		break
+	case 7: // UInt
+		break
+	case 8: // UIntLong
+		break
+	case 9: // FloatSingle
+		<%%-, DbTypeSpec = "float(%%><%%=Precision%%><%%-)", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
+		break
+	case 10: // FloatDouble
+		<%%-, DbTypeSpec = "double", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
+		break
+	case 11: // Decimal
+		<%%-, DbTypeSpec = "decimal", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
+		break
+	case 12: // Boolean
+		<%%-, DbTypeSpec = "bit"%%>
+		break
+	case 13: // Char
+		if (IsPrimaryKeyMember == false) // due to VITA bug
+		{
+			<%%-, DbTypeSpec = "char(%%><%%=Length%%><%%-)"%%>
+		}
+		<%%-, Size = %%><%%=Length%%>
+		break
+	case 14: // CharUnicode
+		if (IsPrimaryKeyMember == false) // due to VITA bug
+		{
+			<%%-, DbTypeSpec = "nchar(%%><%%=Length%%><%%-)"%%>
+		}
+		<%%-, Size = %%><%%=Length%%>
+		break
+	case 15: // Object
+		break
+	case 16: // String
+		<%%-, DbTypeSpec = "varchar"%%>
+		if (Length > 0)
+		{
+		<%%-, Size = %%><%%=Length%%>
+		}
+		break
+	case 17: // StringUnicode
+		if (Length > 0)
+		{
+		<%%-, Size = %%><%%=Length%%>
+		}
+		break
+	case 19: // Text
+		<%%-, DbTypeSpec = "text"%%>
+		break
+	case 20: // TextUnicode
+		<%%-, DbTypeSpec = "ntext"%%>
+		break
+	case 18: // Currency
+		<%%-, DbTypeSpec = "money", Scale = %%><%%=Scale%%><%%-, Precision = %%><%%=Precision%%><%%-%%>
+		break
+	case 21: // IntTiny
+		<%%-, DbTypeSpec = "tinyint"%%>
+		break
+	case 22: // UIntTiny
+		break
+	case 23: // Binary
+		<%%-, DbType = DbType.Binary%%>
+		break
+	case 24: // DateTime
+		<%%-, DbType = DbType.DateTime%%>
+		break
+	case 25: // Timestamp
+		<%%-, DbTypeSpec = "timestamp"%%>
+		break
+	case 26: // Guid
+		break
+	case 27: // Image
+		<%%-, DbTypeSpec = "image", Size = 2147483647%%>
+		break
+	case 37: // Blob
+		<%%-, DbTypeSpec = "varbinary"%%>
+		break
+	default:
+		break
+}
+<%%-)%%>
+if (IsNullable == true && IsPrimaryKeyMember == false && DataTypeCode != 25 /* Timestamp */)
+{
+	<%%-, Nullable%%>
+}
+if (DataTypeCode == 25 /* Timestamp */)
+{
+	<%%-, Auto(AutoType.RowVersion)%%>
+}
+with (Entity)
+{
+	var propertyFound
+	var hasMultiColumnPrimaryKey = false
+	if (BaseEntityID == null || BaseEntity.VITAIsDataModelEntity == false)
+	{
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				hasMultiColumnPrimaryKey = true
+			}
+		}
+		foreach (Property where IsPrimaryKeyMember == true && IsForeignKeyMember == true)
+		{
+			hasMultiColumnPrimaryKey = true
+		}	
+	}
+	if ( hasMultiColumnPrimaryKey == false && ../IsPrimaryKeyMember == true)
+	{
+		<%%-, PrimaryKey%%>
+		if (VITAIsHeapTable == false)
+		{
+			foreach (Index where IsPrimaryKeyIndex == true && PropertyCount == 1)
+			{
+				<%%-, ClusteredIndex(IndexName="%%><%%=IndexName%%><%%-")%%>
+			}
+		}
+	}
+	foreach (Index where IsPrimaryKeyIndex == false && PropertyCount == 1)
+	{
+		if (IsUniqueIndex == false)
+		{
+			foreach(IndexProperty)
+			{
+				if (PropertyID == ../../../PropertyID)
+				{
+					<%%-, Index(IndexName="%%><%%=IndexName%%><%%-")%%>
+				}
+			}
+		}
+		else if (IsNonPrimaryKeyIndex)
+		{
+			foreach(IndexProperty)
+			{
+				if (PropertyID == ../../../PropertyID)
+				{
+					<%%-, Unique(IndexName="%%><%%=IndexName%%><%%-")%%>
+				}
+			}
+		}
+	}
+}
+switch (DataTypeCode)
+{
+	case 19: // Text
+	case 20: // TextUnicode
+		<%%-, Unlimited%%>
+		break
+	default:
+		break
+}
+
+if (IsPrimaryKeyMember == true)
+{
+	if (Identity == true)
+	{
+		<%%-, Identity%%>
+	}
+	else if (DataTypeCode == 26 /* Guid */)
+	{
+		<%%-, Auto%%>
+	}
+	else if (DataTypeCode == 24 /* DateTime */)
+	{
+		<%%-, Auto(AutoType.CreatedOn)%%>
+	}
+}
+if (Description != null)
+{
+	<%%-, Description("%%><%%=Description%%><%%-")%%>
+}
+<%%-]%%>
+%%></CONTENT>

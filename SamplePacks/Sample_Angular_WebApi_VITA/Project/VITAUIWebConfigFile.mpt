@@ -12,15 +12,14 @@
   http://go.microsoft.com/fwlink/?LinkId=301880
   -->
 <configuration>
+  <configSections>
+    <section name="protected" type="System.Configuration.NameValueSectionHandler, System,Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </configSections>
   <appSettings>
     <add key="webpages:Version" value="3.0.0.0" />
     <add key="webpages:Enabled" value="false" />
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
-    <add key="DbConnectionString" value="Server=%%><%%=Project.DbServerName%%><%%-;Database=%%><%%=Project.DbName%%><%%-;Trusted_Connection=True;"/>
-   <!-- for local MS SQL Server
-    <add key="DbConnectionString" value="Data Source=.;Initial Catalog=%%><%%=Project.DbName%%><%%-;Integrated Security=True" />
-   --> 
     <add key="LogFilePath" value="_db.log"/>
   </appSettings>
   <system.web>
@@ -65,6 +64,16 @@
       </dependentAssembly>
     </assemblyBinding>
   </runtime>
+  <protected>
+    <add key="MsSqlConnectionString" value="Server=%%><%%=Project.DbServerName%%><%%-;Database=%%><%%=Project.DbName%%><%%-;Trusted_Connection=True;"/>
+    <!-- for local MS SQL Server
+    <add key="MsSqlConnectionString" value="Data Source=.;Initial Catalog=%%><%%=Project.DbName%%><%%-;Integrated Security=True" />
+    -->
+    <add key="LoginInfoCryptoKey" value="5F29E686B74F176F74AD0D0B54937F5FD9FB190173AB06C5000CC35ED5C5E49E" />
+
+    <!-- Optional - connection string for logs database. If specified, all log tables are placed there. Might be the same as main database -->
+    <add key="MsSqlLogConnectionString" value="Server=%%><%%=Project.DbServerName%%><%%-;Database=%%><%%=Project.DbName%%><%%-;Trusted_Connection=True;" />
+  </protected>
 </configuration>%%></CONTENT><OUTPUT>
 <%%=ProjectDirectory%%><%%-\Web.Config%%>
 <%%:

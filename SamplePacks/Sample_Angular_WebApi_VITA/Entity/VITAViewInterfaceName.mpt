@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAViewInterfaceName
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAInterfaceName%%><%%-View%%></CONTENT>

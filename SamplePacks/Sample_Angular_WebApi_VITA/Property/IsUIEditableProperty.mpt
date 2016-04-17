@@ -6,7 +6,7 @@
 </CONFIG>
 <CONTENT>
 <%%:
-if (IsAuditProperty == true || VITADSIsDtoClassProperty == false || IsBaseProperty == true)
+if (IsAuditProperty == true || VITAIsDtoClassProperty == false || IsBaseProperty == true)
 {
 	<%%-false%%>
 	return

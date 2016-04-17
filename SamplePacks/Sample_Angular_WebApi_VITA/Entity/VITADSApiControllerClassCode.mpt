@@ -34,8 +34,7 @@ if (Solution.VITA_ADD_LOGIN_MODULE == true)
 using Vita.Entities.Authorization;%%>
 }
 <%%-
-using Vita.Web;
-using %%><%%=Project.Namespace%%><%%-.Dtos;%%>
+using Vita.Web;%%>
 with (Project)
 {
 	if (ProjectReferenceCount > 1)
@@ -45,7 +44,8 @@ with (Project)
 		{
     <%%-
 using %%><%%=Namespace%%><%%-;
-using %%><%%=Namespace%%><%%-.Models;%%>
+using %%><%%=Namespace%%><%%-.Models;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
 		}
 	}
 	else
@@ -54,7 +54,8 @@ using %%><%%=Namespace%%><%%-.Models;%%>
 		{
     <%%-
 using %%><%%=Namespace%%><%%-;
-using %%><%%=Namespace%%><%%-.Models;%%>
+using %%><%%=Namespace%%><%%-.Models;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
 		}
 	}
 }
@@ -89,7 +90,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		/// <param name="query">Query object containing search criteria.</param>
 		///--------------------------------------------------------------------------------
     		[HttpGet, Route("api/%%><%%=VITADSApiRoute%%><%%-")%%><%%-]
-		public %%><%%=VITADSQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-([FromUri] %%><%%=VITADSQueryClassName%%><%%- query)%%>
+		public %%><%%=VITAQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-([FromUri] %%><%%=VITAQueryClassName%%><%%- query)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-var session = %%>
@@ -102,14 +103,11 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 				<%%-OpenSession();%%>
 			}
 			<%%-
-			query = query ?? new %%><%%=VITADSQueryClassName%%><%%-();
+			query = query ?? new %%><%%=VITAQueryClassName%%><%%-();
 			if (query.Take == 0) query.Take = 10;%%>
-			<%%=VITADSSearchQuery(listName = "items")%%><%%-
-			var itemsList = items.ToList();
+			<%%=VITASearchQuery(listName = "items")%%><%%-
 			
-			%%><%%=VITADSQueryResultsClassName%%><%%- results = new %%><%%=VITADSQueryResultsClassName%%><%%-();
-			results.Items = itemsList.Select(i => i.ToDto(false)).ToList();
-			results.TotalItems = count;
+			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-(session.ExecuteSearch(where, query, i => i.ToDto(), orderByMapping));
 			results.CanCreate = %%>
 			if (Solution.VITA_ADD_LOGIN_MODULE == true)
 			{
@@ -142,8 +140,8 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		}
 		<%%-
 		///--------------------------------------------------------------------------------
-		[HttpGet, Route("api/%%><%%=VITADSApiRoute%%><%%-/list")]
-		public %%><%%=VITADSQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-List([FromUri] int take = 100%%>
+		[HttpGet, Route("api/%%><%%=VITADSApiRoute%%><%%-list")]
+		public %%><%%=VITAQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-List([FromUri] int take = 100%%>
 		foreach (Property where IsPrimaryKeyMember == true)
 		{
 			<%%-, %%><%%=VITADataType%%><%%- %%><%%=VITAPropertyName.CamelCase()%%><%%- = %%><%%=CSharpDefaultValue%%>
@@ -224,9 +222,9 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			<%%-
 			
 			
-			%%><%%=VITADSQueryResultsClassName%%><%%- results = new %%><%%=VITADSQueryResultsClassName%%><%%-();
-			results.Items = itemsList.Select(i => i.ToDto(false)).ToList();
-			results.TotalItems = count;
+			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-();
+			results.Results = itemsList.Select(i => i.ToDto(false)).ToList();
+			results.TotalCount = count;
 			
 			return results;%%>
 		<%%=Solution.CLOSE_BRACE%%>
@@ -264,7 +262,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			<%%-}%%>
 		}
 		<%%-")]
-		public %%><%%=VITADSDtoClassName%%><%%- Get%%><%%=VITAClassName%%><%%-(%%>
+		public %%><%%=VITADtoClassName%%><%%- Get%%><%%=VITAClassName%%><%%-(%%>
 		if (PrimaryKeyCount > 1)
 		{
 			<%%-[FromUri] %%>
@@ -342,7 +340,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 				return null; %%>
 			<%%=Solution.CLOSE_BRACE%%>
 			<%%=Solution.NEWLINE%%>
-			<%%=VITADSDtoClassName%%><%%- itemDto = item.ToDto(true);
+			<%%=VITADtoClassName%%><%%- itemDto = item.ToDto(true);
 			Type[] blockingEntities;%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-itemDto.CanDelete = itemDto.CanDelete && session.CanDeleteEntity<%%><%%=VITAInterfaceName%%><%%->(item, out blockingEntities);%%>
@@ -357,15 +355,15 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		<%%-///--------------------------------------------------------------------------------
 		/// <summary>Create an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
 		///
-		/// <param name="item">%%><%%=VITADSDtoClassName%%><%%- dto of item to create.</param>
+		/// <param name="item">%%><%%=VITADtoClassName%%><%%- dto of item to create.</param>
 		///--------------------------------------------------------------------------------
     		[HttpPost, Route("api/%%><%%=VITADSApiRoute%%><%%-")%%>
-    		if (VITADSIsAuthenticatedEntity == true && VITAIsPrimaryUserEntity == false)
+    		if (VITAIsAuthenticatedEntity == true && VITAIsPrimaryUserEntity == false)
     		{
     			<%%-, AuthenticatedOnly%%>
     		}
     		<%%-]
-		public %%><%%=VITADSDtoClassName%%><%%- Create%%><%%=VITAClassName%%><%%-(%%><%%=VITADSDtoClassName%%><%%- item)%%>
+		public %%><%%=VITADtoClassName%%><%%- Create%%><%%=VITAClassName%%><%%-(%%><%%=VITADtoClassName%%><%%- item)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-return CreateUpdate%%><%%=VITAClassName%%><%%-(item, create: true);%%>
@@ -378,15 +376,15 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		<%%-///--------------------------------------------------------------------------------
 		/// <summary>Update an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
 		///
-		/// <param name="item">%%><%%=VITADSDtoClassName%%><%%- dto of item to update.</param>
+		/// <param name="item">%%><%%=VITADtoClassName%%><%%- dto of item to update.</param>
 		///--------------------------------------------------------------------------------
     		[HttpPut, Route("api/%%><%%=VITADSApiRoute%%><%%-")%%>
-    		if (VITADSIsAuthenticatedEntity == true)
+    		if (VITAIsAuthenticatedEntity == true)
     		{
     			<%%-, AuthenticatedOnly%%>
     		}
     		<%%-]
-		public %%><%%=VITADSDtoClassName%%><%%- Update%%><%%=VITAClassName%%><%%-(%%><%%=VITADSDtoClassName%%><%%- item)%%>
+		public %%><%%=VITADtoClassName%%><%%- Update%%><%%=VITAClassName%%><%%-(%%><%%=VITADtoClassName%%><%%- item)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-return CreateUpdate%%><%%=VITAClassName%%><%%-(item, create: false);%%>
@@ -396,12 +394,12 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		//
 		<%%=Solution.NEWLINE%%>
 		<%%=Solution.NEWLINE%%>
-		<%%-private %%><%%=VITADSDtoClassName%%><%%- CreateUpdate%%><%%=VITAClassName%%><%%-(%%>
-		<%%=VITADSDtoClassName%%><%%- item, bool create)%%>
+		<%%-private %%><%%=VITADtoClassName%%><%%- CreateUpdate%%><%%=VITAClassName%%><%%-(%%>
+		<%%=VITADtoClassName%%><%%- item, bool create)%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-var session = %%>
-			if (VITADSIsAuthenticatedEntity == true)
+			if (VITAIsAuthenticatedEntity == true)
 			{
 				<%%-OpenSecureSession();%%>
 			}
@@ -501,7 +499,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 				{
 					baseEntityPath = baseEntityPath + VITAClassName + "."
 				}
-				foreach (Property where VITADSIsUpdateProperty == true && IsForeignKeyMember == false)
+				foreach (Property where VITAIsUpdateProperty == true && IsForeignKeyMember == false)
 				{
 					<%%=Solution.NEWLINE%%>
 					<%%-updateItem.%%><%%=baseEntityPath%%><%%=VITAPropertyPath%%><%%- = item.%%><%%=VITAPropertyName%%><%%-;%%>
@@ -595,7 +593,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			<%%-}%%>
 		}
 		<%%-")%%>
-    		if (VITADSIsAuthenticatedEntity == true)
+    		if (VITAIsAuthenticatedEntity == true)
     		{
     			<%%-, AuthenticatedOnly%%>
     		}
@@ -617,7 +615,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-var session = %%>
-			if (VITADSIsAuthenticatedEntity == true)
+			if (VITAIsAuthenticatedEntity == true)
 			{
 				<%%-OpenSecureSession();%%>
 			}

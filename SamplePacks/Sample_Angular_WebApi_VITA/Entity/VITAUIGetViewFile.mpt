@@ -39,6 +39,21 @@
 			<%%=VITAUIViewUI%%>
 		}
 	}
+	if (VITAHasFullNameProperty == true)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<div class="col-md-7">%%><%%=Solution.INDENT%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-<label for="fullName">Full Name:</label>%%>
+				<%%=Solution.NEWLINE%%>
+					<%%-<input type="text" class="form-control" readonly id="fullName" ng-model="itemForm.fullName" />%%><%%=Solution.OUTDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-</div>%%><%%=Solution.OUTDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-</div>%%>
+	}
 	foreach (Entity in EntityAndBaseEntities)
 	{
 		foreach (EntityReference where IsPrimaryReference == true && IsUIViewProperty == true)

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADomainAuthorizationHelperClassName
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-DomainAuthorizationHelper%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITALabelName
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAPropertyName.CapitalWordCase()%%></CONTENT>

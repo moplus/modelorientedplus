@@ -1,0 +1,238 @@
+<CONFIG>
+	NAME VITAInterfaceAttributesCode
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var propertyFound
+var hasMultiColumnPrimaryKey = false
+if (BaseEntityID == null || BaseEntity.VITAIsDataModelEntity == false)
+{
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			hasMultiColumnPrimaryKey = true
+		}
+	}	
+	foreach (Property where IsPrimaryKeyMember == true && IsForeignKeyMember == true)
+	{
+		hasMultiColumnPrimaryKey = true
+	}	
+}
+<%%-
+[Entity(Name="%%><%%=VITAClassName%%><%%-", TableName="%%><%%=VITATableName%%><%%-")%%>
+if (VITAIsHeapTable == true)
+{
+	<%%-, HeapTable%%>
+}
+<%%-]%%>
+if ( hasMultiColumnPrimaryKey == true)
+{
+	<%%-
+	[PrimaryKey("%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-,%%>
+		}
+		if (IsForeignKeyMember == false)
+		{
+			<%%=VITAPropertyName%%>
+		}
+		else
+		{
+			propertyFound = false
+			foreach (EntityReference in ../)
+			{
+				if (propertyFound == true)
+				{
+					break
+				}
+				foreach (PropertyRelationship)
+				{
+					if (propertyFound == true)
+					{
+						break
+					}
+					with (Relationship)
+					{
+						foreach (RelationshipProperty)
+						{
+							if (Property.PropertyID == ../../../../PropertyID)
+							{
+								<%%=../../../VITAPropertyName%%>
+								propertyFound = true
+								break
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	<%%-")]%%>
+}
+foreach (Index where IsPrimaryKeyIndex == true && PropertyCount > 1 && Entity.VITAIsHeapTable == false)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[ClusteredIndex("%%>
+	foreach(IndexProperty)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-,%%>
+		}
+		if (Property.IsForeignKeyMember == false || Entity.BaseEntityID != null)
+		{
+			<%%=Property.VITAPropertyName%%>
+		}
+		else
+		{
+			propertyFound = false
+			foreach (EntityReference in ../../)
+			{
+				if (propertyFound == true)
+				{
+					break
+				}
+				foreach (PropertyRelationship)
+				{
+					if (propertyFound == true)
+					{
+						break
+					}
+					with (Relationship)
+					{
+						foreach (RelationshipProperty)
+						{
+							if (Property.PropertyID == ../../../../Property.PropertyID)
+							{
+								<%%=../../../VITAPropertyName%%>
+								propertyFound = true
+								break
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	<%%-", IndexName="%%><%%=IndexName%%><%%-")]%%>
+}
+foreach (Index where IsPrimaryKeyIndex == false && PropertyCount > 1)
+{
+	if (IsUniqueIndex == false)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-[Index("%%>
+		foreach(IndexProperty)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-,%%>
+			}
+			if (Property.IsForeignKeyMember == false)
+			{
+				<%%=Property.VITAPropertyName%%>
+			}
+			else
+			{
+				propertyFound = false
+				foreach (EntityReference in ../../)
+				{
+					if (propertyFound == true)
+					{
+						break
+					}
+					foreach (PropertyRelationship)
+					{
+						if (propertyFound == true)
+						{
+							break
+						}
+						with (Relationship)
+						{
+							foreach (RelationshipProperty)
+							{
+								if (Property.PropertyID == ../../../../Property.PropertyID)
+								{
+									<%%=../../../VITAPropertyName%%>
+									propertyFound = true
+									break
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		<%%-", IndexName="%%><%%=IndexName%%><%%-")]%%>
+	}
+	else if (IsNonPrimaryKeyIndex)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-[Unique("%%>
+		foreach(IndexProperty)
+		{
+			if (ItemIndex > 0)
+			{
+			<%%-,%%>
+			}
+			if (Property.IsForeignKeyMember == false)
+			{
+				<%%=Property.VITAPropertyName%%>
+			}
+			else
+			{
+				propertyFound = false
+				foreach (EntityReference in ../../)
+				{
+					if (propertyFound == true)
+					{
+						break
+					}
+					foreach (PropertyRelationship)
+					{
+						if (propertyFound == true)
+						{
+							break
+						}
+						with (Relationship)
+						{
+							foreach (RelationshipProperty)
+							{
+								if (Property.PropertyID == ../../../../Property.PropertyID)
+								{
+									<%%=../../../VITAPropertyName%%>
+									propertyFound = true
+									break
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		<%%-", IndexName="%%><%%=IndexName%%><%%-")]%%>
+	}
+}
+if (EntityTypeCode != 1 /* lookup */ && EntityTypeCode != 2 /* lookup business */)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[Paged%%>
+	if (PrimarySortProperty != null)
+	{
+		<%%-, OrderBy("%%><%%=PrimarySortProperty%%><%%-")%%>
+	}
+	<%%-]%%>
+}
+if (Description != null)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[Description("%%><%%=Description%%><%%-")]%%>
+}
+%%></CONTENT>

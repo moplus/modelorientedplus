@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME VITAViewPropertyCode
+	CATEGORY VITA
+	NODE PropertyReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (Entity.VITAViewCanBeIndexed == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[Index]%%>
+}
+<%%=Solution.NEWLINE%%>
+<%%=ReferencedProperty.VITADataType%%><%%- %%><%%=VITAPropertyName%%><%%- { get; set; }%%>
+%%></CONTENT>

@@ -1,0 +1,17 @@
+<CONFIG>
+	NAME VITATableName
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (SourceName != null)
+{
+	<%%=SourceName%%>
+}
+else
+{
+	<%%=EntityName%%>
+}
+%%></CONTENT>

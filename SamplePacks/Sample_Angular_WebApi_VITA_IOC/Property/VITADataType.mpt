@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITADataType
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=CSharpDataType%%></CONTENT>

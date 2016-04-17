@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAQueryResultsClassName
+	CATEGORY VITA
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-QueryResults%%></CONTENT>

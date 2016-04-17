@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME VITAPropertyPropertyName
+	CATEGORY VITA
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (PropertyRelationship)
+{
+	foreach (RelationshipProperty in Relationship)
+	{
+		<%%=Property.VITAPropertyName%%>
+		break
+	}
+	break
+}
+%%></CONTENT>

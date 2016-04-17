@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME VITAIsValidationProperty
+	CATEGORY VITA
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAIsDtoClassProperty == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

@@ -1,0 +1,697 @@
+<CONFIG>
+	NAME VITAApiControllerClassCode
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a web api controller for your entity.
+// This controller enables CRUD and search web api methods for your entity.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var baseEntityPath
+<%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using Vita.Common;
+using Vita.Entities;
+using Vita.Entities.Web;%%>
+if (Solution.VITA_ADD_LOGIN_MODULE == true)
+{
+<%%-
+using Vita.Entities.Authorization;%%>
+}
+<%%-
+using %%><%%=Project.Namespace%%><%%-.Models;
+using %%><%%=Project.Namespace%%><%%-.Dtos;
+
+namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This slim api controller provides access to CRUD operations on
+	/// %%><%%=VITAInterfaceName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=VITAApiControllerClassName%%><%%- : SlimApiController%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		if (Solution.VITA_ADD_LOGIN_MODULE == true)
+		{
+		<%%-private ISecureSession OpenSecureSession()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return base.Context.OpenSecureSession();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		}
+		else
+		{
+		<%%-private IEntitySession OpenSession()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return base.Context.OpenSession();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		}
+		//
+		// search
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Search for instances of %%><%%=VITAInterfaceName%%><%%- by criteria.</summary>
+		///
+		/// <param name="query">Query object containing search criteria.</param>
+		///--------------------------------------------------------------------------------
+    		[ApiGet, ApiRoute("%%><%%=VITADSApiRoute%%><%%-")%%><%%-]
+		public %%><%%=VITAQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-([FromUrl] %%><%%=VITAQueryClassName%%><%%- query)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var session = %%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%-OpenSecureSession();%%>
+			}
+			else
+			{
+				<%%-OpenSession();%%>
+			}
+			<%%-
+			query = query ?? new %%><%%=VITAQueryClassName%%><%%-();
+			if (query.Take == 0) query.Take = 10;%%>
+			<%%=VITASearchQuery(listName = "items")%%><%%-
+			
+			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-(session.ExecuteSearch(where, query, i => i.ToDto(), orderByMapping));
+			results.CanCreate = %%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%-session.IsAccessAllowed<%%><%%=VITAInterfaceName%%><%%->(AccessType.Create);%%>
+			}
+			else
+			{
+				<%%-true;%%>
+			}
+			<%%-
+			
+			return results;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// list
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Get a list of %%><%%=VITAInterfaceName%%><%%- items.</summary>
+		///
+		/// <remarks>This is used to populate drop down lists with selected item, not generally
+		/// recommended for larger tables.</remarks>
+		///
+		/// <param name="take">Number of items to take.</param>%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=VITAPropertyName.ToLower()%%><%%-">Id value to get item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[ApiGet, ApiRoute("%%><%%=VITADSApiRoute%%><%%-list")]
+		public %%><%%=VITAQueryResultsClassName%%><%%- Get%%><%%=LIBPluralEntityName%%><%%-List([FromUrl] int take = 100%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-, %%><%%=VITADataType%%><%%- %%><%%=VITAPropertyName.CamelCase()%%><%%- = %%><%%=CSharpDefaultValue%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var session = %%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%-OpenSecureSession();%%>
+			}
+			else
+			{
+				<%%-OpenSession();%%>
+			}
+			<%%-
+			
+			// Get a bunch of items by no criteria
+			var items = session.EntitySet<%%><%%=VITAInterfaceName%%><%%->();
+			var count = items.Count();
+			items = items.Take(take);
+			var itemsList = items.ToList();
+			
+			// add selected item if not in list
+			if (%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%- && %%>
+				}
+				<%%=VITAPropertyName.CamelCase()%%><%%- != %%><%%=CSharpDefaultValue%%>
+			}
+			<%%-)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				if (PrimaryKeyCount == 1)
+				{
+					<%%-var item = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						<%%=VITAPropertyName.CamelCase()%%>
+					}
+					<%%-);%%>
+				}
+				else
+				{
+					<%%-var item = (from i in session.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						if (ItemIndex == 0)
+						{
+							<%%-
+							where %%>
+						}
+						else
+						{
+							<%%-
+							&& %%>
+						}
+						<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == %%><%%=VITAPropertyName.CamelCase()%%>
+					}
+					<%%=Solution.NEWLINE%%>
+					<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+				}
+				<%%-
+				if (item != null && itemsList.Contains(item) == false)%%><%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+					<%%-itemsList.Add(item);%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			if (VITAPrimarySortProperty != null)
+			{
+				<%%-itemsList.OrderBy(i => i.%%><%%=VITAPrimarySortProperty%%><%%-);%%>
+			}
+			<%%-
+			
+			
+			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-();
+			results.Results = itemsList.Select(i => i.ToDto(false)).ToList();
+			results.TotalCount = count;
+			
+			return results;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		if (Tags.Contains("VIEW") == true)
+		{
+			//
+			// view
+			//
+			<%%=Solution.NEWLINE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-///--------------------------------------------------------------------------------
+			/// <summary>Get a page of %%><%%=VITAViewInterfaceName%%><%%- items.</summary>
+			///
+			/// <param name="skip">Number of items to skip.</param>
+			/// <param name="take">Number of items to take.</param>
+			///--------------------------------------------------------------------------------
+			[ApiGet, ApiRoute("%%><%%=VITADSApiRoute%%><%%-/view")]
+			public List<%%><%%=VITADtoViewClassName%%><%%-> Get%%><%%=LIBPluralEntityName%%><%%-View([FromUrl] int skip = 0, int take = 100)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-var session = %%>
+				if (Solution.VITA_ADD_LOGIN_MODULE == true)
+				{
+					<%%-OpenSecureSession();%%>
+				}
+				else
+				{
+					<%%-OpenSession();%%>
+				}
+				<%%-
+				
+				// Get a bunch of items by no criteria
+				var items = session.EntitySet<%%><%%=VITAViewInterfaceName%%><%%->();
+				items = items.Skip(skip).Take(take);
+				var itemsList = items.ToList();
+				
+				return itemsList.Select(i => i.ToDto()).ToList();%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+		//
+		// get
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Get an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+		///%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=VITAPropertyName.ToLower()%%><%%-">Id value to get item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[ApiGet, ApiRoute("%%><%%=VITADSApiRoute%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-/get%%>
+		}
+		else
+		{
+			<%%-/{%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=VITAPropertyName.ToLower()%%>
+			}
+			<%%-}%%>
+		}
+		<%%-")]
+		public %%><%%=VITADtoClassName%%><%%- Get%%><%%=VITAClassName%%><%%-(%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-[FromUrl] %%>
+		}
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAPropertyName.CamelCase()%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var session = %%>
+			if (Solution.VITA_ADD_LOGIN_MODULE == true)
+			{
+				<%%-OpenSecureSession();%%>
+			}
+			else
+			{
+				<%%-OpenSession();%%>
+			}
+			<%%=Solution.NEWLINE%%>
+			if (PrimaryKeyCount == 1)
+			{
+				<%%-var item = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%=VITAPropertyName.CamelCase()%%>
+				}
+				<%%-);%%>
+			}
+			else
+			{
+				<%%-var item = (from i in session.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex == 0)
+					{
+						<%%-
+						where %%>
+					}
+					else
+					{
+						<%%-
+						&& %%>
+					}
+					<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == %%><%%=VITAPropertyName.CamelCase()%%>
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+			}
+			<%%-
+			if (item == null)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Context.WebContext.CustomResponseStatus = HttpStatusCode.BadRequest;
+				Context.WebContext.ResponseBody = String.Format("%%><%%=VITAClassName%%><%%- with ID '%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-,%%>
+					}
+					<%%-{%%><%%=ItemIndex%%><%%-}%%>
+				}
+				<%%-' not found."%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-, %%><%%=VITAPropertyName.CamelCase()%%>
+				}
+				<%%-);
+				return null; %%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%=VITADtoClassName%%><%%- itemDto = item.ToDto(true);
+			Type[] blockingEntities;%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-itemDto.CanDelete = itemDto.CanDelete && session.CanDeleteEntity<%%><%%=VITAInterfaceName%%><%%->(item, out blockingEntities);%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return itemDto;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// create
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Create an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
+		///
+		/// <param name="item">%%><%%=VITADtoClassName%%><%%- dto of item to create.</param>
+		///--------------------------------------------------------------------------------
+    		[ApiPost, ApiRoute("%%><%%=VITADSApiRoute%%><%%-")]
+		public %%><%%=VITADtoClassName%%><%%- Create%%><%%=VITAClassName%%><%%-(%%><%%=VITADtoClassName%%><%%- item)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return CreateUpdate%%><%%=VITAClassName%%><%%-(item, create: true);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// update
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Update an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
+		///
+		/// <param name="item">%%><%%=VITADtoClassName%%><%%- dto of item to update.</param>
+		///--------------------------------------------------------------------------------
+    		[ApiPut, ApiRoute("%%><%%=VITADSApiRoute%%><%%-")]
+		public %%><%%=VITADtoClassName%%><%%- Update%%><%%=VITAClassName%%><%%-(%%><%%=VITADtoClassName%%><%%- item)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return CreateUpdate%%><%%=VITAClassName%%><%%-(item, create: false);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// private create/update
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-private %%><%%=VITADtoClassName%%><%%- CreateUpdate%%><%%=VITAClassName%%><%%-(%%>
+		<%%=VITADtoClassName%%><%%- item, bool create)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var session = %%>
+			if (VITAIsAuthenticatedEntity == true)
+			{
+				<%%-OpenSecureSession();%%>
+			}
+			else
+			{
+				<%%-OpenSession();%%>
+			}
+			<%%-
+			item.Validate(Context);
+			Context.ThrowValidation(); //will throw if any faults had been detected; will return BadRequest with list of faults in the body
+			%%><%%=VITAInterfaceName%%><%%- updateItem;
+			if (create)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				baseEntityPath = ""
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					if (ItemIndex > 0)
+					{
+						baseEntityPath = baseEntityPath + "." + VITAClassName
+					}
+					<%%=Solution.NEWLINE%%>
+					<%%-updateItem%%><%%=baseEntityPath%%><%%- = session.NewEntity<%%><%%=VITAInterfaceName%%><%%->();%%>
+				}
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				if (PrimaryKeyCount == 1)
+				{
+					<%%-updateItem = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						<%%-item.%%><%%=VITAPropertyName%%>
+					}
+					<%%-);%%>
+				}
+				else
+				{
+					<%%-updateItem = (from i in session.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						if (ItemIndex == 0)
+						{
+							<%%-
+							where %%>
+						}
+						else
+						{
+							<%%-
+							&& %%>
+						}
+						<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == item.%%><%%=VITAPropertyName%%>
+					}
+					<%%=Solution.NEWLINE%%>
+					<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+				}
+				<%%-
+				Context.ThrowIfNull(updateItem, ClientFaultCodes.ObjectNotFound, "%%><%%=VITAClassName%%><%%-", "%%><%%=VITAClassName%%><%%- with ID '{%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-,%%>
+					}
+					<%%=ItemIndex%%>
+				}
+				<%%-}' not found."%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-, item.%%><%%=VITAPropertyName%%>
+				}
+				<%%-);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			var itemFound = false
+			foreach (Property where IsPrimaryKeyMember == true && Identity == false && IsForeignKeyMember == false)
+			{
+				itemFound = true
+				break
+			}
+			if (itemFound == true)
+			{
+				<%%-
+				if (create)%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					foreach (Property where IsPrimaryKeyMember == true && IsUICreateProperty == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%-updateItem.%%><%%=VITAPropertyPath%%><%%- = item.%%><%%=VITAPropertyName%%><%%-;%%>
+					}
+				<%%=Solution.CLOSE_BRACE%%>
+			}
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (Property where VITAIsUpdateProperty == true && IsForeignKeyMember == false)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-updateItem.%%><%%=baseEntityPath%%><%%=VITAPropertyPath%%><%%- = item.%%><%%=VITAPropertyName%%><%%-;%%>
+				}
+			}
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (EntityReference where IsPrimaryReference == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					if (ReferencedEntity.PrimaryKeyCount == 1)
+					{
+						<%%-updateItem.%%><%%=baseEntityPath%%><%%=VITAPropertyName%%><%%- = session.GetEntity<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->(%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								<%%-item.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%-);%%>
+					}
+					else
+					{
+						<%%-updateItem%%><%%=VITAPropertyName%%><%%- = (from i in session.GetEntities<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								if (ItemIndex == 0)
+								{
+									<%%-
+									where %%>
+								}
+								else
+								{
+									<%%-
+									&& %%>
+								}
+								<%%-i.%%><%%=Property.VITAPrimaryKeyPath%%><%%- == item.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%=Solution.NEWLINE%%>
+						<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+					}
+				}
+			}
+			<%%=Solution.NEWLINE%%>
+			<%%-session.SaveChanges();%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return updateItem.ToDto(true);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// delete
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Delete an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+		///%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=VITAPropertyName.ToLower()%%><%%-">Id value to delete item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[ApiDelete, ApiRoute("%%><%%=VITADSApiRoute%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-/%%>
+		}
+		else
+		{
+			<%%-/{%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=VITAPropertyName.ToLower()%%>
+			}
+			<%%-}%%>
+		}
+		<%%-")]
+		public void Delete%%><%%=VITAClassName%%><%%-(%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-[FromUrl] %%>
+		}
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAPropertyName.CamelCase()%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var session = %%>
+			if (VITAIsAuthenticatedEntity == true)
+			{
+				<%%-OpenSecureSession();%%>
+			}
+			else
+			{
+				<%%-OpenSession();%%>
+			}
+			<%%=Solution.NEWLINE%%>
+			if (PrimaryKeyCount == 1)
+			{
+				<%%-var item = session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%=VITAPropertyName.CamelCase()%%>
+				}
+				<%%-);%%>
+			}
+			else
+			{
+				<%%-var item = (from i in session.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex == 0)
+					{
+						<%%-
+						where %%>
+					}
+					else
+					{
+						<%%-
+						&& %%>
+					}
+					<%%-i.%%><%%=VITAPrimaryKeyPath%%><%%- == %%><%%=VITAPropertyName.CamelCase()%%>
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+			}
+			<%%-
+			Context.ThrowIfNull(item, ClientFaultCodes.ObjectNotFound, "%%><%%=VITAClassName%%><%%-", "%%><%%=VITAClassName%%><%%- with ID '{%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=ItemIndex%%>
+			}
+			<%%-}' not found."%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				<%%-, %%><%%=VITAPropertyName.CamelCase()%%>
+			}
+			<%%-);
+			session.DeleteEntity(item);
+			session.SaveChanges();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAApiControllerClassFilePath, text=Text) == true)
+{
+	update(VITAApiControllerClassFilePath)
+}
+%%></OUTPUT>

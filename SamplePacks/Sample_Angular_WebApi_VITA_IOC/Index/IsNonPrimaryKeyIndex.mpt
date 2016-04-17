@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME IsNonPrimaryKeyIndex
+	CATEGORY LIB
+	NODE Index
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryKeyIndex == true)
+{
+	<%%-false%%>
+	return
+}
+var isAllPrimaryKeys = true
+foreach (IndexProperty)
+{
+	if (Property.IsPrimaryKeyMember == false)
+	{
+		isAllPrimaryKeys = false
+		break
+	}
+}
+if (isAllPrimaryKeys == true)
+{
+	<%%-false%%>
+}
+else
+{
+	<%%-true%%>
+}
+%%></CONTENT>

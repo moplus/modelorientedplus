@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAQueryResultsClassFilePath
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\%%><%%=VITAClassName%%><%%-QueryResults%%><%%-_G.cs%%></CONTENT>

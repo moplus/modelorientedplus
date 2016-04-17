@@ -16,6 +16,8 @@
 </copyright>*/
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using Vita.Entities; 
 using %%><%%=Project.Namespace%%><%%-.Models;
 
@@ -42,7 +44,7 @@ namespace %%><%%=Project.Namespace%%>
 		///--------------------------------------------------------------------------------
 		public %%><%%=VITADomainModuleClassName%%><%%-(EntityArea area) : base(area, "%%><%%=VITADomainModuleClassName%%><%%-")%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
-			area.RegisterEntities( %%><%%=Solution.INDENT%%>
+			RegisterEntities( %%><%%=Solution.INDENT%%>
 			foreach (Entity where VITAIsDataModelEntity == true)
 			{
 				if (ItemIndex > 0)
@@ -53,6 +55,28 @@ namespace %%><%%=Project.Namespace%%>
 				<%%-typeof(%%><%%=VITAInterfaceName%%><%%-)%%>
 			}
 			<%%-);%%><%%=Solution.OUTDENT%%>
+			foreach (Entity where VITAIsDataModelEntity == true && Tags.Contains("VIEW") == true)
+			{
+			<%%-
+			
+				// %%><%%=VITAViewInterfaceName%%><%%- setup
+				var %%><%%=VITAClassName.CamelCase()%%><%%-Query = from i in ViewHelper.EntitySet<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%><%%-
+					select new%%>
+					<%%=Solution.OPEN_BRACE%%>
+					foreach (Property where VITAIsInterfaceModelProperty == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%=VITAPropertyName%%><%%- = i.%%><%%=VITAPropertyName%%><%%-,%%>
+					}
+					foreach (PropertyReference where ReferencedEntity.VITAIsDataModelEntity == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						<%%=VITAPropertyName%%><%%- = i.%%><%%=VITAEntityReferencePropertyName%%><%%-.%%><%%=ReferencedProperty.VITAPropertyName%%><%%-,%%>
+					}
+					<%%=Solution.CLOSE_BRACE%%>
+					<%%-;%%><%%=Solution.OUTDENT%%><%%-
+				RegisterView<%%><%%=VITAViewInterfaceName%%><%%->(%%><%%=VITAClassName.CamelCase()%%><%%-Query, DbViewOptions.Materialized);%%>
+			}
 		<%%=Solution.CLOSE_BRACE%%>
 	<%%=Solution.CLOSE_BRACE%%>
 <%%=Solution.CLOSE_BRACE%%>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUISiteCssFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Content\%%><%%-Site.css%%></CONTENT>

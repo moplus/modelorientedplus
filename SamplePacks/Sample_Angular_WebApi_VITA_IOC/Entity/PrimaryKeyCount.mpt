@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME PrimaryKeyCount
+	CATEGORY LIB
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var count = 0
+foreach (Property where IsPrimaryKeyMember == true)
+{
+	count = count + 1
+}
+<%%=count%%>
+%%></CONTENT>

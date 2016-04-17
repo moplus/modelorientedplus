@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME VITAServicesPackagesConfigCode
+	CATEGORY VITAServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="Unity" version="3.5.1405-prerelease" targetFramework="net45" />
+  <package id="Vita" version="1.1.0" targetFramework="net45" />
+</packages>%%></CONTENT><OUTPUT>
+<%%:
+if (File(VITAServicesPackagesConfigFilePath) == null)
+{
+	update(VITAServicesPackagesConfigFilePath)
+}
+%%></OUTPUT>

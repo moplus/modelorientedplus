@@ -1,0 +1,27 @@
+<CONFIG>
+	NAME VITAFullNameMethod
+	CATEGORY VITA
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (VITAHasFullNameProperty != true)
+{
+	return
+}
+<%%-public static string Get%%><%%=VITAClassName%%><%%-FullName(%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%-)%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	#region protected
+	return %%>
+foreach (Property where PropertyName.EndsWith("Name") == true)
+{
+	if (ItemIndex > 0)
+	{
+		<%%- + " " + %%>
+	}
+	<%%=../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%>
+}
+<%%-;
+#endregion protected%%>
+<%%=Solution.CLOSE_BRACE%%>%%></CONTENT>

@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME VITA_USE_SLIMAPI
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// set this value to true if you want to use VITA slim api by default
+//
+<%%-false%%></CONTENT>

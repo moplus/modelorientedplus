@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VITADtoPropertyCode
+	CATEGORY VITA
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-public List<%%><%%=VITADtoPropertyDataType%%><%%-> %%><%%=VITAPropertyName%%><%%- { get; set; }%%></CONTENT>

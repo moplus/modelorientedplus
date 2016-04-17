@@ -1,0 +1,121 @@
+<CONFIG>
+	NAME VITADSSearchQuery
+	CATEGORY VITADS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=USETABS true%%>
+param listName
+
+var hasSearchProperties = false
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where VITADSIsQueryProperty == true)
+	{
+		hasSearchProperties = true
+		break
+	}
+}
+<%%-
+
+// Build where clause%%>
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where VITADSIsQueryProperty == true)
+	{
+		switch (DataTypeCode)
+		{
+			case 24: // DateTime
+			case 29: // DateTimeSmall
+				<%%=Solution.NEWLINE%%>
+				<%%-var %%><%%=VITAPropertyPath.CamelCase()%%><%%-Start = WebHelper.TryParseDateTime(query.%%><%%=VITAPropertyPath%%><%%-Start);%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-var %%><%%=VITAPropertyPath.CamelCase()%%><%%-End = WebHelper.TryParseDateTime(query.%%><%%=VITAPropertyPath%%><%%-End);%%>
+				break
+			case 26: // Guid
+				<%%=Solution.NEWLINE%%>
+				<%%-Guid %%><%%=VITAPropertyName.CamelCase()%%><%%-;%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Guid.TryParse(query.%%><%%=VITAPropertyName%%><%%-, out %%><%%=VITAPropertyName.CamelCase()%%><%%-);%%>
+				break
+			default:
+				break
+		}
+	}
+}
+<%%-
+var where = PredicateBuilder.True<%%><%%=VITAInterfaceName%%><%%->();%%>
+var baseEntityPath = ""
+if (hasSearchProperties == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-where = where%%>
+	<%%=Solution.INDENT%%>
+	baseEntityPath = ""
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		if (ItemIndex > 0)
+		{
+			baseEntityPath = baseEntityPath + "." + VITAClassName
+		}
+		foreach (Property where VITADSIsQueryProperty == true)
+		{
+			<%%=VITADSSearchWhereBlurb(baseEntityPath = baseEntityPath)%%>
+		}
+	}
+	<%%=Solution.OUTDENT%%>
+}
+<%%-;
+
+// Build query from where
+var %%><%%=listName%%><%%- = %%><%%=ServiceImplementationName.CamelCase()%%><%%-.Get%%><%%=LIBPluralEntityName%%><%%-(session).Where(where);
+var count = %%><%%=listName%%><%%-.Count();
+	
+// Add order by
+Expression<Func<%%><%%=VITAInterfaceName%%><%%-, object>> orderByFunc = null;
+if (!String.IsNullOrWhiteSpace(query.OrderBy))%%>
+<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-switch(query.OrderBy.Trim().ToLowerInvariant())%%>
+		<%%=Solution.OPEN_BRACE%%>
+		baseEntityPath = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				baseEntityPath = baseEntityPath + "." + VITAClassName
+			}
+			foreach (Property where VITADSIsResultsProperty == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-case "%%><%%=VITAPropertyName.ToLower()%%><%%-": orderByFunc = i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyPath%%><%%-; break;%%>
+			}
+		}
+		baseEntityPath = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				baseEntityPath = baseEntityPath + "." + VITAClassName
+			}
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-case "%%><%%=VITADerivedPropertyName.ToLower()%%><%%-": orderByFunc = i => i%%><%%=baseEntityPath%%><%%-.%%><%%=VITAPropertyName%%><%%-.%%><%%=ReferencedEntity.VITAPrimaryNameProperty%%><%%-; break;%%>
+			}
+		}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.NEWLINE%%>
+<%%-if (orderByFunc != null)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%=listName%%><%%- = query.Descending ? %%><%%=listName%%><%%-.OrderByDescending(orderByFunc) : %%><%%=listName%%><%%-.OrderBy(orderByFunc); %%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+// Add paging
+%%><%%=listName%%><%%- = %%><%%=listName%%><%%-.Skip(query.Skip).Take(query.Take);%%>
+%%></CONTENT>

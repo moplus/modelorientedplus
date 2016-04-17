@@ -17,7 +17,7 @@ if (defineItem2 == true)
 	<%%=VITAInterfaceName%%><%%- %%>
 }
 var foundItem = false
-	<%%=item2Name%%><%%- = (from i in session2.GetEntities<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+	<%%=item2Name%%><%%- = (from i in session2.EntitySet<%%><%%=VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
 	foreach (Entity in EntityAndBaseEntities)
 	{
 		if (foundItem == true)

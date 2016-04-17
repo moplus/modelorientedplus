@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAServicesPackagesConfigFilePath
+	CATEGORY VITAServices
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%-packages.config%%></CONTENT>

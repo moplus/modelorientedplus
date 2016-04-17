@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME VITAUIUnityWebApiActivatorClassFilePath
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\App_Start\UnityWebApiActivator_G.cs%%></CONTENT>

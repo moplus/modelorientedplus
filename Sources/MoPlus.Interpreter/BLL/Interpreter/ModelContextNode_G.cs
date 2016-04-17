@@ -148,6 +148,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Project))
 			{
+                templateContext.IncludesProjectContext = true;
 				nodeContext = Project.GetModelContext(solutionContext, nodeContext, out isValidContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Property))
@@ -329,11 +330,15 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 					nodeContext = (nodeContext as Entity).BaseEntity;
 				}
 			}
-			#endregion protected
-			else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
-			{
-				return ObjectInstance.GetModelContext(solutionContext, ModelContextName, nodeContext, out isValidContext);
-			}
+            else if (solutionContext.ModelObjectPropertyNames[ModelContextName] != null)
+            {
+                nodeContext = ObjectInstance.GetModelContextViaProperty(solutionContext, ModelContextName, nodeContext, out isValidContext);
+            }
+            #endregion protected
+            else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
+            {
+                return ObjectInstance.GetModelContext(solutionContext, ModelContextName, nodeContext, out isValidContext);
+            }
 			if (nodeContext == null && isValidContext == false)
 			{
 				LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Exception_InvalidModelContext, ModelContextName, modelContext.Name, modelContext.GetType().Name), InterpreterTypeCode.None);
@@ -418,7 +423,8 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Project))
 			{
-				return Project.GetCollectionContext(solutionContext, nodeContext);
+                templateContext.IncludesProjectContext = true;
+                return Project.GetCollectionContext(solutionContext, nodeContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Property))
 			{

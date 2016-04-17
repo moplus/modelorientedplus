@@ -1,0 +1,141 @@
+<CONFIG>
+	NAME VITAUIUnityConfigClassCode
+	CATEGORY VITAUI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Web.Mvc;
+using System.Web.Routing;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as Services
+		foreach (Project where Tags.Contains("Services") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.App_Start%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>Specifies the Unity configuration for the main container.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class UnityConfig%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-#region Unity Container
+		private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var container = new UnityContainer();
+			RegisterTypes(container);
+			return container;%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+		
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-/// <summary>
+		/// Gets the configured Unity container.
+		/// </summary>
+		public static IUnityContainer GetConfiguredContainer()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return container.Value;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-#endregion%%>
+		
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public class UnityControllerFactory : DefaultControllerFactory%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-private readonly IUnityContainer mContainer;
+
+			public UnityControllerFactory(IUnityContainer container)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-mContainer = container;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			
+			<%%=Solution.NEWLINE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-protected override IController GetControllerInstance(System.Web.Routing.RequestContext requestContext, System.Type controllerType)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-if (controllerType == null)%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-//return null;
+					return base.GetControllerInstance(requestContext, controllerType);%%>
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-else%%>
+				<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-return mContainer.Resolve(controllerType, new DependencyOverride<RequestContext>(requestContext)) as IController;%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+
+		<%%=Solution.CLOSE_BRACE%%>
+
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public static void Startup()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory(UnityConfig.GetConfiguredContainer()));%%>
+		<%%=Solution.CLOSE_BRACE%%>
+
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-/// <summary>Registers the type mappings with the Unity container.</summary>
+		/// <param name="container">The unity container to configure.</param>
+		/// <remarks>There is no need to register concrete types such as controllers or API controllers (unless you want to 
+		/// change the defaults), as Unity allows resolving a concrete type even if it was not previously registered.</remarks>
+		public static void RegisterTypes(IUnityContainer container)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-SharedUnityConfig.RegisterTypes(container, false, () => new PerHttpRequestLifetime());%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=VITAUIUnityConfigClassFilePath, text=Text) == true)
+{
+	update(VITAUIUnityConfigClassFilePath)
+}
+%%></OUTPUT>

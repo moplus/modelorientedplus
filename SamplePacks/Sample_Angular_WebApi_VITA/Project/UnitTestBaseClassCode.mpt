@@ -17,9 +17,11 @@
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.Collections.Specialized;
 using System.Text;
 using Vita.Data;
 using Vita.Data.MsSql;
+using Vita.Common;
 using Microsoft.VisualStudio.TestTools.UnitTesting;%%>
 with (Project)
 {
@@ -68,13 +70,26 @@ namespace %%><%%=Project.Namespace%%>
 		<%%=Solution.OPEN_BRACE%%>
 			<%%=Solution.NEWLINE%%>
 			<%%-// set up application
+			var protectedSection = (NameValueCollection)ConfigurationManager.GetSection("protected");
 			DomainApp = new %%><%%=VITADomainAppClassName%%><%%-();
 			DomainApp.Init();
-			var connString = ConfigurationManager.AppSettings["DbConnectionString"];
+			var connString = protectedSection["MsSqlConnectionString"];%%>
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%-
+				var logConnString = protectedSection["MsSqlLogConnectionString"];%%>
+			}
+			<%%-
 			var driver = MsSqlDbDriver.Create(connString);
 			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
 			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
 			DomainApp.ConnectTo(dbSettings);%%>
+			if (Solution.VITA_ADD_LOG_MODULE == true)
+			{
+				<%%-
+				var logDbSettings = new DbSettings(driver, dbOptions, logConnString);
+				DomainApp.LoggingApp.ConnectTo(logDbSettings);%%>
+			}
 		<%%=Solution.CLOSE_BRACE%%>
 		<%%-
 		protected static DomainApp DomainApp { get; set; }
@@ -104,7 +119,7 @@ namespace %%><%%=Project.Namespace%%>
 
 		protected static string GetAlphanumericString(int minLength, int maxLength)%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
-			return Vita.Common.Util.GenerateRandomString(random.Next(minLength, maxLength), UnicodeCategory.UppercaseLetter, UnicodeCategory.LowercaseLetter, UnicodeCategory.DecimalDigitNumber);%%>
+			return Vita.Common.RandomHelper.GenerateRandomString(random.Next(minLength, maxLength), CharKinds.Digit | CharKinds.UpperLetter | CharKinds.LowerLetter );%%>
 		<%%=Solution.CLOSE_BRACE%%><%%-
 
 		protected static string GetRandomString(int minLength, int maxLength)%%>
