@@ -408,6 +408,8 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		///--------------------------------------------------------------------------------
 		public void GenerateContent(Solution solutionContext, ITemplate templateContext, IDomainEnterpriseObject modelContext, bool appendToTemplateContext, NameObjectCollection parameters)
 		{
+			if (modelContext is Project && IsTopLevelTemplate == true)
+				BusinessConfiguration.CurrentProject = modelContext as Project;
 			ModelContextStack = null;
 			PopCount = 0;
             PushModelContext(modelContext);

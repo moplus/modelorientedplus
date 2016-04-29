@@ -11,6 +11,7 @@ You should have received a copy of the GNU General Public License along with thi
 </copyright>*/
 using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace MoPlus.IO
@@ -24,18 +25,18 @@ namespace MoPlus.IO
 		#endregion "Fields and Properties"
 
 		#region "Methods"
-
 		///--------------------------------------------------------------------------------
 		/// <summary>This method creates a file if it does not exist.</summary>
 		///
-		/// <param name="inputPath">The input file path to create.</param>
+		/// <param name="inputFilePath">The input file path to create.</param>
 		///--------------------------------------------------------------------------------
 		public static void CreateFile(string inputFilePath)
 		{
+			FileInfo fi = new FileInfo(inputFilePath);
 			// create file if it does not exist
-			if (File.Exists(inputFilePath) == false)
+			if (fi.Exists == false)
 			{
-				File.Create(inputFilePath);
+				fi.Create();
 			}
 		}
 
@@ -47,8 +48,9 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static void CreateFile(string inputFilePath, string inputText)
 		{
+			FileInfo fi = new FileInfo(inputFilePath);
 			// create file with text if it does not exist
-			if (File.Exists(inputFilePath) == false && inputText != String.Empty)
+			if (fi.Exists == false && inputText != String.Empty)
 			{
 				AppendToFile(inputFilePath, inputText);
 			}
@@ -62,10 +64,12 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static void RenameFile(string inputFilePath, string newFilePath)
 		{
+			FileInfo fi = new FileInfo(inputFilePath);
+			FileInfo fiNew = new FileInfo(newFilePath);
 			// move file if it exists and destination file doesn't exist
-			if (File.Exists(inputFilePath) == true && File.Exists(newFilePath) == false)
+			if (fi.Exists == true && fiNew.Exists == false)
 			{
-				File.Move(inputFilePath, newFilePath);
+				fi.MoveTo(fiNew.FullName);
 			}
 		}
 
@@ -77,9 +81,10 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static void AppendToFile(string inputFilePath, string inputText)
 		{
-			if (File.Exists(inputFilePath) == true)
+			FileInfo fi = new FileInfo(inputFilePath);
+			if (fi.Exists == true)
 			{
-				using (StreamWriter writer = File.AppendText(inputFilePath))
+				using (StreamWriter writer = fi.AppendText())
 				{
 					writer.Write(inputText);
 				}
@@ -98,11 +103,12 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static void ReplaceFile(string inputFilePath, string inputText)
 		{
-			if (File.Exists(inputFilePath) == true)
+			FileInfo fi = new FileInfo(inputFilePath);
+			if (fi.Exists == true)
 			{
-				File.Delete(inputFilePath);
+				fi.Delete();
 			}
-			TextWriter outputFile = new System.IO.StreamWriter(inputFilePath);
+			TextWriter outputFile = new System.IO.StreamWriter(fi.OpenWrite());
 			outputFile.Write(inputText);
 			outputFile.Close();
 		}
@@ -114,10 +120,11 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static string GetText(string inputFilePath)
 		{
+			FileInfo fi = new FileInfo(inputFilePath);
 			string outputText = String.Empty;
-			if (File.Exists(inputFilePath) == true)
+			if (fi.Exists == true)
 			{
-				TextReader inputFile = new System.IO.StreamReader(inputFilePath);
+				TextReader inputFile = new System.IO.StreamReader(fi.OpenRead());
 				outputText = inputFile.ReadToEnd();
 				inputFile.Close();
 			}
@@ -131,8 +138,9 @@ namespace MoPlus.IO
 		///--------------------------------------------------------------------------------
 		public static byte[] GetBytes(string inputFilePath)
 		{
+			FileInfo fi = new FileInfo(inputFilePath);
 			byte[] outputText = null;
-			TextReader inputFile = new System.IO.StreamReader(inputFilePath);
+			TextReader inputFile = new System.IO.StreamReader(fi.OpenRead());
 			outputText = Encoding.UTF8.GetBytes(inputFile.ReadToEnd());
 			inputFile.Close();
 			return outputText;
