@@ -3,6 +3,7 @@ Bin/
 obj/
 *.user
 *.suo
+*.zip
 $tf/properties.tf1
 $tf/localversion.tf1
 $tf/localversion.tfb
