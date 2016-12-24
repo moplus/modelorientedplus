@@ -100,7 +100,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			if (query.Take == 0) query.Take = 10;%%>
 			<%%=VITASearchQuery(listName = "items")%%><%%-
 			
-			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-(session.ExecuteSearch(where, query, i => i.ToDto(), orderByMapping));
+			%%><%%=VITAQueryResultsClassName%%><%%- results = new %%><%%=VITAQueryResultsClassName%%><%%-(session.ExecuteSearch(where, query, i => i.ToDto(), null, orderByMapping));
 			results.CanCreate = %%>
 			if (Solution.VITA_ADD_LOGIN_MODULE == true)
 			{
@@ -350,7 +350,7 @@ namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
 			if (item == null)%%>
 			<%%=Solution.OPEN_BRACE%%>
 				<%%=Solution.NEWLINE%%>
-				<%%-Context.WebContext.CustomResponseStatus = HttpStatusCode.BadRequest;
+				<%%-Context.WebContext.HttpStatus = HttpStatusCode.BadRequest;
 				Context.WebContext.ResponseBody = String.Format("%%><%%=VITAClassName%%><%%- with ID '%%>
 				foreach (Property where IsPrimaryKeyMember == true)
 				{

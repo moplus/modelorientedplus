@@ -32,6 +32,7 @@ if (Solution.VITA_ADD_LOGIN_MODULE == true)
 {
 <%%-
 using Vita.Modules.Login;
+using Vita.Modules.Login.Api;
 using Vita.Modules.TextTemplates;%%>
 }
 if (Solution.VITA_ADD_INFO_MODULE == true)
@@ -84,10 +85,10 @@ if (Solution.VITA_ADD_LOG_MODULE == true)
 		
 		public %%><%%=VITADomainAppClassName%%><%%-()%%>
 		<%%=Solution.OPEN_BRACE%%><%%-
-			this.Version = "1.0.0.2";
+			this.Version = new Version(1, 0);
 			
 			// add main area and module
-			var domainArea = this.AddArea("Domain", "domain");
+			var domainArea = this.AddArea("Domain");
 			MainModule = new %%><%%=VITADomainModuleClassName%%><%%-(domainArea);%%>
 			if (Solution.VITA_ADD_INFO_MODULE == true || Solution.VITA_ADD_LOGIN_MODULE == true || Solution.VITA_ADD_LOG_MODULE == true)
 			{
@@ -98,12 +99,12 @@ if (Solution.VITA_ADD_LOG_MODULE == true)
 			if (Solution.VITA_ADD_INFO_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
-				<%%-var infoArea = this.AddArea("Info", "info");%%>
+				<%%-var infoArea = this.AddArea("Info");%%>
 			}
 			if (Solution.VITA_ADD_LOGIN_MODULE == true)
 			{
 				<%%=Solution.NEWLINE%%>
-				<%%-var loginArea = this.AddArea("Login", "login");%%>
+				<%%-var loginArea = this.AddArea("Login");%%>
 			}
 			if (Solution.VITA_ADD_INFO_MODULE == true)
 			{
@@ -163,10 +164,10 @@ if (Solution.VITA_ADD_LOG_MODULE == true)
 						<%%=Solution.NEWLINE%%>
 						<%%=Solution.NEWLINE%%>
 						<%%-// add trigger to suspense login after 3 failed attempts within a minute
-						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(this,%%>
+						var loginFailedTrigger = new Vita.Modules.Login.LoginFailedTrigger(this, new LoginFailedTriggerSettings(%%>
 						<%%=Solution.INDENT%%>
 						<%%=Solution.NEWLINE%%>
-						<%%-failureCount: 3, timeWindow: TimeSpan.FromMinutes(1), suspensionPeriod: TimeSpan.FromMinutes(5));%%>
+						<%%-failureCount: 3, timeWindow: TimeSpan.FromMinutes(1), suspensionPeriod: TimeSpan.FromMinutes(5)));%%>
 						<%%=Solution.OUTDENT%%>
 						<%%=Solution.NEWLINE%%>
 						<%%-LoggingApp.IncidentLog.AddTrigger(loginFailedTrigger);%%>

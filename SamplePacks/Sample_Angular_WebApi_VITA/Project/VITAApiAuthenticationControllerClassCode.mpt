@@ -17,6 +17,7 @@
 </copyright>*/
 using Vita.Common;
 using Vita.Entities;
+using Vita.Entities.Services;
 using Vita.Entities.Web;
 using Vita.Modules.Login;
 using Vita.Modules.Logging;

@@ -8,4 +8,4 @@
 //
 // set this value to true if you want to use VITA slim api by default
 //
-<%%-false%%></CONTENT>
+<%%-true%%></CONTENT>

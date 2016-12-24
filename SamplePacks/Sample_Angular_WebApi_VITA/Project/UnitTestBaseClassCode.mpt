@@ -82,7 +82,7 @@ namespace %%><%%=Project.Namespace%%>
 			<%%-
 			var driver = MsSqlDbDriver.Create(connString);
 			var dbOptions = MsSqlDbDriver.DefaultMsSqlDbOptions;
-			var dbSettings = new DbSettings(driver, dbOptions, connString, modelUpdateMode: DbModelUpdateMode.Always);
+			var dbSettings = new DbSettings(driver, dbOptions, connString, upgradeMode: DbUpgradeMode.Always);
 			DomainApp.ConnectTo(dbSettings);%%>
 			if (Solution.VITA_ADD_LOG_MODULE == true)
 			{

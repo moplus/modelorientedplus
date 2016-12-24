@@ -8,4 +8,4 @@
 //
 // set this value to true if you want to add the VITA persistent session module to your solution
 //
-<%%-false%%></CONTENT>
+<%%-true%%></CONTENT>
