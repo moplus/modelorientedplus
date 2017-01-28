@@ -23,7 +23,7 @@ namespace MoPlus.ViewModel.Messaging
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public static class MediatorMessages
@@ -256,6 +256,16 @@ namespace MoPlus.ViewModel.Messaging
 		public const string Command_DeleteSqlTableRequested = "Command_DeleteSqlTableRequested";
 		public const string Command_EditSqlTablePerformed = "Command_EditSqlTablePerformed";
 		
+		// SqlView edit related messages
+		public const string Command_EditSqlViewRequested = "Command_EditSqlViewRequested";
+		public const string Command_DeleteSqlViewRequested = "Command_DeleteSqlViewRequested";
+		public const string Command_EditSqlViewPerformed = "Command_EditSqlViewPerformed";
+		
+		// SqlViewProperty edit related messages
+		public const string Command_EditSqlViewPropertyRequested = "Command_EditSqlViewPropertyRequested";
+		public const string Command_DeleteSqlViewPropertyRequested = "Command_DeleteSqlViewPropertyRequested";
+		public const string Command_EditSqlViewPropertyPerformed = "Command_EditSqlViewPropertyPerformed";
+		
 		// Stage edit related messages
 		public const string Command_EditStageRequested = "Command_EditStageRequested";
 		public const string Command_DeleteStageRequested = "Command_DeleteStageRequested";
@@ -305,6 +315,16 @@ namespace MoPlus.ViewModel.Messaging
 		public const string Command_EditValueRequested = "Command_EditValueRequested";
 		public const string Command_DeleteValueRequested = "Command_DeleteValueRequested";
 		public const string Command_EditValuePerformed = "Command_EditValuePerformed";
+		
+		// View edit related messages
+		public const string Command_EditViewRequested = "Command_EditViewRequested";
+		public const string Command_DeleteViewRequested = "Command_DeleteViewRequested";
+		public const string Command_EditViewPerformed = "Command_EditViewPerformed";
+		
+		// ViewProperty edit related messages
+		public const string Command_EditViewPropertyRequested = "Command_EditViewPropertyRequested";
+		public const string Command_DeleteViewPropertyRequested = "Command_DeleteViewPropertyRequested";
+		public const string Command_EditViewPropertyPerformed = "Command_EditViewPropertyPerformed";
 		
 		// Workflow edit related messages
 		public const string Command_EditWorkflowRequested = "Command_EditWorkflowRequested";

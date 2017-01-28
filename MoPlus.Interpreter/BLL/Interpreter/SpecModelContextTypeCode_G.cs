@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum SpecModelContextTypeCode
@@ -54,12 +54,16 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		SqlProperty = 8,
 		/// <summary>For SqlTable spec template types.</summary>
 		SqlTable = 9,
+		/// <summary>For SqlView spec template types.</summary>
+		SqlView = 10,
+		/// <summary>For SqlViewProperty spec template types.</summary>
+		SqlViewProperty = 11,
 		/// <summary>For XmlAttribute spec template types.</summary>
-		XmlAttribute = 10,
+		XmlAttribute = 12,
 		/// <summary>For XmlDocument spec template types.</summary>
-		XmlDocument = 11,
+		XmlDocument = 13,
 		/// <summary>For XmlNode spec template types.</summary>
-		XmlNode = 12,
+		XmlNode = 14,
 
 		#region protected
 		/// <summary>For SpecificationSource template types.</summary>

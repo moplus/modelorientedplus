@@ -38,7 +38,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class CurrentItemAssignmentStatementNode : NonLeafGrammarNode, IStatementNode
@@ -348,15 +348,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 								solutionContext.CurrentProject.IsAutoUpdated = true;
 								solutionContext.CurrentProject.Solution = solutionContext;
 							}
-                            else if (!String.IsNullOrEmpty(NullItem))
-                            {
-                                solutionContext.CurrentProject = null;
-                            }
-                            else if (modelContext is Project)
-                            {
-                                // TODO: needs more testing, inserted for bug fix 6/23/15
-                                solutionContext.CurrentProject = modelContext as Project;
-                            }
+							else if (!String.IsNullOrEmpty(NullItem))
+							{
+								solutionContext.CurrentProject = null;
+							}
 						}
 						else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentProperty))
 						{
@@ -610,6 +605,42 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 								solutionContext.CurrentValue = null;
 							}
 						}
+						else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentView))
+						{
+							if (currentContext is View)
+							{
+								solutionContext.CurrentView = currentContext as View;
+							}
+							else if (!String.IsNullOrEmpty(NewItem))
+							{
+								solutionContext.CurrentView = new View();
+								solutionContext.CurrentView.ViewID = Guid.NewGuid();
+								solutionContext.CurrentView.IsAutoUpdated = true;
+								solutionContext.CurrentView.Solution = solutionContext;
+							}
+							else if (!String.IsNullOrEmpty(NullItem))
+							{
+								solutionContext.CurrentView = null;
+							}
+						}
+						else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentViewProperty))
+						{
+							if (currentContext is ViewProperty)
+							{
+								solutionContext.CurrentViewProperty = currentContext as ViewProperty;
+							}
+							else if (!String.IsNullOrEmpty(NewItem))
+							{
+								solutionContext.CurrentViewProperty = new ViewProperty();
+								solutionContext.CurrentViewProperty.ViewPropertyID = Guid.NewGuid();
+								solutionContext.CurrentViewProperty.IsAutoUpdated = true;
+								solutionContext.CurrentViewProperty.Solution = solutionContext;
+							}
+							else if (!String.IsNullOrEmpty(NullItem))
+							{
+								solutionContext.CurrentViewProperty = null;
+							}
+						}
 						else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentWorkflow))
 						{
 							if (currentContext is Workflow)
@@ -730,6 +761,28 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							else if (!String.IsNullOrEmpty(NullItem))
 							{
 								solutionContext.CurrentSqlTable = null;
+							}
+						}
+						else if (SpecCurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlView))
+						{
+							if (currentContext is SqlView)
+							{
+								solutionContext.CurrentSqlView = currentContext as SqlView;
+							}
+							else if (!String.IsNullOrEmpty(NullItem))
+							{
+								solutionContext.CurrentSqlView = null;
+							}
+						}
+						else if (SpecCurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlViewProperty))
+						{
+							if (currentContext is SqlViewProperty)
+							{
+								solutionContext.CurrentSqlViewProperty = currentContext as SqlViewProperty;
+							}
+							else if (!String.IsNullOrEmpty(NullItem))
+							{
+								solutionContext.CurrentSqlViewProperty = null;
 							}
 						}
 						else if (SpecCurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentXmlAttribute))
@@ -916,6 +969,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				propertyAssigned = solutionContext.CurrentValue.AssignProperty(AssignableProperty.PropertyName, propertyValue);
 			}
+			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentView))
+			{
+				propertyAssigned = solutionContext.CurrentView.AssignProperty(AssignableProperty.PropertyName, propertyValue);
+			}
+			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentViewProperty))
+			{
+				propertyAssigned = solutionContext.CurrentViewProperty.AssignProperty(AssignableProperty.PropertyName, propertyValue);
+			}
 			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentWorkflow))
 			{
 				propertyAssigned = solutionContext.CurrentWorkflow.AssignProperty(AssignableProperty.PropertyName, propertyValue);
@@ -955,6 +1016,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlTable))
 			{
 				propertyAssigned = solutionContext.CurrentSqlTable.AssignProperty(AssignableProperty.PropertyName, propertyValue);
+			}
+			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlView))
+			{
+				propertyAssigned = solutionContext.CurrentSqlView.AssignProperty(AssignableProperty.PropertyName, propertyValue);
+			}
+			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlViewProperty))
+			{
+				propertyAssigned = solutionContext.CurrentSqlViewProperty.AssignProperty(AssignableProperty.PropertyName, propertyValue);
 			}
 			else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentXmlAttribute))
 			{

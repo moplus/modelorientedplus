@@ -25,6 +25,12 @@ foreach(SqlTable where LIBIsModelTable == true)
 	<%%>MDLEntityBaseModel%%>
 	progress
 }
+// create views
+foreach(SqlView)
+{
+	// create/update view
+	<%%>MDLViewModel%%>
+}
 
 // create audit properties
 <%%>MDLAuditPropertiesModel%%>

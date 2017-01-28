@@ -143,6 +143,20 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					table.LoadTable(loopTable);
 					SqlTableList.Add(table);
 				}
+
+				// load information for each view
+				foreach (Microsoft.SqlServer.Management.Smo.View loopView in sqlDatabase.Views)
+				{
+					if (loopView.IsSystemObject == true)
+					{
+						continue;
+					}
+					SqlView view = new SqlView();
+					view.SqlViewID = Guid.NewGuid();
+					view.SqlDatabase = this;
+					view.LoadView(loopView);
+					SqlViewList.Add(view);
+				}
 			}
 			catch (ApplicationAbortException)
 			{

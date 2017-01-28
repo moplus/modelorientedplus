@@ -4,7 +4,7 @@
  customized this file to prevent changes from being overwritten.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>4/12/2014</CreatedDate>
+ <CreatedDate>1/24/2017</CreatedDate>
  <Status>Generated</Status>
 -->
 <UserControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.SolutionDesignerControl"
@@ -355,6 +355,24 @@
 						<Library:FixKeyboardCuesBehavior/>
 					</Interaction:Interaction.Behaviors>
 					<Models:ValueDetailControl/>
+				</Grid>
+			</DataTemplate>
+			<!-- View -->
+			<DataTemplate DataType="{x:Type SolutionsVM:ViewViewModel}">
+				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
+					<Solutions:ViewDetailControl/>
+				</Grid>
+			</DataTemplate>
+			<!-- ViewProperty -->
+			<DataTemplate DataType="{x:Type SolutionsVM:ViewPropertyViewModel}">
+				<Grid>
+					<Interaction:Interaction.Behaviors>
+						<Library:FixKeyboardCuesBehavior/>
+					</Interaction:Interaction.Behaviors>
+					<Solutions:ViewPropertyDetailControl/>
 				</Grid>
 			</DataTemplate>
 			<!-- Workflow -->

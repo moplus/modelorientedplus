@@ -37,7 +37,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class CurrentItemNode : LeafGrammarNode
@@ -170,6 +170,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentValue))
 			{
 				modelContext = solutionContext.CurrentValue;
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentView))
+			{
+				modelContext = solutionContext.CurrentView;
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentViewProperty))
+			{
+				modelContext = solutionContext.CurrentViewProperty;
 			}
 			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentWorkflow))
 			{
@@ -313,6 +321,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentValue))
 			{
 				return Value.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentView))
+			{
+				return View.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentViewProperty))
+			{
+				return ViewProperty.GetCollectionContext(solutionContext, nodeContext);
 			}
 			else if (CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentWorkflow))
 			{

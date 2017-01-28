@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -879,32 +879,6 @@ namespace MoPlus.Interpreter.BLL.Models
 			}
 		}
 		
-		protected BLL.Models.ModelObject _definedByModelObject = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the DefinedByModelObject.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Models.ModelObject DefinedByModelObject
-		{
-			get
-			{
-				return _definedByModelObject;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_definedByModelObjectName = value.ModelObjectName;
-					if (_definedByModelObject != null && _definedByModelObject.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					DefinedByModelObjectID = value.ModelObjectID;
-				}
-				_definedByModelObject = value;
-			}
-		}
-		
 		protected BLL.Models.ModelObject _modelObject = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ModelObject.</summary>
@@ -928,6 +902,32 @@ namespace MoPlus.Interpreter.BLL.Models
 					ModelObjectID = value.ModelObjectID;
 				}
 				_modelObject = value;
+			}
+		}
+		
+		protected BLL.Models.ModelObject _definedByModelObject = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the DefinedByModelObject.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Models.ModelObject DefinedByModelObject
+		{
+			get
+			{
+				return _definedByModelObject;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_definedByModelObjectName = value.ModelObjectName;
+					if (_definedByModelObject != null && _definedByModelObject.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					DefinedByModelObjectID = value.ModelObjectID;
+				}
+				_definedByModelObject = value;
 			}
 		}
 		
@@ -1175,8 +1175,8 @@ namespace MoPlus.Interpreter.BLL.Models
 				ForwardInstance = null;
 			}
 			DefinedByEnumeration = null;
-			DefinedByModelObject = null;
 			ModelObject = null;
+			DefinedByModelObject = null;
 			DefinedByValue = null;
 			Solution = null;
 			if (_propertyInstanceList != null)
@@ -1437,6 +1437,7 @@ namespace MoPlus.Interpreter.BLL.Models
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new ModelProperty();

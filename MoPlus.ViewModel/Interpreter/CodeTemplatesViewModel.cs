@@ -153,6 +153,12 @@ namespace MoPlus.ViewModel.Interpreter
 						case ModelContextTypeCode.Workflow:
 							templateName = Resources.DisplayValues.NodeName_Templates_Workflow;
 							break;
+						case ModelContextTypeCode.View:
+							templateName = Resources.DisplayValues.NodeName_Templates_View;
+							break;
+						case ModelContextTypeCode.ViewProperty:
+							templateName = Resources.DisplayValues.NodeName_Templates_ViewProperty;
+							break;
 						case ModelContextTypeCode.Stage:
 							templateName = Resources.DisplayValues.NodeName_Templates_Stage;
 							break;

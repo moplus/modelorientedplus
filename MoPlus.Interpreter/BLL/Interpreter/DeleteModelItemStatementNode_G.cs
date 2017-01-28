@@ -37,7 +37,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class DeleteModelItemStatementNode : NonLeafGrammarNode, IStatementNode
@@ -383,6 +383,28 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 							if (solutionContext.IsSampleMode == true)
 							{
 								templateContext.MessageBuilder.Append("\r\n- Value: ").Append(solutionContext.CurrentValue.InnerXmlData);
+							}
+						}
+					}
+					else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentView))
+					{
+						if (solutionContext.CurrentView != null)
+						{
+							View.DeleteCurrentItemFromSolution(solutionContext);
+							if (solutionContext.IsSampleMode == true)
+							{
+								templateContext.MessageBuilder.Append("\r\n- View: ").Append(solutionContext.CurrentView.InnerXmlData);
+							}
+						}
+					}
+					else if (CurrentItem.CurrentItemName == Enum.GetName(typeof(CurrentItemTypeCode), CurrentItemTypeCode.CurrentViewProperty))
+					{
+						if (solutionContext.CurrentViewProperty != null)
+						{
+							ViewProperty.DeleteCurrentItemFromSolution(solutionContext);
+							if (solutionContext.IsSampleMode == true)
+							{
+								templateContext.MessageBuilder.Append("\r\n- ViewProperty: ").Append(solutionContext.CurrentViewProperty.InnerXmlData);
 							}
 						}
 					}

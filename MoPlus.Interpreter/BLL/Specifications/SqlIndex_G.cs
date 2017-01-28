@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Specifications
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/30/2014</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -798,26 +798,26 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Specifications.SqlProperty> _sqlPropertyList = null;
+		protected EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> _sqlExtendedPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of SqlIndex.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlProperty> SqlPropertyList
+		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> SqlExtendedPropertyList
 		{
 			get
 			{
-				if (_sqlPropertyList == null)
+				if (_sqlExtendedPropertyList == null)
 				{
-					_sqlPropertyList = new EnterpriseDataObjectList<BLL.Specifications.SqlProperty>();
+					_sqlExtendedPropertyList = new EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty>();
 				}
-				return _sqlPropertyList;
+				return _sqlExtendedPropertyList;
 			}
 			set
 			{
-				if (_sqlPropertyList == null || _sqlPropertyList.Equals(value) == false)
+				if (_sqlExtendedPropertyList == null || _sqlExtendedPropertyList.Equals(value) == false)
 				{
-					_sqlPropertyList = value;
+					_sqlExtendedPropertyList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -825,19 +825,19 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				}
 			}
 		}
-		[XmlArray(ElementName = "SqlPropertyList")]
-		[XmlArrayItem(typeof(BLL.Specifications.SqlProperty), ElementName = "SqlProperty")]
-		[DataMember(Name = "SqlPropertyList")]
-		[DataArrayItem(ElementName = "SqlPropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlProperty> _S_SqlPropertyList
+		[XmlArray(ElementName = "SqlExtendedPropertyList")]
+		[XmlArrayItem(typeof(BLL.Specifications.SqlExtendedProperty), ElementName = "SqlExtendedProperty")]
+		[DataMember(Name = "SqlExtendedPropertyList")]
+		[DataArrayItem(ElementName = "SqlExtendedPropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> _S_SqlExtendedPropertyList
 		{
 			get
 			{
-				return _sqlPropertyList;
+				return _sqlExtendedPropertyList;
 			}
 			set
 			{
-				_sqlPropertyList = value;
+				_sqlExtendedPropertyList = value;
 			}
 		}
 		
@@ -884,26 +884,26 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> _sqlExtendedPropertyList = null;
+		protected EnterpriseDataObjectList<BLL.Specifications.SqlProperty> _sqlPropertyList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of SqlIndex.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> SqlExtendedPropertyList
+		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlProperty> SqlPropertyList
 		{
 			get
 			{
-				if (_sqlExtendedPropertyList == null)
+				if (_sqlPropertyList == null)
 				{
-					_sqlExtendedPropertyList = new EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty>();
+					_sqlPropertyList = new EnterpriseDataObjectList<BLL.Specifications.SqlProperty>();
 				}
-				return _sqlExtendedPropertyList;
+				return _sqlPropertyList;
 			}
 			set
 			{
-				if (_sqlExtendedPropertyList == null || _sqlExtendedPropertyList.Equals(value) == false)
+				if (_sqlPropertyList == null || _sqlPropertyList.Equals(value) == false)
 				{
-					_sqlExtendedPropertyList = value;
+					_sqlPropertyList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -911,19 +911,19 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				}
 			}
 		}
-		[XmlArray(ElementName = "SqlExtendedPropertyList")]
-		[XmlArrayItem(typeof(BLL.Specifications.SqlExtendedProperty), ElementName = "SqlExtendedProperty")]
-		[DataMember(Name = "SqlExtendedPropertyList")]
-		[DataArrayItem(ElementName = "SqlExtendedPropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlExtendedProperty> _S_SqlExtendedPropertyList
+		[XmlArray(ElementName = "SqlPropertyList")]
+		[XmlArrayItem(typeof(BLL.Specifications.SqlProperty), ElementName = "SqlProperty")]
+		[DataMember(Name = "SqlPropertyList")]
+		[DataArrayItem(ElementName = "SqlPropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Specifications.SqlProperty> _S_SqlPropertyList
 		{
 			get
 			{
-				return _sqlExtendedPropertyList;
+				return _sqlPropertyList;
 			}
 			set
 			{
-				_sqlExtendedPropertyList = value;
+				_sqlPropertyList = value;
 			}
 		}
 		
@@ -999,9 +999,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_sqlPropertyList != null && _sqlPropertyList.IsModified == true) return true;
-				if (_sqlIndexedColumnList != null && _sqlIndexedColumnList.IsModified == true) return true;
 				if (_sqlExtendedPropertyList != null && _sqlExtendedPropertyList.IsModified == true) return true;
+				if (_sqlIndexedColumnList != null && _sqlIndexedColumnList.IsModified == true) return true;
+				if (_sqlPropertyList != null && _sqlPropertyList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -1058,17 +1058,17 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		public virtual void AddItemToUsedTags(NameObjectCollection usedTags)
 		{
 			AddTagsToUsedTags(usedTags);
-			foreach (SqlProperty sqlProperty in SqlPropertyList)
+			foreach (SqlExtendedProperty sqlExtendedProperty in SqlExtendedPropertyList)
 			{
-				sqlProperty.AddItemToUsedTags(usedTags);
+				sqlExtendedProperty.AddItemToUsedTags(usedTags);
 			}
 			foreach (SqlIndexedColumn sqlIndexedColumn in SqlIndexedColumnList)
 			{
 				sqlIndexedColumn.AddItemToUsedTags(usedTags);
 			}
-			foreach (SqlExtendedProperty sqlExtendedProperty in SqlExtendedPropertyList)
+			foreach (SqlProperty sqlProperty in SqlPropertyList)
 			{
-				sqlExtendedProperty.AddItemToUsedTags(usedTags);
+				sqlProperty.AddItemToUsedTags(usedTags);
 			}
 		}
 		
@@ -1188,14 +1188,14 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			}
 			SqlTable = null;
 			Solution = null;
-			if (_sqlPropertyList != null)
+			if (_sqlExtendedPropertyList != null)
 			{
-				foreach (SqlProperty item in SqlPropertyList)
+				foreach (SqlExtendedProperty item in SqlExtendedPropertyList)
 				{
 					item.Dispose();
 				}
-				SqlPropertyList.Clear();
-				SqlPropertyList = null;
+				SqlExtendedPropertyList.Clear();
+				SqlExtendedPropertyList = null;
 			}
 			if (_sqlIndexedColumnList != null)
 			{
@@ -1206,14 +1206,14 @@ namespace MoPlus.Interpreter.BLL.Specifications
 				SqlIndexedColumnList.Clear();
 				SqlIndexedColumnList = null;
 			}
-			if (_sqlExtendedPropertyList != null)
+			if (_sqlPropertyList != null)
 			{
-				foreach (SqlExtendedProperty item in SqlExtendedPropertyList)
+				foreach (SqlProperty item in SqlPropertyList)
 				{
 					item.Dispose();
 				}
-				SqlExtendedPropertyList.Clear();
-				SqlExtendedPropertyList = null;
+				SqlPropertyList.Clear();
+				SqlPropertyList = null;
 			}
 			
 			#region protected
@@ -1286,13 +1286,13 @@ namespace MoPlus.Interpreter.BLL.Specifications
 			{
 				forwardItem.SqlIndexID = SqlIndexID;
 			}
-			foreach (SqlProperty item in SqlPropertyList)
+			foreach (SqlExtendedProperty item in SqlExtendedPropertyList)
 			{
 				item.SqlIndex = this;
-				SqlProperty forwardChildItem = item.GetForwardInstance(forwardSolution);
+				SqlExtendedProperty forwardChildItem = item.GetForwardInstance(forwardSolution);
 				if (forwardChildItem != null)
 				{
-					forwardItem.SqlPropertyList.Add(forwardChildItem);
+					forwardItem.SqlExtendedPropertyList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -1306,13 +1306,13 @@ namespace MoPlus.Interpreter.BLL.Specifications
 					isCustomized = true;
 				}
 			}
-			foreach (SqlExtendedProperty item in SqlExtendedPropertyList)
+			foreach (SqlProperty item in SqlPropertyList)
 			{
 				item.SqlIndex = this;
-				SqlExtendedProperty forwardChildItem = item.GetForwardInstance(forwardSolution);
+				SqlProperty forwardChildItem = item.GetForwardInstance(forwardSolution);
 				if (forwardChildItem != null)
 				{
-					forwardItem.SqlExtendedPropertyList.Add(forwardChildItem);
+					forwardItem.SqlPropertyList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -1561,9 +1561,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_sqlPropertyList != null) _sqlPropertyList.ResetLoaded(isLoaded);
-			if (_sqlIndexedColumnList != null) _sqlIndexedColumnList.ResetLoaded(isLoaded);
 			if (_sqlExtendedPropertyList != null) _sqlExtendedPropertyList.ResetLoaded(isLoaded);
+			if (_sqlIndexedColumnList != null) _sqlIndexedColumnList.ResetLoaded(isLoaded);
+			if (_sqlPropertyList != null) _sqlPropertyList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1575,9 +1575,9 @@ namespace MoPlus.Interpreter.BLL.Specifications
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_sqlPropertyList != null) _sqlPropertyList.ResetModified(isModified);
-			if (_sqlIndexedColumnList != null) _sqlIndexedColumnList.ResetModified(isModified);
 			if (_sqlExtendedPropertyList != null) _sqlExtendedPropertyList.ResetModified(isModified);
+			if (_sqlIndexedColumnList != null) _sqlIndexedColumnList.ResetModified(isModified);
+			if (_sqlPropertyList != null) _sqlPropertyList.ResetModified(isModified);
 		}
 		
 		#region protected

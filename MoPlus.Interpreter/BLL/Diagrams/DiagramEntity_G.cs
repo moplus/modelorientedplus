@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -730,6 +730,32 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 			}
 		}
 		
+		protected BLL.Diagrams.Diagram _diagram = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Diagram.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Diagrams.Diagram Diagram
+		{
+			get
+			{
+				return _diagram;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_diagramName = value.DiagramName;
+					if (_diagram != null && _diagram.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					DiagramID = value.DiagramID;
+				}
+				_diagram = value;
+			}
+		}
+		
 		protected BLL.Entities.Entity _entity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the Entity.</summary>
@@ -756,32 +782,6 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 					EntityID = value.EntityID;
 				}
 				_entity = value;
-			}
-		}
-		
-		protected BLL.Diagrams.Diagram _diagram = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Diagram.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Diagrams.Diagram Diagram
-		{
-			get
-			{
-				return _diagram;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_diagramName = value.DiagramName;
-					if (_diagram != null && _diagram.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					DiagramID = value.DiagramID;
-				}
-				_diagram = value;
 			}
 		}
 		
@@ -1001,8 +1001,8 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			Entity = null;
 			Diagram = null;
+			Entity = null;
 			Solution = null;
 			
 			#region protected
@@ -1237,6 +1237,7 @@ namespace MoPlus.Interpreter.BLL.Diagrams
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new DiagramEntity();

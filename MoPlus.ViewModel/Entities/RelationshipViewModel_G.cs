@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class RelationshipViewModel : DialogEditWorkspaceViewModel
@@ -207,8 +207,8 @@ namespace MoPlus.ViewModel.Entities
 					{
 						_editRelationship.TransformDataFromObject(Relationship, null, false);
 						_editRelationship.Solution = Relationship.Solution;
-						_editRelationship.ReferencedEntity = Relationship.ReferencedEntity;
 						_editRelationship.Entity = Relationship.Entity;
+						_editRelationship.ReferencedEntity = Relationship.ReferencedEntity;
 					}
 					_editRelationship.ResetModified(false);
 				}

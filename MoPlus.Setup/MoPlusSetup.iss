@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Mo+ Solution Builder"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.1"
 #define MyAppPublisher "Mo+"
 #define MyAppURL "https://moplus.codeplex.com"
 #define MyAppExeName "MoPlusSolutionBuilder.exe"

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -1313,32 +1313,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Config.EntityType _entityType = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the EntityType.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Config.EntityType EntityType
-		{
-			get
-			{
-				return _entityType;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_entityTypeName = value.EntityTypeName;
-					if (_entityType != null && _entityType.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					EntityTypeCode = value.EntityTypeCode;
-				}
-				_entityType = value;
-			}
-		}
-		
 		protected BLL.Solutions.Feature _feature = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the Feature.</summary>
@@ -1362,6 +1336,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 					FeatureID = value.FeatureID;
 				}
 				_feature = value;
+			}
+		}
+		
+		protected BLL.Config.EntityType _entityType = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the EntityType.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Config.EntityType EntityType
+		{
+			get
+			{
+				return _entityType;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_entityTypeName = value.EntityTypeName;
+					if (_entityType != null && _entityType.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					EntityTypeCode = value.EntityTypeCode;
+				}
+				_entityType = value;
 			}
 		}
 		
@@ -1648,8 +1648,9 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			EntityType = null;
+			BaseEntity = null;
 			Feature = null;
+			EntityType = null;
 			IdentifierType = null;
 			Solution = null;
 			if (_propertyList != null)
@@ -2121,6 +2122,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new Entity();

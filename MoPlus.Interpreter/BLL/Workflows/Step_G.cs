@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/30/2014</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -533,49 +533,6 @@ namespace MoPlus.Interpreter.BLL.Workflows
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Workflows.StepTransition> _toStepTransitionList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Step.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Workflows.StepTransition> ToStepTransitionList
-		{
-			get
-			{
-				if (_toStepTransitionList == null)
-				{
-					_toStepTransitionList = new EnterpriseDataObjectList<BLL.Workflows.StepTransition>();
-				}
-				return _toStepTransitionList;
-			}
-			set
-			{
-				if (_toStepTransitionList == null || _toStepTransitionList.Equals(value) == false)
-				{
-					_toStepTransitionList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "ToStepTransitionList")]
-		[XmlArrayItem(typeof(BLL.Workflows.StepTransition), ElementName = "StepTransition")]
-		[DataMember(Name = "ToStepTransitionList")]
-		[DataArrayItem(ElementName = "ToStepTransitionList")]
-		public virtual EnterpriseDataObjectList<BLL.Workflows.StepTransition> _S_ToStepTransitionList
-		{
-			get
-			{
-				return _toStepTransitionList;
-			}
-			set
-			{
-				_toStepTransitionList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Workflows.StepTransition> _fromStepTransitionList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Step.</summary>
@@ -616,6 +573,49 @@ namespace MoPlus.Interpreter.BLL.Workflows
 			set
 			{
 				_fromStepTransitionList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Workflows.StepTransition> _toStepTransitionList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Step.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Workflows.StepTransition> ToStepTransitionList
+		{
+			get
+			{
+				if (_toStepTransitionList == null)
+				{
+					_toStepTransitionList = new EnterpriseDataObjectList<BLL.Workflows.StepTransition>();
+				}
+				return _toStepTransitionList;
+			}
+			set
+			{
+				if (_toStepTransitionList == null || _toStepTransitionList.Equals(value) == false)
+				{
+					_toStepTransitionList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "ToStepTransitionList")]
+		[XmlArrayItem(typeof(BLL.Workflows.StepTransition), ElementName = "StepTransition")]
+		[DataMember(Name = "ToStepTransitionList")]
+		[DataArrayItem(ElementName = "ToStepTransitionList")]
+		public virtual EnterpriseDataObjectList<BLL.Workflows.StepTransition> _S_ToStepTransitionList
+		{
+			get
+			{
+				return _toStepTransitionList;
+			}
+			set
+			{
+				_toStepTransitionList = value;
 			}
 		}
 		
@@ -691,8 +691,8 @@ namespace MoPlus.Interpreter.BLL.Workflows
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_toStepTransitionList != null && _toStepTransitionList.IsModified == true) return true;
 				if (_fromStepTransitionList != null && _fromStepTransitionList.IsModified == true) return true;
+				if (_toStepTransitionList != null && _toStepTransitionList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -854,15 +854,6 @@ namespace MoPlus.Interpreter.BLL.Workflows
 			}
 			Stage = null;
 			Solution = null;
-			if (_toStepTransitionList != null)
-			{
-				foreach (StepTransition item in ToStepTransitionList)
-				{
-					item.Dispose();
-				}
-				ToStepTransitionList.Clear();
-				ToStepTransitionList = null;
-			}
 			if (_fromStepTransitionList != null)
 			{
 				foreach (StepTransition item in FromStepTransitionList)
@@ -871,6 +862,15 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				}
 				FromStepTransitionList.Clear();
 				FromStepTransitionList = null;
+			}
+			if (_toStepTransitionList != null)
+			{
+				foreach (StepTransition item in ToStepTransitionList)
+				{
+					item.Dispose();
+				}
+				ToStepTransitionList.Clear();
+				ToStepTransitionList = null;
 			}
 			
 			#region protected
@@ -1107,6 +1107,7 @@ namespace MoPlus.Interpreter.BLL.Workflows
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new Step();
@@ -1172,8 +1173,8 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_toStepTransitionList != null) _toStepTransitionList.ResetLoaded(isLoaded);
 			if (_fromStepTransitionList != null) _fromStepTransitionList.ResetLoaded(isLoaded);
+			if (_toStepTransitionList != null) _toStepTransitionList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1185,8 +1186,8 @@ namespace MoPlus.Interpreter.BLL.Workflows
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_toStepTransitionList != null) _toStepTransitionList.ResetModified(isModified);
 			if (_fromStepTransitionList != null) _fromStepTransitionList.ResetModified(isModified);
+			if (_toStepTransitionList != null) _toStepTransitionList.ResetModified(isModified);
 		}
 		
 		#region protected

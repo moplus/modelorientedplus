@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/15/2014</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelObjectViewModel : DialogEditWorkspaceViewModel
@@ -208,6 +208,7 @@ namespace MoPlus.ViewModel.Models
 						_editModelObject.TransformDataFromObject(ModelObject, null, false);
 						_editModelObject.Solution = ModelObject.Solution;
 						_editModelObject.Model = ModelObject.Model;
+						_editModelObject.ParentModelObject = ModelObject.ParentModelObject;
 					}
 					_editModelObject.ResetModified(false);
 				}

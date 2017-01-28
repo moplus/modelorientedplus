@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Workflows
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/18/2013</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class StageViewModel : DialogEditWorkspaceViewModel
@@ -1076,20 +1076,20 @@ namespace MoPlus.ViewModel.Workflows
 			Items.Clear();
 			if (loadChildren == true)
 			{
-				// attach Steps
-				if (StepsFolder == null)
-				{
-					StepsFolder = new StepsViewModel(stage, Solution);
-					StepsFolder.Updated += new EventHandler(Children_Updated);
-					Items.Add(StepsFolder);
-				}
-								
 				// attach StageTransitions
 				if (StageTransitionsFolder == null)
 				{
 					StageTransitionsFolder = new StageTransitionsViewModel(stage, Solution);
 					StageTransitionsFolder.Updated += new EventHandler(Children_Updated);
 					Items.Add(StageTransitionsFolder);
+				}
+								
+				// attach Steps
+				if (StepsFolder == null)
+				{
+					StepsFolder = new StepsViewModel(stage, Solution);
+					StepsFolder.Updated += new EventHandler(Children_Updated);
+					Items.Add(StepsFolder);
 				}
 				#region protected
 				#endregion protected
@@ -1107,8 +1107,8 @@ namespace MoPlus.ViewModel.Workflows
 		{
 			if (refreshChildren == true || refreshLevel > 0)
 			{
-				StepsFolder.Refresh(refreshChildren, refreshLevel - 1);
 				StageTransitionsFolder.Refresh(refreshChildren, refreshLevel - 1);
+				StepsFolder.Refresh(refreshChildren, refreshLevel - 1);
 			}
 			
 			#region protected
@@ -1136,11 +1136,11 @@ namespace MoPlus.ViewModel.Workflows
 				Stage.ReverseInstance = null;
 				Stage.IsAutoUpdated = true;
 			}
-			if (StepsFolder.HasErrors == true)
+			if (StageTransitionsFolder.HasErrors == true)
 			{
 				HasErrors = true;
 			}
-			if (StageTransitionsFolder.HasErrors == true)
+			if (StepsFolder.HasErrors == true)
 			{
 				HasErrors = true;
 			}
@@ -1154,17 +1154,17 @@ namespace MoPlus.ViewModel.Workflows
 		///--------------------------------------------------------------------------------
 		protected override void OnDispose()
 		{
-			if (StepsFolder != null)
-			{
-				StepsFolder.Updated -= Children_Updated;
-				StepsFolder.Dispose();
-				StepsFolder = null;
-			}
 			if (StageTransitionsFolder != null)
 			{
 				StageTransitionsFolder.Updated -= Children_Updated;
 				StageTransitionsFolder.Dispose();
 				StageTransitionsFolder = null;
+			}
+			if (StepsFolder != null)
+			{
+				StepsFolder.Updated -= Children_Updated;
+				StepsFolder.Dispose();
+				StepsFolder = null;
 			}
 			if (_editStage != null)
 			{
@@ -1181,11 +1181,11 @@ namespace MoPlus.ViewModel.Workflows
 		///--------------------------------------------------------------------------------
 		public bool ChildrenHaveAnyCustomizations()
 		{
-			if (StepsFolder != null && StepsFolder.HasCustomizations == true)
+			if (StageTransitionsFolder != null && StageTransitionsFolder.HasCustomizations == true)
 			{
 				return true;
 			}
-			if (StageTransitionsFolder != null && StageTransitionsFolder.HasCustomizations == true)
+			if (StepsFolder != null && StepsFolder.HasCustomizations == true)
 			{
 				return true;
 			}
@@ -1223,12 +1223,12 @@ namespace MoPlus.ViewModel.Workflows
 		public EditWorkspaceViewModel FindParentViewModel(SolutionModelEventArgs data)
 		{
 			EditWorkspaceViewModel parentModel = null;
-			parentModel = StepsFolder.FindParentViewModel(data);
+			parentModel = StageTransitionsFolder.FindParentViewModel(data);
 			if (parentModel != null)
 			{
 				return parentModel;
 			}
-			parentModel = StageTransitionsFolder.FindParentViewModel(data);
+			parentModel = StepsFolder.FindParentViewModel(data);
 			if (parentModel != null)
 			{
 				return parentModel;

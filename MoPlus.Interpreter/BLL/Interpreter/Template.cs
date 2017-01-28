@@ -773,6 +773,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				return Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Step) + ":" + templateName;
 			}
+			else if (modelContext is MoPlus.Interpreter.BLL.Solutions.View)
+			{
+				return Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.View) + ":" + templateName;
+			}
+			else if (modelContext is ViewProperty)
+			{
+				return Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.ViewProperty) + ":" + templateName;
+			}
 			else if (modelContext is StepTransition)
 			{
 				return Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.StepTransition) + ":" + templateName;
@@ -852,6 +860,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (modelContext is SqlTable)
 			{
 				return Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlTable) + ":" + templateName;
+			}
+			else if (modelContext is SqlView)
+			{
+				return Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlView) + ":" + templateName;
+			}
+			else if (modelContext is SqlViewProperty)
+			{
+				return Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlViewProperty) + ":" + templateName;
 			}
 			else if (modelContext is MoPlus.Interpreter.BLL.Specifications.XmlAttribute)
 			{
@@ -1031,6 +1047,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (NodeName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlTable))
 			{
 				return SqlTable.GetModelContext(Solution, parentModelContext, out isValidContext);
+			}
+			else if (NodeName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlView))
+			{
+				return SqlView.GetModelContext(Solution, parentModelContext, out isValidContext);
+			}
+			else if (NodeName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlViewProperty))
+			{
+				return SqlViewProperty.GetModelContext(Solution, parentModelContext, out isValidContext);
 			}
 			else if (NodeName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.XmlAttribute))
 			{

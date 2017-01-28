@@ -53,7 +53,7 @@ namespace MoPlus.ViewModel.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/15/2014</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelObjectsViewModel : EditWorkspaceViewModel
@@ -488,6 +488,21 @@ namespace MoPlus.ViewModel.Models
 			newItem.ModelObjectID = Guid.NewGuid();
 			newItem.IsAutoUpdated = false;
 			
+			// try to find referenced ModelObject by existing id first, second by old id, finally by name
+			newItem.ParentModelObject = Solution.ModelObjectList.FindByID((Guid)copyItem.ModelObject.ParentModelObjectID);
+			if (newItem.ParentModelObject == null && Solution.PasteNewGuids[copyItem.ModelObject.ParentModelObjectID.ToString()] is Guid)
+			{
+				newItem.ParentModelObject = Solution.ModelObjectList.FindByID((Guid)Solution.PasteNewGuids[copyItem.ModelObject.ParentModelObjectID.ToString()]);
+			}
+			if (newItem.ParentModelObject == null)
+			{
+				newItem.ParentModelObject = Solution.ModelObjectList.Find("Name", copyItem.ModelObject.Name);
+			}
+			if (newItem.ParentModelObject == null)
+			{
+				newItem.OldParentModelObjectID = newItem.ParentModelObjectID;
+				newItem.ParentModelObjectID = Guid.Empty;
+			}
 			newItem.Model = Model;
 			newItem.Solution = Solution;
 			ModelObjectViewModel newView = new ModelObjectViewModel(newItem, Solution);

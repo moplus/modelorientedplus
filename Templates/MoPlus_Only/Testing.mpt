@@ -8,7 +8,7 @@
 //
 // this is a template used to test other templates
 //
-foreach (Entity in Solution where EntityName == "ModelObject")
+foreach (Entity in Solution where EntityName == "Solution")
 {
 <%%=VMBLLViewModelClassCode%%>
 }

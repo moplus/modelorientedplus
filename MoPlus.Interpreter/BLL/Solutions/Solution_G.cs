@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -238,6 +238,18 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		public SqlTable CurrentSqlTable { get; set; }
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the CurrentSqlView.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public SqlView CurrentSqlView { get; set; }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the CurrentSqlViewProperty.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public SqlViewProperty CurrentSqlViewProperty { get; set; }
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets the CurrentStage.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
@@ -284,6 +296,18 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
 		public Value CurrentValue { get; set; }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the CurrentView.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public View CurrentView { get; set; }
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the CurrentViewProperty.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public ViewProperty CurrentViewProperty { get; set; }
 		
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets the CurrentWorkflow.</summary>
@@ -1013,73 +1037,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> _specificationSourceList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Solution.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> SpecificationSourceList
-		{
-			get
-			{
-				if (_specificationSourceList == null)
-				{
-					_specificationSourceList = new EnterpriseDataObjectList<BLL.Solutions.SpecificationSource>();
-				}
-				return _specificationSourceList;
-			}
-			set
-			{
-				if (_specificationSourceList == null || _specificationSourceList.Equals(value) == false)
-				{
-					_specificationSourceList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "SpecificationSourceList")]
-		[XmlArrayItem(typeof(BLL.Solutions.SpecificationSource), ElementName = "SpecificationSource")]
-		[DataMember(Name = "SpecificationSourceList")]
-		[DataArrayItem(ElementName = "SpecificationSourceList")]
-		public virtual EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> _S_SpecificationSourceList
-		{
-			get
-			{
-				return _specificationSourceList;
-			}
-			set
-			{
-				_specificationSourceList = value;
-			}
-		}
-		
-		protected EnterpriseDataObjectList<BLL.Interpreter.Template> _templateList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of Solution.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Interpreter.Template> TemplateList
-		{
-			get
-			{
-				if (_templateList == null)
-				{
-					_templateList = new EnterpriseDataObjectList<BLL.Interpreter.Template>();
-				}
-				return _templateList;
-			}
-			set
-			{
-				if (_templateList == null || _templateList.Equals(value) == false)
-				{
-					_templateList = value;
-				}
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Entities.Collection> _collectionList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Solution.</summary>
@@ -1123,26 +1080,50 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.PropertyReference> _propertyReferenceList = null;
+		protected EnterpriseDataObjectList<BLL.Interpreter.Template> _templateList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Solution.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> PropertyReferenceList
+		public virtual EnterpriseDataObjectList<BLL.Interpreter.Template> TemplateList
 		{
 			get
 			{
-				if (_propertyReferenceList == null)
+				if (_templateList == null)
 				{
-					_propertyReferenceList = new EnterpriseDataObjectList<BLL.Entities.PropertyReference>();
+					_templateList = new EnterpriseDataObjectList<BLL.Interpreter.Template>();
 				}
-				return _propertyReferenceList;
+				return _templateList;
 			}
 			set
 			{
-				if (_propertyReferenceList == null || _propertyReferenceList.Equals(value) == false)
+				if (_templateList == null || _templateList.Equals(value) == false)
 				{
-					_propertyReferenceList = value;
+					_templateList = value;
+				}
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> _specificationSourceList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Solution.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> SpecificationSourceList
+		{
+			get
+			{
+				if (_specificationSourceList == null)
+				{
+					_specificationSourceList = new EnterpriseDataObjectList<BLL.Solutions.SpecificationSource>();
+				}
+				return _specificationSourceList;
+			}
+			set
+			{
+				if (_specificationSourceList == null || _specificationSourceList.Equals(value) == false)
+				{
+					_specificationSourceList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -1150,19 +1131,19 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 			}
 		}
-		[XmlArray(ElementName = "PropertyReferenceList")]
-		[XmlArrayItem(typeof(BLL.Entities.PropertyReference), ElementName = "PropertyReference")]
-		[DataMember(Name = "PropertyReferenceList")]
-		[DataArrayItem(ElementName = "PropertyReferenceList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> _S_PropertyReferenceList
+		[XmlArray(ElementName = "SpecificationSourceList")]
+		[XmlArrayItem(typeof(BLL.Solutions.SpecificationSource), ElementName = "SpecificationSource")]
+		[DataMember(Name = "SpecificationSourceList")]
+		[DataArrayItem(ElementName = "SpecificationSourceList")]
+		public virtual EnterpriseDataObjectList<BLL.Solutions.SpecificationSource> _S_SpecificationSourceList
 		{
 			get
 			{
-				return _propertyReferenceList;
+				return _specificationSourceList;
 			}
 			set
 			{
-				_propertyReferenceList = value;
+				_specificationSourceList = value;
 			}
 		}
 		
@@ -1209,26 +1190,26 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.Property> _propertyList = null;
+		protected EnterpriseDataObjectList<BLL.Solutions.View> _viewList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of Solution.</summary>
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.Property> PropertyList
+		public virtual EnterpriseDataObjectList<BLL.Solutions.View> ViewList
 		{
 			get
 			{
-				if (_propertyList == null)
+				if (_viewList == null)
 				{
-					_propertyList = new EnterpriseDataObjectList<BLL.Entities.Property>();
+					_viewList = new EnterpriseDataObjectList<BLL.Solutions.View>();
 				}
-				return _propertyList;
+				return _viewList;
 			}
 			set
 			{
-				if (_propertyList == null || _propertyList.Equals(value) == false)
+				if (_viewList == null || _viewList.Equals(value) == false)
 				{
-					_propertyList = value;
+					_viewList = value;
 					if (value != null)
 					{
 						_isModified = true;
@@ -1236,19 +1217,19 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 			}
 		}
-		[XmlArray(ElementName = "PropertyList")]
-		[XmlArrayItem(typeof(BLL.Entities.Property), ElementName = "Property")]
-		[DataMember(Name = "PropertyList")]
-		[DataArrayItem(ElementName = "PropertyList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.Property> _S_PropertyList
+		[XmlArray(ElementName = "ViewList")]
+		[XmlArrayItem(typeof(BLL.Solutions.View), ElementName = "View")]
+		[DataMember(Name = "ViewList")]
+		[DataArrayItem(ElementName = "ViewList")]
+		public virtual EnterpriseDataObjectList<BLL.Solutions.View> _S_ViewList
 		{
 			get
 			{
-				return _propertyList;
+				return _viewList;
 			}
 			set
 			{
-				_propertyList = value;
+				_viewList = value;
 			}
 		}
 		
@@ -1292,6 +1273,92 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			set
 			{
 				_entityReferenceList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.Property> _propertyList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Solution.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.Property> PropertyList
+		{
+			get
+			{
+				if (_propertyList == null)
+				{
+					_propertyList = new EnterpriseDataObjectList<BLL.Entities.Property>();
+				}
+				return _propertyList;
+			}
+			set
+			{
+				if (_propertyList == null || _propertyList.Equals(value) == false)
+				{
+					_propertyList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "PropertyList")]
+		[XmlArrayItem(typeof(BLL.Entities.Property), ElementName = "Property")]
+		[DataMember(Name = "PropertyList")]
+		[DataArrayItem(ElementName = "PropertyList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.Property> _S_PropertyList
+		{
+			get
+			{
+				return _propertyList;
+			}
+			set
+			{
+				_propertyList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.PropertyReference> _propertyReferenceList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of Solution.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> PropertyReferenceList
+		{
+			get
+			{
+				if (_propertyReferenceList == null)
+				{
+					_propertyReferenceList = new EnterpriseDataObjectList<BLL.Entities.PropertyReference>();
+				}
+				return _propertyReferenceList;
+			}
+			set
+			{
+				if (_propertyReferenceList == null || _propertyReferenceList.Equals(value) == false)
+				{
+					_propertyReferenceList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "PropertyReferenceList")]
+		[XmlArrayItem(typeof(BLL.Entities.PropertyReference), ElementName = "PropertyReference")]
+		[DataMember(Name = "PropertyReferenceList")]
+		[DataArrayItem(ElementName = "PropertyReferenceList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyReference> _S_PropertyReferenceList
+		{
+			get
+			{
+				return _propertyReferenceList;
+			}
+			set
+			{
+				_propertyReferenceList = value;
 			}
 		}
 		
@@ -1733,12 +1800,13 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_specificationSourceList != null && _specificationSourceList.IsModified == true) return true;
 				if (_collectionList != null && _collectionList.IsModified == true) return true;
-				if (_propertyReferenceList != null && _propertyReferenceList.IsModified == true) return true;
+				if (_specificationSourceList != null && _specificationSourceList.IsModified == true) return true;
 				if (_propertyBaseList != null && _propertyBaseList.IsModified == true) return true;
-				if (_propertyList != null && _propertyList.IsModified == true) return true;
+				if (_viewList != null && _viewList.IsModified == true) return true;
 				if (_entityReferenceList != null && _entityReferenceList.IsModified == true) return true;
+				if (_propertyList != null && _propertyList.IsModified == true) return true;
+				if (_propertyReferenceList != null && _propertyReferenceList.IsModified == true) return true;
 				if (_databaseSourceList != null && _databaseSourceList.IsModified == true) return true;
 				if (_xmlSourceList != null && _xmlSourceList.IsModified == true) return true;
 				if (_projectList != null && _projectList.IsModified == true) return true;
@@ -1808,17 +1876,21 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				collection.AddItemToUsedTags(usedTags);
 			}
-			foreach (PropertyReference propertyReference in PropertyReferenceList)
+			foreach (View view in ViewList)
 			{
-				propertyReference.AddItemToUsedTags(usedTags);
+				view.AddItemToUsedTags(usedTags);
+			}
+			foreach (EntityReference entityReference in EntityReferenceList)
+			{
+				entityReference.AddItemToUsedTags(usedTags);
 			}
 			foreach (Property property in PropertyList)
 			{
 				property.AddItemToUsedTags(usedTags);
 			}
-			foreach (EntityReference entityReference in EntityReferenceList)
+			foreach (PropertyReference propertyReference in PropertyReferenceList)
 			{
-				entityReference.AddItemToUsedTags(usedTags);
+				propertyReference.AddItemToUsedTags(usedTags);
 			}
 			foreach (DatabaseSource databaseSource in DatabaseSourceList)
 			{
@@ -1947,14 +2019,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			if (_specificationSourceList != null)
+			if (_collectionList != null)
 			{
-				foreach (SpecificationSource item in SpecificationSourceList)
+				foreach (Collection item in CollectionList)
 				{
 					item.Dispose();
 				}
-				SpecificationSourceList.Clear();
-				SpecificationSourceList = null;
+				CollectionList.Clear();
+				CollectionList = null;
 			}
 			if (_templateList != null)
 			{
@@ -1965,23 +2037,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				TemplateList.Clear();
 				TemplateList = null;
 			}
-			if (_collectionList != null)
+			if (_specificationSourceList != null)
 			{
-				foreach (Collection item in CollectionList)
+				foreach (SpecificationSource item in SpecificationSourceList)
 				{
 					item.Dispose();
 				}
-				CollectionList.Clear();
-				CollectionList = null;
-			}
-			if (_propertyReferenceList != null)
-			{
-				foreach (PropertyReference item in PropertyReferenceList)
-				{
-					item.Dispose();
-				}
-				PropertyReferenceList.Clear();
-				PropertyReferenceList = null;
+				SpecificationSourceList.Clear();
+				SpecificationSourceList = null;
 			}
 			if (_propertyBaseList != null)
 			{
@@ -1992,14 +2055,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				PropertyBaseList.Clear();
 				PropertyBaseList = null;
 			}
-			if (_propertyList != null)
+			if (_viewList != null)
 			{
-				foreach (Property item in PropertyList)
+				foreach (View item in ViewList)
 				{
 					item.Dispose();
 				}
-				PropertyList.Clear();
-				PropertyList = null;
+				ViewList.Clear();
+				ViewList = null;
 			}
 			if (_entityReferenceList != null)
 			{
@@ -2009,6 +2072,24 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 				EntityReferenceList.Clear();
 				EntityReferenceList = null;
+			}
+			if (_propertyList != null)
+			{
+				foreach (Property item in PropertyList)
+				{
+					item.Dispose();
+				}
+				PropertyList.Clear();
+				PropertyList = null;
+			}
+			if (_propertyReferenceList != null)
+			{
+				foreach (PropertyReference item in PropertyReferenceList)
+				{
+					item.Dispose();
+				}
+				PropertyReferenceList.Clear();
+				PropertyReferenceList = null;
 			}
 			if (_databaseSourceList != null)
 			{
@@ -2208,12 +2289,22 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					isCustomized = true;
 				}
 			}
-			foreach (PropertyReference item in PropertyReferenceList)
+			foreach (View item in ViewList)
 			{
-				PropertyReference forwardChildItem = item.GetForwardInstance(forwardSolution);
+				item.Solution = this;
+				View forwardChildItem = item.GetForwardInstance(forwardSolution);
 				if (forwardChildItem != null)
 				{
-					forwardItem.PropertyReferenceList.Add(forwardChildItem);
+					forwardItem.ViewList.Add(forwardChildItem);
+					isCustomized = true;
+				}
+			}
+			foreach (EntityReference item in EntityReferenceList)
+			{
+				EntityReference forwardChildItem = item.GetForwardInstance(forwardSolution);
+				if (forwardChildItem != null)
+				{
+					forwardItem.EntityReferenceList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -2226,12 +2317,12 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					isCustomized = true;
 				}
 			}
-			foreach (EntityReference item in EntityReferenceList)
+			foreach (PropertyReference item in PropertyReferenceList)
 			{
-				EntityReference forwardChildItem = item.GetForwardInstance(forwardSolution);
+				PropertyReference forwardChildItem = item.GetForwardInstance(forwardSolution);
 				if (forwardChildItem != null)
 				{
-					forwardItem.EntityReferenceList.Add(forwardChildItem);
+					forwardItem.PropertyReferenceList.Add(forwardChildItem);
 					isCustomized = true;
 				}
 			}
@@ -2406,13 +2497,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_specificationSourceList != null) _specificationSourceList.ResetLoaded(isLoaded);
-			if (_templateList != null) _templateList.ResetLoaded(isLoaded);
 			if (_collectionList != null) _collectionList.ResetLoaded(isLoaded);
-			if (_propertyReferenceList != null) _propertyReferenceList.ResetLoaded(isLoaded);
+			if (_templateList != null) _templateList.ResetLoaded(isLoaded);
+			if (_specificationSourceList != null) _specificationSourceList.ResetLoaded(isLoaded);
 			if (_propertyBaseList != null) _propertyBaseList.ResetLoaded(isLoaded);
-			if (_propertyList != null) _propertyList.ResetLoaded(isLoaded);
+			if (_viewList != null) _viewList.ResetLoaded(isLoaded);
 			if (_entityReferenceList != null) _entityReferenceList.ResetLoaded(isLoaded);
+			if (_propertyList != null) _propertyList.ResetLoaded(isLoaded);
+			if (_propertyReferenceList != null) _propertyReferenceList.ResetLoaded(isLoaded);
 			if (_databaseSourceList != null) _databaseSourceList.ResetLoaded(isLoaded);
 			if (_xmlSourceList != null) _xmlSourceList.ResetLoaded(isLoaded);
 			if (_projectList != null) _projectList.ResetLoaded(isLoaded);
@@ -2434,13 +2526,14 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_specificationSourceList != null) _specificationSourceList.ResetModified(isModified);
-			if (_templateList != null) _templateList.ResetModified(isModified);
 			if (_collectionList != null) _collectionList.ResetModified(isModified);
-			if (_propertyReferenceList != null) _propertyReferenceList.ResetModified(isModified);
+			if (_templateList != null) _templateList.ResetModified(isModified);
+			if (_specificationSourceList != null) _specificationSourceList.ResetModified(isModified);
 			if (_propertyBaseList != null) _propertyBaseList.ResetModified(isModified);
-			if (_propertyList != null) _propertyList.ResetModified(isModified);
+			if (_viewList != null) _viewList.ResetModified(isModified);
 			if (_entityReferenceList != null) _entityReferenceList.ResetModified(isModified);
+			if (_propertyList != null) _propertyList.ResetModified(isModified);
+			if (_propertyReferenceList != null) _propertyReferenceList.ResetModified(isModified);
 			if (_databaseSourceList != null) _databaseSourceList.ResetModified(isModified);
 			if (_xmlSourceList != null) _xmlSourceList.ResetModified(isModified);
 			if (_projectList != null) _projectList.ResetModified(isModified);

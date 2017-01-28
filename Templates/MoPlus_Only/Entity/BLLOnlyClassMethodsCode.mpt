@@ -678,6 +678,7 @@ public static void AddCurrentItemToSolution(Solution solutionContext, ITemplate 
 		else
 		{%%><%%=TAB 1%%><%%-
 			// update existing item in solution
+			if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 			if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 			{%%><%%=TAB 1%%><%%-
 				existingItem.ForwardInstance = new %%><%%=BLLClassName%%><%%-();

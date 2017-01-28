@@ -56,7 +56,7 @@ namespace MoPlus.ViewModel
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/16/2014</CreatedDate>
+	/// <CreatedDate>1/24/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class BuilderViewModel : WorkspaceViewModel
@@ -533,6 +533,21 @@ namespace MoPlus.ViewModel
 				(viewModel as ValueViewModel).ProcessNewValueCommand();
 				return;
 			}
+			else if (viewModel is ViewsViewModel)
+			{
+				(viewModel as ViewsViewModel).ProcessNewViewCommand();
+				return;
+			}
+			else if (viewModel is ViewViewModel)
+			{
+				(viewModel as ViewViewModel).ProcessNewViewCommand();
+				return;
+			}
+			else if (viewModel is ViewPropertyViewModel)
+			{
+				(viewModel as ViewPropertyViewModel).ProcessNewViewPropertyCommand();
+				return;
+			}
 			else if (viewModel is WorkflowsViewModel)
 			{
 				(viewModel as WorkflowsViewModel).ProcessNewWorkflowCommand();
@@ -635,6 +650,11 @@ namespace MoPlus.ViewModel
 			else if (viewModel is StepViewModel)
 			{
 				(viewModel as StepViewModel).ProcessNewStepTransitionCommand();
+				return;
+			}
+			else if (viewModel is ViewViewModel)
+			{
+				(viewModel as ViewViewModel).ProcessNewViewPropertyCommand();
 				return;
 			}
 			else if (viewModel is WorkflowViewModel)
@@ -827,6 +847,16 @@ namespace MoPlus.ViewModel
 			else if (viewModel is ValueViewModel)
 			{
 				(viewModel as ValueViewModel).ProcessDeleteValueCommand();
+				return;
+			}
+			else if (viewModel is ViewViewModel)
+			{
+				(viewModel as ViewViewModel).ProcessDeleteViewCommand();
+				return;
+			}
+			else if (viewModel is ViewPropertyViewModel)
+			{
+				(viewModel as ViewPropertyViewModel).ProcessDeleteViewPropertyCommand();
 				return;
 			}
 			else if (viewModel is WorkflowViewModel)
@@ -2402,6 +2432,98 @@ namespace MoPlus.ViewModel
 		}
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This method applies View updates.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewPerformed, ParameterType = typeof(ViewEventArgs))]
+		public void ProcessEditViewPerformed(ViewEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ViewsViewModel)
+						{
+							(parentView as ViewsViewModel).ProcessEditViewPerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes delete View messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_DeleteViewRequested, ParameterType = typeof(ViewEventArgs))]
+		public void ProcessDeleteViewRequested(ViewEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ViewsViewModel)
+						{
+							(parentView as ViewsViewModel).ProcessDeleteViewPerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method applies ViewProperty updates.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewPropertyPerformed, ParameterType = typeof(ViewPropertyEventArgs))]
+		public void ProcessEditViewPropertyPerformed(ViewPropertyEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ViewViewModel)
+						{
+							(parentView as ViewViewModel).ProcessEditViewPropertyPerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes delete ViewProperty messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_DeleteViewPropertyRequested, ParameterType = typeof(ViewPropertyEventArgs))]
+		public void ProcessDeleteViewPropertyRequested(ViewPropertyEventArgs data)
+		{
+			if (SolutionsFolder != null)
+			{
+				foreach (SolutionViewModel solution in SolutionsFolder.Solutions)
+				{
+					if (solution.Solution.SolutionID == data.Solution.SolutionID)
+					{
+						EditWorkspaceViewModel parentView = solution.FindParentViewModel(data);
+						if (parentView is ViewViewModel)
+						{
+							(parentView as ViewViewModel).ProcessDeleteViewPropertyPerformed(data);
+						}
+						break;
+					}
+				}
+			}
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This method applies Workflow updates.</summary>
 		///--------------------------------------------------------------------------------
 		[MediatorMessageSink(MediatorMessages.Command_EditWorkflowPerformed, ParameterType = typeof(WorkflowEventArgs))]
@@ -2781,6 +2903,24 @@ namespace MoPlus.ViewModel
 		///--------------------------------------------------------------------------------
 		[MediatorMessageSink(MediatorMessages.Command_EditValueRequested, ParameterType = typeof(ValueEventArgs))]
 		public void ProcessEditValueRequested(ValueEventArgs data)
+		{
+			OnShowSolutionDesignerRequested(this, null);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit View messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewRequested, ParameterType = typeof(ViewEventArgs))]
+		public void ProcessEditViewRequested(ViewEventArgs data)
+		{
+			OnShowSolutionDesignerRequested(this, null);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit ViewProperty messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewPropertyRequested, ParameterType = typeof(ViewPropertyEventArgs))]
+		public void ProcessEditViewPropertyRequested(ViewPropertyEventArgs data)
 		{
 			OnShowSolutionDesignerRequested(this, null);
 		}

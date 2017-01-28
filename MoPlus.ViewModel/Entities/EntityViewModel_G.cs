@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/22/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class EntityViewModel : DialogEditWorkspaceViewModel
@@ -361,8 +361,9 @@ namespace MoPlus.ViewModel.Entities
 					{
 						_editEntity.TransformDataFromObject(Entity, null, false);
 						_editEntity.Solution = Entity.Solution;
-						_editEntity.EntityType = Entity.EntityType;
+						_editEntity.BaseEntity = Entity.BaseEntity;
 						_editEntity.Feature = Entity.Feature;
+						_editEntity.EntityType = Entity.EntityType;
 						_editEntity.IdentifierType = Entity.IdentifierType;
 					}
 					_editEntity.ResetModified(false);

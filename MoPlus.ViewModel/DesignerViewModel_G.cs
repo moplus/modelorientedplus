@@ -57,7 +57,7 @@ namespace MoPlus.ViewModel
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class DesignerViewModel : WorkspaceViewModel
@@ -1652,6 +1652,90 @@ namespace MoPlus.ViewModel
 				{
 					// create new view model and add item to tabs
 					ValueViewModel view = new ValueViewModel(args.Value, args.Solution, false);
+					SelectedItem = view;
+					view.IsSelected = true;
+					Items.Add(view);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit View messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewRequested, ParameterType = typeof(ViewEventArgs))]
+		public void ProcessEditViewRequested(ViewEventArgs data)
+		{
+			ProcessEditView(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit View command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessEditView(ViewEventArgs args)
+		{
+			bool itemExists = false;
+			if (args.View == null)
+				return;
+
+			if (args.View .ViewID != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (ViewViewModel item in Items.OfType<ViewViewModel>())
+				{
+					if (item.View.ViewID == args.View.ViewID)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{
+					// create new view model and add item to tabs
+					ViewViewModel view = new ViewViewModel(args.View, args.Solution, false);
+					SelectedItem = view;
+					view.IsSelected = true;
+					Items.Add(view);
+				}
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes edit ViewProperty messages.</summary>
+		///--------------------------------------------------------------------------------
+		[MediatorMessageSink(MediatorMessages.Command_EditViewPropertyRequested, ParameterType = typeof(ViewPropertyEventArgs))]
+		public void ProcessEditViewPropertyRequested(ViewPropertyEventArgs data)
+		{
+			ProcessEditViewProperty(data);
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This method processes the edit ViewProperty command.</summary>
+		///--------------------------------------------------------------------------------
+		private void ProcessEditViewProperty(ViewPropertyEventArgs args)
+		{
+			bool itemExists = false;
+			if (args.ViewProperty == null)
+				return;
+
+			if (args.ViewProperty .ViewPropertyID != Guid.Empty)
+			{
+				// check for existing item and display if found
+				foreach (ViewPropertyViewModel item in Items.OfType<ViewPropertyViewModel>())
+				{
+					if (item.ViewProperty.ViewPropertyID == args.ViewProperty.ViewPropertyID)
+					{
+						SelectedItem = item;
+						item.IsSelected = true;
+						itemExists = true;
+						break;
+					}
+				}
+				if (itemExists == false)
+				{
+					// create new view model and add item to tabs
+					ViewPropertyViewModel view = new ViewPropertyViewModel(args.ViewProperty, args.Solution, false);
 					SelectedItem = view;
 					view.IsSelected = true;
 					Items.Add(view);

@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum SpecPropertyCode
@@ -162,28 +162,34 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		SqlType = 62,
 		/// <summary>For SqlValue read only property.</summary>
 		SqlValue = 63,
+		/// <summary>For SqlViewID read only property.</summary>
+		SqlViewID = 64,
+		/// <summary>For SqlViewName read only property.</summary>
+		SqlViewName = 65,
+		/// <summary>For SqlViewPropertyID read only property.</summary>
+		SqlViewPropertyID = 66,
 		/// <summary>For State read only property.</summary>
-		State = 64,
+		State = 67,
 		/// <summary>For Status read only property.</summary>
-		Status = 65,
+		Status = 68,
 		/// <summary>For Urn read only property.</summary>
-		Urn = 66,
+		Urn = 69,
 		/// <summary>For UserName read only property.</summary>
-		UserName = 67,
+		UserName = 70,
 		/// <summary>For Value read only property.</summary>
-		Value = 68,
+		Value = 71,
 		/// <summary>For XmlAttributeID read only property.</summary>
-		XmlAttributeID = 69,
+		XmlAttributeID = 72,
 		/// <summary>For XmlAttributeName read only property.</summary>
-		XmlAttributeName = 70,
+		XmlAttributeName = 73,
 		/// <summary>For XmlDocumentID read only property.</summary>
-		XmlDocumentID = 71,
+		XmlDocumentID = 74,
 		/// <summary>For XmlDocumentName read only property.</summary>
-		XmlDocumentName = 72,
+		XmlDocumentName = 75,
 		/// <summary>For XmlNodeID read only property.</summary>
-		XmlNodeID = 73,
+		XmlNodeID = 76,
 		/// <summary>For XmlNodeName read only property.</summary>
-		XmlNodeName = 74,
+		XmlNodeName = 77,
 
 		#region protected
 		/// <summary>For SqlTableCount read only property.</summary>

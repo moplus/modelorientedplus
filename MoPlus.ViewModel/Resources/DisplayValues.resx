@@ -1521,7 +1521,7 @@
     <comment>For the startup control</comment>
   </data>
   <data name="Help_StartupParagraph1" xml:space="preserve">
-    <value>&lt;b&gt;Mo+ Solution Builder&lt;/b&gt; is a model oriented programming language and IDE, used for building models and generating code and other documents in a model driven development process.</value>
+    <value>&lt;b&gt;Mo+ Solution Builder&lt;/b&gt; is a model oriented programming language and IDE, used for building models and generating code and other documents in a model oriented development process.</value>
     <comment>For startup help.</comment>
   </data>
   <data name="Help_StartupParagraph2" xml:space="preserve">
@@ -5583,5 +5583,139 @@ will skip &lt;i&gt;SomeStatements&lt;/i&gt; if &lt;i&gt;SomeCondition&lt;/i&gt; 
   </data>
   <data name="NodeName_PropertyCollection" xml:space="preserve">
     <value>Collection</value>
+  </data>
+  <data name="ContextMenu_NewView" xml:space="preserve">
+    <value>New View</value>
+    <comment>For context menus</comment>
+  </data>
+  <data name="ContextMenu_NewViewProperty" xml:space="preserve">
+    <value>New View Property</value>
+    <comment>For context menus</comment>
+  </data>
+  <data name="ContextMenu_NewViewPropertyToolTip" xml:space="preserve">
+    <value>For creating properties for a view.</value>
+    <comment>For context menus</comment>
+  </data>
+  <data name="ContextMenu_NewViewToolTip" xml:space="preserve">
+    <value>For creating views for a feature.</value>
+    <comment>For context menus</comment>
+  </data>
+  <data name="Edit_FilterProperty" xml:space="preserve">
+    <value>Filter</value>
+    <comment>For the filter property.</comment>
+  </data>
+  <data name="Edit_IsAscendingSortProperty" xml:space="preserve">
+    <value>Is Ascending Sort</value>
+    <comment>For the is ascending sort property.</comment>
+  </data>
+  <data name="Edit_SortOrderProperty" xml:space="preserve">
+    <value>Sort Order</value>
+    <comment>For the sort order property.</comment>
+  </data>
+  <data name="Edit_ViewHeader" xml:space="preserve">
+    <value>View</value>
+    <comment>For the feature view.</comment>
+  </data>
+  <data name="Edit_ViewIDProperty" xml:space="preserve">
+    <value>View ID</value>
+    <comment>For the id property.</comment>
+  </data>
+  <data name="Edit_ViewNameProperty" xml:space="preserve">
+    <value>View Name</value>
+    <comment>For the name property.</comment>
+  </data>
+  <data name="Edit_ViewPropertyHeader" xml:space="preserve">
+    <value>View Property</value>
+    <comment>For the view property.</comment>
+  </data>
+  <data name="Edit_ViewPropertyIDProperty" xml:space="preserve">
+    <value>View Property ID</value>
+    <comment>For the id property.</comment>
+  </data>
+  <data name="NodeName_Views" xml:space="preserve">
+    <value>Views</value>
+    <comment>For the views node name in the tree view.</comment>
+  </data>
+  <data name="NodeName_Templates_SqlView" xml:space="preserve">
+    <value>Sql View</value>
+    <comment>For the templates node name in the tree view.</comment>
+  </data>
+  <data name="NodeName_Templates_SqlViewProperty" xml:space="preserve">
+    <value>Sql View Property</value>
+    <comment>For the templates node name in the tree view.</comment>
+  </data>
+  <data name="NodeName_Templates_View" xml:space="preserve">
+    <value>View</value>
+    <comment>For the templates node name in the tree view.</comment>
+  </data>
+  <data name="NodeName_Templates_ViewProperty" xml:space="preserve">
+    <value>View Property</value>
+    <comment>For the templates node name in the tree view.</comment>
+  </data>
+  <data name="Help_ModelReferenceModelElementViewParagraph1" xml:space="preserve">
+    <value>A &lt;b&gt;View&lt;/b&gt; represents a collection of properties for a larger purpose in the domain.  A &lt;b&gt;View&lt;/b&gt; is found in a collection as a child of &lt;b&gt;Solution&lt;/b&gt;.
+&lt;br&gt;&lt;br&gt;
+A &lt;b&gt;View&lt;/b&gt; consists of the following properties:
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;ViewID (Guid)&lt;/b&gt;: The identifier to uniquely identify the view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ViewName (string)&lt;/b&gt;: The name of the view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SolutionID (Guid)&lt;/b&gt;: (or Solution) The identifier of the parent solution.&lt;/li&gt;
+&lt;/ul&gt;
+A &lt;b&gt;View&lt;/b&gt; can contain collections of the following:
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;ViewProperty&lt;/b&gt;
+&lt;/ul&gt;</value>
+    <comment>For help.</comment>
+  </data>
+  <data name="Help_ModelReferenceModelElementViewPropertyParagraph1" xml:space="preserve">
+    <value>A &lt;b&gt;ViewProperty&lt;/b&gt; represents a property within a view.  A &lt;b&gt;ViewProperty&lt;/b&gt; is found in a collection as a child of &lt;b&gt;View&lt;/b&gt;.
+&lt;br&gt;&lt;br&gt;
+A &lt;b&gt;ViewProperty&lt;/b&gt; consists of the following properties:
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;ViewPropertyID (Guid)&lt;/b&gt;: The identifier to uniquely identify the view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Order (int)&lt;/b&gt;: The order of the property within the view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ViewID (Guid)&lt;/b&gt;: (or View) The identifier of the parent view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;PropertyID (Guid)&lt;/b&gt;: (or Property) The identifier of the parent solution.&lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>For help.</comment>
+  </data>
+  <data name="Help_ModelReferenceSpecElementSqlViewParagraph1" xml:space="preserve">
+    <value>A &lt;b&gt;SqlView&lt;/b&gt; represents information found in a database view.  A &lt;b&gt;SqlView&lt;/b&gt; is found in a collection as a child of &lt;b&gt;SqlDatabase&lt;/b&gt;.
+&lt;br&gt;&lt;br&gt;
+A &lt;b&gt;SqlView&lt;/b&gt; consists of the following properties (values other than internal IDs are as found in the database):
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;SqlViewID (Guid)&lt;/b&gt;: The identifier to uniquely identify the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SqlViewName (string)&lt;/b&gt;: The name of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;DbID (int)&lt;/b&gt;: The external identifier of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;CreateDate (DateTime)&lt;/b&gt;: The created date of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;DateLastModified (DateTime)&lt;/b&gt;: The last modified date of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Urn (string)&lt;/b&gt;: The urn of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;State (string)&lt;/b&gt;: The state of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the sql view.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SqlDatabaseID (Guid)&lt;/b&gt;: (or SqlDatabase) The identifier of the parent sql database.&lt;/li&gt;
+&lt;/ul&gt;
+A &lt;b&gt;SqlView&lt;/b&gt; can contain collections of the following:
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;SqlViewProperty&lt;/b&gt;&lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>For help.</comment>
+  </data>
+  <data name="Help_ModelReferenceSpecElementSqlViewPropertyParagraph1" xml:space="preserve">
+    <value>A &lt;b&gt;SqlViewProperty&lt;/b&gt; represents information found in a database view property.  A &lt;b&gt;SqlViewProperty&lt;/b&gt; is found in a collection as a child of &lt;b&gt;SqlView&lt;/b&gt;.
+&lt;br&gt;&lt;br&gt;
+A &lt;b&gt;SqlViewProperty&lt;/b&gt; consists of the following properties (values other than internal IDs are as found in the database):
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;SqlViewPropertyID (Guid)&lt;/b&gt;: The identifier to uniquely identify the sql view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ReferencedTable (string)&lt;/b&gt;: The name of the table corresponding to the property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ReferencedColumn (string)&lt;/b&gt;: The name of the corresponding column.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;DbID (int)&lt;/b&gt;: The external identifier of the sql view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Urn (string)&lt;/b&gt;: The urn of the sql view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;State (string)&lt;/b&gt;: The state of the sql view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Description (string)&lt;/b&gt;: The description of the sql view property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SqlViewID (Guid)&lt;/b&gt;: (or SqlView) The identifier of the parent sql view.&lt;/li&gt;
+&lt;/ul&gt;</value>
+    <comment>For help.</comment>
   </data>
 </root>

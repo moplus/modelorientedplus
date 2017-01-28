@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/24/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionViewModel : DialogEditWorkspaceViewModel
@@ -81,28 +81,6 @@ namespace MoPlus.ViewModel.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewSpecificationSource.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewSpecificationSource
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewSpecificationSource;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewSpecificationSourceToolTip.</summary>
-		///--------------------------------------------------------------------------------
-		public string MenuLabelNewSpecificationSourceToolTip
-		{
-			get
-			{
-				return DisplayValues.ContextMenu_NewSpecificationSourceToolTip;
-			}
-		}
-
-		///--------------------------------------------------------------------------------
 		/// <summary>This property gets MenuLabelNewCollection.</summary>
 		///--------------------------------------------------------------------------------
 		public string MenuLabelNewCollection
@@ -125,24 +103,68 @@ namespace MoPlus.ViewModel.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewPropertyReference.</summary>
+		/// <summary>This property gets MenuLabelNewSpecificationSource.</summary>
 		///--------------------------------------------------------------------------------
-		public string MenuLabelNewPropertyReference
+		public string MenuLabelNewSpecificationSource
 		{
 			get
 			{
-				return DisplayValues.ContextMenu_NewPropertyReference;
+				return DisplayValues.ContextMenu_NewSpecificationSource;
 			}
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewPropertyReferenceToolTip.</summary>
+		/// <summary>This property gets MenuLabelNewSpecificationSourceToolTip.</summary>
 		///--------------------------------------------------------------------------------
-		public string MenuLabelNewPropertyReferenceToolTip
+		public string MenuLabelNewSpecificationSourceToolTip
 		{
 			get
 			{
-				return DisplayValues.ContextMenu_NewPropertyReferenceToolTip;
+				return DisplayValues.ContextMenu_NewSpecificationSourceToolTip;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewView.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewView
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewView;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewViewToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewViewToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewViewToolTip;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewEntityReference.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewEntityReference
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewEntityReference;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MenuLabelNewEntityReferenceToolTip.</summary>
+		///--------------------------------------------------------------------------------
+		public string MenuLabelNewEntityReferenceToolTip
+		{
+			get
+			{
+				return DisplayValues.ContextMenu_NewEntityReferenceToolTip;
 			}
 		}
 
@@ -169,24 +191,24 @@ namespace MoPlus.ViewModel.Solutions
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewEntityReference.</summary>
+		/// <summary>This property gets MenuLabelNewPropertyReference.</summary>
 		///--------------------------------------------------------------------------------
-		public string MenuLabelNewEntityReference
+		public string MenuLabelNewPropertyReference
 		{
 			get
 			{
-				return DisplayValues.ContextMenu_NewEntityReference;
+				return DisplayValues.ContextMenu_NewPropertyReference;
 			}
 		}
 
 		///--------------------------------------------------------------------------------
-		/// <summary>This property gets MenuLabelNewEntityReferenceToolTip.</summary>
+		/// <summary>This property gets MenuLabelNewPropertyReferenceToolTip.</summary>
 		///--------------------------------------------------------------------------------
-		public string MenuLabelNewEntityReferenceToolTip
+		public string MenuLabelNewPropertyReferenceToolTip
 		{
 			get
 			{
-				return DisplayValues.ContextMenu_NewEntityReferenceToolTip;
+				return DisplayValues.ContextMenu_NewPropertyReferenceToolTip;
 			}
 		}
 
@@ -1393,7 +1415,11 @@ namespace MoPlus.ViewModel.Solutions
 			{
 				item.Defaults();
 			}
-			foreach (PropertyReferenceViewModel item in Items.OfType<PropertyReferenceViewModel>())
+			foreach (ViewViewModel item in Items.OfType<ViewViewModel>())
+			{
+				item.Defaults();
+			}
+			foreach (EntityReferenceViewModel item in Items.OfType<EntityReferenceViewModel>())
 			{
 				item.Defaults();
 			}
@@ -1401,7 +1427,7 @@ namespace MoPlus.ViewModel.Solutions
 			{
 				item.Defaults();
 			}
-			foreach (EntityReferenceViewModel item in Items.OfType<EntityReferenceViewModel>())
+			foreach (PropertyReferenceViewModel item in Items.OfType<PropertyReferenceViewModel>())
 			{
 				item.Defaults();
 			}
@@ -1581,6 +1607,12 @@ namespace MoPlus.ViewModel.Solutions
 			// send update back to solution builder
 			SendEditSolutionPerformed();
 
+			// send update for any updated Views
+			if (ViewsFolder != null && ViewsFolder.IsEdited == true)
+			{
+				ViewsFolder.Update();
+			}
+
 			// send update for any updated Projects
 			if (ProjectsFolder != null && ProjectsFolder.IsEdited == true)
 			{
@@ -1680,6 +1712,11 @@ namespace MoPlus.ViewModel.Solutions
 		public SpecificationSourcesViewModel SpecificationSourcesFolder { get; set; }
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets View lists.</summary>
+		///--------------------------------------------------------------------------------
+		public ViewsViewModel ViewsFolder { get; set; }
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets Project lists.</summary>
 		///--------------------------------------------------------------------------------
 		public ProjectsViewModel ProjectsFolder { get; set; }
@@ -1757,6 +1794,14 @@ namespace MoPlus.ViewModel.Solutions
 					SpecificationSourcesFolder = new SpecificationSourcesViewModel(solution);
 					SpecificationSourcesFolder.Updated += new EventHandler(Children_Updated);
 					Items.Add(SpecificationSourcesFolder);
+				}
+								
+				// attach Views
+				if (ViewsFolder == null)
+				{
+					ViewsFolder = new ViewsViewModel(solution);
+					ViewsFolder.Updated += new EventHandler(Children_Updated);
+					Items.Add(ViewsFolder);
 				}
 								
 				// attach Projects
@@ -1839,6 +1884,7 @@ namespace MoPlus.ViewModel.Solutions
 			if (refreshChildren == true || refreshLevel > 0)
 			{
 				SpecificationSourcesFolder.Refresh(refreshChildren, refreshLevel - 1);
+				ViewsFolder.Refresh(refreshChildren, refreshLevel - 1);
 				ProjectsFolder.Refresh(refreshChildren, refreshLevel - 1);
 				FeaturesFolder.Refresh(refreshChildren, refreshLevel - 1);
 				WorkflowsFolder.Refresh(refreshChildren, refreshLevel - 1);
@@ -1875,6 +1921,10 @@ namespace MoPlus.ViewModel.Solutions
 				Solution.IsAutoUpdated = true;
 			}
 			if (SpecificationSourcesFolder.HasErrors == true)
+			{
+				HasErrors = true;
+			}
+			if (ViewsFolder.HasErrors == true)
 			{
 				HasErrors = true;
 			}
@@ -1934,6 +1984,12 @@ namespace MoPlus.ViewModel.Solutions
 				SpecificationSourcesFolder.Updated -= Children_Updated;
 				SpecificationSourcesFolder.Dispose();
 				SpecificationSourcesFolder = null;
+			}
+			if (ViewsFolder != null)
+			{
+				ViewsFolder.Updated -= Children_Updated;
+				ViewsFolder.Dispose();
+				ViewsFolder = null;
 			}
 			if (ProjectsFolder != null)
 			{
@@ -1999,6 +2055,10 @@ namespace MoPlus.ViewModel.Solutions
 		public bool ChildrenHaveAnyCustomizations()
 		{
 			if (SpecificationSourcesFolder != null && SpecificationSourcesFolder.HasCustomizations == true)
+			{
+				return true;
+			}
+			if (ViewsFolder != null && ViewsFolder.HasCustomizations == true)
 			{
 				return true;
 			}
@@ -2069,6 +2129,11 @@ namespace MoPlus.ViewModel.Solutions
 		{
 			EditWorkspaceViewModel parentModel = null;
 			parentModel = SpecificationSourcesFolder.FindParentViewModel(data);
+			if (parentModel != null)
+			{
+				return parentModel;
+			}
+			parentModel = ViewsFolder.FindParentViewModel(data);
 			if (parentModel != null)
 			{
 				return parentModel;

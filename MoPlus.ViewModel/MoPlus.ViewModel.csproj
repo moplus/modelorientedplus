@@ -253,6 +253,7 @@
     <Compile Include="Solutions\SolutionViewModel_G.cs" />
     <Compile Include="Events\Solutions\XmlSourceEventArgs_G.cs" />
     <Compile Include="Solutions\SpecificationSourcesViewModel.cs" />
+    <Compile Include="Solutions\ViewPropertyViewModel.cs" />
     <Compile Include="Solutions\XmlSourcesViewModel_G.cs" />
     <Compile Include="Solutions\XmlSourceViewModel_G.cs" />
     <Compile Include="Events\Workflows\StageEventArgs_G.cs" />
@@ -279,6 +280,11 @@
     <Compile Include="Models\ObjectInstanceViewModel_G.cs" />
     <Compile Include="Events\Models\PropertyInstanceEventArgs_G.cs" />
     <Compile Include="Models\PropertyInstanceViewModel_G.cs" />
+    <Compile Include="Events\Solutions\ViewEventArgs_G.cs" />
+    <Compile Include="Solutions\ViewsViewModel_G.cs" />
+    <Compile Include="Solutions\ViewViewModel_G.cs" />
+    <Compile Include="Events\Solutions\ViewPropertyEventArgs_G.cs" />
+    <Compile Include="Solutions\ViewPropertyViewModel_G.cs" />
     <Compile Include="DialogEditWorkspaceViewModel.cs" />
     <Compile Include="DialogViewModel.cs" />
     <Compile Include="EditWorkspaceViewModel.cs" />

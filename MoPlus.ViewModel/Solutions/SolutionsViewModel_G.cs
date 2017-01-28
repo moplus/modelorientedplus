@@ -53,7 +53,7 @@ namespace MoPlus.ViewModel.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/10/2013</CreatedDate>
+	/// <CreatedDate>1/24/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionsViewModel : EditWorkspaceViewModel
@@ -310,6 +310,16 @@ namespace MoPlus.ViewModel.Solutions
 							// delete children
 							for (int i = item.Items.Count - 1; i >= 0; i--)
 							{
+								if (item.Items[i] is ViewViewModel)
+								{
+									ViewViewModel child = item.Items[i] as ViewViewModel;
+									ViewEventArgs childMessage = new ViewEventArgs();
+									childMessage.View = child.View;
+									childMessage.SolutionID = item.Solution.SolutionID;
+									childMessage.Solution = Solution;
+									childMessage.WorkspaceID = child.WorkspaceID;
+									item.ViewsFolder.ProcessDeleteViewPerformed(childMessage);
+								}
 								if (item.Items[i] is DatabaseSourceViewModel)
 								{
 									DatabaseSourceViewModel child = item.Items[i] as DatabaseSourceViewModel;

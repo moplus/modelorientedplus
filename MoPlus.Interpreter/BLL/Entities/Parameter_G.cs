@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -702,6 +702,33 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected BLL.Entities.Method _method = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the Method.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Entities.Method Method
+		{
+			get
+			{
+				return _method;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_methodName = value.MethodName;
+					_methodTypeCode = value.MethodTypeCode;
+					if (_method != null && _method.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					MethodID = value.MethodID;
+				}
+				_method = value;
+			}
+		}
+		
 		protected BLL.Entities.Entity _referencedEntity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the ReferencedEntity.</summary>
@@ -728,33 +755,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 					ReferencedEntityID = value.EntityID;
 				}
 				_referencedEntity = value;
-			}
-		}
-		
-		protected BLL.Entities.Method _method = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the Method.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Entities.Method Method
-		{
-			get
-			{
-				return _method;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_methodName = value.MethodName;
-					_methodTypeCode = value.MethodTypeCode;
-					if (_method != null && _method.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					MethodID = value.MethodID;
-				}
-				_method = value;
 			}
 		}
 		
@@ -990,8 +990,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			ReferencedEntity = null;
 			Method = null;
+			ReferencedEntity = null;
 			ReferencedPropertyBase = null;
 			Solution = null;
 			
@@ -1227,6 +1227,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new Parameter();

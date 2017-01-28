@@ -558,7 +558,7 @@ foreach (Collection sort Order) // TODO: shouldn't have to sort here, investigat
 }
 foreach (EntityReference)
 {
-	if (IsBaseProperty == false)
+	if (IsBaseProperty == false && Tags.Contains("Custom") == false)
 	{
 		<%%=BLLOnlyPropertyCode%%>
 	}

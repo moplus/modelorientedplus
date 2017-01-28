@@ -241,6 +241,7 @@
     <Compile Include="BLL\Solutions\Solution.cs" />
     <Compile Include="BLL\Solutions\SpecificationSource.cs" />
     <Compile Include="BLL\Solutions\Tag.cs" />
+    <Compile Include="BLL\Solutions\ViewProperty.cs" />
     <Compile Include="BLL\Solutions\XmlSource.cs" />
     <Compile Include="BLL\Specifications\SqlColumn.cs" />
     <Compile Include="BLL\Specifications\SqlDatabase.cs" />
@@ -251,6 +252,10 @@
     <Compile Include="BLL\Specifications\SqlIndexedColumn.cs" />
     <Compile Include="BLL\Specifications\SqlProperty.cs" />
     <Compile Include="BLL\Specifications\SqlTable.cs" />
+    <Compile Include="BLL\Specifications\SqlViewProperty.cs" />
+    <Compile Include="BLL\Specifications\SqlViewProperty_G.cs" />
+    <Compile Include="BLL\Specifications\SqlView.cs" />
+    <Compile Include="BLL\Specifications\SqlView_G.cs" />
     <Compile Include="BLL\Specifications\XmlAttribute.cs" />
     <Compile Include="BLL\Specifications\XmlDocument.cs" />
     <Compile Include="BLL\Specifications\XmlNode.cs" />
@@ -317,6 +322,8 @@
     <Compile Include="BLL\Models\ObjectInstance_G.cs" />
     <Compile Include="BLL\Models\PropertyInstance_G.cs" />
     <Compile Include="BLL\Interpreter\DebugItem_G.cs" />
+    <Compile Include="BLL\Solutions\View_G.cs" />
+    <Compile Include="BLL\Solutions\ViewProperty_G.cs" />
     <Compile Include="BusinessObjectBase.cs" />
     <Compile Include="ApplicationAbortException.cs" />
     <Compile Include="IDomainEnterpriseObject.cs" />

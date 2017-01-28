@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/30/2014</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -533,49 +533,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.StateTransition> _toStateTransitionList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of State.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.StateTransition> ToStateTransitionList
-		{
-			get
-			{
-				if (_toStateTransitionList == null)
-				{
-					_toStateTransitionList = new EnterpriseDataObjectList<BLL.Entities.StateTransition>();
-				}
-				return _toStateTransitionList;
-			}
-			set
-			{
-				if (_toStateTransitionList == null || _toStateTransitionList.Equals(value) == false)
-				{
-					_toStateTransitionList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "ToStateTransitionList")]
-		[XmlArrayItem(typeof(BLL.Entities.StateTransition), ElementName = "StateTransition")]
-		[DataMember(Name = "ToStateTransitionList")]
-		[DataArrayItem(ElementName = "ToStateTransitionList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.StateTransition> _S_ToStateTransitionList
-		{
-			get
-			{
-				return _toStateTransitionList;
-			}
-			set
-			{
-				_toStateTransitionList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Entities.StateTransition> _fromStateTransitionList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of State.</summary>
@@ -616,6 +573,49 @@ namespace MoPlus.Interpreter.BLL.Entities
 			set
 			{
 				_fromStateTransitionList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.StateTransition> _toStateTransitionList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of State.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.StateTransition> ToStateTransitionList
+		{
+			get
+			{
+				if (_toStateTransitionList == null)
+				{
+					_toStateTransitionList = new EnterpriseDataObjectList<BLL.Entities.StateTransition>();
+				}
+				return _toStateTransitionList;
+			}
+			set
+			{
+				if (_toStateTransitionList == null || _toStateTransitionList.Equals(value) == false)
+				{
+					_toStateTransitionList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "ToStateTransitionList")]
+		[XmlArrayItem(typeof(BLL.Entities.StateTransition), ElementName = "StateTransition")]
+		[DataMember(Name = "ToStateTransitionList")]
+		[DataArrayItem(ElementName = "ToStateTransitionList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.StateTransition> _S_ToStateTransitionList
+		{
+			get
+			{
+				return _toStateTransitionList;
+			}
+			set
+			{
+				_toStateTransitionList = value;
 			}
 		}
 		
@@ -691,8 +691,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_toStateTransitionList != null && _toStateTransitionList.IsModified == true) return true;
 				if (_fromStateTransitionList != null && _fromStateTransitionList.IsModified == true) return true;
+				if (_toStateTransitionList != null && _toStateTransitionList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -854,15 +854,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 			StateModel = null;
 			Solution = null;
-			if (_toStateTransitionList != null)
-			{
-				foreach (StateTransition item in ToStateTransitionList)
-				{
-					item.Dispose();
-				}
-				ToStateTransitionList.Clear();
-				ToStateTransitionList = null;
-			}
 			if (_fromStateTransitionList != null)
 			{
 				foreach (StateTransition item in FromStateTransitionList)
@@ -871,6 +862,15 @@ namespace MoPlus.Interpreter.BLL.Entities
 				}
 				FromStateTransitionList.Clear();
 				FromStateTransitionList = null;
+			}
+			if (_toStateTransitionList != null)
+			{
+				foreach (StateTransition item in ToStateTransitionList)
+				{
+					item.Dispose();
+				}
+				ToStateTransitionList.Clear();
+				ToStateTransitionList = null;
 			}
 			
 			#region protected
@@ -1107,6 +1107,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new State();
@@ -1172,8 +1173,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_toStateTransitionList != null) _toStateTransitionList.ResetLoaded(isLoaded);
 			if (_fromStateTransitionList != null) _fromStateTransitionList.ResetLoaded(isLoaded);
+			if (_toStateTransitionList != null) _toStateTransitionList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -1185,8 +1186,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_toStateTransitionList != null) _toStateTransitionList.ResetModified(isModified);
 			if (_fromStateTransitionList != null) _fromStateTransitionList.ResetModified(isModified);
+			if (_toStateTransitionList != null) _toStateTransitionList.ResetModified(isModified);
 		}
 		
 		#region protected

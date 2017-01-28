@@ -61,8 +61,8 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
-	/// <Status>Customized (customized OpenExecuted)</Status>
+	/// <CreatedDate>1/22/2017</CreatedDate>
+	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SolutionBuilderControl : UserControl
 	{
@@ -165,11 +165,10 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 		///--------------------------------------------------------------------------------
 		private void OpenExecuted(object sender, ExecutedRoutedEventArgs e)
 		{
-            SolutionViewModel solution = null;
 			if (e != null && e.Parameter is String)
 			{
 				Mouse.OverrideCursor = Cursors.Wait;
-                solution = TreeViewModel.SolutionsFolder.LoadSolution(e.Parameter as String);
+				TreeViewModel.SolutionsFolder.LoadSolution(e.Parameter as String);
 				Mouse.OverrideCursor = null;
 			}
 			else
@@ -180,14 +179,9 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 				bool? result = dialog.ShowDialog();
 				if (result == true)
 				{
-					solution = TreeViewModel.SolutionsFolder.LoadSolution(dialog.FileName);
-                }
+					TreeViewModel.SolutionsFolder.LoadSolution(dialog.FileName);
+				}
 			}
-            // check for multiple solutions with same ids
-            if (solution != null && TreeViewModel.SolutionsFolder.Solutions.Find(i => i.SolutionID == solution.SolutionID) != null)
-            {
-                MessageBox.Show(DisplayValues.Message_DuplicateSolutions);
-            }
 		}
 
 		///--------------------------------------------------------------------------------
@@ -694,6 +688,16 @@ namespace MoPlus.SolutionBuilder.WpfClient.UserControls
 				else if (solutionsModel.SelectedItem is ValueViewModel)
 				{
 					(solutionsModel.SelectedItem as ValueViewModel).ProcessEditValueCommand();
+					return;
+				}
+				else if (solutionsModel.SelectedItem is ViewViewModel)
+				{
+					(solutionsModel.SelectedItem as ViewViewModel).ProcessEditViewCommand();
+					return;
+				}
+				else if (solutionsModel.SelectedItem is ViewPropertyViewModel)
+				{
+					(solutionsModel.SelectedItem as ViewPropertyViewModel).ProcessEditViewPropertyCommand();
 					return;
 				}
 				else if (solutionsModel.SelectedItem is WorkflowViewModel)

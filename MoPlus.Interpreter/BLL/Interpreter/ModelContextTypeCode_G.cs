@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum ModelContextTypeCode
@@ -98,8 +98,12 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		StepTransition = 30,
 		/// <summary>For Value template types.</summary>
 		Value = 31,
+		/// <summary>For View template types.</summary>
+		View = 32,
+		/// <summary>For ViewProperty template types.</summary>
+		ViewProperty = 33,
 		/// <summary>For Workflow template types.</summary>
-		Workflow = 32,
+		Workflow = 34,
 
 		#region protected
 		/// <summary>For Tag template types.</summary>

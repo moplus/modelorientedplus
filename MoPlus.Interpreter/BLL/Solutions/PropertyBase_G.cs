@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/30/2014</CreatedDate>
+	/// <CreatedDate>1/20/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -464,49 +464,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 		
-		protected EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> _propertyRelationshipList = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a collection of PropertyBase.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> PropertyRelationshipList
-		{
-			get
-			{
-				if (_propertyRelationshipList == null)
-				{
-					_propertyRelationshipList = new EnterpriseDataObjectList<BLL.Entities.PropertyRelationship>();
-				}
-				return _propertyRelationshipList;
-			}
-			set
-			{
-				if (_propertyRelationshipList == null || _propertyRelationshipList.Equals(value) == false)
-				{
-					_propertyRelationshipList = value;
-					if (value != null)
-					{
-						_isModified = true;
-					}
-				}
-			}
-		}
-		[XmlArray(ElementName = "PropertyRelationshipList")]
-		[XmlArrayItem(typeof(BLL.Entities.PropertyRelationship), ElementName = "PropertyRelationship")]
-		[DataMember(Name = "PropertyRelationshipList")]
-		[DataArrayItem(ElementName = "PropertyRelationshipList")]
-		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> _S_PropertyRelationshipList
-		{
-			get
-			{
-				return _propertyRelationshipList;
-			}
-			set
-			{
-				_propertyRelationshipList = value;
-			}
-		}
-		
 		protected EnterpriseDataObjectList<BLL.Entities.Parameter> _referencedParameterList = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a collection of PropertyBase.</summary>
@@ -547,6 +504,49 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			set
 			{
 				_referencedParameterList = value;
+			}
+		}
+		
+		protected EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> _propertyRelationshipList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a collection of PropertyBase.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> PropertyRelationshipList
+		{
+			get
+			{
+				if (_propertyRelationshipList == null)
+				{
+					_propertyRelationshipList = new EnterpriseDataObjectList<BLL.Entities.PropertyRelationship>();
+				}
+				return _propertyRelationshipList;
+			}
+			set
+			{
+				if (_propertyRelationshipList == null || _propertyRelationshipList.Equals(value) == false)
+				{
+					_propertyRelationshipList = value;
+					if (value != null)
+					{
+						_isModified = true;
+					}
+				}
+			}
+		}
+		[XmlArray(ElementName = "PropertyRelationshipList")]
+		[XmlArrayItem(typeof(BLL.Entities.PropertyRelationship), ElementName = "PropertyRelationship")]
+		[DataMember(Name = "PropertyRelationshipList")]
+		[DataArrayItem(ElementName = "PropertyRelationshipList")]
+		public virtual EnterpriseDataObjectList<BLL.Entities.PropertyRelationship> _S_PropertyRelationshipList
+		{
+			get
+			{
+				return _propertyRelationshipList;
+			}
+			set
+			{
+				_propertyRelationshipList = value;
 			}
 		}
 		
@@ -625,8 +625,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			{
 				if (base.IsModified == true) return true;
 				if (_isModified == true) return true;
-				if (_propertyRelationshipList != null && _propertyRelationshipList.IsModified == true) return true;
 				if (_referencedParameterList != null && _referencedParameterList.IsModified == true) return true;
+				if (_propertyRelationshipList != null && _propertyRelationshipList.IsModified == true) return true;
 				return false;
 			}
 		}
@@ -788,15 +788,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 			Solution = null;
 			Solution = null;
-			if (_propertyRelationshipList != null)
-			{
-				foreach (PropertyRelationship item in PropertyRelationshipList)
-				{
-					item.Dispose();
-				}
-				PropertyRelationshipList.Clear();
-				PropertyRelationshipList = null;
-			}
 			if (_referencedParameterList != null)
 			{
 				foreach (Parameter item in ReferencedParameterList)
@@ -805,6 +796,15 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 				ReferencedParameterList.Clear();
 				ReferencedParameterList = null;
+			}
+			if (_propertyRelationshipList != null)
+			{
+				foreach (PropertyRelationship item in PropertyRelationshipList)
+				{
+					item.Dispose();
+				}
+				PropertyRelationshipList.Clear();
+				PropertyRelationshipList = null;
 			}
 			
 			#region protected
@@ -940,8 +940,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		public override void ResetLoaded(bool isLoaded)
 		{
 			_isLoaded = isLoaded;
-			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetLoaded(isLoaded);
 			if (_referencedParameterList != null) _referencedParameterList.ResetLoaded(isLoaded);
+			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetLoaded(isLoaded);
 		}
 		
 		///--------------------------------------------------------------------------------
@@ -953,8 +953,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		{
 			base.ResetModified(isModified);
 			_isModified = isModified;
-			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetModified(isModified);
 			if (_referencedParameterList != null) _referencedParameterList.ResetModified(isModified);
+			if (_propertyRelationshipList != null) _propertyRelationshipList.ResetModified(isModified);
 		}
 		
 		#region protected

@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum AssignablePropertyCode
@@ -252,10 +252,16 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		ValueID = 107,
 		/// <summary>For ValueName assignable property.</summary>
 		ValueName = 108,
+		/// <summary>For ViewID assignable property.</summary>
+		ViewID = 109,
+		/// <summary>For ViewName assignable property.</summary>
+		ViewName = 110,
+		/// <summary>For ViewPropertyID assignable property.</summary>
+		ViewPropertyID = 111,
 		/// <summary>For WorkflowID assignable property.</summary>
-		WorkflowID = 109,
+		WorkflowID = 112,
 		/// <summary>For WorkflowName assignable property.</summary>
-		WorkflowName = 110,
+		WorkflowName = 113,
 
 		#region protected
 		/// <summary>For SourceName assignable property.</summary>

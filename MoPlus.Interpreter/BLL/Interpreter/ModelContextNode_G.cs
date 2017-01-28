@@ -38,7 +38,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/19/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class ModelContextNode : NonLeafGrammarNode
@@ -148,7 +148,6 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Project))
 			{
-                templateContext.IncludesProjectContext = true;
 				nodeContext = Project.GetModelContext(solutionContext, nodeContext, out isValidContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Property))
@@ -211,6 +210,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				nodeContext = Value.GetModelContext(solutionContext, nodeContext, out isValidContext);
 			}
+			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.View))
+			{
+				nodeContext = View.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.ViewProperty))
+			{
+				nodeContext = ViewProperty.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Workflow))
 			{
 				nodeContext = Workflow.GetModelContext(solutionContext, nodeContext, out isValidContext);
@@ -250,6 +257,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlTable))
 			{
 				nodeContext = SqlTable.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlView))
+			{
+				nodeContext = SqlView.GetModelContext(solutionContext, nodeContext, out isValidContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlViewProperty))
+			{
+				nodeContext = SqlViewProperty.GetModelContext(solutionContext, nodeContext, out isValidContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.XmlAttribute))
 			{
@@ -335,10 +350,10 @@ namespace MoPlus.Interpreter.BLL.Interpreter
                 nodeContext = ObjectInstance.GetModelContextViaProperty(solutionContext, ModelContextName, nodeContext, out isValidContext);
             }
             #endregion protected
-            else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
-            {
-                return ObjectInstance.GetModelContext(solutionContext, ModelContextName, nodeContext, out isValidContext);
-            }
+			else if (solutionContext.ModelObjectNames.AllKeys.Contains(ModelContextName) == true)
+			{
+				return ObjectInstance.GetModelContext(solutionContext, ModelContextName, nodeContext, out isValidContext);
+			}
 			if (nodeContext == null && isValidContext == false)
 			{
 				LogException(solutionContext, templateContext, modelContext, String.Format(DisplayValues.Exception_InvalidModelContext, ModelContextName, modelContext.Name, modelContext.GetType().Name), InterpreterTypeCode.None);
@@ -423,8 +438,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Project))
 			{
-                templateContext.IncludesProjectContext = true;
-                return Project.GetCollectionContext(solutionContext, nodeContext);
+				return Project.GetCollectionContext(solutionContext, nodeContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Property))
 			{
@@ -486,6 +500,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			{
 				return Value.GetCollectionContext(solutionContext, nodeContext);
 			}
+			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.View))
+			{
+				return View.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.ViewProperty))
+			{
+				return ViewProperty.GetCollectionContext(solutionContext, nodeContext);
+			}
 			else if (ModelContextName == Enum.GetName(typeof(ModelContextTypeCode), ModelContextTypeCode.Workflow))
 			{
 				return Workflow.GetCollectionContext(solutionContext, nodeContext);
@@ -525,6 +547,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlTable))
 			{
 				return SqlTable.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlView))
+			{
+				return SqlView.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.SqlViewProperty))
+			{
+				return SqlViewProperty.GetCollectionContext(solutionContext, nodeContext);
 			}
 			else if (ModelContextName == Enum.GetName(typeof(SpecModelContextTypeCode), SpecModelContextTypeCode.XmlAttribute))
 			{

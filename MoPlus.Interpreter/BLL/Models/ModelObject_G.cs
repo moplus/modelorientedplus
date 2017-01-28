@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Models
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/18/2014</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -700,6 +700,31 @@ namespace MoPlus.Interpreter.BLL.Models
 			}
 		}
 		
+		protected BLL.Models.ModelObject _parentModelObject = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the ParentModelObject.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Models.ModelObject ParentModelObject
+		{
+			get
+			{
+				return _parentModelObject;
+			}
+			set
+			{
+				if (value != null)
+				{
+					if (_parentModelObject != null && _parentModelObject.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					ParentModelObjectID = value.ModelObjectID;
+				}
+				_parentModelObject = value;
+			}
+		}
+		
 		///-------------------------------------------------------------------------------
 		/// <summary>This property gets the primary key properties.</summary>
 		///--------------------------------------------------------------------------------
@@ -913,6 +938,7 @@ namespace MoPlus.Interpreter.BLL.Models
 				ForwardInstance = null;
 			}
 			Model = null;
+			ParentModelObject = null;
 			Solution = null;
 			if (_modelPropertyList != null)
 			{
@@ -1186,6 +1212,7 @@ namespace MoPlus.Interpreter.BLL.Models
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new ModelObject();

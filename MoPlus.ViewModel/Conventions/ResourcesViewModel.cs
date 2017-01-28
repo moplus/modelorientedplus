@@ -385,6 +385,14 @@ namespace MoPlus.ViewModel.Conventions
 			helpSubSub = new HelpViewModel(ModelContextTypeCode.Value.ToString(), DisplayValues.Help_ModelReferenceModelElementValueParagraph1);
 			helpSub.Items.Add(helpSubSub);
 
+			// add Model Reference View model element sub subsection
+			helpSubSub = new HelpViewModel(ModelContextTypeCode.View.ToString(), DisplayValues.Help_ModelReferenceModelElementViewParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
+			// add Model Reference ViewProperty model element sub subsection
+			helpSubSub = new HelpViewModel(ModelContextTypeCode.ViewProperty.ToString(), DisplayValues.Help_ModelReferenceModelElementViewPropertyParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
 			// add Model Reference Workflow model element sub subsection
 			helpSubSub = new HelpViewModel(ModelContextTypeCode.Workflow.ToString(), DisplayValues.Help_ModelReferenceModelElementWorkflowParagraph1);
 			helpSub.Items.Add(helpSubSub);
@@ -431,6 +439,14 @@ namespace MoPlus.ViewModel.Conventions
 
 			// add Model Reference SqlTable spec element sub subsection
 			helpSubSub = new HelpViewModel(SpecModelContextTypeCode.SqlTable.ToString(), DisplayValues.Help_ModelReferenceSpecElementSqlTableParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
+			// add Model Reference SqlView spec element sub subsection
+			helpSubSub = new HelpViewModel(SpecModelContextTypeCode.SqlView.ToString(), DisplayValues.Help_ModelReferenceSpecElementSqlViewParagraph1);
+			helpSub.Items.Add(helpSubSub);
+
+			// add Model Reference SqlViewProperty spec element sub subsection
+			helpSubSub = new HelpViewModel(SpecModelContextTypeCode.SqlViewProperty.ToString(), DisplayValues.Help_ModelReferenceSpecElementSqlViewPropertyParagraph1);
 			helpSub.Items.Add(helpSubSub);
 
 			// add Model Reference XmlAttribute spec element sub subsection

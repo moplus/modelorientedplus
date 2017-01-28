@@ -37,7 +37,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class SpecCurrentItemNode : LeafGrammarNode
@@ -86,6 +86,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlTable))
 			{
 				modelContext = solutionContext.CurrentSqlTable;
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlView))
+			{
+				modelContext = solutionContext.CurrentSqlView;
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlViewProperty))
+			{
+				modelContext = solutionContext.CurrentSqlViewProperty;
 			}
 			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentXmlAttribute))
 			{
@@ -149,6 +157,14 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlTable))
 			{
 				return SqlTable.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlView))
+			{
+				return SqlView.GetCollectionContext(solutionContext, nodeContext);
+			}
+			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentSqlViewProperty))
+			{
+				return SqlViewProperty.GetCollectionContext(solutionContext, nodeContext);
 			}
 			else if (CurrentItemName == Enum.GetName(typeof(SpecCurrentItemTypeCode), SpecCurrentItemTypeCode.CurrentXmlAttribute))
 			{

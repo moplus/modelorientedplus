@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/3/2013</CreatedDate>
+	/// <CreatedDate>1/22/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum CurrentItemTypeCode
@@ -96,8 +96,12 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		CurrentStepTransition = 29,
 		/// <summary>For Value current item types.</summary>
 		CurrentValue = 30,
+		/// <summary>For View current item types.</summary>
+		CurrentView = 31,
+		/// <summary>For ViewProperty current item types.</summary>
+		CurrentViewProperty = 32,
 		/// <summary>For Workflow current item types.</summary>
-		CurrentWorkflow = 31,
+		CurrentWorkflow = 33,
 
 		#region protected
 		#endregion protected

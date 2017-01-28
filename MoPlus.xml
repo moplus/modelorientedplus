@@ -1178,6 +1178,86 @@
       <ItemID>b304eb4e-a07a-4053-aa79-926e15eb202f</ItemID>
       <ItemName>Entities.Relationship.RelationshipName</ItemName>
     </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>636635b8-1189-4903-b8de-736d96f95519</ItemID>
+      <ItemName>Entities.View.Feature</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>e6cecafb-46fb-4678-9117-37be43f39c70</ItemID>
+      <ItemName>Entities.View</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>6ac817e0-ce25-43e0-b7cf-0bc24ad4c221</ItemID>
+      <ItemName>Entities.ViewProperty.View</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>a8eab057-2a89-4702-ac0a-b5d0e768c999</ItemID>
+      <ItemName>Entities.ViewProperty</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>cc3d3157-c272-48ab-8bc6-020f8f03004a</ItemID>
+      <ItemName>Entities.Entity.BaseEntity</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>14e9a833-0fda-4fe1-a863-1887b6a3dd73</ItemID>
+      <ItemName>Solutions.View.Solution</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>10f97fcf-1a62-4ecd-8483-4c321a374dc3</ItemID>
+      <ItemName>Solutions.View</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>0dbba854-a94d-4115-851e-aef280769171</ItemID>
+      <ItemName>Solutions.ViewProperty.View</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>cd011af8-1645-4a70-a473-36d294d1dbb9</ItemID>
+      <ItemName>Solutions.ViewProperty</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>ab3ba6a7-5b11-4acd-836d-c4a7cf359736</ItemID>
+      <ItemName>Entities.Property.ViewPropertyList</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>4336bcef-a211-42fc-9c94-c96a28168122</ItemID>
+      <ItemName>Specifications.SqlView.SqlDatabase</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>7038ecbb-b21b-4653-b459-c1b797d41535</ItemID>
+      <ItemName>Specifications.SqlView</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>c7fa0144-4aa1-4f78-9f38-c55a2374e48d</ItemID>
+      <ItemName>Specifications.SqlViewProperty.SqlView</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>36f0c6b9-e6f9-4171-b0e9-23aaf41c272e</ItemID>
+      <ItemName>Specifications.SqlViewProperty</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>5afc5e7f-9f65-4d33-9330-ca6504f7b42b</ItemID>
+      <ItemName>Solutions.View.ViewName</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>1f019684-1130-4ad5-a865-578345c3ac2f</ItemID>
+      <ItemName>Specifications.SqlView.SqlViewName</ItemName>
+    </CollectionItem>
   </ReferencedModelIDs>
   <IsSampleMode>false</IsSampleMode>
   <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -1224,7 +1304,7 @@ The following Entity level tags are utilized in this solution:
       <SpecSourceName>eyedgy7z9q.database.windows.net,1433</SpecSourceName>
       <SpecificationSourceID>30339a08-14a7-4de8-98be-f8b5efdda7e0</SpecificationSourceID>
       <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
-      <TemplatePath>..\SamplePacks\Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps</TemplatePath>
+      <TemplatePath>Templates\Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps</TemplatePath>
       <Order>1</Order>
       <Description />
       <SourceDbServerName>eyedgy7z9q.database.windows.net,1433</SourceDbServerName>
@@ -1611,6 +1691,15 @@ The following Entity level tags are utilized in this solution:
             </Collection>
           </CollectionList>
           <EntityReferenceList>
+            <EntityReference>
+              <Tags>DB Custom </Tags>
+              <SpecSourceName>Entities.Entity.BaseEntity</SpecSourceName>
+              <PropertyID>cc3d3157-c272-48ab-8bc6-020f8f03004a</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>9fc775e8-405c-4de1-9c30-ecff1173055d</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </EntityReference>
             <EntityReference>
               <Tags>DB Parent </Tags>
               <SpecSourceName>Entities.Entity.Feature</SpecSourceName>
@@ -2003,6 +2092,24 @@ The following Entity level tags are utilized in this solution:
           <CollectionList>
             <Collection>
               <Tags>DB Secondary </Tags>
+              <SpecSourceName>Entities.Property.IndexPropertyList</SpecSourceName>
+              <PropertyID>8d93a49f-b5df-47c8-8378-67c4f24cd339</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>b58b0190-1a67-4f98-8737-808d7c033a88</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </Collection>
+            <Collection>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Entities.Property.ReferencedPropertyReferenceList</SpecSourceName>
+              <PropertyID>9968c014-40e6-4517-8e87-21b83cc48d6a</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>b58b0190-1a67-4f98-8737-808d7c033a88</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </Collection>
+            <Collection>
+              <Tags>DB Secondary </Tags>
               <SpecSourceName>Entities.Property.RelationshipPropertyList</SpecSourceName>
               <PropertyID>d92a6a83-f2a7-4a8f-859b-c087534993f4</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -2021,17 +2128,8 @@ The following Entity level tags are utilized in this solution:
             </Collection>
             <Collection>
               <Tags>DB Secondary </Tags>
-              <SpecSourceName>Entities.Property.IndexPropertyList</SpecSourceName>
-              <PropertyID>8d93a49f-b5df-47c8-8378-67c4f24cd339</PropertyID>
-              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
-              <Description />
-              <EntityID>b58b0190-1a67-4f98-8737-808d7c033a88</EntityID>
-              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
-            </Collection>
-            <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Entities.Property.ReferencedPropertyReferenceList</SpecSourceName>
-              <PropertyID>9968c014-40e6-4517-8e87-21b83cc48d6a</PropertyID>
+              <SpecSourceName>Entities.Property.ViewPropertyList</SpecSourceName>
+              <PropertyID>ab3ba6a7-5b11-4acd-836d-c4a7cf359736</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b58b0190-1a67-4f98-8737-808d7c033a88</EntityID>
@@ -2209,9 +2307,9 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Entities.Relationship.RelationshipPropertyList</SpecSourceName>
-              <PropertyID>dfbc5ca5-9b51-4d4f-a067-afafbba4a5e4</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Entities.Relationship.MethodRelationshipList</SpecSourceName>
+              <PropertyID>305d9ce0-9afd-4d24-bdba-3c19e3abd835</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>1ca2873a-5786-4851-aad3-f783df1fe8cd</EntityID>
@@ -2227,9 +2325,9 @@ The following Entity level tags are utilized in this solution:
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Entities.Relationship.MethodRelationshipList</SpecSourceName>
-              <PropertyID>305d9ce0-9afd-4d24-bdba-3c19e3abd835</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Entities.Relationship.RelationshipPropertyList</SpecSourceName>
+              <PropertyID>dfbc5ca5-9b51-4d4f-a067-afafbba4a5e4</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>1ca2873a-5786-4851-aad3-f783df1fe8cd</EntityID>
@@ -2312,18 +2410,18 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Entities.State.ToStateTransitionList</SpecSourceName>
-              <PropertyID>087d8677-02df-4141-aff5-9ba2d6a536a8</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Entities.State.FromStateTransitionList</SpecSourceName>
+              <PropertyID>3351536a-c8c5-4e29-9041-e28b92877123</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>4a983ebc-3e6a-4f35-b427-c547183df175</EntityID>
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Entities.State.FromStateTransitionList</SpecSourceName>
-              <PropertyID>3351536a-c8c5-4e29-9041-e28b92877123</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Entities.State.ToStateTransitionList</SpecSourceName>
+              <PropertyID>087d8677-02df-4141-aff5-9ba2d6a536a8</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>4a983ebc-3e6a-4f35-b427-c547183df175</EntityID>
@@ -2602,18 +2700,18 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Models.Enumeration.ValueList</SpecSourceName>
-              <PropertyID>e0825f82-69b2-4ff5-bca9-6d2934135edc</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Models.Enumeration.DefinedByModelPropertyList</SpecSourceName>
+              <PropertyID>346ccf61-e1d6-4fb4-9ae4-5f8e1e43134b</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b5a30427-d00c-435b-ab9f-9f1cd1224ba6</EntityID>
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Models.Enumeration.DefinedByModelPropertyList</SpecSourceName>
-              <PropertyID>346ccf61-e1d6-4fb4-9ae4-5f8e1e43134b</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Models.Enumeration.ValueList</SpecSourceName>
+              <PropertyID>e0825f82-69b2-4ff5-bca9-6d2934135edc</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b5a30427-d00c-435b-ab9f-9f1cd1224ba6</EntityID>
@@ -2673,7 +2771,7 @@ The following Entity level tags are utilized in this solution:
           <Tags>DB ExtraUpdate DeleteRefresh </Tags>
           <SpecSourceName>Models.ModelObject</SpecSourceName>
           <EntityID>49131834-6c1b-4e8f-abcb-de8c521b3b8b</EntityID>
-          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
+          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -2741,7 +2839,7 @@ The following Entity level tags are utilized in this solution:
           <Tags>DB ExtraUpdate DeleteRefresh </Tags>
           <SpecSourceName>Models.ModelProperty</SpecSourceName>
           <EntityID>a684e6c4-fa81-42a7-b224-30304f2e0c8f</EntityID>
-          <FeatureID>00000000-0000-0000-0000-000000000000</FeatureID>
+          <FeatureID>07650e05-d45b-4d09-933b-d5b621b75e31</FeatureID>
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
@@ -3235,18 +3333,18 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Solutions.PropertyBase.PropertyRelationshipList</SpecSourceName>
-              <PropertyID>4602d28e-9133-4a78-a9ef-7b111ebdd148</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Solutions.PropertyBase.ReferencedParameterList</SpecSourceName>
+              <PropertyID>ac31d16b-d846-4420-8296-f980b4021bf2</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>96584474-6a8d-4520-a7ba-af93cea18f59</EntityID>
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Solutions.PropertyBase.ReferencedParameterList</SpecSourceName>
-              <PropertyID>ac31d16b-d846-4420-8296-f980b4021bf2</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Solutions.PropertyBase.PropertyRelationshipList</SpecSourceName>
+              <PropertyID>4602d28e-9133-4a78-a9ef-7b111ebdd148</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>96584474-6a8d-4520-a7ba-af93cea18f59</EntityID>
@@ -3367,9 +3465,9 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Solutions.Solution.PropertyBaseList</SpecSourceName>
-              <PropertyID>1fd7cea8-bb6b-4cb7-8d43-dc135193df4b</PropertyID>
+              <Tags>DB Secondary XmlIgnore </Tags>
+              <SpecSourceName>Solutions.Solution.TemplateList</SpecSourceName>
+              <PropertyID>38e25992-0e82-4b1e-ace5-f28f90e0fe59</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b2fc46d5-0ff3-4c00-8d60-d08e3971d771</EntityID>
@@ -3385,9 +3483,9 @@ The following Entity level tags are utilized in this solution:
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary XmlIgnore </Tags>
-              <SpecSourceName>Solutions.Solution.TemplateList</SpecSourceName>
-              <PropertyID>38e25992-0e82-4b1e-ace5-f28f90e0fe59</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Solutions.Solution.PropertyBaseList</SpecSourceName>
+              <PropertyID>1fd7cea8-bb6b-4cb7-8d43-dc135193df4b</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b2fc46d5-0ff3-4c00-8d60-d08e3971d771</EntityID>
@@ -3555,6 +3653,63 @@ The following Entity level tags are utilized in this solution:
           <BaseEntityID xsi:nil="true" />
           <GroupName />
           <Description />
+        </Entity>
+        <Entity>
+          <Tags />
+          <SpecSourceName>Solutions.View</SpecSourceName>
+          <EntityID>10f97fcf-1a62-4ecd-8483-4c321a374dc3</EntityID>
+          <FeatureID>8e05a6f5-3d65-4c02-9f17-f7d47142a2e5</FeatureID>
+          <BaseEntityID xsi:nil="true" />
+          <GroupName />
+          <Description />
+          <PropertyList>
+            <Property>
+              <Tags>AnyChars </Tags>
+              <SpecSourceName>Solutions.View.ViewName</SpecSourceName>
+              <PropertyID>5afc5e7f-9f65-4d33-9330-ca6504f7b42b</PropertyID>
+              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <Description />
+              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <Length xsi:nil="true" />
+              <Precision xsi:nil="true" />
+              <Scale xsi:nil="true" />
+              <InitialValue />
+              <Identity xsi:nil="true" />
+              <IdentitySeed xsi:nil="true" />
+              <IdentityIncrement xsi:nil="true" />
+            </Property>
+          </PropertyList>
+          <EntityReferenceList>
+            <EntityReference>
+              <Tags>DB Parent </Tags>
+              <SpecSourceName>Solutions.View.Solution</SpecSourceName>
+              <PropertyID>14e9a833-0fda-4fe1-a863-1887b6a3dd73</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>10f97fcf-1a62-4ecd-8483-4c321a374dc3</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </EntityReference>
+          </EntityReferenceList>
+        </Entity>
+        <Entity>
+          <Tags />
+          <SpecSourceName>Solutions.ViewProperty</SpecSourceName>
+          <EntityID>cd011af8-1645-4a70-a473-36d294d1dbb9</EntityID>
+          <FeatureID>8e05a6f5-3d65-4c02-9f17-f7d47142a2e5</FeatureID>
+          <BaseEntityID xsi:nil="true" />
+          <GroupName />
+          <Description />
+          <EntityReferenceList>
+            <EntityReference>
+              <Tags>DB Parent </Tags>
+              <SpecSourceName>Solutions.ViewProperty.View</SpecSourceName>
+              <PropertyID>0dbba854-a94d-4115-851e-aef280769171</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>cd011af8-1645-4a70-a473-36d294d1dbb9</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </EntityReference>
+          </EntityReferenceList>
         </Entity>
         <Entity>
           <Tags>DB IgnoreBuilderUI Source </Tags>
@@ -3767,6 +3922,63 @@ The following Entity level tags are utilized in this solution:
           </EntityReferenceList>
         </Entity>
         <Entity>
+          <Tags />
+          <SpecSourceName>Specifications.SqlView</SpecSourceName>
+          <EntityID>7038ecbb-b21b-4653-b459-c1b797d41535</EntityID>
+          <FeatureID>b2f64424-247e-4cda-b735-c8320f81f944</FeatureID>
+          <BaseEntityID xsi:nil="true" />
+          <GroupName />
+          <Description />
+          <PropertyList>
+            <Property>
+              <Tags>AnyChars </Tags>
+              <SpecSourceName>Specifications.SqlView.SqlViewName</SpecSourceName>
+              <PropertyID>1f019684-1130-4ad5-a865-578345c3ac2f</PropertyID>
+              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <Description />
+              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <Length xsi:nil="true" />
+              <Precision xsi:nil="true" />
+              <Scale xsi:nil="true" />
+              <InitialValue />
+              <Identity xsi:nil="true" />
+              <IdentitySeed xsi:nil="true" />
+              <IdentityIncrement xsi:nil="true" />
+            </Property>
+          </PropertyList>
+          <EntityReferenceList>
+            <EntityReference>
+              <Tags>DB Parent </Tags>
+              <SpecSourceName>Specifications.SqlView.SqlDatabase</SpecSourceName>
+              <PropertyID>4336bcef-a211-42fc-9c94-c96a28168122</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>7038ecbb-b21b-4653-b459-c1b797d41535</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </EntityReference>
+          </EntityReferenceList>
+        </Entity>
+        <Entity>
+          <Tags />
+          <SpecSourceName>Specifications.SqlViewProperty</SpecSourceName>
+          <EntityID>36f0c6b9-e6f9-4171-b0e9-23aaf41c272e</EntityID>
+          <FeatureID>b2f64424-247e-4cda-b735-c8320f81f944</FeatureID>
+          <BaseEntityID xsi:nil="true" />
+          <GroupName />
+          <Description />
+          <EntityReferenceList>
+            <EntityReference>
+              <Tags>DB Parent </Tags>
+              <SpecSourceName>Specifications.SqlViewProperty.SqlView</SpecSourceName>
+              <PropertyID>c7fa0144-4aa1-4f78-9f38-c55a2374e48d</PropertyID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
+              <Description />
+              <EntityID>36f0c6b9-e6f9-4171-b0e9-23aaf41c272e</EntityID>
+              <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
+            </EntityReference>
+          </EntityReferenceList>
+        </Entity>
+        <Entity>
           <Tags>DB CustomCollectionContext </Tags>
           <SpecSourceName>Specifications.XmlAttribute</SpecSourceName>
           <EntityID>63819bd0-6cc2-49c5-a5c1-46d7eb40e9ac</EntityID>
@@ -3842,18 +4054,18 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Workflows.Stage.ToStageTransitionList</SpecSourceName>
-              <PropertyID>09b5e891-c3d4-4e47-a59e-a1c5427d2b0c</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Workflows.Stage.FromStageTransitionList</SpecSourceName>
+              <PropertyID>b91cd732-73f3-4939-a4fd-4dab28b565f3</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>3d88420e-3c85-447a-aff8-bc70645bb99a</EntityID>
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Workflows.Stage.FromStageTransitionList</SpecSourceName>
-              <PropertyID>b91cd732-73f3-4939-a4fd-4dab28b565f3</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Workflows.Stage.ToStageTransitionList</SpecSourceName>
+              <PropertyID>09b5e891-c3d4-4e47-a59e-a1c5427d2b0c</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>3d88420e-3c85-447a-aff8-bc70645bb99a</EntityID>
@@ -3936,18 +4148,18 @@ The following Entity level tags are utilized in this solution:
           </PropertyList>
           <CollectionList>
             <Collection>
-              <Tags>DB CustomUI </Tags>
-              <SpecSourceName>Workflows.Step.ToStepTransitionList</SpecSourceName>
-              <PropertyID>f7ccdde1-aae4-45fb-8d5f-e9b9d3bf48eb</PropertyID>
+              <Tags>DB Secondary </Tags>
+              <SpecSourceName>Workflows.Step.FromStepTransitionList</SpecSourceName>
+              <PropertyID>2c9a12f6-51f8-4504-ae2c-a307d5f6525d</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>f4988157-43ba-46ed-bfb0-da654255c19d</EntityID>
               <ReferencedEntityID>00000000-0000-0000-0000-000000000000</ReferencedEntityID>
             </Collection>
             <Collection>
-              <Tags>DB Secondary </Tags>
-              <SpecSourceName>Workflows.Step.FromStepTransitionList</SpecSourceName>
-              <PropertyID>2c9a12f6-51f8-4504-ae2c-a307d5f6525d</PropertyID>
+              <Tags>DB CustomUI </Tags>
+              <SpecSourceName>Workflows.Step.ToStepTransitionList</SpecSourceName>
+              <PropertyID>f7ccdde1-aae4-45fb-8d5f-e9b9d3bf48eb</PropertyID>
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>f4988157-43ba-46ed-bfb0-da654255c19d</EntityID>

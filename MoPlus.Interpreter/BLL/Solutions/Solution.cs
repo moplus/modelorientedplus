@@ -824,6 +824,27 @@ namespace MoPlus.Interpreter.BLL.Solutions
 			}
 		}
 
+		protected EnterpriseDataObjectList<ViewProperty> _viewPropertyList = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ViewProperty lists.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<ViewProperty> ViewPropertyList
+		{
+			get
+			{
+				if (_viewPropertyList == null)
+				{
+					_viewPropertyList = new EnterpriseDataObjectList<ViewProperty>();
+				}
+				return _viewPropertyList;
+			}
+			set
+			{
+				_viewPropertyList = value;
+			}
+		}
+
 		protected NameObjectCollection _usedModelIDs = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the collection of IDs used in the model.</summary>
@@ -1106,6 +1127,18 @@ namespace MoPlus.Interpreter.BLL.Solutions
 		///--------------------------------------------------------------------------------
 		[XmlIgnore]
 		public virtual EnterpriseDataObjectList<Workflow> WorkflowsToMerge { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ViewsToMerge.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<View> ViewsToMerge { get; set; }
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets ViewPropertiesToMerge.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual EnterpriseDataObjectList<ViewProperty> ViewPropertiesToMerge { get; set; }
 
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets StagesToMerge.</summary>
@@ -1828,6 +1861,16 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					forwardItem.WorkflowList.Add(forwardChildItem);
 				}
 			}
+			foreach (View item in ViewList)
+			{
+				item.Solution = this;
+				View forwardChildItem = item.GetForwardInstance(forwardItem);
+				if (forwardChildItem != null)
+				{
+					forwardChildItem.Solution = forwardItem;
+					forwardItem.ViewList.Add(forwardChildItem);
+				}
+			}
 			return forwardItem;
 		}
 
@@ -2536,6 +2579,39 @@ namespace MoPlus.Interpreter.BLL.Solutions
 					}
 				}
 
+
+				foreach (View loopView in ViewList)
+				{
+					if (loopView.IsAutoUpdated == false || loopView.ForwardInstance != null)
+					{
+						// add view to list
+						View forwardView = loopView;
+						if (loopView.ForwardInstance != null)
+						{
+							forwardView = loopView.ForwardInstance;
+						}
+						ViewsToMerge.Add(forwardView);
+						EnterpriseDataObjectList<ViewProperty> forwardViewPropertyList = new EnterpriseDataObjectList<ViewProperty>();
+						foreach (ViewProperty loopViewProperty in forwardView.ViewPropertyList)
+						{
+							if (loopViewProperty.IsAutoUpdated == false || loopViewProperty.ForwardInstance != null)
+							{
+								// add property to list
+								ViewProperty forwardViewProperty = loopViewProperty;
+								if (loopViewProperty.ForwardInstance != null)
+								{
+									forwardViewProperty = loopViewProperty.ForwardInstance;
+								}
+								forwardViewProperty.View = forwardView;
+								forwardViewProperty.Solution = this;
+								forwardViewPropertyList.Add(forwardViewProperty);
+								ViewPropertiesToMerge.Add(forwardViewProperty);
+							}
+						}
+						forwardView.ViewPropertyList = forwardViewPropertyList;
+					}
+				}
+	
 				// clear main lists and add forward engineering data into model;
 				FeatureList = FeaturesToMerge;
 				EntityList = new EnterpriseDataObjectList<Entity>();
@@ -2623,6 +2699,12 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				foreach (StepTransition item in StepTransitionsToMerge)
 				{
 					StepTransitionList.Add(item);
+				}
+				ViewList = ViewsToMerge;
+				ViewPropertyList = new EnterpriseDataObjectList<ViewProperty>();
+				foreach (ViewProperty item in ViewPropertiesToMerge)
+				{
+					ViewPropertyList.Add(item);
 				}
 				StateModelList = new EnterpriseDataObjectList<StateModel>();
 				foreach (StateModel item in StateModelsToMerge)
@@ -2724,6 +2806,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				StageTransitionsToMerge = new EnterpriseDataObjectList<StageTransition>();
 				StepsToMerge = new EnterpriseDataObjectList<Step>();
 				StepTransitionsToMerge = new EnterpriseDataObjectList<StepTransition>();
+				ViewsToMerge = new EnterpriseDataObjectList<View>();
+				ViewPropertiesToMerge = new EnterpriseDataObjectList<ViewProperty>();
 				ModelsToMerge = new EnterpriseDataObjectList<Model>();
 				ModelObjectsToMerge = new EnterpriseDataObjectList<ModelObject>();
 				ModelPropertiesToMerge = new EnterpriseDataObjectList<ModelProperty>();
@@ -3042,6 +3126,21 @@ namespace MoPlus.Interpreter.BLL.Solutions
 						}
 					}
 				}
+				ViewList.Sort("ViewName", Data.SortDirection.Ascending);
+				foreach (View loopView in ViewList)
+				{
+					loopView.Solution = this;
+					loopView.ViewPropertyList.Sort("Name", Data.SortDirection.Ascending);
+					foreach (ViewProperty loopViewProperty in loopView.ViewPropertyList)
+					{
+						loopViewProperty.View = loopView;
+						loopViewProperty.Solution = this;
+						if (loopViewProperty.Property == null)
+						{
+							loopViewProperty.Property = PropertyList.FindByID(loopViewProperty.PropertyID);
+						}
+					}
+				}
 
 				// add run time template usage data
 				AddSpecTemplateCallData();
@@ -3098,6 +3197,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				StageTransitionsToMerge = null;
 				StepsToMerge = null;
 				StepTransitionsToMerge = null;
+				ViewsToMerge = null;
+				ViewPropertiesToMerge = null;
 				ModelsToMerge = null;
 				ModelObjectsToMerge = null;
 				ModelPropertiesToMerge = null;
@@ -3332,6 +3433,8 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				StageTransitionsToMerge = new EnterpriseDataObjectList<StageTransition>();
 				StepsToMerge = new EnterpriseDataObjectList<Step>();
 				StepTransitionsToMerge = new EnterpriseDataObjectList<StepTransition>();
+				ViewsToMerge = new EnterpriseDataObjectList<View>();
+				ViewPropertiesToMerge = new EnterpriseDataObjectList<ViewProperty>();
 				ModelsToMerge = new EnterpriseDataObjectList<Model>();
 				ModelObjectsToMerge = new EnterpriseDataObjectList<ModelObject>();
 				ModelPropertiesToMerge = new EnterpriseDataObjectList<ModelProperty>();
@@ -4134,6 +4237,42 @@ namespace MoPlus.Interpreter.BLL.Solutions
 				}
 				StepTransitionList.Clear();
 				StepTransitionList = null;
+			}
+			if (ViewsToMerge != null)
+			{
+				foreach (View item in ViewsToMerge)
+				{
+					item.Dispose();
+				}
+				ViewsToMerge.Clear();
+				ViewsToMerge = null;
+			}
+			if (_viewList != null)
+			{
+				foreach (View item in ViewList)
+				{
+					item.Dispose();
+				}
+				ViewList.Clear();
+				ViewList = null;
+			}
+			if (ViewPropertiesToMerge != null)
+			{
+				foreach (ViewProperty item in ViewPropertiesToMerge)
+				{
+					item.Dispose();
+				}
+				ViewPropertiesToMerge.Clear();
+				ViewPropertiesToMerge = null;
+			}
+			if (_viewPropertyList != null)
+			{
+				foreach (ViewProperty item in ViewPropertyList)
+				{
+					item.Dispose();
+				}
+				ViewPropertyList.Clear();
+				ViewPropertyList = null;
 			}
 			if (_diagramList != null)
 			{

@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>9/4/2013</CreatedDate>
+	/// <CreatedDate>1/27/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -677,32 +677,6 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
-		protected BLL.Config.MethodType _methodType = null;
-		///--------------------------------------------------------------------------------
-		/// <summary>This property gets or sets a reference to the MethodType.</summary>
-		///--------------------------------------------------------------------------------
-		[XmlIgnore]
-		public virtual BLL.Config.MethodType MethodType
-		{
-			get
-			{
-				return _methodType;
-			}
-			set
-			{
-				if (value != null)
-				{
-					_methodTypeName = value.MethodTypeName;
-					if (_methodType != null && _methodType.PrimaryKeyValues != value.PrimaryKeyValues)
-					{
-						_isModified = true;
-					}
-					MethodTypeCode = value.MethodTypeCode;
-				}
-				_methodType = value;
-			}
-		}
-		
 		protected BLL.Entities.Entity _entity = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets a reference to the Entity.</summary>
@@ -729,6 +703,32 @@ namespace MoPlus.Interpreter.BLL.Entities
 					EntityID = value.EntityID;
 				}
 				_entity = value;
+			}
+		}
+		
+		protected BLL.Config.MethodType _methodType = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets a reference to the MethodType.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlIgnore]
+		public virtual BLL.Config.MethodType MethodType
+		{
+			get
+			{
+				return _methodType;
+			}
+			set
+			{
+				if (value != null)
+				{
+					_methodTypeName = value.MethodTypeName;
+					if (_methodType != null && _methodType.PrimaryKeyValues != value.PrimaryKeyValues)
+					{
+						_isModified = true;
+					}
+					MethodTypeCode = value.MethodTypeCode;
+				}
+				_methodType = value;
 			}
 		}
 		
@@ -943,8 +943,8 @@ namespace MoPlus.Interpreter.BLL.Entities
 				ForwardInstance.Dispose();
 				ForwardInstance = null;
 			}
-			MethodType = null;
 			Entity = null;
+			MethodType = null;
 			Solution = null;
 			if (_parameterList != null)
 			{
@@ -1209,6 +1209,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 				else
 				{
 					// update existing item in solution
+					if (existingItem.Solution == null) existingItem.Solution = solutionContext;
 					if (existingItem.ForwardInstance == null && existingItem.IsAutoUpdated == false)
 					{
 						existingItem.ForwardInstance = new Method();

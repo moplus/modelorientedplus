@@ -7,7 +7,7 @@
 <CONTENT>
 <%%:
 param baseName
-var pluralizeName = true // set to false to use simple "List" form for plural
+var pluralizeName = false // set to false to use simple "List" form for plural
 var pluralName = baseName
 var propertyPrefix = MDLPropertyNamePrefix
 if (baseName.StartsWith(propertyPrefix) == false)
@@ -32,6 +32,6 @@ if (pluralizeName == true)
 }
 else
 {
-	<%%-s%%><%%=baseName%%><%%-List%%>
+	<%%=baseName%%><%%-List%%>
 }
 %%></CONTENT>

@@ -507,6 +507,14 @@ namespace MoPlus.ViewModel.Solutions
 						Items.Add(WorkflowsFolder);
 					}
 
+					// attach views
+					if (ViewsFolder == null)
+					{
+						ViewsFolder = new ViewsViewModel(Solution, isCompiledModel);
+						ViewsFolder.Updated += new EventHandler(Children_Updated);
+						Items.Add(ViewsFolder);
+					}
+
 					// attach audit properties
 					if (AuditPropertiesFolder == null)
 					{
@@ -974,6 +982,12 @@ namespace MoPlus.ViewModel.Solutions
 			SpecificationSourcesFolder = new SpecificationSourcesViewModel(solution);
 			SpecificationSourcesFolder.Updated += new EventHandler(Children_Updated);
 			SpecificationSourcesFolder.UpdateSolution(solution);
+			ViewsFolder.Dispose();
+			ViewsFolder.Updated -= Children_Updated;
+			ViewsFolder = null;
+			ViewsFolder = new ViewsViewModel(solution);
+			ViewsFolder.Updated += new EventHandler(Children_Updated);
+
 
 			// retain template information
 			SpecTemplatesFolder.UpdateSolution(solution);
@@ -984,6 +998,7 @@ namespace MoPlus.ViewModel.Solutions
 			Items.Add(ProjectsFolder);
 			Items.Add(FeaturesFolder);
 			Items.Add(WorkflowsFolder);
+			Items.Add(ViewsFolder);
 			Items.Add(ModelsFolder);
 			Items.Add(DiagramsFolder);
 			Items.Add(AuditPropertiesFolder);

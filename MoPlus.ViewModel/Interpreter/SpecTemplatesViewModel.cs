@@ -273,6 +273,12 @@ namespace MoPlus.ViewModel.Interpreter
 						case SpecModelContextTypeCode.SqlTable:
 							templateName = Resources.DisplayValues.NodeName_Templates_SqlTable;
 							break;
+						case SpecModelContextTypeCode.SqlView:
+							templateName = Resources.DisplayValues.NodeName_Templates_SqlView;
+							break;
+						case SpecModelContextTypeCode.SqlViewProperty:
+							templateName = Resources.DisplayValues.NodeName_Templates_SqlViewProperty;
+							break;
 						case SpecModelContextTypeCode.XmlAttribute:
 							templateName = Resources.DisplayValues.NodeName_Templates_XmlAttribute;
 							break;

@@ -169,7 +169,7 @@
     <value>Solution:</value>
   </data>
   <data name="Exception_SourceDbNotFound" xml:space="preserve">
-    <value>SQL Database  {0} not found in the following list of databases: {1}.</value>
+    <value>SQL Database  {0} not found in the available databases on server {1}.</value>
   </data>
   <data name="Exception_SourceXmlMissing" xml:space="preserve">
     <value>Source xml file {0} not found or is empty.</value>

@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Solutions
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>8/7/2013</CreatedDate>
+	/// <CreatedDate>1/24/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class FeatureViewModel : DialogEditWorkspaceViewModel
@@ -732,6 +732,10 @@ namespace MoPlus.ViewModel.Solutions
 				{
 					isItemMatch = true;
 					item.Entity.TransformDataFromObject(entity, null, false);
+					if (!item.Entity.BaseEntityID.IsNullOrEmpty())
+					{
+						item.Entity.BaseEntity = Solution.EntityList.FindByID((Guid)item.Entity.BaseEntityID);
+					}
 					item.OnUpdated(item, null);
 					item.ShowInTreeView();
 					break;
@@ -742,6 +746,10 @@ namespace MoPlus.ViewModel.Solutions
 				// add new Entity
 				entity.Feature = Feature;
 				EntityViewModel newItem = new EntityViewModel(entity, Solution);
+				if (!newItem.Entity.BaseEntityID.IsNullOrEmpty())
+				{
+					newItem.Entity.BaseEntity = Solution.EntityList.FindByID((Guid)newItem.Entity.BaseEntityID);
+				}
 				newItem.Updated += new EventHandler(Children_Updated);
 				Entities.Add(newItem);
 				Feature.EntityList.Add(entity);

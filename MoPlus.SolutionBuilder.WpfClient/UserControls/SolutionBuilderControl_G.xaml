@@ -4,7 +4,7 @@
  customized this file to prevent changes from being overwritten, or use protected areas.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>7/15/2014</CreatedDate>
+ <CreatedDate>1/24/2017</CreatedDate>
  <Status>Generated</Status>
 -->
 <UserControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.SolutionBuilderControl"
@@ -100,6 +100,9 @@
 			<BitmapImage x:Key="Icon_StepClosed" UriSource="../Resources/Images/StepClosed.png" />
 			<BitmapImage x:Key="Icon_StepTransitionClosed" UriSource="../Resources/Images/StepTransitionClosed.png" />
 			<BitmapImage x:Key="Icon_ValueClosed" UriSource="../Resources/Images/ValueClosed.png" />
+			<BitmapImage x:Key="Icon_ViewOpen"   UriSource="../Resources/Images/ViewOpen.png"   />
+			<BitmapImage x:Key="Icon_ViewClosed" UriSource="../Resources/Images/ViewClosed.png" />
+			<BitmapImage x:Key="Icon_ViewPropertyClosed" UriSource="../Resources/Images/ViewPropertyClosed.png" />
 			<BitmapImage x:Key="Icon_WorkflowOpen"   UriSource="../Resources/Images/WorkflowOpen.png"   />
 			<BitmapImage x:Key="Icon_WorkflowClosed" UriSource="../Resources/Images/WorkflowClosed.png" />
 			<BitmapImage x:Key="Icon_XmlSourceClosed" UriSource="../Resources/Images/XmlSourceClosed.png" />
@@ -1039,6 +1042,57 @@
 					<StackPanel.ContextMenu>
 						<ContextMenu>
 							<MenuItem Header="{Binding MenuLabelNewValue}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelEdit}" Command="vm:CustomCommands.Update"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+						</ContextMenu>
+					</StackPanel.ContextMenu>
+				</StackPanel>
+			</DataTemplate>
+			<!-- Views -->
+			<HierarchicalDataTemplate DataType="{x:Type Solutions:ViewsViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_FolderClosed}" />
+					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
+					<StackPanel.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewView}" Command="New"></MenuItem>
+						</ContextMenu>
+					</StackPanel.ContextMenu>
+				</StackPanel>
+				<HierarchicalDataTemplate.Triggers>
+					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
+						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_FolderOpen}, Mode=OneTime}"/>
+					</DataTrigger>
+				</HierarchicalDataTemplate.Triggers>
+			</HierarchicalDataTemplate>
+			<!-- View -->
+			<HierarchicalDataTemplate DataType="{x:Type Solutions:ViewViewModel}" ItemsSource="{Binding Items, Mode=OneWay}">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_ViewClosed}" />
+					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
+					<StackPanel.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewView}" Command="New"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelNewViewProperty}" Command="vm:CustomCommands.NewChildItem"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelEdit}" Command="vm:CustomCommands.Update"></MenuItem>
+							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
+						</ContextMenu>
+					</StackPanel.ContextMenu>
+				</StackPanel>
+				<HierarchicalDataTemplate.Triggers>
+					<DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=lib:ModelTreeViewItem}, Path=IsExpanded}" Value="True">
+						<Setter TargetName="nodeImg" Property="Source" Value="{Binding Source={StaticResource Icon_ViewOpen}, Mode=OneTime}"/>
+					</DataTrigger>
+				</HierarchicalDataTemplate.Triggers>
+			</HierarchicalDataTemplate>
+			<!-- ViewProperty -->
+			<DataTemplate DataType="{x:Type Solutions:ViewPropertyViewModel}">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="nodeImg" Style="{StaticResource IconImageStyleSmall}" Source="{StaticResource Icon_ViewPropertyClosed}" />
+					<TextBlock Style="{DynamicResource TreeViewItemTextStyle}" />
+					<StackPanel.ContextMenu>
+						<ContextMenu>
+							<MenuItem Header="{Binding MenuLabelNewViewProperty}" Command="New"></MenuItem>
 							<MenuItem Header="{Binding MenuLabelEdit}" Command="vm:CustomCommands.Update"></MenuItem>
 							<MenuItem Header="{Binding MenuLabelDelete}" Command="Delete"></MenuItem>
 						</ContextMenu>

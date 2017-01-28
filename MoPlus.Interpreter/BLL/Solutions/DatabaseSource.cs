@@ -174,19 +174,11 @@ namespace MoPlus.Interpreter.BLL.Solutions
 							Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
 							throw ex;
 						}
-                        StringBuilder databases = new StringBuilder();
                             
 				        if (SourceDbName.Contains("\\"))
 				        {
                             var dbName = Path.GetFileNameWithoutExtension(SourceDbName);
-                            foreach (Database loopDb in sqlServer.Databases)
-                            {
-                                if (loopDb.Name.ToLower() == dbName.ToLower())
-                                {
-                                    sqlDatabase = loopDb;
-                                    break;
-                                }
-                            }
+							sqlDatabase = sqlServer.Databases[dbName];
 
 				            if (sqlDatabase == null)
 				            {
@@ -197,36 +189,18 @@ namespace MoPlus.Interpreter.BLL.Solutions
 
 				                sqlServer.AttachDatabase(dbName, stringColl);
 
-				                foreach (Database loopDb in sqlServer.Databases)
-				                {
-				                    if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
-				                    databases.Append(loopDb.Name);
-				                    if (loopDb.Name.ToLower() == dbName.ToLower())
-				                    {
-				                        sqlDatabase = loopDb;
-				                        break;
-				                    }
-				                }
-				            }
+								sqlDatabase = sqlServer.Databases[SourceDbName];
+							}
 				        }
 				        else
 				        {
-				            foreach (Database loopDb in sqlServer.Databases)
-				            {
-				                if (!String.IsNullOrEmpty(databases.ToString())) databases.Append(", ");
-				                databases.Append(loopDb.Name);
-				                if (loopDb.Name.ToLower() == SourceDbName.ToLower())
-				                {
-				                    sqlDatabase = loopDb;
-				                    break;
-				                }
-				            }
+							sqlDatabase = sqlServer.Databases[SourceDbName];
 				        }
 
 				        if (sqlDatabase == null)
 						{
 							SpecDatabase = null;
-							ApplicationException ex = new ApplicationException(String.Format(DisplayValues.Exception_SourceDbNotFound, SourceDbName, databases.ToString()));
+							ApplicationException ex = new ApplicationException(String.Format(DisplayValues.Exception_SourceDbNotFound, SourceDbName, SourceDbServerName));
 							Solution.ShowIssue(ex.Message + "\r\n" + ex.StackTrace);
 							throw ex;
 						}
@@ -238,7 +212,6 @@ namespace MoPlus.Interpreter.BLL.Solutions
 							SpecDatabase.Solution = Solution;
 							SpecDatabase.LoadSqlServerDatabase(sqlDatabase);
 						}
-						databases = null;
 						break;
 					case (int)BLL.Config.DatabaseTypeCode.MySQL:
 						string myConnectionString = "SERVER=" + SourceDbServerName + ";" +

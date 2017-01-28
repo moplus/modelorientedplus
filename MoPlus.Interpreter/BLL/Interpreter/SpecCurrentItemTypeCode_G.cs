@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>7/2/2013</CreatedDate>
+	/// <CreatedDate>1/26/2017</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum SpecCurrentItemTypeCode
@@ -54,12 +54,16 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		CurrentSqlProperty = 8,
 		/// <summary>For SqlTable spec current item types.</summary>
 		CurrentSqlTable = 9,
+		/// <summary>For SqlView spec current item types.</summary>
+		CurrentSqlView = 10,
+		/// <summary>For SqlViewProperty spec current item types.</summary>
+		CurrentSqlViewProperty = 11,
 		/// <summary>For XmlAttribute spec current item types.</summary>
-		CurrentXmlAttribute = 10,
+		CurrentXmlAttribute = 12,
 		/// <summary>For XmlDocument spec current item types.</summary>
-		CurrentXmlDocument = 11,
+		CurrentXmlDocument = 13,
 		/// <summary>For XmlNode spec current item types.</summary>
-		CurrentXmlNode = 12,
+		CurrentXmlNode = 14,
 
 		#region protected
 		#endregion protected
