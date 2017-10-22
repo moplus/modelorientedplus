@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSDtoPropertyDataType
+	CATEGORY DS
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ReferencedEntity.EFCFClassName%%></CONTENT>

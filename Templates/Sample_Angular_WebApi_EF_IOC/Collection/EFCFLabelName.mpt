@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFLabelName
+	CATEGORY EFCF
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFPropertyName.CapitalWordCase()%%></CONTENT>

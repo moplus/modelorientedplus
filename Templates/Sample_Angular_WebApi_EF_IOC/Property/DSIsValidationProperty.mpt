@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME DSIsValidationProperty
+	CATEGORY DS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (DSIsDtoClassProperty == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

@@ -1,0 +1,47 @@
+<CONFIG>
+	NAME DSIsResultsProperty
+	CATEGORY DS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsForeignKeyMember == true)
+{
+	<%%-false%%>
+	return
+}
+if (DSIsQueryProperty == true || IsPrimaryKeyMember == true)
+{
+	<%%-true%%>
+	return
+}
+
+switch (DataTypeCode)
+{
+	case 2: // IntShort
+	case 3: // Int
+	case 4: // IntLong
+	case 5: // Byte
+	case 6: // UIntShort
+	case 7: // UInt
+	case 8: // UIntLong
+	case 9: // FloatSingle
+	case 10: // FloatDouble
+	case 11: // Decimal
+	case 12: // Boolean
+	case 13: // Char
+	case 14: // Char Unicode
+	case 16: // String
+	case 17: // StringUnicode
+	case 18: // Currency
+	case 21: // IntTiny
+	case 22: // UIntTiny
+	case 24: // DateTime
+		<%%-true%%>
+		break
+	default:
+		<%%-false%%>
+		break
+}
+%%></CONTENT>

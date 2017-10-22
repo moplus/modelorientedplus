@@ -1,0 +1,94 @@
+<CONFIG>
+	NAME DSDomainMapCode
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using AutoMapper;
+using %%><%%=Project.Namespace%%><%%-.Dtos;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines mappings for domain and dto objects.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class DomainMap : Profile%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public DomainMap()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			foreach (Entity in Solution where IsDataModelEntity == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-CreateMap<%%><%%=EFCFClassName%%><%%-, %%><%%=DSDtoClassName%%><%%->()%%>
+				if (EntityReferenceCount > 0)
+				{
+					<%%=Solution.INDENT%%>
+					foreach (EntityReference)
+					{
+						<%%-
+						.ForMember(dest => dest.%%><%%=EFCFDerivedPropertyName%%><%%-, opt => opt.MapFrom(src => src.%%><%%=EFCFPropertyName%%><%%-.%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%><%%-))%%>
+					}
+					<%%-
+					.ReverseMap()
+					.AfterMap((src, dest) => { %%>
+					foreach (EntityReference)
+					{
+						<%%-dest.%%><%%=EFCFPropertyName%%><%%- = null; %%>
+					}
+					<%%-});%%>
+					<%%=Solution.OUTDENT%%>
+				}
+				else
+				{
+					<%%-.ReverseMap();%%>
+				}
+			}
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=DSDomainMapFilePath, text=Text) == true)
+{
+	update(DSDomainMapFilePath)
+}
+%%></OUTPUT>

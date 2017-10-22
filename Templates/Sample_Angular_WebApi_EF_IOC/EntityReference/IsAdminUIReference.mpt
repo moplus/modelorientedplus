@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsAdminUIReference
+	CATEGORY CONFIG
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (IsPrimaryReference == true && ReferencedEntity.IsUIEntity == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

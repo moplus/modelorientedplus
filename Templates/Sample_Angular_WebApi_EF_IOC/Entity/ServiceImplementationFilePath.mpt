@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceImplementationFilePath
+	CATEGORY Services
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Services\Implementations\%%><%%=ServiceImplementationName%%><%%-_G.cs%%></CONTENT>

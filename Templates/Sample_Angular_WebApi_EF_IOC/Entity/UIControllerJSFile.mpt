@@ -1,0 +1,745 @@
+<CONFIG>
+	NAME UIControllerJSFile
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS ui-router controller for your entity.
+// This controller enables CRUD and search operations with your entity.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var itemFound
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This controller provides access to CRUD operations on
+/// %%><%%=EFCFClassName%%><%%- items.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var %%><%%=UIControllerClassName%%><%%- = function($scope, $filter, $stateParams, $state, $window, $location%%>
+var serviceReferences = ", " + UIServiceName
+var serviceReference
+CurrentEntity = Entity
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where IsAdminUIReference == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", " + UIServiceName
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Collection where IsAdminUICollection == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", " + UIServiceName
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+<%%=serviceReferences%%><%%-)%%>
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	<%%-
+	// data for search operations
+	$scope.searchQuery =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where DSIsQueryProperty == true)
+			{
+				<%%=UISearchQueryBlurb%%>
+			}
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-orderBy: $stateParams.orderBy || '',%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-descending: $stateParams.descending || 'false',%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-page: $stateParams.page || 1,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-pageSize: $stateParams.pageSize || 10,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalPages: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-filter: 'none'%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+
+	// data to get search results
+	$scope.searchResults =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-items: null,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalPages: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-totalItems: 0,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-hasResults: false,%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-canCreate: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+
+	// data to get an item
+	$scope.itemQuery =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=UIItemQueryBlurb%%>
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-itemFound: false%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// data for create, update, and delete operations
+	$scope.itemForm =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where IsUIEditableProperty == true)
+			{
+				if (IsForeignKeyMember == true)
+				{
+					<%%=UIItemQueryBlurb%%>
+				}
+				else
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%=EFCFParameterName%%><%%-: %%>
+					<%%=JSDefaultValue%%><%%-,%%>
+				}
+			}
+		}
+		var foundReferences = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (EntityReference where IsUIEditableProperty == true)
+			{
+				if (foundReferences.Contains("'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'") == false)
+				{
+					foundReferences = foundReferences + "'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'"
+					<%%=Solution.NEWLINE%%>
+					<%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-: null,%%>
+				}
+			}
+		}
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Collection where IsPrimaryCollection== true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=EFCFParameterName%%><%%-: null,%%>
+			}
+		}
+		<%%=Solution.NEWLINE%%>
+		<%%-canEdit: true,
+		canDelete: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// status on any operation
+	$scope.status =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		isReadOnly: false,
+		isError: false,
+		errorMessage: '',
+		isSuccess: false,
+		successMessage: ''%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	$scope.navbarProperties =%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		isCollapsed: true%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	
+	// search api
+	$scope.search = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		$scope.searchQuery.filter = '';%%>
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where DSIsQueryProperty == true)
+			{
+				switch (DataTypeCode)
+				{
+					case 24: // DateTime
+					case 29: // DateTimeSmall
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=EFCFParameterName%%><%%-Start != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE(js=true)%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != '')%%>
+							<%%=Solution.OPEN_BRACE(js=true)%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=EFCFLabelName%%><%%- Start: ' + $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-Start;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=EFCFParameterName%%><%%-End != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE(js=true)%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != '')%%>
+							<%%=Solution.OPEN_BRACE(js=true)%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=EFCFLabelName%%><%%- End: ' + $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-End;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						break
+					default:
+						<%%=Solution.NEWLINE%%>
+						<%%-if ($scope.searchQuery.%%><%%=EFCFParameterName%%><%%- != %%><%%=JSDefaultValue%%><%%-)%%>
+						<%%=Solution.OPEN_BRACE(js=true)%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-if ($scope.searchQuery.filter != '')%%>
+							<%%=Solution.OPEN_BRACE(js=true)%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + ', ';%%>
+							<%%=Solution.CLOSE_BRACE%%>
+								<%%=Solution.NEWLINE%%>
+								<%%-$scope.searchQuery.filter = $scope.searchQuery.filter + '%%><%%=EFCFLabelName%%><%%-: ' + $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+						break
+				}
+			}
+		}
+		<%%-
+		if ($scope.searchQuery.filter == '')%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-$scope.searchQuery.filter = 'none';%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		var result = %%><%%=UIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where DSIsQueryProperty == true)
+			{
+				switch (DataTypeCode)
+				{
+					case 24: // DateTime
+					case 29: // DateTimeSmall
+						if (itemFound == true)
+						{
+							<%%-, %%>
+						}
+						itemFound = true
+						<%%-$scope.searchQuery.%%><%%=EFCFParameterName%%><%%-Start%%>
+						<%%-, $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-End%%>
+						break
+					default:
+						if (itemFound == true)
+						{
+							<%%-, %%>
+						}
+						itemFound = true
+						<%%-$scope.searchQuery.%%><%%=EFCFParameterName%%>
+						break
+				}
+			}
+		}
+		if (itemFound == true)
+		{
+			<%%-, %%>
+		}
+		<%%-$scope.searchQuery.orderBy, $scope.searchQuery.descending, $scope.searchQuery.page, $scope.searchQuery.pageSize);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.searchResults.items = result.items;
+				$scope.searchResults.totalPages = Math.ceil(1.0 * result.totalItems / $scope.searchQuery.pageSize);
+				$scope.searchResults.totalItems = result.totalItems;
+				$scope.searchResults.hasResults = true;
+				$scope.searchResults.canCreate = true;%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+	$scope.refreshSearch = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+		$state.go('%%><%%=EFCFClassName.CamelCase()%%><%%-Results',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsQueryProperty == true)
+				{
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=EFCFParameterName%%><%%-Start': $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-Start,%%>
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=EFCFParameterName%%><%%-End': $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-End,%%>
+							break
+						default:
+							<%%=Solution.NEWLINE%%>
+							<%%-'%%><%%=EFCFParameterName%%><%%-': $scope.searchQuery.%%><%%=EFCFParameterName%%><%%-,%%>
+							break
+					}
+				}
+			}
+			<%%-
+			'orderBy': $scope.searchQuery.orderBy,
+			'descending': $scope.searchQuery.descending,
+			'page': $scope.searchQuery.page,
+			'pageSize': $scope.searchQuery.pageSize%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// get api
+	$scope.get = function (isEdit)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var result = %%><%%=UIServiceName%%><%%-.get%%><%%=EFCFClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%-$scope.itemQuery.%%><%%=EFCFParameterName%%>
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+				$scope.status.isSuccess = true;%%>
+				foreach (Entity in EntityAndBaseEntities)
+				{
+					foreach (Property where DSIsDtoClassProperty == true)
+					{
+						<%%=Solution.NEWLINE%%>
+						if (DataTypeCode == 24)
+						{
+							<%%-$scope.itemForm.%%><%%=EFCFParameterName%%><%%- = $filter('date')(new Date(parseInt(result.data.%%><%%=EFCFPropertyName%%><%%-.substr(6))), 'MM/dd/yyyy');%%>
+						}
+						else
+						{
+							<%%-$scope.itemForm.%%><%%=EFCFParameterName%%><%%- = result.data.%%><%%=EFCFPropertyName%%><%%-;%%>
+						}
+					}
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%-$scope.itemForm.canEdit = true;
+				$scope.itemForm.canDelete = true;
+				if (isEdit == true && $scope.itemForm.canEdit == false)%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+					$scope.status.isReadOnly = true;%%>
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-
+				$scope.init();%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Collection where IsPrimaryCollection == true)
+		{
+			<%%-
+			
+			// get %%><%%=EFCFPropertyName%%><%%- api
+			$scope.get%%><%%=EFCFPropertyName%%><%%- = function ()%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				var editing = $stateParams.editing;
+				if (editing != 'true' && editing != true)%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					$scope.status.isReadOnly = true;%%>
+				<%%=Solution.CLOSE_BRACE%%>
+				<%%-
+				var result = %%><%%=CurrentEntity.UIServiceName%%><%%-.get%%><%%=CurrentEntity.EFCFClassName%%><%%-(%%>
+				foreach (Property in CurrentEntity where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-, %%>
+					}
+					<%%-$scope.itemQuery.%%><%%=EFCFParameterName%%>
+				}
+				<%%-);
+				result.then(function(result)%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					if (result.isSuccess)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+						$scope.status.isSuccess = true;%%>
+						with (CurrentEntity)
+						{
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where DSIsDtoClassProperty == true)
+								{
+									<%%=Solution.NEWLINE%%>
+									if (DataTypeCode == 24)
+									{
+										<%%-$scope.itemForm.%%><%%=EFCFParameterName%%><%%- = $filter('date')(new Date(parseInt(result.data.%%><%%=EFCFPropertyName%%><%%-.substr(6))), 'MM/dd/yyyy');%%>
+									}
+									else
+									{
+										<%%-$scope.itemForm.%%><%%=EFCFParameterName%%><%%- = result.data.%%><%%=EFCFPropertyName%%><%%-;%%>
+									}
+								}
+							}
+						}
+						<%%=Solution.NEWLINE%%>
+						<%%-$scope.init();%%>
+						with (ReferencedEntity)
+						{
+							<%%-
+							var searchResult = %%><%%=UIServiceName%%><%%-.search%%><%%=LIBPluralEntityName%%><%%-(%%>
+							itemFound = false
+							foreach (Entity in EntityAndBaseEntities)
+							{
+								foreach (Property where DSIsQueryProperty == true)
+								{
+									switch (DataTypeCode)
+									{
+										case 24: // DateTime
+										case 29: // DateTimeSmall
+											if (itemFound == true)
+											{
+												<%%-, %%>
+											}
+											itemFound = true
+											<%%=JSDefaultValue%%>
+											<%%-, %%><%%=JSDefaultValue%%>
+											break
+										default:
+											if (itemFound == true)
+											{
+												<%%-, %%>
+											}
+											itemFound = true
+											if (IsForeignKeyToEntity(entityID=CurrentEntity.EntityID) == true)
+											{
+												<%%-$scope.itemQuery.%%>
+												foreach (Property in CurrentEntity where IsPrimaryKeyMember == true)
+												{
+													<%%=EFCFParameterName%%>
+												}
+											}
+											else
+											{
+												<%%=JSDefaultValue%%>
+											}
+											break
+									}
+								}
+							}
+							if (itemFound == true)
+							{
+								<%%-, %%>
+							}
+						}
+							<%%-$scope.searchQuery.orderBy, $scope.searchQuery.descending, $scope.searchQuery.page, $scope.searchQuery.pageSize);
+							searchResult.then(function(result)%%>
+							<%%=Solution.OPEN_BRACE(js=true)%%>
+								<%%-
+								if (result.isSuccess)%%>
+								<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+									$scope.itemForm.%%><%%=EFCFParameterName%%><%%- = result.items;%%>
+								<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+								<%%=Solution.OPEN_BRACE(js=true)%%>
+									<%%-
+									$scope.status.isError = true;
+									$scope.status.isSuccess = false;
+									$scope.status.errorMessage = result.message;%%>
+								<%%=Solution.CLOSE_BRACE%%>
+							<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+						<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+						<%%=Solution.OPEN_BRACE(js=true)%%>
+							<%%-
+							$scope.status.isError = true;
+							$scope.status.isSuccess = false;
+							$scope.status.errorMessage = result.message;%%>
+						<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+	}
+	<%%-
+	
+	// create api
+	$scope.create = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var result = %%><%%=UIServiceName%%><%%-.create%%><%%=EFCFClassName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where IsCreateProperty == true)
+			{
+				if (itemFound == true)
+				{
+					<%%-, %%>
+				}
+				itemFound = true
+				<%%-$scope.itemForm.%%><%%=EFCFParameterName%%>
+			}
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=EFCFClassName%%><%%- item successfully created."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// update api
+	$scope.update = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var result = %%><%%=UIServiceName%%><%%-.update%%><%%=EFCFClassName%%><%%-(%%>
+		itemFound = false
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where DSIsDtoClassProperty == true)
+			{
+				if (itemFound == true)
+				{
+					<%%-, %%>
+				}
+				itemFound = true
+				<%%-$scope.itemForm.%%><%%=EFCFParameterName%%>
+			}
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=EFCFClassName%%><%%- item successfully updated."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	// delete api
+	$scope.delete = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var result = %%><%%=UIServiceName%%><%%-.delete%%><%%=EFCFClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%-$scope.itemQuery.%%><%%=EFCFParameterName%%>
+		}
+		<%%-);
+		result.then(function(result)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if (result.isSuccess)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isSuccess = true;
+				$scope.status.isReadOnly = true;
+				$scope.status.isError = false;
+				$scope.status.successMessage = "%%><%%=EFCFClassName%%><%%- item successfully deleted."%%>
+			<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				$scope.status.isError = true;
+				$scope.status.isSuccess = false;
+				$scope.status.errorMessage = result.message;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// navigation and other functions
+	$scope.back = function()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-$window.history.back();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.first = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+		$scope.searchQuery.page = 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.next = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+		$scope.searchQuery.page = parseInt($scope.searchQuery.page) + 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.previous = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+		$scope.searchQuery.page = parseInt($scope.searchQuery.page) - 1;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+	
+	$scope.last = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%><%%-
+		$scope.searchQuery.page = $scope.searchResults.totalPages;
+		$scope.refreshSearch();%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-
+	
+	// init api
+	$scope.init = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+	foundReferences = ""
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (EntityReference where IsUIEditableProperty == true)
+		{
+			if (foundReferences.Contains("'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'") == false)
+			{
+				foundReferences = foundReferences + "'" + ReferencedEntity.LIBPluralEntityName.CamelCase() + "'"
+				<%%-
+				var %%><%%=EntityReferenceName.CamelCase()%%><%%-Result = %%><%%=ReferencedEntity.UIServiceName%%><%%-.list%%><%%=ReferencedEntity.EFCFClassName%%><%%-(%%>
+				foreach (PropertyRelationship)
+				{
+					foreach (RelationshipProperty in Relationship)
+					{
+						if (ItemIndex > 0)
+						{
+							<%%-, %%>
+						}
+						<%%-$scope.itemForm.%%><%%=Property.EFCFParameterName%%>
+						break
+					}
+				}
+				<%%-);
+				%%><%%=EntityReferenceName.CamelCase()%%><%%-Result.then(function(result)%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					if (result.isSuccess)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						$scope.itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%- = result.data.Items;%%>
+					<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						$scope.status.isError = true;
+						$scope.status.isSuccess = false;
+						$scope.status.errorMessage = result.message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			}
+		}
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+%%><%%=UIControllerClassName%%><%%-.$inject = ['$scope', '$filter', '$stateParams', '$state', '$window', '$location'%%>
+serviceReferences = ", '" + UIServiceName + "'"
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (EntityReference where IsAdminUIReference == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", '" + UIServiceName + "'"
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Collection where IsAdminUICollection == true)
+	{
+		with (ReferencedEntity)
+		{
+			serviceReference = ", '" + UIServiceName + "'"
+			if (serviceReferences.Contains(serviceReference) == false)
+			{
+				serviceReferences = serviceReferences + serviceReference
+			}
+		}
+	}
+}
+<%%=serviceReferences%%><%%-];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UIControllerJSFilePath, text=Text) == true)
+{
+	update(UIControllerJSFilePath)
+}
+%%></OUTPUT>

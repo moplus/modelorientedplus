@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryInterfaceFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=EFCFGenericRepositoryInterfaceName%%><%%-_G.cs%%></CONTENT>

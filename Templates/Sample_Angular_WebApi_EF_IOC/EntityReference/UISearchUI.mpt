@@ -1,0 +1,26 @@
+<CONFIG>
+	NAME UISearchUI
+	CATEGORY UI
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=Solution.NEWLINE%%>
+<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-<div class="col-md-5">%%><%%=Solution.INDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<label for="%%><%%=EFCFParameterName%%><%%-">%%><%%=EFCFLabelName%%><%%-:</label>%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<select class="form-control" name="%%><%%=EFCFParameterName%%><%%-" ng-model="searchQuery.%%><%%=EFCFPropertyParameterName%%><%%-">%%><%%=Solution.INDENT%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-<option value="%%><%%=ReferencedEntity.JSDefaultValue%%><%%-">Any</option>
+			<option ng-repeat="item in itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-" value="{{item.%%><%%=EFCFPrimaryKeyPropertyName%%><%%-}}">{{item.%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%><%%-}}</option>%%>
+			<%%=Solution.OUTDENT%%><%%-
+		</select>%%><%%=Solution.OUTDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-</div>%%><%%=Solution.OUTDENT%%>
+<%%=Solution.NEWLINE%%>
+<%%-</div>%%>
+%%></CONTENT>

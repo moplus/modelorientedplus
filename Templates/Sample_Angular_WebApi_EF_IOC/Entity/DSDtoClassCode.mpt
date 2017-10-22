@@ -1,0 +1,100 @@
+<CONFIG>
+	NAME DSDtoClassCode
+	CATEGORY DS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a data transfer object for your entity, a concrete class used to transfer
+// information to/from corresponding data managed by EFCF.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Dtos%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines the key elements of the %%><%%=DSDtoClassName%%><%%-
+	/// data transfer object, and associated methods for validation.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=DSDtoClassName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		var firstItem
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Property where DSIsDtoClassProperty == true)
+			{
+				if (firstItem == false)
+				{
+					<%%=Solution.NEWLINE%%>
+				}
+				firstItem = false
+				<%%=DSDtoPropertyCode%%>
+			}
+		}
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (Collection where IsPrimaryCollection == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=DSDtoPropertyCode%%>
+			}
+		}
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%=DSDtoDerivedPropertyCode%%>
+			}
+		}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=DSDtoClassFilePath, text=Text) == true)
+{
+	update(DSDtoClassFilePath)
+}
+%%></OUTPUT>

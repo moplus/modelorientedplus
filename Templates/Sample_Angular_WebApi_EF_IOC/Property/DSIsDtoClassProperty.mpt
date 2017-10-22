@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSIsDtoClassProperty
+	CATEGORY DS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFIsConceptualModelProperty%%></CONTENT>

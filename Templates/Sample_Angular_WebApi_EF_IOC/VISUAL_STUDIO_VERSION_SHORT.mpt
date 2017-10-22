@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME VISUAL_STUDIO_VERSION_SHORT
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+// VisualStudioVersion (short) to be utilized in generating solution files, etc.
+<%%-12.00%%></CONTENT>

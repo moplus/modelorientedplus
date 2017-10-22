@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME EFCFPropertyDataType
+	CATEGORY EFCF
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.EFCFIsMappingOnlyEntity == true)
+{
+	with (ReferencedEntity)
+	{
+		foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+		{
+			<%%=ReferencedEntity.EFCFPropertyName%%>
+			return
+		}
+	}
+}
+<%%=ReferencedEntity.EFCFPropertyName%%>
+%%></CONTENT>

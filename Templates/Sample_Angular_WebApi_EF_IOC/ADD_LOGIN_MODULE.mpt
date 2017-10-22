@@ -1,0 +1,11 @@
+<CONFIG>
+	NAME ADD_LOGIN_MODULE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// set this value to true if you want to add the VITA login module to your database and solution
+//
+<%%-true%%></CONTENT>

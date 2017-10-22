@@ -1,0 +1,156 @@
+<CONFIG>
+	NAME WebApiTestBaseClassCode
+	CATEGORY WebApiTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a base service test class, needed by all other generated tests.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Xunit;
+using Moq;
+using Vita.Entities;
+using Vita.Entities.Authorization;
+using PSNS.VITA.Models;
+using PSNS.WebApi.Dtos;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as DS 
+		foreach (Project where Tags.Contains("DS ") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.WebApi;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.WebApi;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.WebApi%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This base class is used to set up service tests.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public abstract class %%><%%=WebApiTestBaseClassName%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+		private Mock<UserInfo> mockUser;
+		protected Mock<UserInfo> MockUser%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			get%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				return mockUser;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+		
+		private Mock<ISecureSession> mockSession;
+		protected Mock<ISecureSession> MockSession%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			get%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				return mockSession;%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		protected List<IUser> Users { get; set; }%%>
+		foreach (Entity in Solution where VITAIsDataModelEntity == true && Tags.Contains("USER") == false)
+		{
+		<%%-
+		protected List<%%><%%=VITAInterfaceName%%><%%-> %%><%%=LIBPluralEntityName%%><%%- { get; set; }%%>
+		}
+		<%%-
+
+		protected void InitializeSecureSession(bool addUser = true)%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			Users = new List<IUser>();%%>
+			foreach (Entity in Solution where VITAIsDataModelEntity == true && Tags.Contains("USER") == false)
+			{
+			<%%-
+			%%><%%=LIBPluralEntityName%%><%%- = new List<%%><%%=VITAInterfaceName%%><%%->();%%>
+			}
+			<%%-
+
+			// setup user
+			IUser sessionUser = new UserDto { UserId = Guid.NewGuid(), DisplayName = "%Anonymous" } as IUser;
+			if (addUser == true)%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				Users.Add(sessionUser);%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-
+			mockUser = new Mock<UserInfo>(sessionUser.UserId, sessionUser.DisplayName);
+
+			// setup session and entity sets
+			mockSession = new Mock<ISecureSession>();
+
+			// user setup
+			mockSession.Setup(i => i.EntitySet<IUser>()).Returns(Users.AsQueryable<IUser>);
+			mockSession.Setup(i => i.NewEntity<IUser>()).Returns(() =>%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				IUser user = new UserDto { UserId = Guid.NewGuid() } as IUser;
+				if (Users != null) Users.Add(user);
+				return user;%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-);
+			mockSession.Setup(i => i.GetEntity<IUser>(It.IsAny<object>(), It.IsAny<LoadFlags>())).Returns<object, LoadFlags>((i, l) => { return Users.Where(j => j.UserId == (Guid)i).FirstOrDefault(); });
+			mockSession.Setup(i => i.DeleteEntity<IUser>(It.IsAny<IUser>())).Callback<IUser>(j =>%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				IUser user = Users.Where(k => k.UserId == j.UserId).FirstOrDefault();
+				Users.Remove(user);%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			foreach (Entity in Solution where VITAIsDataModelEntity == true && Tags.Contains("USER") == false)
+			{
+			<%%-
+
+			// %%><%%=VITAClassName.CamelCase()%%><%%- setup
+			mockSession.Setup(i => i.EntitySet<%%><%%=VITAInterfaceName%%><%%->()).Returns(%%><%%=LIBPluralEntityName%%><%%-.AsQueryable<%%><%%=VITAInterfaceName%%><%%->);
+			mockSession.Setup(i => i.NewEntity<%%><%%=VITAInterfaceName%%><%%->()).Returns(() =>%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%><%%- } as %%><%%=VITAInterfaceName%%><%%-;
+				if (%%><%%=LIBPluralEntityName%%><%%- != null) %%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+				return %%><%%=VITAClassName.CamelCase()%%><%%-;%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-);
+			mockSession.Setup(i => i.GetEntity<%%><%%=VITAInterfaceName%%><%%->(It.IsAny<object>(), It.IsAny<LoadFlags>())).Returns<object, LoadFlags>((i, l) => { return %%><%%=LIBPluralEntityName%%><%%-.Where(j => j.%%><%%=VITAPrimaryKeyPropertyName%%><%%- == (%%><%%=VITAPrimaryKeyPropertyType%%><%%-)i).FirstOrDefault(); });
+			mockSession.Setup(i => i.DeleteEntity<%%><%%=VITAInterfaceName%%><%%->(It.IsAny<%%><%%=VITAInterfaceName%%><%%->())).Callback<%%><%%=VITAInterfaceName%%><%%->(j =>%%>
+			<%%=Solution.OPEN_BRACE%%><%%-
+				%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = %%><%%=LIBPluralEntityName%%><%%-.Where(k => k.%%><%%=VITAPrimaryKeyPropertyName%%><%%- == j.%%><%%=VITAPrimaryKeyPropertyName%%><%%-).FirstOrDefault();
+				%%><%%=LIBPluralEntityName%%><%%-.Remove(%%><%%=VITAClassName.CamelCase()%%><%%-);%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-);%%>
+			}
+		<%%=Solution.CLOSE_BRACE%%>	
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebApiTestBaseClassFilePath) == null || (File(WebApiTestBaseClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(WebApiTestBaseClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(WebApiTestBaseClassFilePath)
+}
+%%></OUTPUT>

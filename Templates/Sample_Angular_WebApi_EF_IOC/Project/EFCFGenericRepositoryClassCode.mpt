@@ -1,0 +1,99 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryClassCode
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace %%><%%=Project.Namespace%%><%%-
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class is used to manage repository operations for
+	/// entity framework entities.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class %%><%%=EFCFGenericRepositoryClassName%%><%%-<TEntity>: %%><%%=EFCFGenericRepositoryInterfaceName%%><%%-<TEntity> where TEntity : class
+	{
+		private %%><%%=EFCFModelContextClassName%%><%%- context;
+		
+		public %%><%%=EFCFGenericRepositoryClassName%%><%%-(%%><%%=EFCFModelContextClassName%%><%%- context)
+		{
+			this.context = context;
+		}
+		
+		public virtual IQueryable<TEntity> All()
+		{
+			return context.Set<TEntity>();
+		}
+		
+		public virtual IQueryable<TEntity> All(params string [] includes)
+		{
+			var set = context.Set<TEntity>().AsQueryable();
+			foreach (string include in includes)
+			{
+				set = set.Include(include);
+			}
+			return set;
+		}
+		
+		public virtual TEntity Get(object id)
+		{
+			return context.Set<TEntity>().Find(id);
+		}
+		
+		public virtual void Insert(TEntity entity)
+		{
+			context.Set<TEntity>().Add(entity);
+		}
+		
+		public virtual void Delete(object id)
+		{
+			TEntity entityToDelete = context.Set<TEntity>().Find(id);
+			Delete(entityToDelete);
+		}
+		
+		public virtual void Delete(TEntity entityToDelete)
+		{
+			if (context.Entry(entityToDelete).State == EntityState.Detached)
+			{
+				context.Set<TEntity>().Attach(entityToDelete);
+			}
+			context.Set<TEntity>().Remove(entityToDelete);
+		}
+		
+		public virtual void Update(TEntity entityToUpdate)
+		{
+			context.Set<TEntity>().Attach(entityToUpdate);
+			context.Entry(entityToUpdate).State = EntityState.Modified;
+		}
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFGenericRepositoryClassFilePath) == null || (File(EFCFGenericRepositoryClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFGenericRepositoryClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFGenericRepositoryClassFilePath)
+}
+%%></OUTPUT>

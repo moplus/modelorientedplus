@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceTestClassFilePath
+	CATEGORY ServiceTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Services\%%><%%=ServiceTestClassName%%><%%-_G.cs%%></CONTENT>

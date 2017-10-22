@@ -1,0 +1,73 @@
+<CONFIG>
+	NAME UnitTestUpdateTestMethod
+	CATEGORY UnitTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-
+///--------------------------------------------------------------------------------
+/// <summary>Update an instance (including references) of %%><%%=VITAInterfaceName%%><%%- with new test data values.</summary>
+/// 
+/// <param name="item">The first instance if %%><%%=VITAInterfaceName%%><%%- to update.</param>
+/// <param name="includeCollections">Flag indicating whether to include collections in updating data.</param>
+/// <param name="parentInstance">The parent instance updating this item, if applicable.</param>
+///--------------------------------------------------------------------------------
+public static void UpdateTest%%><%%=VITAClassName%%><%%-(%%><%%=VITAInterfaceName%%><%%- item, bool includeCollections = true, object parentInstance = null)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%-
+	// update the item with new test data values, including for references%%>
+	foreach (Property where VITAIsConceptualModelProperty == true && IsBaseProperty == false && IsPrimaryKeyMember == false && IsForeignKeyMember == false && TestValue != null)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%-item.%%><%%=VITAPropertyName%%><%%- = %%><%%=TestValue%%><%%-;%%>
+	}
+         foreach (EntityReference where IsPrimaryReference == true)
+         {
+		<%%=Solution.NEWLINE%%>
+         		<%%-if (parentInstance is %%><%%=ReferencedEntity.VITAInterfaceName%%><%%- == false)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%=ReferencedEntity.UnitTestClassName%%><%%-.UpdateTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(item.%%><%%=VITAPropertyName%%><%%-, false, item);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	     }
+	<%%=Solution.NEWLINE%%>
+	<%%-if (includeCollections == true)%%>
+	<%%=Solution.OPEN_BRACE%%>
+	foreach (Collection where IsPrimaryCollection == true)
+	{
+		if (ReferencedEntity.VITAIsMappingOnlyEntity == true)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference where ReferencedEntityID != ../../EntityID)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-foreach (%%><%%=ReferencedEntity.VITAInterfaceName%%><%%- colItem in item.%%><%%=ReferencedEntity.LIBPluralEntityName%%><%%-)%%>
+					<%%=Solution.OPEN_BRACE%%>
+					<%%=Solution.NEWLINE%%>
+					<%%=ReferencedEntity.UnitTestClassName%%><%%-.UpdateTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(colItem, false, item);%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				}
+			}
+		}
+		else
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-foreach (%%><%%=ReferencedEntity.VITAInterfaceName%%><%%- colItem in item.%%><%%=VITAPropertyName%%><%%-)%%>
+			<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%=ReferencedEntity.UnitTestClassName%%><%%-.UpdateTest%%><%%=ReferencedEntity.VITAClassName%%><%%-(colItem, false, item);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+	if (BaseEntityID != null)
+	{
+		<%%=Solution.NEWLINE%%>
+		<%%=BaseEntity.UnitTestClassName%%><%%-.UpdateTest%%><%%=BaseEntity.VITAClassName%%><%%-(item.%%><%%=BaseEntity.VITAClassName%%><%%-, false, item);%%>
+	}
+	<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT>

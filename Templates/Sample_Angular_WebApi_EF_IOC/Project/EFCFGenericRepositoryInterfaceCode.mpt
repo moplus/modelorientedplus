@@ -1,0 +1,60 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryInterfaceCode
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+
+namespace %%><%%=Project.Namespace%%><%%-
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This interface is used to define repository operations for
+	/// entity framework entities.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public interface %%><%%=EFCFGenericRepositoryInterfaceName%%><%%-<TEntity> where TEntity : class
+	{		
+		IQueryable<TEntity> All();
+
+		IQueryable<TEntity> All(params string[] includes);
+		
+		TEntity Get(object id);
+		
+		void Insert(TEntity entity);
+		
+		void Delete(object id);
+		
+		void Delete(TEntity entityToDelete);
+		
+		void Update(TEntity entityToUpdate);
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFGenericRepositoryInterfaceFilePath) == null || (File(EFCFGenericRepositoryInterfaceFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFGenericRepositoryInterfaceFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFGenericRepositoryInterfaceFilePath)
+}
+%%></OUTPUT>

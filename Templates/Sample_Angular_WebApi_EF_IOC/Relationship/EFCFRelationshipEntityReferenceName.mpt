@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME EFCFRelationshipEntityReferenceName
+	CATEGORY EFCF
+	NODE Relationship
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+with (Entity)
+{
+	foreach (EntityReference)
+	{
+		foreach (PropertyRelationship)
+		{
+			if (Relationship.RelationshipID == ../../../RelationshipID)
+			{
+				<%%=../EntityReferenceName%%>
+				return
+			}
+		}
+	}
+}
+%%></CONTENT>

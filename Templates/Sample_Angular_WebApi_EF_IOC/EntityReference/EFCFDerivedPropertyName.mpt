@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFDerivedPropertyName
+	CATEGORY EFCF
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFPropertyName%%><%%-_%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%></CONTENT>

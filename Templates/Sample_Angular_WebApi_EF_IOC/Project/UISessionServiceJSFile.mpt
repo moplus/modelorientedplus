@@ -1,0 +1,79 @@
+<CONFIG>
+	NAME UISessionServiceJSFile
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS service for session functions.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var firstItem
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This service provides access to session operations.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var SessionService = function ($cookies)%%>
+var tokenName = Solution.SolutionName.Replace(" ", "") + "Token"
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	<%%-
+	this.token = null;%%>
+	//
+	// get token
+	//
+	<%%-
+	this.getToken = function ()%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		if(!$cookies.%%><%%=tokenName%%><%%-)%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			if(!this.token)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				return null;%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-
+			this.setToken(this.token);%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+		return $cookies.%%><%%=tokenName%%><%%-;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// set token
+	//
+	<%%-
+	this.setToken = function (token)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		this.token = token;
+		$cookies.%%><%%=tokenName%%><%%- = token;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+SessionService.$inject = ['$cookies'];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UISessionServiceJSFilePath, text=Text) == true)
+{
+	update(UISessionServiceJSFilePath)
+}
+%%></OUTPUT>

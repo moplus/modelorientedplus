@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebApiTestBaseClassName
+	CATEGORY WebApiTest
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-BaseWebApiTest%%></CONTENT>

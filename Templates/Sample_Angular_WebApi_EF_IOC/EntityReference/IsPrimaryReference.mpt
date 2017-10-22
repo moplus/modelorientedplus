@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME IsPrimaryReference
+	CATEGORY CONFIG
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// Alter these business rules as needed as to what references are "primary", to be more visible
+//
+if (Tags.Contains("Ignore") || Tags.Contains("Secondary") == true || ReferencedEntity.IsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+// make self referential references secondary
+if (Entity.EntityID == ReferencedEntity.EntityID)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

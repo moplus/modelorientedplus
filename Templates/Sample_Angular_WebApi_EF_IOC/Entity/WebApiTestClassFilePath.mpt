@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME WebApiTestClassFilePath
+	CATEGORY WebApiTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\WebApi\%%><%%=WebApiTestClassName%%><%%-_G.cs%%></CONTENT>

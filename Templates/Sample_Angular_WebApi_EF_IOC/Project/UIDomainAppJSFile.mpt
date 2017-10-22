@@ -1,0 +1,386 @@
+<CONFIG>
+	NAME UIDomainAppJSFile
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS module for your project.  This module, which uses ui.router, ui.bootstrap, and angular.Validator is used to
+// register all of the Angular controllers, services, and factories in your application.  This module also implements the state provider for your application,
+// which determines updates to the url, views, and controllers based on change in state.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+var isFirstItem
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// This file manages controllers, states, and other details for the
+/// primary angular module for this application.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, change the Status
+/// value below to something other than Generated to prevent changes from
+/// being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+
+// define module with ui router
+var DomainApp = angular.module('DomainApp', ['ui.router', 'ui.bootstrap', 'angularValidator', 'ngCookies']);
+
+// add controllers, services, and factories%%>
+var tokenName = Solution.SolutionName.Replace(" ", "") + "Token"
+foreach (Entity in Solution where IsUIEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.controller('%%><%%=UIControllerClassName%%><%%-', %%><%%=UIControllerClassName%%><%%-);%%>
+}
+<%%=Solution.NEWLINE%%>
+foreach (Entity in Solution where IsUIEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-DomainApp.service('%%><%%=UIServiceName%%><%%-', %%><%%=UIServiceName%%><%%-);%%>
+}
+<%%-
+DomainApp.factory('WebConfigFactory', WebConfigFactory);
+
+DomainApp.filter("jsDate", function ()%%>
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	<%%-
+	return function (x)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		return new Date(parseInt(x.substr(6)));
+	%%><%%=Solution.CLOSE_BRACE%%><%%-;%%>
+<%%=Solution.CLOSE_BRACE%%><%%-);
+
+var configFunction = function ($stateProvider, $httpProvider, $locationProvider)%%>
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	<%%-
+
+	$locationProvider.hashPrefix('!').html5Mode(true);%%>
+	<%%-
+	$stateProvider%%><%%=Solution.INDENT%%>
+	foreach (Entity in Solution where IsUIEntity == true)
+	{
+		//
+		// search state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Search',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsQueryProperty == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=EFCFParameterName%%><%%-Start&%%>
+							<%%=EFCFParameterName%%><%%-End%%>
+							break
+						default:
+							<%%=EFCFParameterName%%>
+							break
+					}
+				}
+			}
+			if (isFirstItem == true)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%-orderBy&descending&page&pageSize',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"searchView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Search.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// results state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Results',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Results%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsQueryProperty == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=EFCFParameterName%%><%%-Start&%%>
+							<%%=EFCFParameterName%%><%%-End%%>
+							break
+						default:
+							<%%=EFCFParameterName%%>
+							break
+					}
+				}
+			}
+			if (isFirstItem == true)
+			{
+				<%%-?%%>
+			}
+			else
+			{
+				<%%-&%%>
+			}
+			<%%-orderBy&descending&page&pageSize',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Results.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// get state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Get',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/get%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=EFCFParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Get.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// create state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Create',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/create%%>
+			isFirstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsForeignKeyMember == true && IsBasePropertyMember == false)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					isFirstItem = false
+					<%%=EFCFParameterName%%>
+				}
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Create.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// update state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Update',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/update%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=EFCFParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Update.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		//
+		// delete state
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%-.state('%%><%%=EFCFClassName.CamelCase()%%><%%-Delete',%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-url: '/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/delete%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex == 0)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%=EFCFParameterName%%>
+			}
+			<%%-',
+			views:%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-"detailView":%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-templateUrl: '/Templates/%%><%%=LIBPluralEntityName.CamelCase()%%><%%-/Delete.html',
+					controller: %%><%%=UIControllerClassName%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-)%%>
+		foreach (Collection where IsPrimaryCollection== true)
+		{
+			//
+			// get collection
+			//
+			<%%=Solution.NEWLINE%%>
+			<%%-.state('%%><%%=../EFCFClassName.CamelCase()%%><%%-Get%%><%%=EFCFPropertyName%%><%%-',%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-url: '/%%><%%=../LIBPluralEntityName.CamelCase()%%><%%-/get%%><%%=EFCFPropertyName%%>
+				isFirstItem = true
+				foreach (Property in ../ where IsPrimaryKeyMember == true)
+				{
+					if (isFirstItem == true)
+					{
+						<%%-?%%>
+					}
+					else
+					{
+						<%%-&%%>
+					}
+					<%%=EFCFParameterName%%>
+					isFirstItem = false
+				}
+				if (isFirstItem == true)
+				{
+					<%%-?%%>
+				}
+				else
+				{
+					<%%-&%%>
+				}
+				<%%-editing&orderBy&descending&page&pageSize',
+				views:%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-"detailView":%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%=Solution.NEWLINE%%>
+						<%%-templateUrl: '/Templates/%%><%%=../LIBPluralEntityName.CamelCase()%%><%%-/Get%%><%%=EFCFPropertyName%%><%%-.html',
+						controller: %%><%%=../UIControllerClassName%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-)%%>
+		}
+	}
+	<%%=Solution.NEWLINE%%>
+	<%%-.state('home',%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-url: '/'%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%-);%%><%%=Solution.OUTDENT%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+configFunction.$inject = ['$stateProvider', '$httpProvider', '$locationProvider'];
+
+DomainApp.config(configFunction);%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UIDomainAppJSFilePath, text=Text) == true)
+{
+	update(UIDomainAppJSFilePath)
+}
+%%></OUTPUT>

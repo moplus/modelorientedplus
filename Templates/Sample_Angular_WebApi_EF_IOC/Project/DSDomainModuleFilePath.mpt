@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSDomainModuleFilePath
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\App_Start\DomainModule_G.cs%%></CONTENT>

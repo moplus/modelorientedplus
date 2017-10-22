@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsBasePropertyMember
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (Entity.BaseEntityID != null && IsForeignKeyMember == true && IsPrimaryKeyMember == true)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

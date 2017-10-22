@@ -1,0 +1,469 @@
+<CONFIG>
+	NAME DSApiControllerClassCode
+	CATEGORY DS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a web api controller for your entity.
+// This controller enables CRUD and search web api methods for your entity.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var baseEntityPath
+<%%-
+</copyright>*/
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+using System.Net;
+using System.Web.Mvc;
+using LinqKit;
+using AutoMapper;
+using %%><%%=Project.Namespace%%><%%-.Dtos;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+		// get a project tagged as Services
+		foreach (Project where Tags.Contains("Services") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Services;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+var repositoryParam = EFCFClassName.CamelCase() + "Repository"
+var repositoryProperty = "_" + EFCFClassName.CamelCase() + "Repository"
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Controllers%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This api controller provides access to CRUD operations on
+	/// %%><%%=EFCFClassName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=DSApiControllerClassName%%><%%- : Controller%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-private readonly IRepository<%%><%%=EFCFClassName%%><%%-> %%><%%=repositoryProperty%%><%%-;
+		private readonly %%><%%=Project.EFCFUnitOfWorkInterfaceName%%><%%- _unitOfWork;
+		private readonly IMapper _mapper;%%>
+		//
+		// constructor
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Contructor for %%><%%=DSApiControllerClassName%%><%%- with dependences.</summary>
+		///
+		///--------------------------------------------------------------------------------
+		public %%><%%=DSApiControllerClassName%%><%%-(IRepository<%%><%%=EFCFClassName%%><%%-> %%><%%=repositoryParam%%><%%-, %%><%%=Project.EFCFUnitOfWorkInterfaceName%%><%%- unitOfWork, IMapper mapper)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%=repositoryProperty%%><%%- = %%><%%=repositoryParam%%><%%-;
+			_mapper = mapper;
+			_unitOfWork = unitOfWork;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// search
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Search for instances of %%><%%=EFCFClassName%%><%%- by criteria.</summary>
+		///
+		/// <param name="query">Query object containing search criteria.</param>
+		///--------------------------------------------------------------------------------
+    		[HttpGet, Route("api/%%><%%=DSApiRoute%%><%%-")%%><%%-]
+		public ActionResult Get%%><%%=LIBPluralEntityName%%><%%-(%%><%%=DSQueryClassName%%><%%- query)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-query = query ?? new %%><%%=DSQueryClassName%%><%%-();
+			if (query.Take == 0) query.Take = 10;%%>
+			<%%=DSSearchQuery(repositoryName = repositoryProperty, listName = "items")%%><%%-
+			var itemsList = items.ToList();
+			
+			%%><%%=DSQueryResultsClassName%%><%%- results = new %%><%%=DSQueryResultsClassName%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Items = itemsList.Select(i => _mapper.Map<%%><%%=DSDtoClassName%%><%%->(i)).ToList(),
+				TotalItems = count,
+				CanCreate = true%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-;%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return Json(results, JsonRequestBehavior.AllowGet);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// list
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Get a list of %%><%%=EFCFClassName%%><%%- items.</summary>
+		///
+		/// <remarks>This is used to populate drop down lists with selected item, not generally
+		/// recommended for larger tables.</remarks>
+		///
+		/// <param name="take">Number of items to take.</param>%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=EFCFPropertyName.ToLower()%%><%%-">Id value to get item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[HttpGet, Route("api/%%><%%=DSApiRoute%%><%%-/list")]
+		public ActionResult Get%%><%%=LIBPluralEntityName%%><%%-List(int take = 100%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-, %%><%%=EFCFDataType%%><%%- %%><%%=EFCFPropertyName.CamelCase()%%><%%- = %%><%%=CSharpDefaultValue%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-// Get a bunch of items by no criteria
+			var items = %%><%%=repositoryProperty%%><%%-.All();
+			var count = items.Count();
+			items = items.Take(take);
+			var itemsList = items.ToList();
+			
+			// add selected item if not in list
+			if (%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%- && %%>
+				}
+				<%%=EFCFPropertyName.CamelCase()%%><%%- != %%><%%=CSharpDefaultValue%%>
+			}
+			<%%-)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				if (PrimaryKeyCount == 1)
+				{
+					<%%-var item = %%><%%=repositoryProperty%%><%%-.Get(%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						<%%=EFCFPropertyName.CamelCase()%%>
+					}
+					<%%-);%%>
+				}
+				else
+				{
+					<%%-var item = (from i in %%><%%=repositoryProperty%%><%%-.Get()%%><%%=Solution.INDENT%%>
+					foreach (Property where IsPrimaryKeyMember == true)
+					{
+						if (ItemIndex == 0)
+						{
+							<%%-
+							where %%>
+						}
+						else
+						{
+							<%%-
+							&& %%>
+						}
+						<%%-i.%%><%%=EFCFPrimaryKeyPath%%><%%- == %%><%%=EFCFPropertyName.CamelCase()%%>
+					}
+					<%%=Solution.NEWLINE%%>
+					<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+				}
+				<%%-
+				if (item != null && itemsList.Contains(item) == false)%%><%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+					<%%-itemsList.Add(item);%%>
+				<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			if (EFCFPrimarySortProperty != null)
+			{
+				<%%-itemsList.OrderBy(i => i.%%><%%=EFCFPrimarySortProperty%%><%%-);%%>
+			}
+			<%%-	
+			%%><%%=DSQueryResultsClassName%%><%%- results = new %%><%%=DSQueryResultsClassName%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Items = itemsList.Select(i => _mapper.Map<%%><%%=DSDtoClassName%%><%%->(i)).ToList(),
+				TotalItems = count%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-;%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return Json(results, JsonRequestBehavior.AllowGet);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// get
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Get an instance of %%><%%=EFCFClassName%%><%%- by id.</summary>
+		///%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=EFCFPropertyName.ToLower()%%><%%-">Id value to get item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[HttpGet, Route("api/%%><%%=DSApiRoute%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-/get%%>
+		}
+		else
+		{
+			<%%-/{%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=EFCFPropertyName.ToLower()%%>
+			}
+			<%%-}%%>
+		}
+		<%%-")]
+		public ActionResult Get%%><%%=EFCFClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=EFCFDataType%%><%%- %%><%%=EFCFPropertyName.CamelCase()%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var item = %%><%%=repositoryProperty%%><%%-.Get(%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=EFCFParameterName%%>
+			}
+			<%%-);
+			if (item == null)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				Response.StatusDescription = String.Format("%%><%%=EFCFClassName%%><%%- with ID '%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-,%%>
+					}
+					<%%-{%%><%%=ItemIndex%%><%%-}%%>
+				}
+				<%%-' not found."%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-, %%><%%=EFCFPropertyName.CamelCase()%%>
+				}
+				<%%-);
+				return null; %%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%=DSQueryResultsClassName%%><%%- results = new %%><%%=DSQueryResultsClassName%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Items = new List<%%><%%=DSDtoClassName%%><%%-> { _mapper.Map<%%><%%=DSDtoClassName%%><%%->(item) },
+				TotalItems = 1%%>
+			<%%=Solution.CLOSE_BRACE%%><%%-;%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-return Json(results, JsonRequestBehavior.AllowGet);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// create
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Create an instance of %%><%%=EFCFClassName%%><%%-.</summary>
+		///
+		/// <param name="item">%%><%%=DSDtoClassName%%><%%- dto of item to create.</param>
+		///--------------------------------------------------------------------------------
+    		[HttpPost, Route("api/%%><%%=DSApiRoute%%><%%-")]
+		public void Create%%><%%=EFCFClassName%%><%%-(%%><%%=DSDtoClassName%%><%%- item)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-if (TryValidateModel(item))%%>
+			<%%=Solution.OPEN_BRACE%%>
+				if (EFCFPrimaryKeyPropertyType == "Guid")
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-item.%%><%%=EFCFPrimaryKeyPropertyName%%><%%- = Guid.NewGuid();%%>
+				}
+				<%%=Solution.NEWLINE%%>
+				<%%=repositoryProperty%%><%%-.Insert(_mapper.Map<%%><%%=EFCFClassName%%><%%->(item));
+				_unitOfWork.Save();%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				Response.StatusDescription = string.Join(".  ", ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage)));%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// update
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Update an instance of %%><%%=EFCFClassName%%><%%-.</summary>
+		///
+		/// <param name="item">%%><%%=DSDtoClassName%%><%%- dto of item to update.</param>
+		///--------------------------------------------------------------------------------
+    		[HttpPut, Route("api/%%><%%=DSApiRoute%%><%%-")]
+		public void Update%%><%%=EFCFClassName%%><%%-(%%><%%=DSDtoClassName%%><%%- item)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-if (TryValidateModel(item))%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%=repositoryProperty%%><%%-.Update(_mapper.Map<%%><%%=EFCFClassName%%><%%->(item));
+				_unitOfWork.Save();%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				Response.StatusDescription = string.Join(".  ", ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage)));%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		//
+		// delete
+		//
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+		/// <summary>Delete an instance of %%><%%=EFCFClassName%%><%%- by id.</summary>
+		///%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%=Solution.NEWLINE%%>
+			<%%-/// <param name="%%><%%=EFCFPropertyName.ToLower()%%><%%-">Id value to delete item.</param>%%>
+		}
+		<%%-
+		///--------------------------------------------------------------------------------
+		[HttpDelete, Route("api/%%><%%=DSApiRoute%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-/%%>
+		}
+		else
+		{
+			<%%-/{%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=EFCFPropertyName.ToLower()%%>
+			}
+			<%%-}%%>
+		}
+		<%%-")]
+		public void Delete%%><%%=EFCFClassName%%><%%-(%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-[FromUri] %%>
+		}
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-, %%>
+			}
+			<%%=EFCFDataType%%><%%- %%><%%=EFCFPropertyName.CamelCase()%%>
+		}
+		<%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-var item = %%><%%=repositoryProperty%%><%%-.Get(%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=EFCFParameterName%%>
+			}
+			<%%-);
+			if (item != null)%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%=repositoryProperty%%><%%-.Delete(_mapper.Map<%%><%%=EFCFClassName%%><%%->(item));
+				_unitOfWork.Save();%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%=Solution.ELSE%%>
+			<%%=Solution.OPEN_BRACE%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Response.StatusCode = (int)HttpStatusCode.BadRequest;
+				Response.StatusDescription = String.Format("%%><%%=EFCFClassName%%><%%- with ID '%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-,%%>
+					}
+					<%%-{%%><%%=ItemIndex%%><%%-}%%>
+				}
+				<%%-' not found."%%>
+				foreach (Property where IsPrimaryKeyMember == true)
+				{
+					<%%-, %%><%%=EFCFPropertyName.CamelCase()%%>
+				}
+				<%%-);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=DSApiControllerClassFilePath, text=Text) == true)
+{
+	update(DSApiControllerClassFilePath)
+}
+%%></OUTPUT>

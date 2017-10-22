@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME IsInterfaceModelProperty
+	CATEGORY CONFIG
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.IsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

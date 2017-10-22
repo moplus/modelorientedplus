@@ -1,0 +1,77 @@
+<CONFIG>
+	NAME DSDomainModuleCode
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using Ninject.Modules;
+using Ninject.Web.Common;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class defines domain instances that need to be injected via Ninject.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public class DomainModule : NinjectModule%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public override void Load()%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-Bind<ModelContext>().To<ModelContext>().InRequestScope();
+			Bind<IUnitOfWork>().To<UnitOfWork>();%%>
+			foreach (Entity in Solution where IsDataModelEntity == true)
+			{
+				<%%-
+				Bind<IRepository<%%><%%=EFCFClassName%%><%%->>().To<Repository<%%><%%=EFCFClassName%%><%%->>();%%>
+			}
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=DSDomainModuleFilePath, text=Text) == true)
+{
+	update(DSDomainModuleFilePath)
+}
+%%></OUTPUT>

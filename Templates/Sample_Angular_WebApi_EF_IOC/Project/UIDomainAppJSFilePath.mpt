@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIDomainAppJSFilePath
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Scripts\DomainApp.js%%></CONTENT>

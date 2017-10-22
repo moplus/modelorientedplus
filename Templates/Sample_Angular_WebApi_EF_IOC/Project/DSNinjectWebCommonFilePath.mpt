@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSNinjectWebCommonFilePath
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\App_Start\NinjectWebCommon.cs%%></CONTENT>

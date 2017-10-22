@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIUpdateViewFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Update.html%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSAutoMapperModuleFilePath
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\App_Start\AutoMapperModule_G.cs%%></CONTENT>

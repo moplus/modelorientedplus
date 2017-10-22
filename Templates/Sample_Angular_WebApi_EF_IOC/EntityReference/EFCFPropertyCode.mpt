@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFPropertyCode
+	CATEGORY EFCF
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFPropertyAttributesCode%%>
+<%%=Solution.NEWLINE%%>
+<%%=ReferencedEntity.EFCFClassName%%><%%- %%><%%=EFCFPropertyName%%><%%- { get; set; }%%></CONTENT>

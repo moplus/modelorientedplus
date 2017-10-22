@@ -1,0 +1,132 @@
+<CONFIG>
+	NAME DSSearchQuery
+	CATEGORY DS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=USETABS true%%>
+param repositoryName
+param listName
+
+var hasSearchProperties = false
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where DSIsQueryProperty == true)
+	{
+		hasSearchProperties = true
+		break
+	}
+}
+<%%-
+
+// Build where clause%%>
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where DSIsQueryProperty == true)
+	{
+		switch (DataTypeCode)
+		{
+			case 24: // DateTime
+			case 29: // DateTimeSmall
+				<%%=Solution.NEWLINE%%>
+				<%%-var %%><%%=EFCFPropertyPath.CamelCase()%%><%%-Start = WebHelper.TryParseDateTime(query.%%><%%=EFCFPropertyPath%%><%%-Start);%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-var %%><%%=EFCFPropertyPath.CamelCase()%%><%%-End = WebHelper.TryParseDateTime(query.%%><%%=EFCFPropertyPath%%><%%-End);%%>
+				break
+			case 26: // Guid
+				<%%=Solution.NEWLINE%%>
+				<%%-Guid %%><%%=EFCFPropertyName.CamelCase()%%><%%-;%%>
+				<%%=Solution.NEWLINE%%>
+				<%%-Guid.TryParse(query.%%><%%=EFCFPropertyName%%><%%-, out %%><%%=EFCFPropertyName.CamelCase()%%><%%-);%%>
+				break
+			default:
+				break
+		}
+	}
+}
+<%%-
+var where = PredicateBuilder.New<%%><%%=EFCFClassName%%><%%->(true);%%>
+var baseEntityPath = ""
+if (hasSearchProperties == true)
+{
+	baseEntityPath = ""
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		if (ItemIndex > 0)
+		{
+			baseEntityPath = baseEntityPath + "." + EFCFClassName
+		}
+		foreach (Property where DSIsQueryProperty == true)
+		{
+			<%%=EFCFSearchWhereBlurb(baseEntityPath = baseEntityPath)%%>
+		}
+	}
+}
+<%%-
+
+// Build query from where
+var %%><%%=listName%%><%%- = %%><%%=repositoryName%%><%%-.All(%%>
+if (EntityReferenceCount > 0)
+{
+	foreach (EntityReference)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%-"%%><%%=EFCFPropertyName%%><%%-"%%>
+	}
+}
+<%%-).Where(where);
+var count = %%><%%=listName%%><%%-.Count();
+	
+// Add order by
+Expression<Func<%%><%%=EFCFClassName%%><%%-, object>> orderByFunc = null;
+if (!String.IsNullOrWhiteSpace(query.OrderBy))%%>
+<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-switch(query.OrderBy.Trim().ToLowerInvariant())%%>
+		<%%=Solution.OPEN_BRACE%%>
+		baseEntityPath = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				baseEntityPath = baseEntityPath + "." + EFCFClassName
+			}
+			foreach (Property where DSIsResultsProperty == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-case "%%><%%=EFCFPropertyName.ToLower()%%><%%-": orderByFunc = i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%-; break;%%>
+			}
+		}
+		baseEntityPath = ""
+		foreach (Entity in EntityAndBaseEntities)
+		{
+			if (ItemIndex > 0)
+			{
+				baseEntityPath = baseEntityPath + "." + EFCFClassName
+			}
+			foreach (EntityReference where IsPrimaryReference == true)
+			{
+				<%%=Solution.NEWLINE%%>
+				<%%-case "%%><%%=EFCFDerivedPropertyName.ToLower()%%><%%-": orderByFunc = i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyName%%><%%-.%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%><%%-; break;%%>
+			}
+		}
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.NEWLINE%%>
+<%%-if (orderByFunc == null)%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-orderByFunc = i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPrimarySortProperty%%><%%-;%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.NEWLINE%%>
+<%%=listName%%><%%- = query.Descending ? %%><%%=listName%%><%%-.OrderByDescending(orderByFunc) : %%><%%=listName%%><%%-.OrderBy(orderByFunc); %%>
+<%%-
+
+// Add paging
+%%><%%=listName%%><%%- = %%><%%=listName%%><%%-.Skip(query.Skip).Take(query.Take);%%>
+%%></CONTENT>

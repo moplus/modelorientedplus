@@ -1,0 +1,31 @@
+<CONFIG>
+	NAME UIEditUI
+	CATEGORY UI
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+var attributes = ""
+if (IsNullable == false)
+{
+	attributes = " required required-message=\"'" + EFCFLabelName + " is required, please choose a " + ReferencedEntity.EFCFClassName.CapitalWordCase() + ".'\""
+}
+<%%=Solution.NEWLINE%%>
+<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-<div class="col-md-5">%%><%%=Solution.INDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<label for="%%><%%=EFCFParameterName%%><%%-">%%><%%=EFCFLabelName%%><%%-:</label>%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<select class="form-control" name="%%><%%=EFCFParameterName%%><%%-" ng-disabled="status.isReadOnly" ng-model="itemForm.%%><%%=EFCFPropertyParameterName%%><%%-"%%>
+		if (attributes != "")
+		{
+			<%%- %%><%%=attributes%%>
+		}
+		<%%- ng-options="item.%%><%%=EFCFPrimaryKeyPropertyName%%><%%- as item.%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%><%%- for item in itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-"></select>%%><%%=Solution.OUTDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-</div>%%><%%=Solution.OUTDENT%%>
+<%%=Solution.NEWLINE%%>
+<%%-</div>%%>
+%%></CONTENT>

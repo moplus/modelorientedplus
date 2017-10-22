@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceImplementationName
+	CATEGORY Services
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=VITAClassName%%><%%-Service%%></CONTENT>

@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME EFCFPropertyParameterName
+	CATEGORY EFCF
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (PropertyRelationship)
+{
+	foreach (RelationshipProperty in Relationship)
+	{
+		<%%=Property.EFCFParameterName%%>
+		break
+	}
+	break
+}
+%%></CONTENT>

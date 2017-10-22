@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSQueryResultsClassFilePath
+	CATEGORY DS
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Dtos\%%><%%=DSQueryResultsClassName%%><%%-_G.cs%%></CONTENT>

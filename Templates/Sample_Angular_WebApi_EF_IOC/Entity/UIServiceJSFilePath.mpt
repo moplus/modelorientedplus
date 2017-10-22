@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIServiceJSFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:param nocache%%><%%=Project.ProjectDirectory%%><%%-\Scripts\Services\%%><%%=UIServiceName%%><%%-.js%%></CONTENT>

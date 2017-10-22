@@ -1,0 +1,34 @@
+<CONFIG>
+	NAME EFCFPrimarySortProperty
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where (DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)  && PropertyName.ToLower().EndsWith("name") == true)
+	{
+		<%%=EFCFPropertyPath%%>
+		return
+	}
+}
+// get first string property
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where DataTypeCode == 16 || DataTypeCode == 17 || DataTypeCode == 19 || DataTypeCode == 20)
+	{
+		<%%=EFCFPropertyPath%%>
+		return
+	}
+}
+// get first non guid property
+foreach (Entity in EntityAndBaseEntities)
+{
+	foreach (Property where DataTypeCode < 23)
+	{
+		<%%=EFCFPropertyPath%%>
+		return
+	}
+}%%></CONTENT>

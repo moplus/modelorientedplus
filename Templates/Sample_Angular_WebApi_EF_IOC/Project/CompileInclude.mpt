@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME CompileInclude
+	CATEGORY LIB
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+param filePath
+if (filePath != null)
+{
+<%%-<Compile Include="%%><%%=filePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%>
+}
+%%></CONTENT>

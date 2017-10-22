@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DSDtoDerivedPropertyCode
+	CATEGORY DS
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-public %%><%%=ReferencedEntity.EFCFPrimaryNamePropertyType%%><%%- %%><%%=EFCFDerivedPropertyName%%><%%- { get; set; }%%></CONTENT>

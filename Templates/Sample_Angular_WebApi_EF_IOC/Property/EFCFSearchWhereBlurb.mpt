@@ -1,0 +1,70 @@
+<CONFIG>
+	NAME EFCFSearchWhereBlurb
+	CATEGORY EFCF
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=USETABS true%%>
+param baseEntityPath
+switch (DataTypeCode)
+{
+	case 13: // Char
+		<%%=Solution.NEWLINE%%>
+		if (Length > 1)
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=EFCFPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%-.StartsWith(query.%%><%%=EFCFPropertyName%%><%%-))%%>
+		}
+		else
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=EFCFPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%- == query.%%><%%=EFCFPropertyName%%><%%-.Value)%%>
+		}
+		break
+	case 14: // CharUnicode
+		<%%=Solution.NEWLINE%%>
+		if (Length > 1)
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=EFCFPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%-.StartsWith(query.%%><%%=EFCFPropertyName%%><%%-))%%>
+		}
+		else
+		{
+			<%%-.AndIfNotEmpty(query.%%><%%=EFCFPropertyName%%><%%-, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%- == query.%%><%%=EFCFPropertyName%%><%%-.Value)%%>
+		}
+		break
+	case 16: // String
+	case 17: // StringUnicode
+	case 19: // Text
+	case 20: // TextUnicode
+		<%%=Solution.NEWLINE%%>
+		<%%-if (!String.IsNullOrEmpty(query.%%><%%=EFCFPropertyName%%><%%-))%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-where = where.And(i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%-.StartsWith(query.%%><%%=EFCFPropertyName%%><%%-));%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		break
+	case 24: // DateTime
+	case 29: // DateTimeSmall
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIfNotEmpty(%%><%%=VITAPropertyPath.CamelCase()%%><%%-Start, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyName%%><%%- >= %%><%%=EFCFPropertyName.CamelCase()%%><%%-Start.Value)%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-.AndIfNotEmpty(%%><%%=VITAPropertyPath.CamelCase()%%><%%-End, i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyName%%><%%- <= %%><%%=EFCFPropertyName.CamelCase()%%><%%-End.Value)%%>
+		break
+	case 26: // Guid
+		<%%=Solution.NEWLINE%%>
+		<%%-if(%%><%%=EFCFPropertyName.CamelCase()%%><%%- != Guid.Empty)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-where = where.And(i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%- == %%><%%=EFCFPropertyName.CamelCase()%%><%%-);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		break
+	default:
+		<%%=Solution.NEWLINE%%>
+		<%%-if (query.%%><%%=EFCFPropertyName%%><%%- != %%><%%=CSharpDefaultValue%%><%%-)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-where = where.And(i => i%%><%%=baseEntityPath%%><%%-.%%><%%=EFCFPropertyPath%%><%%- == query.%%><%%=EFCFPropertyName%%><%%-.Value);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		break
+}
+%%></CONTENT>

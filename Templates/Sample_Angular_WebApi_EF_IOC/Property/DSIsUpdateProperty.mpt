@@ -1,0 +1,15 @@
+<CONFIG>
+	NAME DSIsUpdateProperty
+	CATEGORY DS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (DSIsDtoClassProperty == true && IsPrimaryKeyMember == false)
+{
+	<%%-true%%>
+	return
+}
+<%%-false%%>
+%%></CONTENT>

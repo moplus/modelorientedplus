@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME EFCFPrimaryKeyPropertyName
+	CATEGORY EFCF
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property in ReferencedEntity where IsPrimaryKeyMember == true)
+{
+	<%%=EFCFPropertyName%%>
+	break
+}
+%%></CONTENT>

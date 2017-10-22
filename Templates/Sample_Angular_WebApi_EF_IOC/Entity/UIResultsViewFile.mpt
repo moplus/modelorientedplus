@@ -1,0 +1,118 @@
+<CONFIG>
+	NAME UIResultsViewFile
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-<!DOCTYPE html>
+<!--Copyright:
+%%>
+<%%=Solution.Copyright%%><%%-
+
+//------------------------------------------------------------------------------
+/// This file is for providing search results ui functionality for %%><%%=EFCFClassName%%><%%- items.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+-->
+<div class="container-fluid" data-ng-init="search()">%%><%%=Solution.INDENT%%><%%-
+	<h2>%%><%%=EFCFClassName%%><%%- Results</h2>
+	<input id="orderBy" type="hidden" ng-model="searchQuery.orderBy" />
+	<input id="descending" type="hidden" ng-model="searchQuery.descending" />
+	<input id="page" type="hidden" ng-model="searchQuery.page" />
+	<input id="pageSize" type="hidden" ng-model="searchQuery.pageSize" />
+	<input id="totalPages" type="hidden" ng-model="searchResults.totalPages" />%%>
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where DSIsQueryProperty == true)
+		{
+			switch (DataTypeCode)
+			{
+				case 24: // DateTime
+				case 29: // DateTimeSmall
+					<%%=Solution.NEWLINE%%>
+					<%%-<input id="%%><%%=EFCFParameterName%%><%%-Start" type="hidden" ng-model="searchQuery.%%><%%=EFCFParameterName%%><%%-Start" />%%>
+					<%%=Solution.NEWLINE%%>
+					<%%-<input id="%%><%%=EFCFParameterName%%><%%-End" type="hidden" ng-model="searchQuery.%%><%%=EFCFParameterName%%><%%-End" />%%>
+					break
+				default:
+					<%%=Solution.NEWLINE%%>
+					<%%-<input id="%%><%%=EFCFParameterName%%><%%-" type="hidden" ng-model="searchQuery.%%><%%=EFCFParameterName%%><%%-" />%%>
+					break
+			}
+		}
+	}
+	<%%-
+	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-default" ui-sref="%%><%%=EFCFClassName.CamelCase()%%><%%-Search({%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsQueryProperty == true)
+				{
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=EFCFParameterName%%><%%-Start: searchQuery.%%><%%=EFCFParameterName%%><%%-Start, %%><%%=EFCFParameterName%%><%%-End: searchQuery.%%><%%=EFCFParameterName%%><%%-End, %%>
+							break
+						default:
+							<%%=EFCFParameterName%%><%%-: searchQuery.%%><%%=EFCFParameterName%%><%%-, %%>
+							break
+					}
+				}
+			}
+			<%%-page: 1})">%%><%%-Search</a>
+			<span>&nbsp;Filter:&nbsp;{{searchQuery.filter}}</span>%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+			<a class="btn btn-default" ng-if="searchResults.canCreate == true" ui-sref="%%><%%=EFCFClassName.CamelCase()%%><%%-Create">New %%><%%=EFCFClassName%%><%%-</a>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>%%>
+	<%%=UIResultsList(listName="searchResults.items", sortAllowed = true)%%>
+	<%%-
+	<div class="row top15">%%><%%=Solution.INDENT%%><%%-
+		<div class="col-md-2">%%><%%=Solution.INDENT%%><%%-
+			Page&nbsp;{{searchQuery.page}}&nbsp;of&nbsp;{{searchResults.totalPages}}%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-1">%%><%%=Solution.INDENT%%><%%-
+			<span ng-if="searchQuery.page > 1" class="glyphicon glyphicon-fast-backward" ng-click="first()" />%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-1">%%><%%=Solution.INDENT%%><%%-
+			<span ng-if="searchQuery.page > 1" class="glyphicon glyphicon-chevron-left" ng-click="previous()" />%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-1">%%><%%=Solution.INDENT%%><%%-
+			<span ng-if="searchQuery.page < searchResults.totalPages" class="glyphicon glyphicon-chevron-right" ng-click="next()" />%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-1">%%><%%=Solution.INDENT%%><%%-
+			<span ng-if="searchQuery.page < searchResults.totalPages" class="glyphicon glyphicon-fast-forward" ng-click="last()" />%%><%%=Solution.OUTDENT%%><%%-
+		</div>
+		<div class="col-md-6">%%><%%=Solution.INDENT%%><%%-
+			<select ng-model="searchQuery.pageSize" ng-change="searchQuery.page = 1;search()">
+			<option value="10">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+			<option value="100">100</option>
+			<option value="200">200</option>
+			</select>&nbsp;items&nbsp;per&nbsp;page</span>%%><%%=Solution.OUTDENT%%><%%-
+		</div>%%><%%=Solution.OUTDENT%%><%%-
+	</div>%%><%%=Solution.OUTDENT%%><%%-
+</div>%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UIResultsViewFilePath, text=Text) == true)
+{
+	update(UIResultsViewFilePath)
+}
+%%></OUTPUT>

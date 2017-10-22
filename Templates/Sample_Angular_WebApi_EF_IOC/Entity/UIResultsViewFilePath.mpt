@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIResultsViewFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Results.html%%></CONTENT>

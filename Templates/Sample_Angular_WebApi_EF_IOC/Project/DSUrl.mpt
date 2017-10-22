@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSUrl
+	CATEGORY CONFIG
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-http://localhost:%%><%%=DSPort%%><%%-/%%></CONTENT>

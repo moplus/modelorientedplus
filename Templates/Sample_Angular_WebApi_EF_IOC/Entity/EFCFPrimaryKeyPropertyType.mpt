@@ -1,0 +1,14 @@
+<CONFIG>
+	NAME EFCFPrimaryKeyPropertyType
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+foreach (Property where IsPrimaryKeyMember == true)
+{
+	<%%=EFCFDataType%%>
+	return
+}
+%%></CONTENT>

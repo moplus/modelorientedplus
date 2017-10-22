@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSDomainMapFilePath
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\App_Start\DomainMap_G.cs%%></CONTENT>

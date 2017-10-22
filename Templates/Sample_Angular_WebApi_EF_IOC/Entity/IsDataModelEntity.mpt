@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME IsDataModelEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-true%%></CONTENT>

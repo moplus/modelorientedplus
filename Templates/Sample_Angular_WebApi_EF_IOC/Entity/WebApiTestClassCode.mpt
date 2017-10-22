@@ -1,0 +1,299 @@
+<CONFIG>
+	NAME WebApiTestClassCode
+	CATEGORY WebApiTest
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a set of CRUD tests which test VITA data operations for this entity.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using System.Configuration;
+using System.Globalization;
+using System.Text;
+using Xunit;
+using Moq;
+using Vita.Entities;
+using Vita.Entities.Authorization;
+using System.Collections.Generic;
+using System.Linq;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+		// get a project tagged as Services
+		foreach (Project where Tags.Contains("Services") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Services;%%>
+		}
+		// get a project tagged as DS
+		foreach (Project where Tags.Contains("DS") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Controllers;
+using %%><%%=Namespace%%><%%-.Dtos;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-;
+using %%><%%=Namespace%%><%%-.Models;
+using %%><%%=Namespace%%><%%-.Services;
+using %%><%%=Namespace%%><%%-.Controllers;%%>
+		}
+	}
+}
+<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.WebApi%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class implements service tests and validation
+	/// for the %%><%%=VITADSApiControllerClassName%%><%%- webapi controller.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=WebApiTestClassName%%><%%- : %%><%%=Project.WebApiTestBaseClassName%%>
+	<%%=Solution.OPEN_BRACE%%><%%-
+        	///--------------------------------------------------------------------------------
+		/// <summary>Test create an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
+        	///--------------------------------------------------------------------------------
+		[Fact]
+		public void WebApiCreate%%><%%=VITAClassName%%><%%-Test()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			// arrange
+			InitializeSecureSession(%%>
+			if (Tags.Contains("USER") == true)
+			{
+				<%%-false%%>
+			}
+			<%%-);
+			var service = new Mock<%%><%%=ServiceInterfaceName%%><%%->();
+			service.Setup(i => i.Create%%><%%=VITAClassName%%><%%-(It.IsAny<%%><%%=VITAInterfaceName%%><%%->(), It.IsAny<IEntitySession>())).Returns<%%>
+				<%%=VITAInterfaceName%%><%%-, IEntitySession>((i, j) => new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%-=i.%%><%%=VITAPrimaryKeyPropertyName%%>
+				foreach (Property where IsStringProperty == true)
+				{
+					<%%-, %%><%%=VITAPropertyName%%><%%-=i.%%><%%=VITAPropertyName%%>
+				}
+			<%%- });
+			var controller = new Mock<%%><%%=VITADSApiControllerClassName%%><%%->(service.Object);
+			controller.CallBase = true;
+			controller.Setup(i => i.OpenUserSecureSession()).Returns(MockSession.Object);
+			
+			// act
+			%%><%%=VITADSDtoClassName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-"%%>
+			}
+			<%%- };
+			%%><%%=VITAInterfaceName%%><%%- created%%><%%=VITAClassName%%><%%- = controller.Object.Create%%><%%=VITAClassName%%><%%-(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			
+			// assert
+			Assert.NotNull(created%%><%%=VITAClassName%%><%%-);%%>
+			foreach (Property where IsStringProperty == true)
+			{
+			<%%-
+			Assert.Equal(created%%><%%=../VITAClassName%%><%%-.%%><%%=VITAPropertyName%%><%%-, %%><%%=../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%-);%%>
+			}
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Test update an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+		///--------------------------------------------------------------------------------
+		[Fact]
+		public void WebApiUpdate%%><%%=VITAClassName%%><%%-Test()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			// arrange
+			InitializeSecureSession(%%>
+			if (Tags.Contains("USER") == true)
+			{
+				<%%-false%%>
+			}
+			<%%-);
+			var service = new Mock<%%><%%=ServiceInterfaceName%%><%%->();
+			service.Setup(i => i.Update%%><%%=VITAClassName%%><%%-(It.IsAny<%%><%%=VITAInterfaceName%%><%%->(), It.IsAny<IEntitySession>())).Returns<%%>
+				<%%=VITAInterfaceName%%><%%-, IEntitySession>((i, j) => new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%-=i.%%><%%=VITAPrimaryKeyPropertyName%%>
+				foreach (Property where IsStringProperty == true)
+				{
+					<%%-, %%><%%=VITAPropertyName%%><%%-=i.%%><%%=VITAPropertyName%%>
+				}
+			<%%- });
+			var controller = new Mock<%%><%%=VITADSApiControllerClassName%%><%%->(service.Object);
+			controller.CallBase = true;
+			controller.Setup(i => i.OpenUserSecureSession()).Returns(MockSession.Object);
+			
+			// act
+			%%><%%=VITADSDtoClassName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-"%%>
+			}
+			<%%- };
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			%%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-2"%%>
+			}
+			<%%- };
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			%%><%%=VITAInterfaceName%%><%%- updated%%><%%=VITAClassName%%><%%- = controller.Object.Update%%><%%=VITAClassName%%><%%-(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			
+			// assert
+			Assert.NotNull(updated%%><%%=VITAClassName%%><%%-);%%>
+			foreach (Property where IsStringProperty == true)
+			{
+			<%%-
+			Assert.Equal(updated%%><%%=../VITAClassName%%><%%-.%%><%%=VITAPropertyName%%><%%-, %%><%%=../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%-);%%>
+			}
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Test delete an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+		///--------------------------------------------------------------------------------
+		[Fact]
+		public void WebApiDelete%%><%%=VITAClassName%%><%%-Test()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			// arrange
+			InitializeSecureSession(%%>
+			if (Tags.Contains("USER") == true)
+			{
+				<%%-false%%>
+			}
+			<%%-);
+			var service = new Mock<%%><%%=ServiceInterfaceName%%><%%->();
+			service.Setup(i => i.Delete%%><%%=VITAClassName%%><%%-(It.IsAny<%%><%%=VITAPrimaryKeyPropertyType%%><%%->(), It.IsAny<IEntitySession>())).Callback<%%>
+				<%%=VITAPrimaryKeyPropertyType%%><%%-, IEntitySession>((i, j) => %%><%%=LIBPluralEntityName%%><%%-.Remove(%%><%%=LIBPluralEntityName%%><%%-.FirstOrDefault(k => k.%%><%%=VITAPrimaryKeyPropertyName%%><%%- == i)));
+			var controller = new Mock<%%><%%=VITADSApiControllerClassName%%><%%->(service.Object);
+			controller.CallBase = true;
+			controller.Setup(i => i.OpenUserSecureSession()).Returns(MockSession.Object);
+			
+			// act
+			%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-"%%>
+			}
+			<%%- } as %%><%%=VITAInterfaceName%%><%%-;
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			controller.Object.Delete%%><%%=VITAClassName%%><%%-(%%><%%=VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPrimaryKeyPropertyName%%><%%-);
+			
+			// assert
+			Assert.Equal(%%><%%=LIBPluralEntityName%%><%%-.Count, 0);
+			Assert.Null(%%><%%=LIBPluralEntityName%%><%%-.Where(i => i.%%><%%=VITAPrimaryKeyPropertyName%%><%%- == %%><%%=VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPrimaryKeyPropertyName%%><%%-).FirstOrDefault());%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Test get an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+		///--------------------------------------------------------------------------------
+		[Fact]
+		public void WebApiGet%%><%%=VITAClassName%%><%%-Test()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			// arrange
+			InitializeSecureSession(%%>
+			if (Tags.Contains("USER") == true)
+			{
+				<%%-false%%>
+			}
+			<%%-);
+			var service = new Mock<%%><%%=ServiceInterfaceName%%><%%->();
+			service.Setup(i => i.Get%%><%%=VITAClassName%%><%%-(It.IsAny<%%><%%=VITAPrimaryKeyPropertyType%%><%%->(), It.IsAny<IEntitySession>())).Returns<%%>
+				<%%=VITAPrimaryKeyPropertyType%%><%%-, IEntitySession>((i, j) => %%><%%=LIBPluralEntityName%%><%%-.FirstOrDefault(k => k.%%><%%=VITAPrimaryKeyPropertyName%%><%%- == i));
+			var controller = new Mock<%%><%%=VITADSApiControllerClassName%%><%%->(service.Object);
+			controller.CallBase = true;
+			controller.Setup(i => i.OpenUserSecureSession()).Returns(MockSession.Object);
+			
+			// act
+			%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-"%%>
+			}
+			<%%- } as %%><%%=VITAInterfaceName%%><%%-;
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			%%><%%=VITAInterfaceName%%><%%- get%%><%%=VITAClassName%%><%%- = controller.Object.Get%%><%%=VITAClassName%%><%%-(%%><%%=VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPrimaryKeyPropertyName%%><%%-);
+			
+			// assert
+			Assert.NotNull(get%%><%%=VITAClassName%%><%%-);%%>
+			foreach (Property where IsStringProperty == true)
+			{
+			<%%-
+			Assert.Equal(get%%><%%=../VITAClassName%%><%%-.%%><%%=VITAPropertyName%%><%%-, %%><%%=../VITAClassName.CamelCase()%%><%%-.%%><%%=VITAPropertyName%%><%%-);%%>
+			}
+		<%%=Solution.CLOSE_BRACE%%><%%-
+
+		///--------------------------------------------------------------------------------
+		/// <summary>Test get a list of %%><%%=VITAInterfaceName%%><%%-.</summary>
+		///--------------------------------------------------------------------------------
+		[Fact]
+		public void WebApiGet%%><%%=LIBPluralEntityName%%><%%-Test()%%>
+		<%%=Solution.OPEN_BRACE%%><%%-
+			// arrange
+			InitializeSecureSession(%%>
+			if (Tags.Contains("USER") == true)
+			{
+				<%%-false%%>
+			}
+			<%%-);
+			var service = new Mock<%%><%%=ServiceInterfaceName%%><%%->();
+			service.Setup(i => i.Get%%><%%=LIBPluralEntityName%%><%%-(It.IsAny<IEntitySession>())).Returns<IEntitySession>((i) => %%><%%=LIBPluralEntityName%%><%%-.AsQueryable());
+			var controller = new Mock<%%><%%=VITADSApiControllerClassName%%><%%->(service.Object);
+			controller.CallBase = true;
+			controller.Setup(i => i.OpenUserSecureSession()).Returns(MockSession.Object);
+			
+			// act
+			%%><%%=VITAInterfaceName%%><%%- %%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-"%%>
+			}
+			<%%- } as %%><%%=VITAInterfaceName%%><%%-;
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			%%><%%=VITAClassName.CamelCase()%%><%%- = new %%><%%=VITADSDtoClassName%%><%%- { %%><%%=VITAPrimaryKeyPropertyName%%><%%- = %%><%%=VITAPrimaryKeyNewValue%%>
+			foreach (Property where IsStringProperty == true)
+			{
+				<%%-, %%><%%=VITAPropertyName%%><%%- = "My %%><%%=VITAPropertyName%%><%%-2"%%>
+			}
+			<%%- } as %%><%%=VITAInterfaceName%%><%%-;
+			%%><%%=LIBPluralEntityName%%><%%-.Add(%%><%%=VITAClassName.CamelCase()%%><%%-);
+			%%><%%=VITADSQueryResultsClassName%%><%%- results = controller.Object.Get%%><%%=LIBPluralEntityName%%><%%-(new %%><%%=VITADSQueryClassName%%><%%-());
+			
+			// assert
+			Assert.NotNull(results);
+			Assert.Equal(results.Items.Count(), 2);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>%%></CONTENT><OUTPUT>
+<%%:
+if (File(WebApiTestClassFilePath) == null || (File(WebApiTestClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(WebApiTestClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(WebApiTestClassFilePath)
+}
+%%></OUTPUT>

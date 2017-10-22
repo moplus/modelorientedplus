@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFParameterName
+	CATEGORY EFCF
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFPropertyName.CamelCase()%%></CONTENT>

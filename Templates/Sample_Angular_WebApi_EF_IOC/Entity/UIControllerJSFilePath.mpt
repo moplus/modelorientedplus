@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIControllerJSFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:param nocache%%><%%=Project.ProjectDirectory%%><%%-\Scripts\Controllers\%%><%%=UIControllerClassName%%><%%-.js%%></CONTENT>

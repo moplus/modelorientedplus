@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Solution xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Tags />
+  <SpecSourceName>Basic VITA</SpecSourceName>
+  <ReferencedModelIDs />
+  <IsSampleMode>false</IsSampleMode>
+  <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+  <SolutionName>Basic VITA</SolutionName>
+  <Namespace>Basic</Namespace>
+  <OutputSolutionFileName>BasicVITA.sln</OutputSolutionFileName>
+  <CompanyName>Your Company</CompanyName>
+  <ProductName>VITA Admin Tool</ProductName>
+  <ProductVersion>1.0</ProductVersion>
+  <TemplatePath>..\..\..\Source\SamplePacks\Sample_Angular_WebApi_VITA\SolutionFile.mpt</TemplatePath>
+  <UseRelativePaths>true</UseRelativePaths>
+  <Copyright>This software falls under the Code Project Open License (CPOL), please feel free to use it!</Copyright>
+  <Description />
+  <DatabaseSourceList>
+    <DatabaseSource>
+      <Tags />
+      <SpecSourceName>(localdb)\v11.0</SpecSourceName>
+      <SpecificationSourceID>83a2f004-be17-4382-a1a7-edc106606251</SpecificationSourceID>
+      <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+      <TemplatePath>..\..\..\Source\SamplePacks\Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps</TemplatePath>
+      <Order>1</Order>
+      <Description />
+      <SourceDbServerName>(localdb)\v11.0</SourceDbServerName>
+      <SourceDbName>BasicSource</SourceDbName>
+      <DatabaseTypeCode>1</DatabaseTypeCode>
+      <UserName />
+      <Password />
+    </DatabaseSource>
+  </DatabaseSourceList>
+  <ProjectList>
+    <Project>
+      <Tags>BLL </Tags>
+      <SpecSourceName>VITA</SpecSourceName>
+      <ProjectID>76f238f8-19cf-489e-b3ea-bc1337edd6d8</ProjectID>
+      <ProjectName>VITA</ProjectName>
+      <Namespace>Basic.VITA</Namespace>
+      <DbServerName>(localdb)\v11.0</DbServerName>
+      <DbName>BasicVITA</DbName>
+      <TemplatePath>..\..\..\Source\SamplePacks\Sample_Angular_WebApi_VITA\Project\VITA.mpt</TemplatePath>
+      <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+      <Description />
+      <ProjectReferenceList />
+    </Project>
+    <Project>
+      <Tags>DS </Tags>
+      <SpecSourceName>VITA DS</SpecSourceName>
+      <ProjectID>3e4ee131-5e19-4bc5-9074-6160825dbead</ProjectID>
+      <ProjectName>VITA DS</ProjectName>
+      <Namespace>Basic.DS</Namespace>
+      <DbServerName>(localdb)\v11.0</DbServerName>
+      <DbName>BasicVITA</DbName>
+      <TemplatePath>..\..\..\Source\SamplePacks\Sample_Angular_WebApi_VITA\Project\VITADataServices.mpt</TemplatePath>
+      <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+      <Description />
+      <ProjectReferenceList>
+        <ProjectReference>
+          <Tags>BLL </Tags>
+          <SpecSourceName>VITA</SpecSourceName>
+          <ProjectID>3e4ee131-5e19-4bc5-9074-6160825dbead</ProjectID>
+          <ReferencedProjectID>76f238f8-19cf-489e-b3ea-bc1337edd6d8</ReferencedProjectID>
+          <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+        </ProjectReference>
+      </ProjectReferenceList>
+    </Project>
+    <Project>
+      <Tags />
+      <SpecSourceName>Tests</SpecSourceName>
+      <ProjectID>a2a43d84-4068-494e-bcf2-1befd7b16aea</ProjectID>
+      <ProjectName>Tests</ProjectName>
+      <Namespace>Basic.Tests</Namespace>
+      <DbServerName>(localdb)\v11.0</DbServerName>
+      <DbName>BasicVITATest</DbName>
+      <TemplatePath>..\..\..\Source\SamplePacks\Sample_Angular_WebApi_VITA\Project\VITAUnitTests.mpt</TemplatePath>
+      <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+      <Description />
+      <ProjectReferenceList>
+        <ProjectReference>
+          <Tags>BLL </Tags>
+          <SpecSourceName>VITA</SpecSourceName>
+          <ProjectID>a2a43d84-4068-494e-bcf2-1befd7b16aea</ProjectID>
+          <ReferencedProjectID>76f238f8-19cf-489e-b3ea-bc1337edd6d8</ReferencedProjectID>
+          <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+        </ProjectReference>
+      </ProjectReferenceList>
+    </Project>
+    <Project>
+      <Tags />
+      <SpecSourceName>VITA UI</SpecSourceName>
+      <ProjectID>227632a2-5844-4b6a-8997-fbf2b75095c5</ProjectID>
+      <ProjectName>VITA UI</ProjectName>
+      <Namespace>Basic.UI</Namespace>
+      <DbServerName>(localdb)\v11.0</DbServerName>
+      <DbName>BasicVITA</DbName>
+      <TemplatePath>..\..\..\Source\SamplePacks\Sample_Angular_WebApi_VITA\Project\VITAUI.mpt</TemplatePath>
+      <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+      <Description />
+      <ProjectReferenceList>
+        <ProjectReference>
+          <Tags>DS </Tags>
+          <SpecSourceName>VITA DS</SpecSourceName>
+          <ProjectID>227632a2-5844-4b6a-8997-fbf2b75095c5</ProjectID>
+          <ReferencedProjectID>3e4ee131-5e19-4bc5-9074-6160825dbead</ReferencedProjectID>
+          <SolutionID>7729cb47-406f-4a49-9832-d36a50f60f8f</SolutionID>
+        </ProjectReference>
+      </ProjectReferenceList>
+    </Project>
+  </ProjectList>
+</Solution>

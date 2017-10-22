@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIDeleteViewFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Delete.html%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFMigrationsConfigurationClassFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Migrations\Configuration_G.cs%%></CONTENT>

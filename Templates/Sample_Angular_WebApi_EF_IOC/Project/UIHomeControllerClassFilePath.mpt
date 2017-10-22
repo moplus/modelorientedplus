@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIHomeControllerClassFilePath
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Controllers\HomeController_G.cs%%></CONTENT>

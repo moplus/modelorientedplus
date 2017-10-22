@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UICreateViewFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Create.html%%></CONTENT>

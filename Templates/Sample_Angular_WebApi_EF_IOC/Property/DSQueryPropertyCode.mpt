@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME DSQueryPropertyCode
+	CATEGORY DS
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (DataTypeCode == 24 /* DateTime */ || DataTypeCode == 29 /* DateTimeSmall */)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=DSQueryDataType%%><%%- %%><%%=EFCFPropertyName%%><%%-Start { get; set; }%%>
+	<%%=Solution.NEWLINE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=DSQueryDataType%%><%%- %%><%%=EFCFPropertyName%%><%%-End { get; set; }%%>
+}
+else
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-public %%>
+	<%%=DSQueryDataType%%><%%- %%><%%=EFCFPropertyName%%><%%- { get; set; }%%>
+}
+%%></CONTENT>

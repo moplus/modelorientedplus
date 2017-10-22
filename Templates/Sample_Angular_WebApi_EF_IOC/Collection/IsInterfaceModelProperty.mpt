@@ -1,0 +1,23 @@
+<CONFIG>
+	NAME IsInterfaceModelProperty
+	CATEGORY CONFIG
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.IsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+foreach (PropertyRelationship)
+{
+	if (Relationship.Entity.EntityID != ../ReferencedEntity.EntityID)
+	{
+		<%%-false%%>
+		return
+	}
+}
+<%%-true%%>
+%%></CONTENT>

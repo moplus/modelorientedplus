@@ -1,0 +1,9 @@
+<CONFIG>
+	NAME DSDtoPropertyCode
+	CATEGORY DS
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-public IList<%%><%%=DSDtoPropertyDataType%%><%%-> %%><%%=EFCFPropertyName%%><%%- { get; set; }%%></CONTENT>

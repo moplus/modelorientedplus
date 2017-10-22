@@ -1,0 +1,21 @@
+<CONFIG>
+	NAME UIViewUI
+	CATEGORY UI
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+<%%=Solution.NEWLINE%%>
+<%%-<div class="row top5">%%><%%=Solution.INDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-<div class="col-md-5">%%><%%=Solution.INDENT%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<label for="%%><%%=EFCFParameterName%%><%%-">%%><%%=EFCFLabelName%%><%%-:</label>%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-<select class="form-control" readonly disabled name="%%><%%=EFCFParameterName%%><%%-" ng-model="itemForm.%%><%%=EFCFPropertyParameterName%%><%%-" ng-options="item.%%><%%=EFCFPrimaryKeyPropertyName%%><%%- as item.%%><%%=ReferencedEntity.EFCFPrimaryNameProperty%%><%%- for item in itemForm.%%><%%=ReferencedEntity.LIBPluralEntityName.CamelCase()%%><%%-"></select>%%><%%=Solution.OUTDENT%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-</div>%%><%%=Solution.OUTDENT%%>
+<%%=Solution.NEWLINE%%>
+<%%-</div>%%>
+%%></CONTENT>

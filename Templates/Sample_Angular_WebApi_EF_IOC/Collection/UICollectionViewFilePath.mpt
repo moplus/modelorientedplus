@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UICollectionViewFilePath
+	CATEGORY UI
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=Entity.LIBPluralEntityName%%><%%-\Get%%><%%=EFCFPropertyName%%><%%-.html%%></CONTENT>

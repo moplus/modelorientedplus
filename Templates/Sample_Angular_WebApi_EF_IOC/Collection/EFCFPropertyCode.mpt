@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFPropertyCode
+	CATEGORY EFCF
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EFCFPropertyAttributesCode%%>
+<%%=Solution.NEWLINE%%>
+<%%-IList<%%><%%=EFCFPropertyDataType%%><%%-> %%><%%=EFCFPropertyName%%><%%- { get; }%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFMappingClassName
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=EntityName%%><%%-Map%%></CONTENT>

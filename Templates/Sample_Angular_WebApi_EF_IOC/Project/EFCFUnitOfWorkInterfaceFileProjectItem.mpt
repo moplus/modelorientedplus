@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFUnitOfWorkInterfaceFileProjectItem
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=EFCFUnitOfWorkInterfaceFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

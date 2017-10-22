@@ -1,0 +1,30 @@
+<CONFIG>
+	NAME IsForeignKeyToEntity
+	CATEGORY LIB
+	NODE Property
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+param entityID
+if (IsForeignKeyMember == false)
+{
+	<%%-false%%>
+	return
+}
+foreach (Relationship in Entity)
+{
+	if (ReferencedEntity.EntityID == entityID)
+	{
+		foreach (RelationshipProperty)
+		{
+			if (Property.PropertyID == ../../PropertyID)
+			{
+				<%%-true%%>
+				return
+			}
+		}
+	}
+}
+<%%-false%%>
+%%></CONTENT>

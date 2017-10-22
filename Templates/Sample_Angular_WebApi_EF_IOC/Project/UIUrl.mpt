@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UIUrl
+	CATEGORY CONFIG
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-http://localhost:%%><%%=UIPort%%><%%-/%%></CONTENT>

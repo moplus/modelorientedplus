@@ -1,0 +1,82 @@
+<CONFIG>
+	NAME UISiteCssFile
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+
+/*------------------------------------------------------------------------------
+/// This file manages any customizations for the bootstrap based styles
+/// to be used on this site.
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, change the Status
+/// value below to something other than Generated to prevent changes from
+/// being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//----------------------------------------------------------------------------*/
+.navbar-default%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-background-image: linear-gradient(to bottom, #fff 0, lightblue 100%);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.navbar-left%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-background-color: lightblue;
+		padding: 10px;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.searchbar%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-background-color: rgba(173, 216, 230, 0.34);%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.mainContent%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-margin-top: 60px;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.top5%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-margin-top: 5px;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.top10%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-margin-top: 10px;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.top15%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-margin-top: 15px;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-
+
+.top20%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-margin-top: 20px;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UISiteCssFilePath, text=Text) == true)
+{
+	update(UISiteCssFilePath)
+}
+%%></OUTPUT>

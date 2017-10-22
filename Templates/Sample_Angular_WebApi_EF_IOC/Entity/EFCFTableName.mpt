@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME EFCFTableName
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (SourceName != null)
+{
+	<%%=SourceName%%>
+}
+else
+{
+	<%%=EntityName%%>
+}%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME ServiceInterfaceFilePath
+	CATEGORY Services
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Services\%%><%%=ServiceInterfaceName%%><%%-_G.cs%%></CONTENT>

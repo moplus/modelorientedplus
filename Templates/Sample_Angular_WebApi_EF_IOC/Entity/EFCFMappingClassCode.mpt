@@ -1,0 +1,164 @@
+<CONFIG>
+	NAME EFCFMappingClassCode
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+
+namespace %%><%%=Project.Namespace%%><%%-.Models.Mapping
+{
+	//------------------------------------------------------------------------------
+	/// <summary>This class implements entity framework db mapping
+	/// for %%><%%=EFCFMappingClassName%%><%%- items.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, change
+	/// the Status value below to something other than Generated to
+	/// prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class %%><%%=EFCFMappingClassName%%><%%- : EntityTypeConfiguration<%%><%%=EFCFClassName%%><%%->
+	{
+		public  %%><%%=EFCFMappingClassName%%><%%-()
+		{
+			// Primary Key%%>
+		if (EFCFPrimaryKeyCount > 1)
+		{
+			<%%-
+			this.HasKey(t => new {%%>
+			foreach (Property where IsPrimaryKeyMember == true && EFCFIsStorageModelProperty == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%-t.%%><%%=EFCFPropertyName%%>
+			}
+			<%%-});%%>
+		}
+		else
+		{
+			foreach (Property where IsPrimaryKeyMember == true && EFCFIsStorageModelProperty == true)
+			{
+			<%%-
+			this.HasKey(t => t.%%><%%=EFCFPropertyName%%><%%-);%%>
+			}
+		}
+		foreach (Property where IsPrimaryKeyMember == true && EFCFIsStorageModelProperty == true)
+		{
+			if (Identity == true /*  || DataTypeCode ==26Guid */)
+			{
+		<%%-
+			this.Property(t => t.%%><%%=EFCFPropertyName%%><%%-).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);%%>
+			}
+			else
+			{
+		<%%-
+			this.Property(t => t.%%><%%=EFCFPropertyName%%><%%-).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);%%>
+			}
+		}
+		<%%-
+
+			// Properties%%>
+		foreach (Property where IsPrimaryKeyMember == false && EFCFIsStorageModelProperty == true)
+		{
+		<%%-
+			this.Property(t => t.%%><%%=EFCFPropertyName%%><%%-)%%>
+			if (IsNullable == false && DataTypeCode != 25 /* Timestamp */)
+			{
+			<%%-
+				.IsRequired()%%>
+			}
+			if ((DataTypeCode == 16 || DataTypeCode == 17/* strings */) && Length > 0 && Length != null)
+			{
+				<%%-
+				.HasMaxLength(%%><%%=Length%%><%%-)%%>
+			}
+			if (DataTypeCode == 25 /* Timestamp */)
+			{
+				<%%-
+				.IsRowVersion()%%>
+			}
+		<%%-;%%>
+		}
+		<%%-
+		
+			// Table & Column Mappings
+			this.ToTable("%%><%%=EFCFTableName%%><%%-");%%>
+            foreach (Property where EFCFIsStorageModelProperty == true)
+            {
+            <%%-
+			this.Property(t => t.%%><%%=EFCFPropertyName%%><%%-).HasColumnName("%%><%%=EFCFColumnName%%><%%-");%%>
+            }
+		foreach (Relationship where EFCFIsBaseRelationship == false)
+		{
+			if (ItemIndex == 0)
+			{
+			<%%-
+            
+			// Relationships%%>
+			}
+			if (EFCFRelationshipEntityReferenceName != null && EFCFRelationshipCollectionName != null)
+			{
+			if (IsNullable == true)
+			{
+			<%%-
+			this.HasOptional(t => t.%%><%%=EFCFRelationshipEntityReferenceName%%><%%-)%%>
+			}
+			else
+			{
+			<%%-
+			this.HasRequired(t => t.%%><%%=EFCFRelationshipEntityReferenceName%%><%%-)%%>
+			}
+			<%%-
+				.WithMany(t => t.%%><%%=EFCFRelationshipCollectionName%%><%%-)%%>
+			if (PropertyCount > 1)
+			{
+				<%%-
+				.HasForeignKey(t => new {%%>
+				foreach (RelationshipProperty)
+				{
+					if (ItemIndex > 0)
+					{
+						<%%-, %%>
+					}
+				<%%-t.%%><%%=Property.EFCFPropertyName%%>
+				}
+				<%%-})%%>
+			}
+			else
+			{
+				foreach (RelationshipProperty)
+				{
+				<%%-
+				.HasForeignKey(t => t.%%><%%=Property.EFCFPropertyName%%><%%-)%%>
+				}
+			}
+			<%%-
+				.WillCascadeOnDelete(false);%%>
+			}
+		}
+		<%%-
+		}
+	}
+}%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (File(EFCFMappingClassFilePath) == null || (File(EFCFMappingClassFilePath).Contains("<Status>Generated</Status>") == true
+     && File(EFCFMappingClassFilePath).FilterProtected().FilterIgnored() != Text.FilterProtected().FilterIgnored()))
+{
+	update(EFCFMappingClassFilePath)
+}
+%%></OUTPUT>

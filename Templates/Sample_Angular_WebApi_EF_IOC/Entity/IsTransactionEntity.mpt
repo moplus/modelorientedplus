@@ -1,0 +1,12 @@
+<CONFIG>
+	NAME IsTransactionEntity
+	CATEGORY CONFIG
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// This property is used to determine which entities should have transaction tracking info (fields) added, if the VITA login module is enabled.
+// If you want only certain entities to be tracked in this way, alter this rule.
+//
+<%%-true%%></CONTENT>

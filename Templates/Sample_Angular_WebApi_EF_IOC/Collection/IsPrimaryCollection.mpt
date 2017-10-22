@@ -1,0 +1,18 @@
+<CONFIG>
+	NAME IsPrimaryCollection
+	CATEGORY CONFIG
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+//
+// Alter these business rules as needed as to what collections are "primary", to be more visible
+//
+if (IsInterfaceModelProperty == false || Tags.Contains("Ignore") || Tags.Contains("Secondary") == true || ReferencedEntity.IsDataModelEntity == false)
+{
+	<%%-false%%>
+	return
+}
+<%%-true%%>
+%%></CONTENT>

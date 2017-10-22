@@ -1,0 +1,24 @@
+<CONFIG>
+	NAME EFCFPropertyAttributesCode
+	CATEGORY EFCF
+	NODE Collection
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+if (ReferencedEntity.EFCFIsMappingOnlyEntity == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[ManyToMany(typeof(%%><%%=ReferencedEntity.EFCFInterfaceName%%><%%-))]%%>
+}
+if (ReferencedEntity.PrimarySortProperty != null)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[OrderBy("%%><%%=ReferencedEntity.PrimarySortProperty%%><%%-")]%%>
+}
+if (EFCFHasMultipleReferences == true)
+{
+	<%%=Solution.NEWLINE%%>
+	<%%-[OneToMany("%%><%%=EFCFEntityReferencePropertyName%%><%%-")]%%>
+}
+%%></CONTENT>

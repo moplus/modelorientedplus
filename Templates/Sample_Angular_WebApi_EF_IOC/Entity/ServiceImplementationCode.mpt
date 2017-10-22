@@ -1,0 +1,341 @@
+<CONFIG>
+	NAME ServiceImplementationCode
+	CATEGORY Services
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create a model defintion for this entity, to be used by VITA
+// to manage your corresponding db schema and data.
+//
+<%%=USETABS true%%>
+<%%=TAB -100%%>
+<%%:
+var baseEntityPath = ""
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System;
+using Vita.Entities;
+using System.Linq;%%>
+with (Project)
+{
+	if (ProjectReferenceCount > 1)
+	{
+		// get a project tagged as BLL
+		foreach (Project where Tags.Contains("BLL") == true)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+	else
+	{
+		foreach (Project)
+		{
+    <%%-
+using %%><%%=Namespace%%><%%-.Models;%%>
+		}
+	}
+}<%%-
+
+namespace %%><%%=Project.Namespace%%><%%-.Services%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class implements key services for %%><%%=VITAClassName%%><%%- items,
+	/// utilizing the VITA ORM, to be utilized by data services such as web api.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial interface file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-public partial class %%><%%=ServiceImplementationName%%><%%- : %%><%%=ServiceInterfaceName%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+	        /// <summary>Get an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+	        ///
+	        /// <returns>An instance of %%><%%=VITAInterfaceName%%><%%-.</returns>%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-
+			/// <param name="%%><%%=VITAParameterName%%><%%-">The id to retrieve item.</param>%%>
+		}
+	        <%%-
+	        /// <param name="session">Caller session info.</param>
+	        ///--------------------------------------------------------------------------------%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public %%><%%=VITAInterfaceName%%><%%- Get%%><%%=VITAClassName%%><%%-(%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-,%%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAParameterName%%>
+		}
+		<%%-, IEntitySession session)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			return session.GetEntity<%%><%%=VITAInterfaceName%%><%%->(%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=VITAParameterName%%>
+			}
+			<%%-);%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+	        /// <summary>Get a queryable collection of %%><%%=VITAInterfaceName%%><%%- items.</summary>
+	        ///
+	        /// <returns>IQueryable collection of %%><%%=VITAInterfaceName%%><%%-.</returns>
+	        /// <param name="session">Caller session info.</param>
+	        ///--------------------------------------------------------------------------------%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public %%><%%-IQueryable<%%><%%=VITAInterfaceName%%><%%-> Get%%><%%=LIBPluralEntityName%%><%%-(IEntitySession session)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%-
+			return session.EntitySet<%%><%%=VITAInterfaceName%%><%%->();%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+	        /// <summary>Create an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
+	        ///
+	        /// <returns>Created instance of %%><%%=VITAInterfaceName%%><%%- if successful, null otherwise.</returns>
+	        /// <param name="itemToCreate">Instance of %%><%%=VITAInterfaceName%%><%%- to create.</param>
+	        /// <param name="session">Caller session info.</param>
+	        ///--------------------------------------------------------------------------------%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public %%><%%=VITAInterfaceName%%><%%- Create%%><%%=VITAClassName%%><%%-(%%><%%=VITAInterfaceName%%><%%- itemToCreate, IEntitySession session)%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%-
+			%%><%%=VITAInterfaceName%%><%%- item = session.NewEntity<%%><%%=VITAInterfaceName%%><%%->();
+			if (item == null) return null;
+			%%>
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (Property where VITADSIsUpdateProperty == true && IsForeignKeyMember == false)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-item.%%><%%=baseEntityPath%%><%%=VITAPropertyPath%%><%%- = itemToCreate.%%><%%=VITAPropertyName%%><%%-;%%>
+				}
+			}
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (EntityReference where IsPrimaryReference == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					if (ReferencedEntity.PrimaryKeyCount == 1)
+					{
+						<%%-item.%%><%%=baseEntityPath%%><%%=VITAPropertyName%%><%%- = session.GetEntity<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->(%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								<%%-itemToCreate.%%><%%=baseEntityPath%%><%%=../../VITAPropertyName%%><%%-.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%-);%%>
+					}
+					else
+					{
+						<%%-item%%><%%=VITAPropertyName%%><%%- = (from i in session.GetEntities<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								if (ItemIndex == 0)
+								{
+									<%%-
+									where %%>
+								}
+								else
+								{
+									<%%-
+									&& %%>
+								}
+								<%%-i.%%><%%=Property.VITAPrimaryKeyPath%%><%%- == itemToCreate.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%=Solution.NEWLINE%%>
+						<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+					}
+				}
+			}
+		<%%-
+
+			session.SaveChanges();
+			return item;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+	        /// <summary>Update an instance of %%><%%=VITAInterfaceName%%><%%-.</summary>
+	        ///
+	        /// <returns>Updated instance of %%><%%=VITAInterfaceName%%><%%- if successful, null otherwise.</returns>
+	        /// <param name="itemToUpdate">Instance of %%><%%=VITAInterfaceName%%><%%- to update.</param>
+	        /// <param name="session">Caller session info.</param>
+	        ///--------------------------------------------------------------------------------%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public %%><%%=VITAInterfaceName%%><%%- Update%%><%%=VITAClassName%%><%%-(%%><%%=VITAInterfaceName%%><%%- itemToUpdate, IEntitySession session)%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%-
+			if (itemToUpdate == null) return null;
+			%%><%%=VITAInterfaceName%%><%%- item = Get%%><%%=VITAClassName%%><%%-(%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%-itemToUpdate.%%><%%=VITAPropertyName%%>
+			}
+			<%%-, session);
+			if (item == null) return null;
+			%%>
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (Property where VITADSIsUpdateProperty == true && IsForeignKeyMember == false)
+				{
+					<%%=Solution.NEWLINE%%>
+					<%%-item.%%><%%=baseEntityPath%%><%%=VITAPropertyPath%%><%%- = itemToUpdate.%%><%%=VITAPropertyName%%><%%-;%%>
+				}
+			}
+			baseEntityPath = ""
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				if (ItemIndex > 0)
+				{
+					baseEntityPath = baseEntityPath + VITAClassName + "."
+				}
+				foreach (EntityReference where IsPrimaryReference == true)
+				{
+					<%%=Solution.NEWLINE%%>
+					if (ReferencedEntity.PrimaryKeyCount == 1)
+					{
+						<%%-item.%%><%%=baseEntityPath%%><%%=VITAPropertyName%%><%%- = session.GetEntity<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->(%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								<%%-itemToUpdate.%%><%%=baseEntityPath%%><%%=../../VITAPropertyName%%><%%-.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%-);%%>
+					}
+					else
+					{
+						<%%-item%%><%%=VITAPropertyName%%><%%- = (from i in session.GetEntities<%%><%%=ReferencedEntity.VITAInterfaceName%%><%%->()%%><%%=Solution.INDENT%%>
+						foreach (PropertyRelationship)
+						{
+							foreach (RelationshipProperty in Relationship)
+							{
+								if (ItemIndex == 0)
+								{
+									<%%-
+									where %%>
+								}
+								else
+								{
+									<%%-
+									&& %%>
+								}
+								<%%-i.%%><%%=Property.VITAPrimaryKeyPath%%><%%- == itemToUpdate.%%><%%=Property.VITAPropertyName%%>
+							}
+							break
+						}
+						<%%=Solution.NEWLINE%%>
+						<%%-select i).FirstOrDefault();%%><%%=Solution.OUTDENT%%>
+					}
+				}
+			}
+		<%%-
+
+			session.SaveChanges();
+			return item;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-///--------------------------------------------------------------------------------
+	        /// <summary>Delete an instance of %%><%%=VITAInterfaceName%%><%%- by id.</summary>
+	        ///
+	        /// <returns>True if successful, false otherwise.</returns>%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-
+			/// <param name="%%><%%=VITAParameterName%%><%%-">The id to retrieve item.</param>%%>
+		}
+	        <%%-
+	        /// <param name="session">Caller session info.</param>
+	        ///--------------------------------------------------------------------------------%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public bool Delete%%><%%=VITAClassName%%><%%-(%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+		{
+			if (ItemIndex > 0)
+			{
+				<%%-,%%>
+			}
+			<%%=VITADataType%%><%%- %%><%%=VITAParameterName%%>
+		}
+		<%%-, IEntitySession session)%%>
+		<%%=Solution.OPEN_BRACE%%>
+		<%%-
+			%%><%%=VITAInterfaceName%%><%%- item = Get%%><%%=VITAClassName%%><%%-(%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-,%%>
+				}
+				<%%=VITAParameterName%%>
+			}
+			<%%-, session);
+			if (item == null) return false;
+
+			session.DeleteEntity(item);
+			session.SaveChanges();
+			return true;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=ServiceImplementationFilePath, text=Text) == true)
+{
+	update(ServiceImplementationFilePath)
+}
+%%></OUTPUT>

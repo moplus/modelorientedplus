@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFClassFileProjectItem
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=EFCFClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

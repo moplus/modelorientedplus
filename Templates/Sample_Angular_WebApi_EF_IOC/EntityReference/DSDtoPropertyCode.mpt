@@ -1,0 +1,25 @@
+<CONFIG>
+	NAME DSDtoPropertyCode
+	CATEGORY DS
+	NODE EntityReference
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Solution.NEWLINE%%>
+<%%-private %%><%%=ReferencedEntity.DSDtoClassName%%><%%- %%><%%=EFCFPropertyName.CamelCase()%%><%%-;
+public %%><%%=ReferencedEntity.DSDtoClassName%%><%%- %%><%%=EFCFPropertyName%%>
+<%%=Solution.OPEN_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-get%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-if (%%><%%=EFCFPropertyName.CamelCase()%%><%%- == null) %%><%%=EFCFPropertyName.CamelCase()%%><%%- = new %%><%%=ReferencedEntity.DSDtoClassName%%><%%-();
+		return %%><%%=EFCFPropertyName.CamelCase()%%><%%-;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.NEWLINE%%>
+	<%%-set%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%=EFCFPropertyName.CamelCase()%%><%%- = value;%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%></CONTENT>

@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME DSGlobalClassFilePath
+	CATEGORY DS
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=ProjectDirectory%%><%%-\Global.asax.cs%%></CONTENT>

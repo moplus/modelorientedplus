@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME UISearchViewFilePath
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\Templates\%%><%%=LIBPluralEntityName%%><%%-\Search.html%%></CONTENT>

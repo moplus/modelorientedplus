@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFPackagesConfigFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%-packages.config%%></CONTENT>

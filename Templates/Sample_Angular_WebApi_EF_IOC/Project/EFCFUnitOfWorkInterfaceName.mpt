@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFUnitOfWorkInterfaceName
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%-I%%><%%=EFCFUnitOfWorkClassName%%></CONTENT>

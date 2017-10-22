@@ -1,0 +1,16 @@
+<CONFIG>
+	NAME NEWLINE
+	CATEGORY CONFIG
+	NODE Solution
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+/*
+	A convenience property for emitting new lines (and make template code a little more readable).
+*/
+<%%-
+%%>
+<%%:
+// until a "no cache" property is provided, param statement is used to turn off caching for this template
+param noCache
+%%></CONTENT>

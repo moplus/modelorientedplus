@@ -1,0 +1,67 @@
+<CONFIG>
+	NAME UIBundleConfigClassCode
+	CATEGORY UI
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%><%%-
+</copyright>*/
+using System.Web.Optimization;
+
+namespace %%><%%=Project.Namespace%%>
+<%%=Solution.OPEN_BRACE%%><%%-
+	//------------------------------------------------------------------------------
+	/// <summary>This class registers script and style bundles.</summary>
+	///
+	/// This file is code generated and should not be modified by hand.
+	/// If you need to customize outside of protected areas, add those changes
+	/// in another partial class file.  As a last resort (if generated code needs
+	/// to be different), change the Status value below to something other than
+	/// Generated to prevent changes from being overwritten.
+	///
+	/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+	/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+	/// <Status>Generated</Status>
+	//------------------------------------------------------------------------------
+	public partial class BundleConfig%%>
+	<%%=Solution.OPEN_BRACE%%>
+		<%%=Solution.NEWLINE%%>
+		<%%-public static void RegisterBundles(BundleCollection bundles)%%>
+		<%%=Solution.OPEN_BRACE%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-bundles.Add(new ScriptBundle("~/bundles/DomainApp")%%>
+			<%%=Solution.INDENT%%><%%-
+				.Include("~/Scripts/angular.min.js")
+				.Include("~/Scripts/angular-ui-router.min.js")
+				.Include("~/Scripts/angular-ui/ui-bootstrap-tpls.min.js")
+				.Include("~/Scripts/angular-validator.min.js")
+				.Include("~/Scripts/angular-cookies.min.js")
+				.IncludeDirectory("~/Scripts/Controllers", "*.js")
+				.IncludeDirectory("~/Scripts/Factories", "*.js")
+				.IncludeDirectory("~/Scripts/Services", "*.js")
+				.Include("~/Scripts/DomainApp.js"));%%>
+			<%%=Solution.OUTDENT%%><%%-
+			
+			bundles.Add(new StyleBundle("~/Content/css")%%>
+			<%%=Solution.INDENT%%><%%-
+				.Include("~/Content/bootstrap.min.css")
+				.Include("~/Content/bootstrap-theme.min.css")
+				.Include("~/Content/site.css"));%%>
+			<%%=Solution.OUTDENT%%><%%-
+
+			BundleTable.EnableOptimizations = false;%%>
+		<%%=Solution.CLOSE_BRACE%%>
+	<%%=Solution.CLOSE_BRACE%%>
+<%%=Solution.CLOSE_BRACE%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UIBundleConfigClassFilePath, text=Text) == true)
+{
+	update(UIBundleConfigClassFilePath)
+}
+%%></OUTPUT>

@@ -1,0 +1,70 @@
+<CONFIG>
+	NAME EFCFPathToEntityKey
+	CATEGORY EFCF
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%:
+// check base entities and 3 layers of references for a reference to the input entity
+param entityID
+var path = ""
+foreach (Entity in EntityAndBaseEntities)
+{
+	if (ItemIndex > 0)
+	{
+		path = path + "." + EFCFClassName
+	}
+	if (EntityID == entityID)
+	{
+		<%%=path%%><%%-.%%><%%=EFCFPrimaryKeyPropertyName%%>
+		return
+	}
+	if (BaseEntity == null || BaseEntity.HasReferenceToEntity(entityID = entityID) == false)
+	{
+		foreach (EntityReference)
+		{
+			if (ReferencedEntity.EntityID == entityID)
+			{
+				<%%=path%%><%%-.%%><%%=EFCFPropertyName%%><%%-.%%><%%=EFCFPrimaryKeyPropertyName%%>
+				return
+			}
+		}
+		foreach (EntityReference)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference)
+				{
+					if (ReferencedEntity.EntityID == entityID)
+					{
+						<%%=path%%><%%-.%%><%%=../../EFCFPropertyName%%><%%-.%%><%%=EFCFPropertyName%%><%%-.%%><%%=EFCFPrimaryKeyPropertyName%%>
+						return
+					}
+				}
+			}
+		}
+		foreach (EntityReference)
+		{
+			with (ReferencedEntity)
+			{
+				foreach (EntityReference)
+				{
+					with (ReferencedEntity)
+					{
+						foreach (EntityReference)
+						{
+							if (ReferencedEntity.EntityID == entityID)
+							{
+								<%%=path%%><%%-.%%><%%=../../../../EFCFPropertyName%%><%%-.%%><%%=../../EFCFPropertyName%%><%%-.%%><%%=EFCFPropertyName%%><%%-.%%><%%=EFCFPrimaryKeyPropertyName%%>
+								return
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+<%%-false%%>
+%%></CONTENT>

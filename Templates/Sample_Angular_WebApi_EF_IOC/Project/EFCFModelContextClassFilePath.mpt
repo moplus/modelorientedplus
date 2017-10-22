@@ -1,0 +1,8 @@
+<CONFIG>
+	NAME EFCFModelContextClassFilePath
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=Project.ProjectDirectory%%><%%-\%%><%%=EFCFModelContextClassName%%><%%-_G.cs%%></CONTENT>

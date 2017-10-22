@@ -1,0 +1,10 @@
+<CONFIG>
+	NAME EFCFGenericRepositoryClassFileProjectItem
+	CATEGORY EFCF
+	NODE Project
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+<%%=USETABS false%%>
+<%%-<Compile Include="%%><%%=EFCFGenericRepositoryClassFilePath.Substring(Project.ProjectDirectory.Length + 1)%%><%%-" />
+    %%></CONTENT>

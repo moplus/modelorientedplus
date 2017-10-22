@@ -1,0 +1,559 @@
+<CONFIG>
+	NAME UIServiceJSFile
+	CATEGORY UI
+	NODE Entity
+	TOPLEVEL False
+</CONFIG>
+<CONTENT>
+//
+// Use this template to create an AngularJS service for your entity.  This service
+// manages the web api calls to manage the CRUD, search, and other related
+// operations with your entity.
+//
+<%%=USETABS true%%>
+<%%:
+<%%-/*<copyright>
+%%>
+<%%=Solution.Copyright%%>
+var firstItem
+<%%-
+</copyright>*/
+
+//------------------------------------------------------------------------------
+/// <summary>This service enables CRUD operations on the data store for
+/// %%><%%=EFCFClassName%%><%%- items via Web Api calls.</summary>
+///
+/// This file is code generated and should not be modified by hand.
+/// If you need to customize outside of protected areas, add those changes
+/// in another partial class file.  As a last resort (if generated code needs
+/// to be different), change the Status value below to something other than
+/// Generated to prevent changes from being overwritten.
+///
+/// <CreatedByUserName>%%><%%=USER%%><%%-</CreatedByUserName>
+/// <CreatedDate>%%><%%=NOW%%><%%-</CreatedDate>
+/// <Status>Generated</Status>
+//------------------------------------------------------------------------------
+var %%><%%=UIServiceName%%><%%- = function ($http, $q)%%>
+<%%=Solution.OPEN_BRACE(js=true)%%>
+	//
+	// search
+	//
+	<%%-
+	this.search%%><%%=LIBPluralEntityName%%><%%- = function (%%>
+	firstItem = true
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where DSIsQueryProperty == true)
+		{
+			if (firstItem != true)
+			{
+				<%%-, %%>
+			}
+			firstItem = false
+			switch (DataTypeCode)
+			{
+				case 24: // DateTime
+				case 29: // DateTimeSmall
+					<%%=EFCFParameterName%%><%%-Start,%%><%%=EFCFParameterName%%><%%-End%%>
+					break
+				default:
+					<%%=EFCFParameterName%%>
+					break
+			}
+		}
+	}
+	if (firstItem != true)
+	{
+		<%%-, %%>
+	}
+	<%%-orderBy, decending, page, pageSize)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			items: null,
+			totalItems: 0,
+			canCreate: true%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		var searchQuery =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsQueryProperty == true)
+				{
+					switch (DataTypeCode)
+					{
+						case 24: // DateTime
+						case 29: // DateTimeSmall
+							<%%=Solution.NEWLINE%%>
+							<%%=EFCFPropertyName%%><%%-Start: %%><%%=EFCFParameterName%%><%%-Start,%%>
+							<%%=Solution.NEWLINE%%>
+							<%%=EFCFPropertyName%%><%%-End: %%><%%=EFCFParameterName%%><%%-End,%%>
+							break
+						default:
+							<%%=Solution.NEWLINE%%>
+							<%%=EFCFPropertyName%%><%%-: %%><%%=EFCFParameterName%%><%%-,%%>
+							break
+					}
+				}
+			}
+			<%%=Solution.NEWLINE%%>
+			<%%-OrderBy: orderBy,%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-Descending: decending,%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-Skip: (page - 1) * pageSize,%%>
+			<%%=Solution.NEWLINE%%>
+			<%%-Take: pageSize%%>
+		<%%=Solution.CLOSE_BRACE%%><%%-;
+		if (searchQuery.Skip < 0) searchQuery.Skip = 0;
+		
+		$http.get('/api/%%><%%=DSApiRoute%%><%%-', { params: searchQuery }).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.items = data.Items;
+				results.totalItems = data.TotalItems;
+				results.canCreate = data.CanCreate;
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not search for %%><%%=EFCFClassName%%><%%- items: ';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// get
+	//
+	<%%-
+	this.get%%><%%=EFCFClassName%%><%%- = function (%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%=EFCFParameterName%%>
+	}
+	<%%-)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			data: null%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
+		$http.get('/api/%%><%%=DSApiRoute%%><%%-/%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-get', { params: { %%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=EFCFPropertyName.ToLower()%%><%%-: %%><%%=EFCFParameterName%%>
+			}
+			<%%- } }%%>
+		}
+		else
+		{
+			<%%-'%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				<%%- + %%><%%=EFCFParameterName%%>
+				break
+			}
+		}
+		<%%-).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.data = data.Items[0];
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not get %%><%%=EFCFClassName%%><%%- item:';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// get collection
+	//
+	<%%-
+	this.list%%><%%=EFCFClassName%%><%%- = function (%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%=EFCFParameterName%%>
+	}
+	<%%-)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			data: null%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		foreach (Property where IsPrimaryKeyMember == true && IsStringProperty == true)
+		{
+			<%%-
+			if (%%><%%=EFCFParameterName%%><%%- == '')%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				%%><%%=EFCFParameterName%%><%%- = 'nnn'; // TODO: find cause of deserialization bug if string is blank%%>
+			<%%=Solution.CLOSE_BRACE%%>
+		}
+		<%%-
+		
+		$http.get('/api/%%><%%=DSApiRoute%%><%%-/list', { params: { take: 100%%>
+		foreach (Property where IsPrimaryKeyMember == true)
+		{
+			<%%-, %%><%%=EFCFPropertyName.ToLower()%%><%%-: %%><%%=EFCFParameterName%%>
+		}
+		<%%- } }).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.data = data;
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not get %%><%%=EFCFClassName%%><%%- list:';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// create
+	//
+	<%%-
+	this.create%%><%%=EFCFClassName%%><%%- = function (%%>
+	firstItem = true
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where IsCreateProperty == true)
+		{
+			if (firstItem != true)
+			{
+				<%%-, %%>
+			}
+			firstItem = false
+			<%%=EFCFParameterName%%>
+		}
+	}
+	<%%-)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			data: null%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		var itemData =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			firstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where IsCreateProperty == true)
+				{
+					if (firstItem == false)
+					{
+						<%%-, %%>
+					}
+					firstItem = false
+					<%%=Solution.NEWLINE%%>
+					<%%=EFCFPropertyName%%><%%-: %%><%%=EFCFParameterName%%>
+				}
+			}
+		<%%=Solution.CLOSE_BRACE%%><%%-;
+		
+		$http.post('/api/%%><%%=DSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.data = data;
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not create %%><%%=EFCFClassName%%><%%- item:';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// update
+	//
+	<%%-
+	this.update%%><%%=EFCFClassName%%><%%- = function (%%>
+	firstItem = true
+	foreach (Entity in EntityAndBaseEntities)
+	{
+		foreach (Property where DSIsDtoClassProperty == true)
+		{
+			if (firstItem != true)
+			{
+				<%%-, %%>
+			}
+			firstItem = false
+			<%%=EFCFParameterName%%>
+		}
+	}
+	<%%-)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			data: null%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		var itemData =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			firstItem = true
+			foreach (Entity in EntityAndBaseEntities)
+			{
+				foreach (Property where DSIsDtoClassProperty == true)
+				{
+					if (firstItem == false)
+					{
+						<%%-, %%>
+					}
+					firstItem = false
+					<%%=Solution.NEWLINE%%>
+					<%%=EFCFPropertyName%%><%%-: %%><%%=EFCFParameterName%%>
+				}
+			}
+		<%%=Solution.CLOSE_BRACE%%><%%-;
+		
+		$http.put('/api/%%><%%=DSApiRoute%%><%%-', itemData).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.data = data;
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not update %%><%%=EFCFClassName%%><%%- item:';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;
+	%%>
+	//
+	// delete
+	//
+	<%%-
+	this.delete%%><%%=EFCFClassName%%><%%- = function (%%>
+	foreach (Property where IsPrimaryKeyMember == true)
+	{
+		if (ItemIndex > 0)
+		{
+			<%%-, %%>
+		}
+		<%%=EFCFParameterName%%>
+	}
+	<%%-)%%>
+	<%%=Solution.OPEN_BRACE(js=true)%%>
+		<%%-
+		var deferredObject = $q.defer();
+		var results =%%>
+		<%%=Solution.OPEN_BRACE(js=true)%%>
+			<%%-
+			isSuccess: true,
+			message: '',
+			data: null%%>
+		<%%=Solution.CLOSE_BRACE%%>
+		<%%-
+		
+		$http.delete('/api/%%><%%=DSApiRoute%%><%%-/%%>
+		if (PrimaryKeyCount > 1)
+		{
+			<%%-', { params: { %%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				if (ItemIndex > 0)
+				{
+					<%%-, %%>
+				}
+				<%%=EFCFPropertyName.ToLower()%%><%%-: %%><%%=EFCFParameterName%%>
+			}
+			<%%- } }%%>
+		}
+		else
+		{
+			<%%-'%%>
+			foreach (Property where IsPrimaryKeyMember == true)
+			{
+				<%%- + %%><%%=EFCFParameterName%%>
+				break
+			}
+		}
+		<%%-).%%><%%=Solution.INDENT%%><%%-
+			success(function (data)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.data = data;
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-).
+			error(function (data, status, headers, config)%%>
+			<%%=Solution.OPEN_BRACE(js=true)%%>
+				<%%-
+				results.isSuccess = false;
+				results.message = 'Could not delete %%><%%=EFCFClassName%%><%%- item:';
+				if (typeof data == "string")%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					results.message = results.message + ' ' + data;%%>
+				<%%=Solution.CLOSE_BRACE%%><%%- else%%>
+				<%%=Solution.OPEN_BRACE(js=true)%%>
+					<%%-
+					for (var i = 0; i < data.length; i++)%%>
+					<%%=Solution.OPEN_BRACE(js=true)%%>
+						<%%-
+						results.message = results.message + ' ' + data[i].Message;%%>
+					<%%=Solution.CLOSE_BRACE%%>
+				<%%=Solution.CLOSE_BRACE%%><%%-
+				deferredObject.resolve(results);%%>
+			<%%=Solution.CLOSE_BRACE%%>
+			<%%-);%%><%%=Solution.OUTDENT%%><%%-
+		
+		return deferredObject.promise;%%>
+	<%%=Solution.CLOSE_BRACE%%><%%-;%%>
+<%%=Solution.CLOSE_BRACE%%>
+<%%-
+
+%%><%%=UIServiceName%%><%%-.$inject = ['$http', '$q'];%%>
+%%></CONTENT><OUTPUT>
+<%%:
+if (Solution.ShouldUpdateFile(path=UIServiceJSFilePath, text=Text) == true)
+{
+	update(UIServiceJSFilePath)
+}
+%%></OUTPUT>
