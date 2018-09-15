@@ -52,7 +52,7 @@ namespace MoPlus.ViewModel.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>1/24/2017</CreatedDate>
+	/// <CreatedDate>9/15/2018</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public partial class PropertyViewModel : DialogEditWorkspaceViewModel
@@ -164,7 +164,7 @@ namespace MoPlus.ViewModel.Entities
 		{
 			get
 			{
-				return string.IsNullOrEmpty(PropertyNameValidationMessage + IsPrimaryKeyMemberValidationMessage + IsForeignKeyMemberValidationMessage + DataTypeCodeValidationMessage + LengthValidationMessage + PrecisionValidationMessage + ScaleValidationMessage + InitialValueValidationMessage + IdentityValidationMessage + IdentitySeedValidationMessage + IdentityIncrementValidationMessage + IsNullableValidationMessage + OrderValidationMessage + DescriptionValidationMessage + PropertyRelationshipListValidationMessage);
+				return string.IsNullOrEmpty(PropertyNameValidationMessage + IsPrimaryKeyMemberValidationMessage + IsForeignKeyMemberValidationMessage + DataTypeCodeValidationMessage + MinLengthValidationMessage + LengthValidationMessage + PrecisionValidationMessage + ScaleValidationMessage + InitialValueValidationMessage + ValueConstraintValidationMessage + IdentityValidationMessage + IdentitySeedValidationMessage + IdentityIncrementValidationMessage + IsNullableValidationMessage + OrderValidationMessage + DescriptionValidationMessage + PropertyRelationshipListValidationMessage);
 			}
 		}
  
@@ -223,6 +223,10 @@ namespace MoPlus.ViewModel.Entities
 			OnPropertyChanged("DataTypeCodeCustomized");
 			OnPropertyChanged("DataTypeCodeValidationMessage");
 			
+			OnPropertyChanged("MinLength");
+			OnPropertyChanged("MinLengthCustomized");
+			OnPropertyChanged("MinLengthValidationMessage");
+			
 			OnPropertyChanged("Length");
 			OnPropertyChanged("LengthCustomized");
 			OnPropertyChanged("LengthValidationMessage");
@@ -238,6 +242,10 @@ namespace MoPlus.ViewModel.Entities
 			OnPropertyChanged("InitialValue");
 			OnPropertyChanged("InitialValueCustomized");
 			OnPropertyChanged("InitialValueValidationMessage");
+			
+			OnPropertyChanged("ValueConstraint");
+			OnPropertyChanged("ValueConstraintCustomized");
+			OnPropertyChanged("ValueConstraintValidationMessage");
 			
 			OnPropertyChanged("Identity");
 			OnPropertyChanged("IdentityCustomized");
@@ -593,6 +601,64 @@ namespace MoPlus.ViewModel.Entities
 		}
 
 		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the MinLengthLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string MinLengthLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_MinLengthProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets MinLength.</summary>
+		///--------------------------------------------------------------------------------
+		public int? MinLength
+		{
+			get
+			{
+				return EditProperty.MinLength;
+			}
+			set
+			{
+				EditProperty.MinLength = value;
+				OnPropertyChanged("MinLength");
+				OnPropertyChanged("TabTitle");
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MinLengthCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool MinLengthCustomized
+		{
+			get
+			{
+				if (Property.ReverseInstance != null)
+				{
+					return MinLength.GetInt() != Property.ReverseInstance.MinLength.GetInt();
+				}
+				else if (Property.IsAutoUpdated == true)
+				{
+					return MinLength.GetInt() != Property.MinLength.GetInt();
+				}
+				return MinLength != DefaultValue.Int;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets MinLengthValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string MinLengthValidationMessage
+		{
+			get
+			{
+				return EditProperty.ValidateMinLength();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
 		/// <summary>This property gets the LengthLabel.</summary>
 		///--------------------------------------------------------------------------------
 		public string LengthLabel
@@ -821,6 +887,64 @@ namespace MoPlus.ViewModel.Entities
 			get
 			{
 				return EditProperty.ValidateInitialValue();
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets the ValueConstraintLabel.</summary>
+		///--------------------------------------------------------------------------------
+		public string ValueConstraintLabel
+		{
+			get
+			{
+				return DisplayValues.Edit_ValueConstraintProperty + DisplayValues.Edit_LabelColon;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets/sets ValueConstraint.</summary>
+		///--------------------------------------------------------------------------------
+		public string ValueConstraint
+		{
+			get
+			{
+				return EditProperty.ValueConstraint;
+			}
+			set
+			{
+				EditProperty.ValueConstraint = value;
+				OnPropertyChanged("ValueConstraint");
+				OnPropertyChanged("TabTitle");
+			}
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets ValueConstraintCustomized.</summary>
+		///--------------------------------------------------------------------------------
+		public bool ValueConstraintCustomized
+		{
+			get
+			{
+				if (Property.ReverseInstance != null)
+				{
+					return ValueConstraint.GetString() != Property.ReverseInstance.ValueConstraint.GetString();
+				}
+				else if (Property.IsAutoUpdated == true)
+				{
+					return ValueConstraint.GetString() != Property.ValueConstraint.GetString();
+				}
+				return ValueConstraint != DefaultValue.String;
+			}
+		}
+
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets ValueConstraintValidationMessage.</summary>
+		///--------------------------------------------------------------------------------
+		public string ValueConstraintValidationMessage
+		{
+			get
+			{
+				return EditProperty.ValidateValueConstraint();
 			}
 		}
 
@@ -1654,7 +1778,7 @@ namespace MoPlus.ViewModel.Entities
 				Property.IsAutoUpdated = false;
 			}
 			Property.ForwardInstance = null;
-			if (PropertyNameCustomized || IsPrimaryKeyMemberCustomized || IsForeignKeyMemberCustomized || DataTypeCodeCustomized || LengthCustomized || PrecisionCustomized || ScaleCustomized || InitialValueCustomized || IdentityCustomized || IdentitySeedCustomized || IdentityIncrementCustomized || IsNullableCustomized || OrderCustomized || DescriptionCustomized || PropertyRelationshipListCustomized || TagsCustomized)
+			if (PropertyNameCustomized || IsPrimaryKeyMemberCustomized || IsForeignKeyMemberCustomized || DataTypeCodeCustomized || MinLengthCustomized || LengthCustomized || PrecisionCustomized || ScaleCustomized || InitialValueCustomized || ValueConstraintCustomized || IdentityCustomized || IdentitySeedCustomized || IdentityIncrementCustomized || IsNullableCustomized || OrderCustomized || DescriptionCustomized || PropertyRelationshipListCustomized || TagsCustomized)
 			{
 				Property.ForwardInstance = new Property();
 				Property.ForwardInstance.PropertyID = EditProperty.PropertyID;
@@ -1675,6 +1799,10 @@ namespace MoPlus.ViewModel.Entities
 				{
 					Property.ForwardInstance.DataTypeCode = EditProperty.DataTypeCode;
 				}
+				if (MinLengthCustomized)
+				{
+					Property.ForwardInstance.MinLength = EditProperty.MinLength;
+				}
 				if (LengthCustomized)
 				{
 					Property.ForwardInstance.Length = EditProperty.Length;
@@ -1690,6 +1818,10 @@ namespace MoPlus.ViewModel.Entities
 				if (InitialValueCustomized)
 				{
 					Property.ForwardInstance.InitialValue = EditProperty.InitialValue;
+				}
+				if (ValueConstraintCustomized)
+				{
+					Property.ForwardInstance.ValueConstraint = EditProperty.ValueConstraint;
 				}
 				if (IdentityCustomized)
 				{

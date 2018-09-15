@@ -29,7 +29,7 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>1/26/2017</CreatedDate>
+	/// <CreatedDate>9/15/2018</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	public enum AssignablePropertyCode
@@ -134,134 +134,138 @@ namespace MoPlus.Interpreter.BLL.Interpreter
 		MethodRelationshipID = 48,
 		/// <summary>For MethodTypeCode assignable property.</summary>
 		MethodTypeCode = 49,
+		/// <summary>For MinLength assignable property.</summary>
+		MinLength = 50,
 		/// <summary>For ModelID assignable property.</summary>
-		ModelID = 50,
+		ModelID = 51,
 		/// <summary>For ModelName assignable property.</summary>
-		ModelName = 51,
+		ModelName = 52,
 		/// <summary>For ModelObjectID assignable property.</summary>
-		ModelObjectID = 52,
+		ModelObjectID = 53,
 		/// <summary>For ModelObjectName assignable property.</summary>
-		ModelObjectName = 53,
+		ModelObjectName = 54,
 		/// <summary>For ModelPropertyID assignable property.</summary>
-		ModelPropertyID = 54,
+		ModelPropertyID = 55,
 		/// <summary>For ModelPropertyName assignable property.</summary>
-		ModelPropertyName = 55,
+		ModelPropertyName = 56,
 		/// <summary>For Namespace assignable property.</summary>
-		Namespace = 56,
+		Namespace = 57,
 		/// <summary>For ObjectInstanceID assignable property.</summary>
-		ObjectInstanceID = 57,
+		ObjectInstanceID = 58,
 		/// <summary>For Order assignable property.</summary>
-		Order = 58,
+		Order = 59,
 		/// <summary>For OutputSolutionFileName assignable property.</summary>
-		OutputSolutionFileName = 59,
+		OutputSolutionFileName = 60,
 		/// <summary>For ParameterID assignable property.</summary>
-		ParameterID = 60,
+		ParameterID = 61,
 		/// <summary>For ParameterName assignable property.</summary>
-		ParameterName = 61,
+		ParameterName = 62,
 		/// <summary>For ParentModelObjectID assignable property.</summary>
-		ParentModelObjectID = 62,
+		ParentModelObjectID = 63,
 		/// <summary>For ParentObjectInstanceID assignable property.</summary>
-		ParentObjectInstanceID = 63,
+		ParentObjectInstanceID = 64,
 		/// <summary>For Precision assignable property.</summary>
-		Precision = 64,
+		Precision = 65,
 		/// <summary>For ProductName assignable property.</summary>
-		ProductName = 65,
+		ProductName = 66,
 		/// <summary>For ProductVersion assignable property.</summary>
-		ProductVersion = 66,
+		ProductVersion = 67,
 		/// <summary>For ProjectID assignable property.</summary>
-		ProjectID = 67,
+		ProjectID = 68,
 		/// <summary>For ProjectName assignable property.</summary>
-		ProjectName = 68,
+		ProjectName = 69,
 		/// <summary>For PropertyID assignable property.</summary>
-		PropertyID = 69,
+		PropertyID = 70,
 		/// <summary>For PropertyInstanceID assignable property.</summary>
-		PropertyInstanceID = 70,
+		PropertyInstanceID = 71,
 		/// <summary>For PropertyName assignable property.</summary>
-		PropertyName = 71,
+		PropertyName = 72,
 		/// <summary>For PropertyReferenceName assignable property.</summary>
-		PropertyReferenceName = 72,
+		PropertyReferenceName = 73,
 		/// <summary>For PropertyRelationshipID assignable property.</summary>
-		PropertyRelationshipID = 73,
+		PropertyRelationshipID = 74,
 		/// <summary>For PropertyValue assignable property.</summary>
-		PropertyValue = 74,
+		PropertyValue = 75,
 		/// <summary>For ReferencedEntityID assignable property.</summary>
-		ReferencedEntityID = 75,
+		ReferencedEntityID = 76,
 		/// <summary>For ReferencedItemsMax assignable property.</summary>
-		ReferencedItemsMax = 76,
+		ReferencedItemsMax = 77,
 		/// <summary>For ReferencedItemsMin assignable property.</summary>
-		ReferencedItemsMin = 77,
+		ReferencedItemsMin = 78,
 		/// <summary>For ReferencedProjectID assignable property.</summary>
-		ReferencedProjectID = 78,
+		ReferencedProjectID = 79,
 		/// <summary>For ReferencedPropertyID assignable property.</summary>
-		ReferencedPropertyID = 79,
+		ReferencedPropertyID = 80,
 		/// <summary>For RelationshipID assignable property.</summary>
-		RelationshipID = 80,
+		RelationshipID = 81,
 		/// <summary>For RelationshipName assignable property.</summary>
-		RelationshipName = 81,
+		RelationshipName = 82,
 		/// <summary>For RelationshipPropertyID assignable property.</summary>
-		RelationshipPropertyID = 82,
+		RelationshipPropertyID = 83,
 		/// <summary>For Scale assignable property.</summary>
-		Scale = 83,
+		Scale = 84,
 		/// <summary>For SolutionID assignable property.</summary>
-		SolutionID = 84,
+		SolutionID = 85,
 		/// <summary>For SolutionName assignable property.</summary>
-		SolutionName = 85,
+		SolutionName = 86,
 		/// <summary>For SpecificationDirectory assignable property.</summary>
-		SpecificationDirectory = 86,
+		SpecificationDirectory = 87,
 		/// <summary>For StageID assignable property.</summary>
-		StageID = 87,
+		StageID = 88,
 		/// <summary>For StageName assignable property.</summary>
-		StageName = 88,
+		StageName = 89,
 		/// <summary>For StageTransitionID assignable property.</summary>
-		StageTransitionID = 89,
+		StageTransitionID = 90,
 		/// <summary>For StageTransitionName assignable property.</summary>
-		StageTransitionName = 90,
+		StageTransitionName = 91,
 		/// <summary>For StateID assignable property.</summary>
-		StateID = 91,
+		StateID = 92,
 		/// <summary>For StateModelID assignable property.</summary>
-		StateModelID = 92,
+		StateModelID = 93,
 		/// <summary>For StateModelName assignable property.</summary>
-		StateModelName = 93,
+		StateModelName = 94,
 		/// <summary>For StateName assignable property.</summary>
-		StateName = 94,
+		StateName = 95,
 		/// <summary>For StateTransitionID assignable property.</summary>
-		StateTransitionID = 95,
+		StateTransitionID = 96,
 		/// <summary>For StateTransitionName assignable property.</summary>
-		StateTransitionName = 96,
+		StateTransitionName = 97,
 		/// <summary>For StepID assignable property.</summary>
-		StepID = 97,
+		StepID = 98,
 		/// <summary>For StepName assignable property.</summary>
-		StepName = 98,
+		StepName = 99,
 		/// <summary>For StepTransitionID assignable property.</summary>
-		StepTransitionID = 99,
+		StepTransitionID = 100,
 		/// <summary>For StepTransitionName assignable property.</summary>
-		StepTransitionName = 100,
+		StepTransitionName = 101,
 		/// <summary>For TemplateID assignable property.</summary>
-		TemplateID = 101,
+		TemplateID = 102,
 		/// <summary>For TemplatePath assignable property.</summary>
-		TemplatePath = 102,
+		TemplatePath = 103,
 		/// <summary>For ToStageID assignable property.</summary>
-		ToStageID = 103,
+		ToStageID = 104,
 		/// <summary>For ToStateID assignable property.</summary>
-		ToStateID = 104,
+		ToStateID = 105,
 		/// <summary>For ToStepID assignable property.</summary>
-		ToStepID = 105,
+		ToStepID = 106,
 		/// <summary>For UseRelativePaths assignable property.</summary>
-		UseRelativePaths = 106,
+		UseRelativePaths = 107,
+		/// <summary>For ValueConstraint assignable property.</summary>
+		ValueConstraint = 108,
 		/// <summary>For ValueID assignable property.</summary>
-		ValueID = 107,
+		ValueID = 109,
 		/// <summary>For ValueName assignable property.</summary>
-		ValueName = 108,
+		ValueName = 110,
 		/// <summary>For ViewID assignable property.</summary>
-		ViewID = 109,
+		ViewID = 111,
 		/// <summary>For ViewName assignable property.</summary>
-		ViewName = 110,
+		ViewName = 112,
 		/// <summary>For ViewPropertyID assignable property.</summary>
-		ViewPropertyID = 111,
+		ViewPropertyID = 113,
 		/// <summary>For WorkflowID assignable property.</summary>
-		WorkflowID = 112,
+		WorkflowID = 114,
 		/// <summary>For WorkflowName assignable property.</summary>
-		WorkflowName = 113,
+		WorkflowName = 115,
 
 		#region protected
 		/// <summary>For SourceName assignable property.</summary>

@@ -1258,6 +1258,25 @@
       <ItemID>1f019684-1130-4ad5-a865-578345c3ac2f</ItemID>
       <ItemName>Specifications.SqlView.SqlViewName</ItemName>
     </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>e87b78c9-11b9-4102-a4a6-8df60d5ea3f0</ItemID>
+      <ItemName>.</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>70867cea-21cd-477a-974c-c2155ab3619c</ItemID>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>20e8801a-70e8-48eb-9e78-62915d0bfc0e</ItemID>
+      <ItemName>..</ItemName>
+    </CollectionItem>
+    <CollectionItem>
+      <Tags />
+      <ItemID>907c598a-c856-4f06-8c59-6e0facde809f</ItemID>
+      <ItemName>Entities.Property.MinLength</ItemName>
+    </CollectionItem>
   </ReferencedModelIDs>
   <IsSampleMode>false</IsSampleMode>
   <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
@@ -1301,17 +1320,17 @@ The following Entity level tags are utilized in this solution:
   <DatabaseSourceList>
     <DatabaseSource>
       <Tags />
-      <SpecSourceName>eyedgy7z9q.database.windows.net,1433</SpecSourceName>
+      <SpecSourceName>INCODE-1\INCODE4</SpecSourceName>
       <SpecificationSourceID>30339a08-14a7-4de8-98be-f8b5efdda7e0</SpecificationSourceID>
       <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
       <TemplatePath>Templates\Sample_CSharp_SQLServer_MySQL_Xml\Specifications\SQLServer\MDLSqlModel.mps</TemplatePath>
       <Order>1</Order>
       <Description />
-      <SourceDbServerName>eyedgy7z9q.database.windows.net,1433</SourceDbServerName>
+      <SourceDbServerName>INCODE-1\INCODE4</SourceDbServerName>
       <SourceDbName>InCode_ModelPlus</SourceDbName>
       <DatabaseTypeCode>1</DatabaseTypeCode>
-      <UserName>moplus_developer@eyedgy7z9q</UserName>
-      <Password>EAAAABvHO9Bp/A7D8oAGtjVHVZpWwzIZqXEfYA7qlI8IFJt6</Password>
+      <UserName />
+      <Password />
     </DatabaseSource>
   </DatabaseSourceList>
   <ProjectList>
@@ -1990,6 +2009,21 @@ The following Entity level tags are utilized in this solution:
               <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
               <EntityID>b58b0190-1a67-4f98-8737-808d7c033a88</EntityID>
+              <Length xsi:nil="true" />
+              <Precision xsi:nil="true" />
+              <Scale xsi:nil="true" />
+              <InitialValue />
+              <Identity xsi:nil="true" />
+              <IdentitySeed xsi:nil="true" />
+              <IdentityIncrement xsi:nil="true" />
+            </Property>
+            <Property>
+              <Tags>DB CondensedUI2 </Tags>
+              <SpecSourceName>Entities.Property.MinLength</SpecSourceName>
+              <PropertyID>907c598a-c856-4f06-8c59-6e0facde809f</PropertyID>
+              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <Description />
+              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />
@@ -3667,9 +3701,9 @@ The following Entity level tags are utilized in this solution:
               <Tags>AnyChars </Tags>
               <SpecSourceName>Solutions.View.ViewName</SpecSourceName>
               <PropertyID>5afc5e7f-9f65-4d33-9330-ca6504f7b42b</PropertyID>
-              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
-              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <EntityID>10f97fcf-1a62-4ecd-8483-4c321a374dc3</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />
@@ -3934,9 +3968,9 @@ The following Entity level tags are utilized in this solution:
               <Tags>AnyChars </Tags>
               <SpecSourceName>Specifications.SqlView.SqlViewName</SpecSourceName>
               <PropertyID>1f019684-1130-4ad5-a865-578345c3ac2f</PropertyID>
-              <SolutionID>00000000-0000-0000-0000-000000000000</SolutionID>
+              <SolutionID>77810edf-620f-4069-a19d-bfb20ee46ef4</SolutionID>
               <Description />
-              <EntityID>00000000-0000-0000-0000-000000000000</EntityID>
+              <EntityID>7038ecbb-b21b-4653-b459-c1b797d41535</EntityID>
               <Length xsi:nil="true" />
               <Precision xsi:nil="true" />
               <Scale xsi:nil="true" />

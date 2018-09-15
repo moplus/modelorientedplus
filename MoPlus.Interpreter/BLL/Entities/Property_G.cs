@@ -40,7 +40,7 @@ namespace MoPlus.Interpreter.BLL.Entities
 	/// Generated to prevent changes from being overwritten.
 	///
 	/// <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
-	/// <CreatedDate>1/27/2017</CreatedDate>
+	/// <CreatedDate>9/15/2018</CreatedDate>
 	/// <Status>Generated</Status>
 	///--------------------------------------------------------------------------------
 	[Serializable()]
@@ -85,6 +85,11 @@ namespace MoPlus.Interpreter.BLL.Entities
 			{
 				errors.Append("\r\n").Append(error);
 			}
+			error = GetValidationError("MinLength");
+			if (!String.IsNullOrEmpty(error))
+			{
+				errors.Append("\r\n").Append(error);
+			}
 			error = GetValidationError("Length");
 			if (!String.IsNullOrEmpty(error))
 			{
@@ -101,6 +106,11 @@ namespace MoPlus.Interpreter.BLL.Entities
 				errors.Append("\r\n").Append(error);
 			}
 			error = GetValidationError("InitialValue");
+			if (!String.IsNullOrEmpty(error))
+			{
+				errors.Append("\r\n").Append(error);
+			}
+			error = GetValidationError("ValueConstraint");
 			if (!String.IsNullOrEmpty(error))
 			{
 				errors.Append("\r\n").Append(error);
@@ -178,6 +188,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 				case "DataTypeCode":
 					error = ValidateDataTypeCode();
 					break;
+				case "_minLength":
+				case "MinLength":
+					error = ValidateMinLength();
+					break;
 				case "_length":
 				case "Length":
 					error = ValidateLength();
@@ -193,6 +207,10 @@ namespace MoPlus.Interpreter.BLL.Entities
 				case "_initialValue":
 				case "InitialValue":
 					error = ValidateInitialValue();
+					break;
+				case "_valueConstraint":
+				case "ValueConstraint":
+					error = ValidateValueConstraint();
 					break;
 				case "_identity":
 				case "Identity":
@@ -282,6 +300,18 @@ namespace MoPlus.Interpreter.BLL.Entities
 		}
 		
 		///--------------------------------------------------------------------------------
+		/// <summary>This method validates MinLength and returns an error message if not valid.</param>
+		///--------------------------------------------------------------------------------
+		public string ValidateMinLength()
+		{
+			if (MinLength != null && MinLength < 0)
+			{
+				return String.Format(Resources.DisplayValues.Validation_NonNegativeNumericValue, "MinLength");
+			}
+			return null;
+		}
+		
+		///--------------------------------------------------------------------------------
 		/// <summary>This method validates Length and returns an error message if not valid.</param>
 		///--------------------------------------------------------------------------------
 		public string ValidateLength()
@@ -321,6 +351,14 @@ namespace MoPlus.Interpreter.BLL.Entities
 		/// <summary>This method validates InitialValue and returns an error message if not valid.</param>
 		///--------------------------------------------------------------------------------
 		public string ValidateInitialValue()
+		{
+			return null;
+		}
+		
+		///--------------------------------------------------------------------------------
+		/// <summary>This method validates ValueConstraint and returns an error message if not valid.</param>
+		///--------------------------------------------------------------------------------
+		public string ValidateValueConstraint()
 		{
 			return null;
 		}
@@ -655,6 +693,31 @@ namespace MoPlus.Interpreter.BLL.Entities
 			}
 		}
 		
+		protected int? _minLength = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the MinLength.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(null)]
+		public virtual int? MinLength
+		{
+			get
+			{
+				return _minLength;
+			}
+			set
+			{
+				if (_minLength != value)
+				{
+					_minLength = value;
+					_isModified = true;
+					base.OnPropertyChanged("MinLength");
+				}
+			}
+		}
+		
 		protected int? _length = null;
 		///--------------------------------------------------------------------------------
 		/// <summary>This property gets or sets the Length.</summary>
@@ -751,6 +814,31 @@ namespace MoPlus.Interpreter.BLL.Entities
 					_initialValue = value;
 					_isModified = true;
 					base.OnPropertyChanged("InitialValue");
+				}
+			}
+		}
+		
+		protected string _valueConstraint = null;
+		///--------------------------------------------------------------------------------
+		/// <summary>This property gets or sets the ValueConstraint.</summary>
+		///--------------------------------------------------------------------------------
+		[XmlElement()]
+		[DataMember]
+		[DataElement]
+		[DefaultValue(null)]
+		public virtual string ValueConstraint
+		{
+			get
+			{
+				return _valueConstraint;
+			}
+			set
+			{
+				if (_valueConstraint != value)
+				{
+					_valueConstraint = value;
+					_isModified = true;
+					base.OnPropertyChanged("ValueConstraint");
 				}
 			}
 		}
@@ -1258,10 +1346,12 @@ namespace MoPlus.Interpreter.BLL.Entities
 			if (IsPrimaryKeyMember.GetBool() != inputProperty.IsPrimaryKeyMember.GetBool()) return false;
 			if (IsForeignKeyMember.GetBool() != inputProperty.IsForeignKeyMember.GetBool()) return false;
 			if (DataTypeCode.GetInt() != inputProperty.DataTypeCode.GetInt()) return false;
+			if (MinLength.GetInt() != inputProperty.MinLength.GetInt()) return false;
 			if (Length.GetInt() != inputProperty.Length.GetInt()) return false;
 			if (Precision.GetInt() != inputProperty.Precision.GetInt()) return false;
 			if (Scale.GetInt() != inputProperty.Scale.GetInt()) return false;
 			if (InitialValue.GetString() != inputProperty.InitialValue.GetString()) return false;
+			if (ValueConstraint.GetString() != inputProperty.ValueConstraint.GetString()) return false;
 			if (Identity.GetBool() != inputProperty.Identity.GetBool()) return false;
 			if (IdentitySeed.GetLong() != inputProperty.IdentitySeed.GetLong()) return false;
 			if (IdentityIncrement.GetLong() != inputProperty.IdentityIncrement.GetLong()) return false;
@@ -1287,10 +1377,12 @@ namespace MoPlus.Interpreter.BLL.Entities
 			if (IsPrimaryKeyMember != inputProperty.IsPrimaryKeyMember) return false;
 			if (IsForeignKeyMember != inputProperty.IsForeignKeyMember) return false;
 			if (DataTypeCode != DefaultValue.Int) return false;
+			if (MinLength != DefaultValue.Int) return false;
 			if (Length != DefaultValue.Int) return false;
 			if (Precision != DefaultValue.Int) return false;
 			if (Scale != DefaultValue.Int) return false;
 			if (!String.IsNullOrEmpty(inputProperty.InitialValue)) return false;
+			if (!String.IsNullOrEmpty(inputProperty.ValueConstraint)) return false;
 			if (Identity != inputProperty.Identity) return false;
 			if (IdentitySeed != DefaultValue.Int) return false;
 			if (IdentityIncrement != DefaultValue.Int) return false;
@@ -1314,10 +1406,12 @@ namespace MoPlus.Interpreter.BLL.Entities
 			IsPrimaryKeyMember = inputProperty.IsPrimaryKeyMember;
 			IsForeignKeyMember = inputProperty.IsForeignKeyMember;
 			DataTypeCode = inputProperty.DataTypeCode;
+			MinLength = inputProperty.MinLength;
 			Length = inputProperty.Length;
 			Precision = inputProperty.Precision;
 			Scale = inputProperty.Scale;
 			InitialValue = inputProperty.InitialValue;
+			ValueConstraint = inputProperty.ValueConstraint;
 			Identity = inputProperty.Identity;
 			IdentitySeed = inputProperty.IdentitySeed;
 			IdentityIncrement = inputProperty.IdentityIncrement;

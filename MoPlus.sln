@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.VSPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlus.SolutionBuilder.WpfUI", "MoPlus.SolutionBuilder.WpfUI\MoPlus.SolutionBuilder.WpfUI.csproj", "{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoPlusInstall", "MoPlusInstall\MoPlusInstall.csproj", "{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -197,6 +199,18 @@ Global
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x64.Build.0 = Release|Any CPU
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x86.ActiveCfg = Release|x86
 		{6CE470F9-CCC0-44A6-9700-A2A3C7A35A00}.Release|x86.Build.0 = Release|x86
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|Mixed Platforms.Build.0 = Release|x86
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|x64.ActiveCfg = Release|Any CPU
+		{4E1C564D-D443-434C-A0D0-3CA56BFAEC13}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

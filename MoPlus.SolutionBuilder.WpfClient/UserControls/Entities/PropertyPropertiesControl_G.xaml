@@ -5,7 +5,7 @@
  from being overwritten.
 
  <CreatedByUserName>INCODE-1\Dave</CreatedByUserName>
- <CreatedDate>5/31/2013</CreatedDate>
+ <CreatedDate>9/15/2018</CreatedDate>
  <Status>Generated</Status>
 -->
 <lib:EditControl x:Class="MoPlus.SolutionBuilder.WpfClient.UserControls.Entities.PropertyPropertiesControl"
@@ -96,6 +96,20 @@
 					</DataTrigger>
 				</Style.Triggers>
 			</Style>
+			<Style x:Key="MinLengthInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding MinLengthCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding MinLengthValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
 			<Style x:Key="LengthInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
 				<Style.Triggers>
 					<DataTrigger Binding="{Binding LengthCustomized, Mode=OneWay}" Value="True">
@@ -146,6 +160,20 @@
 						</DataTrigger.Setters>
 					</DataTrigger>
 					<DataTrigger Binding="{Binding InitialValueValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Red" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+				</Style.Triggers>
+			</Style>
+			<Style x:Key="ValueConstraintInput" BasedOn="{StaticResource LabelInput}" TargetType="{x:Type Label}">
+				<Style.Triggers>
+					<DataTrigger Binding="{Binding ValueConstraintCustomized, Mode=OneWay}" Value="True">
+						<DataTrigger.Setters>
+							<Setter Property="Foreground" Value="Black" />
+						</DataTrigger.Setters>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding ValueConstraintValidationMessage, Converter={StaticResource IsNullOrEmptyConverter}, Mode=OneWay}" Value="False">
 						<DataTrigger.Setters>
 							<Setter Property="Foreground" Value="Red" />
 						</DataTrigger.Setters>
@@ -277,6 +305,7 @@
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
+				<RowDefinition Height="*"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
 				<RowDefinition Height="Auto"></RowDefinition>
@@ -293,14 +322,17 @@
 			<Label Margin="1" Grid.Row="2" Grid.Column="0" Style="{DynamicResource PropertyNameInput}" Content="{Binding PropertyNameLabel, Mode=OneWay}" />
 			<Label Margin="1" Grid.Row="3" Grid.Column="0" Style="{DynamicResource DataTypeCodeInput}" Content="{Binding DataTypeCodeLabel, Mode=OneWay}" />
 			<Label Margin="1" Grid.Row="4" Grid.Column="0" Style="{DynamicResource InitialValueInput}" Content="{Binding InitialValueLabel, Mode=OneWay}" />
-			<Label Margin="1" Grid.Row="8" Grid.Column="0" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
-			<Label Margin="1" Grid.Row="9" Grid.Column="0" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="5" Grid.Column="0" Style="{DynamicResource ValueConstraintInput}" Content="{Binding ValueConstraintLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="9" Grid.Column="0" Style="{DynamicResource DescriptionInput}" Content="{Binding DescriptionLabel, Mode=OneWay}" />
+			<Label Margin="1" Grid.Row="10" Grid.Column="0" Style="{DynamicResource TagsInput}" Content="{Binding TagsLabel, Mode=OneWay}" />
 			<Border Name="PlaceHolderBorder" Grid.Column="1" Margin="1"/>
 			<Label Margin="1" Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelValue}" Content="{Binding PropertyID, Mode=OneWay}" />
 			<TextBox Margin="0" Grid.Row="2" Grid.Column="1" ToolTip="{Binding PropertyNameValidationMessage, Mode=OneWay}" Text="{Binding PropertyName, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}" Loaded="TextBox_Loaded"/>
 			<ComboBox Margin="0" Grid.Row="3" Grid.Column="1" ToolTip="{Binding DataTypeCodeValidationMessage, Mode=OneWay}" ItemsSource="{Binding DataTypeCodeItems}" DisplayMemberPath="DisplayName" SelectedValuePath="DataTypeCode" SelectedValue="{Binding DataTypeCode, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{x:Null}" />
 			<TextBox Margin="0" Grid.Row="4" Grid.Column="1" ToolTip="{Binding InitialValueValidationMessage, Mode=OneWay}" Text="{Binding InitialValue, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="255" Validation.ErrorTemplate="{x:Null}"/>
-			<WrapPanel Margin="1" Grid.Row="5" Grid.Column="1">
+			<Border Name="ValueConstraintPlaceHolderBorder" Grid.Row="5" Margin="7"/>
+			<TextBox Margin="0" Grid.Row="5" Grid.Column="1" ToolTip="{Binding ValueConstraintValidationMessage, Mode=OneWay}" Text="{Binding ValueConstraint, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=ValueConstraintPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<WrapPanel Margin="1" Grid.Row="6" Grid.Column="1">
 				<StackPanel Orientation="Horizontal">
 					<CheckBox Style="{DynamicResource IsPrimaryKeyMemberInput}" Content="{Binding IsPrimaryKeyMemberLabel, Mode=OneWay}" IsChecked="{Binding IsPrimaryKeyMember}" />
 					<CheckBox Style="{DynamicResource IsForeignKeyMemberInput}" Content="{Binding IsForeignKeyMemberLabel, Mode=OneWay}" IsChecked="{Binding IsForeignKeyMember}" />
@@ -309,8 +341,10 @@
 					<TextBox Width="80" ToolTip="{Binding OrderValidationMessage, Mode=OneWay}" Text="{Binding Order, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="6" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput" DataObject.Pasting="TextBox_NumericPasting"/>
 				</StackPanel>
 			</WrapPanel>
-			<WrapPanel Margin="1" Grid.Row="6" Grid.Column="1">
+			<WrapPanel Margin="1" Grid.Row="7" Grid.Column="1">
 				<StackPanel Orientation="Horizontal">
+					<Label Style="{DynamicResource MinLengthInput}" Content="{Binding MinLengthLabel, Mode=OneWay}" />
+					<TextBox Width="80" ToolTip="{Binding MinLengthValidationMessage, Mode=OneWay}" Text="{Binding MinLength, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" MaxLength="6" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput" DataObject.Pasting="TextBox_NumericPasting"/>
 					<Label Style="{DynamicResource LengthInput}" Content="{Binding LengthLabel, Mode=OneWay}" />
 					<TextBox Width="80" ToolTip="{Binding LengthValidationMessage, Mode=OneWay}" Text="{Binding Length, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" MaxLength="6" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput" DataObject.Pasting="TextBox_NumericPasting"/>
 					<Label Style="{DynamicResource PrecisionInput}" Content="{Binding PrecisionLabel, Mode=OneWay}" />
@@ -319,7 +353,7 @@
 					<TextBox Width="80" ToolTip="{Binding ScaleValidationMessage, Mode=OneWay}" Text="{Binding Scale, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" MaxLength="6" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput" DataObject.Pasting="TextBox_NumericPasting"/>
 				</StackPanel>
 			</WrapPanel>
-			<WrapPanel Margin="1" Grid.Row="7" Grid.Column="1">
+			<WrapPanel Margin="1" Grid.Row="8" Grid.Column="1">
 				<StackPanel Orientation="Horizontal">
 					<CheckBox Style="{DynamicResource IdentityInput}" Content="{Binding IdentityLabel, Mode=OneWay}" IsChecked="{Binding Identity}" />
 					<Label Style="{DynamicResource IdentitySeedInput}" Content="{Binding IdentitySeedLabel, Mode=OneWay}" />
@@ -328,9 +362,9 @@
 					<TextBox Width="80" ToolTip="{Binding IdentityIncrementValidationMessage, Mode=OneWay}" Text="{Binding IdentityIncrement, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, TargetNullValue=''}" MaxLength="6" Validation.ErrorTemplate="{x:Null}" PreviewTextInput="TextBox_PreviewNumericInput" DataObject.Pasting="TextBox_NumericPasting"/>
 				</StackPanel>
 			</WrapPanel>
-			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="8" Margin="7"/>
-			<TextBox Margin="0" Grid.Row="8" Grid.Column="1" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
-			<TextBox Margin="0" Grid.Row="9" Grid.Column="1" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
+			<Border Name="DescriptionPlaceHolderBorder" Grid.Row="9" Margin="7"/>
+			<TextBox Margin="0" Grid.Row="9" Grid.Column="1" ToolTip="{Binding DescriptionValidationMessage, Mode=OneWay}" Text="{Binding Description, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextAlignment="Left" TextWrapping="Wrap" Width="{Binding ElementName=PlaceHolderBorder, Path=ActualWidth}" Height="{Binding ElementName=DescriptionPlaceHolderBorder, Path=ActualHeight}" MinHeight="60" MaxLength="2000" Validation.ErrorTemplate="{x:Null}"/>
+			<TextBox Margin="0" Grid.Row="10" Grid.Column="1" ToolTip="{Binding TagsValidationMessage, Mode=OneWay}" Text="{Binding Tags, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" MaxLength="500" Validation.ErrorTemplate="{x:Null}"/>
 		</Grid>
 	</ScrollViewer>
 </lib:EditControl>

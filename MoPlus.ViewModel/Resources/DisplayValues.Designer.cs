@@ -2277,6 +2277,15 @@ namespace MoPlus.ViewModel.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimum Length.
+        /// </summary>
+        internal static string Edit_MinLengthProperty {
+            get {
+                return ResourceManager.GetString("Edit_MinLengthProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Model.
         /// </summary>
         internal static string Edit_ModelHeader {
@@ -3587,6 +3596,15 @@ namespace MoPlus.ViewModel.Resources {
         internal static string Edit_UserNameProperty {
             get {
                 return ResourceManager.GetString("Edit_UserNameProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value Constraint.
+        /// </summary>
+        internal static string Edit_ValueConstraintProperty {
+            get {
+                return ResourceManager.GetString("Edit_ValueConstraintProperty", resourceCulture);
             }
         }
         

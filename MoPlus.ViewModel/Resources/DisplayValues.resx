@@ -3094,10 +3094,12 @@ A &lt;b&gt;Property&lt;/b&gt;  consists of the following properties:
 &lt;li&gt;&lt;b&gt;IsPrimaryKeyMember (bool)&lt;/b&gt;: Flag, indicating if property is part of the primary key.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;IsForeignKeyMember (bool)&lt;/b&gt;: Flag, indicating if property is part of a foreign key.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;DataTypeCode (int)&lt;/b&gt;: (or DataTypeName) The data type the property, based in input data type enumeration values.&lt;/li&gt;
-&lt;li&gt;&lt;b&gt;Length (int)&lt;/b&gt;: The length of the property value, if applicable for data type.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;MinLength (int)&lt;/b&gt;: The minimum length of the property value, if applicable for data type.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Length (int)&lt;/b&gt;: The maximum length of the property value, if applicable for data type.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Precision (int)&lt;/b&gt;: The precision of the property value, if applicable for data type.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Scale (int)&lt;/b&gt;: The scale of the property vlaue, if applicable for data type.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;InitialValue (string)&lt;/b&gt;: The initial value of the property.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;ValueConstraint (string)&lt;/b&gt;: A programatic or other constraint on the value of the property.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;IsNullable (bool)&lt;/b&gt;: Flag, indicating if property can have null values.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Order (int)&lt;/b&gt;: The order in which the property can appear.&lt;/li&gt;
 &lt;li&gt;&lt;b&gt;Identity (bool)&lt;/b&gt;: Flag, indicating if property is an identity, with values being auto generated.&lt;/li&gt;
@@ -5717,5 +5719,13 @@ A &lt;b&gt;SqlViewProperty&lt;/b&gt; consists of the following properties (value
 &lt;li&gt;&lt;b&gt;SqlViewID (Guid)&lt;/b&gt;: (or SqlView) The identifier of the parent sql view.&lt;/li&gt;
 &lt;/ul&gt;</value>
     <comment>For help.</comment>
+  </data>
+  <data name="Edit_MinLengthProperty" xml:space="preserve">
+    <value>Minimum Length</value>
+    <comment>For min length property.</comment>
+  </data>
+  <data name="Edit_ValueConstraintProperty" xml:space="preserve">
+    <value>Value Constraint</value>
+    <comment>For value constraint property.</comment>
   </data>
 </root>

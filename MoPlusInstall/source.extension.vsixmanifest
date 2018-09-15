@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+	<Metadata>
+		<Identity Id="MoPlusInstall..da1826dd-1e69-4bed-a53d-feb576701905" Version="1.2" Language="en-US" Publisher="Dave Clemmer" />
+		<DisplayName>Mo+ Solution Builder</DisplayName>
+		<Description xml:space="preserve">Mo+ is a model oriented programming language and fully featured IDE for model oriented development.  You have the full power to create and maintain solutions using the technologies and best practices of your choice.</Description>
+		<MoreInfo>https://github.com/moplus/modelorientedplus</MoreInfo>
+		<License>License.txt</License>
+		<Icon>Product.ico</Icon>
+		<PreviewImage>Product.ico</PreviewImage>
+	</Metadata>
+	<Installation>
+		<InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[12.0,15.0]" />
+		<InstallationTarget Version="[12.0,15.0]" Id="Microsoft.VisualStudio.Premium" />
+		<InstallationTarget Version="[12.0,15.0]" Id="Microsoft.VisualStudio.Ultimate" />
+	</Installation>
+	<Dependencies>
+		<Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+	</Dependencies>
+	<Assets>
+		<Asset d:Source="Project" d:ProjectName="MoPlus.SolutionBuilder.VSPackage" Type="Microsoft.VisualStudio.VsPackage" Path="|MoPlus.SolutionBuilder.VSPackage;PkgdefProjectOutputGroup|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.SolutionBuilder.WpfClient" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.SolutionBuilder.WpfClient|" AssemblyName="|MoPlus.SolutionBuilder.WpfClient;AssemblyName|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.ViewModel" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.ViewModel|" AssemblyName="|MoPlus.ViewModel;AssemblyName|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.Interpreter" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.Interpreter|" AssemblyName="|MoPlus.Interpreter;AssemblyName|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.Common" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.Common|" AssemblyName="|MoPlus.Common;AssemblyName|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.IO" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.IO|" AssemblyName="|MoPlus.IO;AssemblyName|" />
+		<Asset d:Source="Project" d:ProjectName="MoPlus.Data" Type="Microsoft.VisualStudio.Assembly" Path="|MoPlus.Data|" AssemblyName="|MoPlus.Data;AssemblyName|" />
+	</Assets>
+</PackageManifest>

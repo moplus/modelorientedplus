@@ -71,7 +71,7 @@ namespace MoPlus.SolutionBuilder.VSPackage
     [ProvideToolWindow(typeof(SolutionDesignerWindow))]
 	[ProvideAutoLoad(Microsoft.VisualStudio.Shell.Interop.UIContextGuids80.SolutionExists)]
 	[Guid(GuidList.guidMoPlusPkgString)]
-	//[ProvideBindingPath]
+	[ProvideBindingPath]
 	public sealed class MoPlusPackage : Package, IVsPackage2
     {
         #region "Fields and Properties"
